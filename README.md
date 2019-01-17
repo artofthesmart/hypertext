@@ -1,8 +1,14 @@
 # Hypertext Theme
 
-![The Hypertext theme keeps things minimal.](assets/screenshot.png)
-
 **Hypertext** is a [Grav](http://github.com/getgrav/grav) theme that focuses on speed and simplicity by using little-to-no JS or CSS.  Hypertext is meant to be used with the latest version of the Grav CMS.
+
+[You can see it live here](http://hypertext.artofthesmart.com).
+
+---
+
+## Screenshot
+
+![The Hypertext theme keeps things minimal.](assets/screenshot.png)
 
 ## Features
 
