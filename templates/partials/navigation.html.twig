@@ -1,0 +1,38 @@
+<nav role="navigation">
+    {% if config.themes.hypertext.style.inlineNavbar %}
+        {% for page in pages.children.visible %}
+        <a href="{{ page.url }}"{{ (page.active or page.activeChild) ? ' class="current"' :'' }}>{{ page.menu }}</a>
+        {% if not loop.last %} | {% endif %}
+        {% endfor %}
+        
+        {% if config.plugins.login.enabled and grav.user.username %}
+            <li>[{% include 'partials/login-status.html.twig' %}]</li>
+        {% endif %}
+    {% else %}
+    <ul>
+        {% for page in pages.children.visible %}
+        <li><a href="{{ page.url }}"{{ (page.active or page.activeChild) ? ' class="current"' :'' }}>{{ page.menu }}</a></li>
+        {% endfor %}
+
+        {% if config.plugins.login.enabled and grav.user.username %}
+            <li>[{% include 'partials/login-status.html.twig' %}]</li>
+        {% endif %}
+    </ul>
+    {% endif %}
+
+    <hr/>
+    
+    {# Breadcrumbs #}
+    {% if config.plugins.breadcrumbs.enabled %}
+    {% set crumbs = breadcrumbs.get() %}
+
+    {% if crumbs|length > 1 %}
+    <span>
+        {% for crumb in crumbs %}
+        <a href="{{ crumb.url }}">{{ crumb.menu }}</a>{% if not loop.last %} &raquo; {% endif %}
+        {% endfor %}
+    </span>
+    {% endif %}
+
+{% endif %}
+</nav>

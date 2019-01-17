@@ -1,0 +1,161 @@
+name: Hypertext
+version: 0.1
+description: "Hypertext is a zero JS/CSS theme to create simple, fast websites."
+icon: compress
+author:
+  name: Alejo Grigera
+  email: hypertext@artofthesmart.com
+  url: http://artofthesmart.com
+homepage: https://github.com/artofthesmart/hypertext
+demo: http://hypertext.artofthesmart.com
+keywords: theme, simple, compliance, fast
+bugs: https://github.com/artofthesmart/hypertext/issues
+license: MIT
+
+form:
+  validation: strict
+  fields:
+    tabs:
+      type: tabs
+      active: 0
+
+      fields:
+        includes:
+          type: tab
+          title: CSS & JS
+          fields:
+            description:
+              type: display
+              size: long
+              label: Description
+              markdown: true
+              content: "This tab lets you control whether or not to include Javascript and CSS during rendering. Removing these cuts down transmission and rendering time by at least 50% for most pages, oftentimes much more. Only turn these on if you're certain that you have a plugin that requires it. Alternatively, you can turn JS/CSS on or off per-page (recommended over turning it on globally)."
+            allowCSS:
+              type: toggle
+              label: Allow global CSS
+              help: When disabled, prevent global CSS files from loading, e.g. plugins. Some overrides allowed. See documentation.
+              default: 1
+              highlight: 0
+              options:
+                1: Enabled
+                0: Disabled
+            allowJS:  
+              type: toggle
+              label: Allow global JS
+              help: When disabled, prevent global JS files from loading, e.g. plugins. Some overrides allowed. See documentation.
+              default: 1
+              highlight: 0
+              options:
+                1: Enabled
+                0: Disabled
+        colors:
+          type: tab
+          title: Colors & Typefaces
+          fields:
+            description:
+              type: display
+              size: long
+              label: Description
+              markdown: true
+              content: "This tab lets you control basic colors.  These settings apply regardless of your JS/CSS settings on the other tab or on the page itself. At the bottom you can add your own custom CSS rules (no validation)."
+            colors.background:
+              type: colorpicker
+              label: Background Color
+              toggleable: true
+              help: When set to anything but white, this will set a background color for the website.
+              placeholder: "#FFFFFF"
+            colors.text:
+              type: colorpicker
+              label: Text Color
+              toggleable: true
+              help: When set to anything but black, this will set the text color for the website.
+              placeholder: "#000000"
+            colors.link:
+              type: colorpicker
+              label: Link Color
+              toggleable: true
+              help: When set to anything but blue, this will set a link color for the website.
+              placeholder: "#0000EE"
+            colors.visitedLink:
+              type: colorpicker
+              label: Visited Link Color
+              toggleable: true
+              help: When set to anything but purple, this will set a visited link color for the website.
+              placeholder: "#551A8B"
+            colors.activeLink:
+              type: colorpicker
+              label: Clicked Link Color
+              toggleable: true
+              help: When set to anything but red, this will set a hovered link color for the website.
+              placeholder: "#EE0000"
+            customCSS:
+              type: textarea
+              label: Custom CSS
+              toggleable: true
+              help: Add your custom CSS rules here.
+              size: large
+        style:
+          type: tab
+          title: Style & Formatting
+          fields:
+            description:
+              type: display
+              size: long
+              label: Description
+              markdown: true
+              content: "This tab lets you control some of the look and feel of the site. There are a few, universally supported declarations that add <1KB but greatly enhance the readability and aesthetic of your site. You can enable and disable those features here"
+            layout.configuration:
+              type: select
+              size: medium
+              classes: fancy
+              label: General site layout
+              help: Configures the general layout of the website horizontally.
+              options:
+                default: No style (align left)
+                centered: Centered
+            layout.width:
+              type: select
+              size: medium
+              classes: fancy
+              label: Maximum website width
+              help: Caps the website's maximum width for viewing on very large screens.
+              options:
+                default: No style (full width)
+                640: 640px (very small)
+                768: 768px (small)
+                960: 960px (medium)
+                1024: 1024px (large)
+                1280: 1280px (very large)
+            style.inlineNavbar:
+              type: toggle
+              label: Use inline navigation
+              help: When enabled, the navigation lists will be inline instead of <ul>.
+              default: 1
+              highlight: 1
+              options:
+                1: Enabled
+                0: Disabled
+              validate:
+                type: bool
+            style.useFavicon:
+              type: toggle
+              label: Use favicon
+              help: When enabled, the site will feed a favicon to the user if present.
+              default: 0
+              highlight: 0
+              options:
+                1: Enabled
+                0: Disabled
+              validate:
+                type: bool
+            style.beautifyText:
+              type: toggle
+              label: Beautify text
+              help: When enabled, this will add a couple declarations to give your text more space.
+              default: 0
+              highlight: 0
+              options:
+                1: Enabled
+                0: Disabled
+              validate:
+                type: bool

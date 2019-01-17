@@ -1,0 +1,48 @@
+{% set layout = config.themes.hypertext.layout %}
+{% set colors = config.themes.hypertext.colors %}
+{% set style = config.themes.hypertext.style %}
+{% set beautify = style.beautifyText %}
+
+{% block stylehseets %}
+<style>
+body {
+{{ layout.width ? "max-width: #{layout.width}px;" : ""}}
+{{ layout.configuration ? "margin: 40px auto;" : ""}}
+{{ colors.background ? "background: #{colors.background};" : ""}}
+{{ colors.text ? "color: #{colors.text};" : "" }}
+
+{% if beautify %}
+font-size:large;
+padding:0 10px;
+{% endif %}
+}
+
+{% if beautify %}
+.subtitle { display: block; }
+img { max-width: 80%; }
+h1, h2, h3 { font-family: sans-serif; }
+p { line-height:1.5; }
+.red { background: #F2DEDE }
+.yellow { background: #FCF8E3 }
+.green { background: #DFF0D8 }
+.blue { background: #D9EDF7 }
+.callout { background: #F5F5F5 }
+{% endif %}
+
+{{ colors.link ? "a { color: #{colors.link}; }" : "" }}
+{{ colors.visitedLink ? "a:visited { color: #{colors.visitedLink}; }" : "" }}
+{{ colors.activeLink ? "a:active { color: #{colors.activeLink}; }" : "" }}
+</style>
+
+    {% if page.header.allowCSS == 'enabled' or 
+         (page.header.allowCSS == 'default' and config.themes.hypertext.allowCSS == '1') %}
+    {{ assets.css()|raw }}
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {% if page.header.allowJS == 'enabled' or 
+         (page.header.allowJS == 'default' and config.themes.hypertext.allowJS == '1') %}
+    {{ assets.js()|raw }}
+    {% endif %}
+{% endblock %} 

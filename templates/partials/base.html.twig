@@ -1,0 +1,52 @@
+{% set body_classes = page.header.bodyClasses %}
+
+<!DOCTYPE html>
+<html lang="{{ grav.language.getActive ?: grav.config.site.default_lang }}">
+<head>
+{% block head %}
+    <meta charset="utf-8" />
+    <link rel="canonical" href="{{ page.url(true, true) }}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% include 'partials/metadata.html.twig' %}
+
+    <title>{% if header.title %}{{ header.title|e('html') }} | {% endif %}{{ site.title|e('html') }}</title>
+    
+    {% if config.themes.hypertext.style.usefavicon and not uri.query('headless') %}
+    <link rel="icon" type="image/png" href="{{ url('theme://images/favicon.png') }}" />
+    {% endif %}
+
+    {% include 'partials/js-css.html.twig' %}
+{% endblock head %}
+</head>
+
+<body class="{{ page.template }}{{ body_classes ? ' {{ body_classes }}' : ''}}">
+    {% if not uri.query('headless') %}
+    <header>
+    {% block header %}
+        <h1><a href="{{ home_url }}">{{ site.title|e('html') }}</a></h1>
+        {% if site.metadata.description %} <aside>{{ site.metadata.description }}</aside> {% endif %}
+
+        {% block header_navigation %}
+            {% include 'partials/navigation.html.twig' %}
+        {% endblock %}
+        {% if grav.messages.all %}
+            {% include 'partials/messages.html.twig' %}
+        {% endif %}
+    {% endblock %}
+    </header>
+    {% endif %}
+    
+    <section id="content">
+        {% block content %}
+        {% endblock %}
+    </section>
+
+    {% if not uri.query('headless') %}
+    {% block footer %}
+    <footer>
+        {% include 'partials/footer.html.twig' %}
+    <footer>
+    {% endblock %}
+    {% endif %}
+</body>
+</html>

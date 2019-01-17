@@ -1,0 +1,63 @@
+<div class="snippet{% if page.taxonomy.category %}{% for category in page.taxonomy.category %} {{ category|url_encode }}{% endfor %}{% endif %}">
+    {% set item_image = page.media.images[page.header.hero_image] ?: page.media.images|first %}
+
+    {# Title #}
+    <h2>
+    {% if page.header.link %}
+    <a href="{{ page.header.link }}">{{ page.title }}</a>
+    {% else %}
+    <a href="{{ page.url }}">{{ page.title }}</a>
+    {% endif %}
+    </h2>
+
+    {# Subtitle #}
+    {% if page.taxonomy.category or page.header.subtitle %}
+    <span class="subtitle">
+        {% if page.taxonomy.category %}
+        {% for category in page.taxonomy.category %}
+            [<a href="{{ page.parent.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ category }}">{{ category }}</a>]{% if not loop.last %}, {% endif %}
+        {% endfor %}
+        {% endif %}
+        {% if page.header.subtitle %} - {{ page.header.subtitle }}{% endif %}
+    </span>
+    {% endif %}
+
+    {#
+    {% if page.taxonomy.tag %}
+    <span class="tags">
+    Tags: 
+        {% for tag in page.taxonomy.tag %}
+        <a href="{{ page.parent.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ tag }}">{{ tag }}</a>
+        {% endfor %}
+    </span>
+    {% endif %}#}
+
+    {# Headline Image #}
+    {% if item_image %}
+        <a href="{{page.url}}">{{ item_image.cropZoom(config.themes.hypertext.layout.width, 250).html }}</a>
+    {% endif %}
+    
+    {# Text & Follow-Ons #}
+    {% if page.summary != page.content %}
+        <p>{{ page.summary }}</p>
+        <p><a href="{{ page.url }}">Continue Reading...</a></p>
+    {% else %}
+        <p>{{ page.content|truncate(550) }}</p>
+    {% endif %}
+
+    {% if page.children.visible|length > 0 %}
+    <i>Sub-pages</i>
+    {% if config.themes.hypertext.style.inlineNavbar %}
+    - 
+        {% for child in page.children.visible %}
+        <a href="{{ child.url }}">{{child.title}}</a>{% if not loop.last %}, {% endif %}
+        {% endfor %} 
+    {% else %}
+    <ol>
+        {% for child in page.children.visible %}
+        <li><a href="{{ child.url }}">{{child.title}}</a></li>
+        {% endfor %}
+    </ol>
+    {% endif %}
+    {% endif %}
+</div>

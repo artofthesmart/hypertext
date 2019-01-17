@@ -1,0 +1,100 @@
+{% embed 'partials/base.html.twig' %}
+
+	{% set base_url = page.parent.url %}
+    {% set feed_url = base_url %}
+
+    {% if base_url == '/' %}
+        {% set base_url = '' %}
+    {% endif %}
+
+    {% if base_url == base_url_relative %}
+        {% set feed_url = base_url~'/'~page.parent.slug %}
+    {% endif  %}
+
+	{% block content %}
+		<div class="item">
+        {% set header_image = page.header.header_image|defined(true) %}
+        {% set header_image_width  = page.header.header_image_width|defined(config.themes.hypertext.layout.width) %}
+        {% set header_image_height = page.header.header_image_height|defined(300) %}
+        {% set header_image_file = page.header.header_image_file %}
+
+        {# Titles #}
+        {% if page.header.link %}
+        <h2><a href="{{ page.header.link }}">{{ page.title }}</a></h2>
+        {% else %}
+            <h2><a href="{{ page.url }}" class="u-url">{{ page.title }}</a></h2>
+        {% endif %}
+
+        {% if page.header.subtitle %}
+        <span class="subtitle"><time datetime="{{ page.date|date("c") }}">{{ page.date|date(system.pages.dateformat.short) }}</time> - <u>{{ page.header.subtitle }}</u>
+        {% endif %}
+
+        {# Taxonomies #}
+        {% if page.taxonomy.category %}
+        <span class="categories">
+        Categories: 
+            {% for category in page.taxonomy.category %}
+            <a href="{{ blog.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ category }}">{{ category }}</a>
+            {% endfor %}
+        </span><br/>
+        {% endif %}
+
+        {% if page.taxonomy.tag %}
+        <span class="tags">
+        Tags: 
+            {% for tag in page.taxonomy.tag %}
+            <a href="{{ blog.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ tag }}">{{ tag }}</a>
+            {% endfor %}
+        </span>
+        {% endif %}
+
+        {# Headline Image #}
+        {% if big_header %}
+            {{ page.media.images|first.cropResize(config.themes.hypertext.layout.width,480).html('','blog-header-image') }}
+        {% else %}
+            {% if header_image %}
+                {% if header_image_file %}
+                    {% set header_image_media = page.media.images[header_image_file] %}
+                {% else %}
+                    {% set header_image_media = page.media.images|first %}
+                {% endif %}
+                <br/>
+                {{ header_image_media.cropZoom(header_image_width, header_image_height).html }}
+            {% endif %}
+        {% endif %}
+        
+        {% if page.header.continue_link is sameas(false) %}
+            <p>{{ page.content }}</p>
+            {% if not truncate %}
+            {% set show_prev_next = true %}
+            {% endif %}
+        {% elseif truncate and page.summary != page.content %}
+            <p>{{ page.summary }}</p>
+            <p><a href="{{ page.url }}">Continue Reading...</a></p>
+        {% elseif truncate %}
+            {% if page.summary != page.content %}
+                <p>{{ page.content|truncate(550) }}</p>
+            {% else %}
+                <p>{{ page.content }}</p>
+            {% endif %}
+            <p><a href="{{ page.url }}">Continue Reading...</a></p>
+        {% else %}
+            {{ page.content }}
+            {% set show_prev_next = true %}
+        {% endif %}
+
+        {% if show_prev_next %}
+        <center>
+            {% if not page.isLast %}
+                <a href="{{ page.prevSibling.url }}">&#xab; Previous Post</a>
+            {% endif %}
+            {% if not page.isFirst %}
+                <a href="{{ page.nextSibling.url }}">Next Post &raquo;</a>
+            {% endif %}
+        </center>
+        {% endif %}
+
+        </div>
+	{% endblock %}
+
+{% endembed %}

@@ -1,0 +1,35 @@
+extends@: default
+
+form:
+  fields:
+    tabs:
+      fields:
+        options:
+          fields:
+            header.allowCSS:
+              type: select
+              label: Allow CSS Override
+              help: Allow CSS only for this page, overriding any global settings.
+              classes: fancy
+              size: medium
+              options:
+                default: Use global setting
+                enabled: Use CSS
+                disabled: Suppress CSS
+            header.allowJS:
+              type: select
+              label: Allow JS Override
+              help: Allow JS only for this page, overriding any global settings.
+              classes: fancy
+              size: medium
+              options:
+                default: Use global setting
+                enabled: Use JS
+                disabled: Suppress JS
+            header.subtitle:
+              type: text
+              label: Subtitle
+              help: A subtitle to display sometimes under the title of a page.
+              size: long
+              style: fancy
+              toggleable: true

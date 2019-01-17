@@ -1,0 +1,9 @@
+<hr/>
+<p>Running the <a href="http://getgrav.org">Grav CMS</a> using the <a href="http://hypertext.artofthesmart.com">Hypertext theme</a>.</p>
+
+{% if page.header.allowJS == 'enabled' or 
+         (page.header.allowJS == 'default' and config.themes.hypertext.allowJS == '1') %}
+{% block bottom %}
+{{ assets.js('bottom')|raw }}
+{% endblock %}
+{% endif %}
