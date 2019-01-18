@@ -8,7 +8,7 @@ suitable for blogs or multi-part projects. #}
 	{% block content %}
     {{ page.content }}
 
-    {% for child in collection %}
+    {% for child in collection.order(header.content.order.by, header.content.order.dir) %}
         {% include 'partials/item_snippet.html.twig' with {'page':child, truncate:true} %}
         {% if not loop.last %}<br/>{% endif %}
     {% endfor %}
