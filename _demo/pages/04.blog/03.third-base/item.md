@@ -1,3 +1,13 @@
+---
+taxonomy:
+    category:
+        - animals
+    tag:
+        - cats
+allowCSS: default
+allowJS: default
+---
+
 This is a post with a summary section and a photo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus euismod blandit lectus, id molestie libero mollis vel.
 
 ===

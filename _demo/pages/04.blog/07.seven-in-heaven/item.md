@@ -1,3 +1,11 @@
+---
+taxonomy:
+    category:
+        - 'desktop publishing'
+allowCSS: default
+allowJS: default
+---
+
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus euismod blandit lectus, id molestie libero mollis vel. Mauris tincidunt elit dui, nec sodales sem laoreet posuere. Vivamus consequat placerat quam, in tincidunt lectus vulputate eu. Nulla nec blandit ex. Curabitur id eleifend magna, in bibendum diam. Vivamus vestibulum diam nec ante vehicula efficitur. Quisque ut aliquam ante. Nullam nec consectetur arcu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquet ut massa sed porta. Fusce ullamcorper lacinia odio ut rhoncus. Phasellus efficitur euismod faucibus. Proin at interdum felis.
 
 Morbi lacus nisi, feugiat sit amet elit sit amet, ornare imperdiet felis. Sed egestas, augue vel volutpat ultrices, tortor felis posuere nibh, sed ultricies nisl lectus et sapien. In faucibus odio ac cursus elementum. Nullam quis ante vel magna efficitur euismod. Aliquam erat volutpat. Fusce vel dui elit. Sed vitae dolor ultrices, volutpat elit in, mattis dui. Donec mauris turpis, mollis a pretium sed, congue eu velit. Sed pretium, orci at imperdiet fringilla, elit orci elementum ligula, ac malesuada felis erat in orci. Phasellus magna lacus, sollicitudin id quam at, lacinia mollis elit. Curabitur lectus ex, facilisis sodales ante porta, sodales faucibus justo. Maecenas id lorem sagittis, efficitur nunc viverra, auctor nunc. Ut eget elit et justo pharetra tincidunt.
