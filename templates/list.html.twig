@@ -1,0 +1,42 @@
+{# A list is a parent page with less detailed information about its children, 
+suitable for thin directories that are more for organization than for semantics. 
+Note that this isn't compatible with extremely old browsers. #}
+
+{% embed 'partials/base.html.twig' %}
+
+	{% set collection = page.collection()|length > 0 ? page.collection() : page.children.visible %}
+
+	{% block content %}
+    {{ page.content }}
+
+    <table>
+        <caption>Sub-pages</caption>
+        {% for child in collection %}
+        <tr>
+            <th>
+                <td>Date</td>
+                <td>Title</td>
+                <td>Categories</td>
+            </th>
+            <td class="datetime">{{ child.date|date("F j, Y, g:i a") }}</td>
+            <td class="title">
+                {% if child.header.link %}
+                <a href="{{ child.header.link }}">{{ child.title }}</a>
+                {% else %}
+                <a href="{{ child.url }}">{{ child.title }}</a>
+                {% endif %}
+
+                {% if child.taxonomy.category or child.header.subtitle %}
+                <span>{{ child.header.subtitle }}</span>
+                {% endif %}
+            </td>
+            <td class="category">
+                {% for category in child.taxonomy.category %}
+                    <a href="{{ child.parent.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+	{% endblock %}
+{% endembed %}
