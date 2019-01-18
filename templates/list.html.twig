@@ -11,14 +11,14 @@ Note that this isn't compatible with extremely old browsers. #}
 
     <table>
         <caption>Sub-pages</caption>
-        {% for child in collection %}
+        <th>
+            <td>Date</td>
+            <td>Title</td>
+            <td>Categories</td>
+        </th>
+        {% for child in collection.order(header.content.order.by, header.content.order.dir) %}
         <tr>
-            <th>
-                <td>Date</td>
-                <td>Title</td>
-                <td>Categories</td>
-            </th>
-            <td class="datetime">{{ child.date|date("F j, Y, g:i a") }}</td>
+            <td class="datetime">{{ child.date|date("Y-d-m H:i") }}</td>
             <td class="title">
                 {% if child.header.link %}
                 <a href="{{ child.header.link }}">{{ child.title }}</a>
