@@ -1,17 +1,25 @@
 <nav role="navigation">
     {% if config.themes.hypertext.style.inlineNavbar %}
-        {% for page in pages.children.visible %}
-        <a href="{{ page.url }}"{{ (page.active or page.activeChild) ? ' class="current"' :'' }}>{{ page.menu }}</a>
+        {% for child in pages.children.visible %}
+        <a href="{{ child.url }}"{{ (child.active or child.activeChild) ? ' class="current"' :'' }}>{{ child.menu }}</a>
         {% if not loop.last %} | {% endif %}
+        {% endfor %}
+
+        {% for name, url in config.themes.hypertext.menuItems %}
+        | <a href="{{ url }}" target="_blank">{{ name }}</a>
         {% endfor %}
         
         {% if config.plugins.login.enabled and grav.user.username %}
-            <li>[{% include 'partials/login-status.html.twig' %}]</li>
+            [{% include 'partials/login-status.html.twig' %}]
         {% endif %}
     {% else %}
     <ul>
-        {% for page in pages.children.visible %}
-        <li><a href="{{ page.url }}"{{ (page.active or page.activeChild) ? ' class="current"' :'' }}>{{ page.menu }}</a></li>
+        {% for child in pages.children.visible %}
+        <li><a href="{{ child.url }}"{{ (child.active or child.activeChild) ? ' class="current"' :'' }}>{{ child.menu }}</a></li>
+        {% endfor %}
+
+        {% for name, url in config.themes.hypertext.menuItems %}
+        <li><a href="{{ url }}" target="_blank">{{ name }}</a></li>
         {% endfor %}
 
         {% if config.plugins.login.enabled and grav.user.username %}

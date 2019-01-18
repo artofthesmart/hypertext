@@ -159,3 +159,14 @@ form:
                 0: Disabled
               validate:
                 type: bool
+        features:
+          type: tab
+          title: Menus & Features
+          fields:
+            menuItems:
+              type: array
+              label: Additional Menu Items
+              help: Add items to have them "tacked on" to the end of the menu bar, like Github or Twitter links.
+              placeholder_key: e.g. Twitter
+              placeholder_value: http://twitter.com/artofthesmart/
+              required: false
