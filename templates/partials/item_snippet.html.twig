@@ -1,5 +1,5 @@
 <div class="snippet{% if page.taxonomy.category %}{% for category in page.taxonomy.category %} {{ category|url_encode }}{% endfor %}{% endif %}">
-    {% set item_image = page.media.images[page.header.hero_image] ?: page.media.images|first %}
+    {% set item_image = page.media.images[page.header.header_image_file] ?: page.media.images|first %}
 
     {# Title #}
     <h2>
@@ -42,7 +42,7 @@
         <p>{{ page.summary }}</p>
         <p><a href="{{ page.url }}">Continue Reading...</a></p>
     {% else %}
-        <p>{{ page.content|truncate(550) }}</p>
+        <p>{{ page.content|truncate(header.summary.size ?? 300) }}</p>
     {% endif %}
 
     {% if page.children.visible|length > 0 %}
