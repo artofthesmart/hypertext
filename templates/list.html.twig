@@ -10,30 +10,32 @@ Note that this isn't compatible with extremely old browsers. #}
     {{ page.content }}
 
     <table>
-        <caption>Sub-pages</caption>
-        <th>
-            <td>Date</td>
-            <td>Title</td>
-            <td>Categories</td>
-        </th>
+        {# If there are category filters in the URL, let the user know. #}
+        {% if (uri.query('category')) %}
+            
+        {% endif %}
+
         {% for child in collection.order(header.content.order.by, header.content.order.dir) %}
         <tr>
-            <td class="datetime">{{ child.date|date("Y-d-m H:i") }}</td>
+            <td class="datetime" nowrap>{{ child.date|date("Y-d-m") }}</td>
+            <td class="category">
+                {% for category in child.taxonomy.category %}
+                    <a href="{{ child.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </td>
             <td class="title">
+                {{ config.themes.hypertext.style.beautifyText and not loop.first ? '<hr/>' }}
                 {% if child.header.link %}
                 <a href="{{ child.header.link }}">{{ child.title }}</a>
                 {% else %}
                 <a href="{{ child.url }}">{{ child.title }}</a>
                 {% endif %}
 
-                {% if child.taxonomy.category or child.header.subtitle %}
-                <span>{{ child.header.subtitle }}</span>
+                {% if child.summary != child.content %}
+                    <p>{{ child.summary }}</p>
+                {% else %}
+                    <p>{{ child.content|truncate(header.summary.size ?? 150) }}</p>
                 {% endif %}
-            </td>
-            <td class="category">
-                {% for category in child.taxonomy.category %}
-                    <a href="{{ child.parent.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{% if not loop.last %}, {% endif %}
-                {% endfor %}
             </td>
         </tr>
         {% endfor %}

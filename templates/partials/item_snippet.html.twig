@@ -15,7 +15,7 @@
     <span class="subtitle">
         {% if page.taxonomy.category %}
         {% for category in page.taxonomy.category %}
-            [<a href="{{ page.parent.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ category }}">{{ category }}</a>]{% if not loop.last %}, {% endif %}
+            [<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>]{% if not loop.last %}, {% endif %}
         {% endfor %}
         {% endif %}
         {% if page.header.subtitle %} - {{ page.header.subtitle }}{% endif %}
