@@ -38,15 +38,6 @@ form:
               validate:
                 type: yaml
 
-            header.content.limit:
-              type: text
-              label: Max Item Count
-              default: 5
-              validate:
-                required: true
-                type: int
-                min: 1
-
             header.content.order.by:
               type: select
               label: Order By
@@ -64,29 +55,3 @@ form:
               options:
                 asc: Ascending
                 desc: Descending
-
-            header.content.pagination:
-              type: toggle
-              label: Pagination
-              highlight: 1
-              default: 1
-              options:
-                1: PLUGIN_ADMIN.ENABLED
-                0: PLUGIN_ADMIN.DISABLED
-              validate:
-                type: bool
-
-            header.content.url_taxonomy_filters:
-              type: toggle
-              label: URL Taxonomy Filters
-              highlight: 1
-              default: 1
-              options:
-                1: PLUGIN_ADMIN.ENABLED
-                0: PLUGIN_ADMIN.DISABLED
-              validate:
-                type: bool
-
-#          import@:
-#            type: partials/blog-bits
-#            context: blueprints://pages
