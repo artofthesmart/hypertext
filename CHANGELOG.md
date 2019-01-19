@@ -2,7 +2,6 @@
 ## 01/18/2019
 
 1. [](#new)
-    * Adds the `list` template with tabular view for larger collections.
     * Adds demo content for testing and new installations.
     * Adds custom menu items after pages are rendered.
    [](#improved)
