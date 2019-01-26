@@ -6,7 +6,7 @@
 {% block stylesheets %}
 <style>
 body {
-{{ layout.width ? "max-width: #{layout.width}px;" : ""}}
+{{ ( layout.width and layout.width != "default" ) ? "max-width: #{layout.width}px;" : ""}}
 {{ layout.configuration ? "margin: 40px auto;" : ""}}
 {{ colors.background ? "background: #{colors.background};" : ""}}
 {{ colors.text ? "color: #{colors.text};" : "" }}
