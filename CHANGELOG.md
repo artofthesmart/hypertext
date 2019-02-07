@@ -3,6 +3,7 @@
 
 1. [](#bug)
     * Fixes CSS/JS in footers. This broke popular plugins like code syntax highlighting.
+    * Includes typo and logical fixes from [mbirth](https://github.com/mbirth).
     
 # v1.0.1
 ## 01/18/2019
