@@ -1,3 +1,9 @@
+# v1.0.2
+## 02/06/2019
+
+1. [](#bug)
+    * Fixes CSS/JS in footers. This broke popular plugins like code syntax highlighting.
+    
 # v1.0.1
 ## 01/18/2019
 
