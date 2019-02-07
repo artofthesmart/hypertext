@@ -2,7 +2,7 @@
 	{% block content %}
 		<div class="item">
         {% set header_image = page.header.header_image ?? true %}
-        {% set header_image_width  = page.header.header_image_width ?? config.themes.hypertext.layout.width * .80 %}
+        {% set header_image_width  = page.header.header_image_width ?? config.themes.hypertext.layout.width * 0.80 %}
         {% set header_image_height = page.header.header_image_height ?? 300 %}
         {% set header_image_file = page.header.header_image_file ?? false %}
 
