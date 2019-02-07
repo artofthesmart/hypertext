@@ -36,6 +36,8 @@ table { width: 95%; margin: 0 auto; }
 {{ colors.link ? "a { color: #{colors.link}; }" : "" }}
 {{ colors.visitedLink ? "a:visited { color: #{colors.visitedLink}; }" : "" }}
 {{ colors.activeLink ? "a:active { color: #{colors.activeLink}; }" : "" }}
+
+{{ config.themes.hypertext.customCSS }}
 </style>
 
     {% if page.header.allowCSS == 'enabled' or 
