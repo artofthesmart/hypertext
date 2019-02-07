@@ -1,10 +1,16 @@
+# v1.0.3
+## 02/07/2019
+
+1. [](#bug)
+    * Fixes custom CSS to be properly inserted into head section.
+    * Fixes a missing 0 from [shanehoban](https://github.com/shanehoban)
+
 # v1.0.2
 ## 02/06/2019
 
 1. [](#bug)
     * Fixes CSS/JS in footers. This broke popular plugins like code syntax highlighting.
     * Includes typo and logical fixes from [mbirth](https://github.com/mbirth).
-    * Fixes custom CSS to be properly inserted into head section.
     
 # v1.0.1
 ## 01/18/2019
