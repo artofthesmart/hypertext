@@ -3,7 +3,8 @@
 
 1. [](#bug)
     * Fixes custom CSS to be properly inserted into head section.
-    * Fixes a missing 0 from [shanehoban](https://github.com/shanehoban)
+    * Fixes a missing 0 from [shanehoban](https://github.com/shanehoban).
+    * Fixes "Next" and "Previous" post options in collections, they were reversed.
 
 # v1.0.2
 ## 02/06/2019
