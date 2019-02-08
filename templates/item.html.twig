@@ -52,10 +52,10 @@
         {{ page.content }}
 
         <span class="pagination">
-        {% if not page.isFirst %}
+        {% if not page.isLast %}
             <a href="{{ page.prevSibling.url }}">&#xab; Previous Post</a>
         {% endif %}
-        {% if not page.isLast %}
+        {% if not page.isFirst %}
             <a href="{{ page.nextSibling.url }}">Next Post &raquo;</a>
         {% endif %}
         </span>
