@@ -14,6 +14,18 @@ form:
 
           fields:
 
+            subtitle:
+              type: section
+              title: Subtitle
+              underline: true
+
+            header.subtitle:
+              type: text
+              toggleable: true
+              label: Subtitle
+              help: Provides a one-line summary of this item.
+              placeholder: First steps for training your new puppy.
+
             header_image:
               type: section
               title: Header Image

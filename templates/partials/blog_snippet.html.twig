@@ -1,4 +1,6 @@
-<div class="snippet{% if page.taxonomy.category %}{% for category in page.taxonomy.category %} {{ category|lower }}{% endfor %}{% endif %}">
+<div class="snippet{% if page.taxonomy.category %}{% for category in page.taxonomy.category %} {{ category|url_encode }}{% endfor %}{% endif %}">
+    {% set item_image = page.media.images[page.header.header_image_file] ?: page.media.images|first %}
+
     {# Title #}
     <h2>
     {% if page.header.link %}
@@ -18,6 +20,21 @@
         {% endif %}
         {% if page.header.subtitle %}{% if page.taxonomy.category %} - {{ page.header.subtitle }}{% endif %}{% endif %}
     </span>
+    {% endif %}
+
+    {#
+    {% if page.taxonomy.tag %}
+    <span class="tags">
+    Tags: 
+        {% for tag in page.taxonomy.tag %}
+        <a href="{{ page.parent.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ tag }}">{{ tag }}</a>
+        {% endfor %}
+    </span>
+    {% endif %}#}
+
+    {# Headline Image #}
+    {% if item_image %}
+        <a href="{{page.url}}">{{ item_image.cropZoom(config.themes.hypertext.layout.width, 250).html }}</a>
     {% endif %}
     
     {# Text & Follow-Ons #}
