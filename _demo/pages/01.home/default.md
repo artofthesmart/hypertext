@@ -24,7 +24,7 @@ This will install the Hypertext theme into your `/user/themes` directory within 
 
 ## Manual Installation
 
-To install this theme, just download the zip version of this repository and unzip it under `/your/site/grav/user/themes`. Then, rename the folder to `hypertext`. You can find these files either on [GitHub](https://github.com/getgrav/hypertext) or via [GetGrav.org](http://getgrav.org/downloads/themes).
+To install this theme, just download the zip version of this repository and unzip it under `/your/site/grav/user/themes`. Then, rename the folder to `hypertext`. You can find these files either on [GitHub](https://github.com/artofthesmart/hypertext) or via [GetGrav.org](http://getgrav.org/downloads/themes).
 
 You should now have all the theme files under
 
