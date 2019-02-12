@@ -1,11 +1,11 @@
 This page describes the philosophy behind Hypertext and some of the technical details. It's a good place to learn more about what it can do and why it's built the way it is.
 
----
+===
 
 ## Summary
 You probably work on front-end development, either as a hobbyist or a professional.  Whether you noticed or not websites are getting too heavy, with too many libraries, that take too long to render.  Worse yet, if you don't take the time to include only what you need, there's a good chance you're bloating your UX with code that doesn't ultimately have much impact.
 
-Hypertext theme is the answer to that bloat.
+Hypertext theme is an answer to that bloat.
 
 It brings all of the powerful CMS features of [Grav](getgrav.com), but is:
 * **Lightweight** - Coming in at 0KB of Javascript and <1KB of CSS (optional).
@@ -16,7 +16,7 @@ It brings all of the powerful CMS features of [Grav](getgrav.com), but is:
 * **Readable** - Legible and clear, just like the W3C intended.
 
 ### Special Features
-`headless=true` - If you add this query parameter to your URL, Grav will only return the content of the page (including any JS/CSS you enabled/disabled as normal).  This is useful for serving content for other 
+`headless=true` - If you add this query parameter to your URL, Grav will only return the content of the page (including any JS/CSS you enabled/disabled as normal).  This is useful for serving content for other applications like embedded browsers.
 
 ## Background & Purpose
 I've been thinking a lot lately about frontend development and I think the web has gotten very bloated.  I've built powerful tools and websites before, on a variety of platforms, but lately I've come away thinking that we could do so much more with less.  Imagine you aren't in a major US metro and have low bandwidth as a constant issue.  Or maybe your cellular plan is terribly expensive.  Perhaps you're just in the subway trying to read a blog.
