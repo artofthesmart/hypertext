@@ -12,14 +12,14 @@
 
     {# Subtitle #}
     {% if page.taxonomy.category or page.header.subtitle %}
-    <span class="subtitle">
+    <p class="subtitle">
         {% if page.taxonomy.category %}
         {% for category in page.taxonomy.category %}
             [<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>]{% if not loop.last %}, {% endif %}
         {% endfor %}
         {% endif %}
         {% if page.header.subtitle %}{% if page.taxonomy.category %} - {{ page.header.subtitle }}{% endif %}{% endif %}
-    </span>
+    </p>
     {% endif %}
 
     {#
