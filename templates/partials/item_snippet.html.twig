@@ -1,33 +1,30 @@
 <div class="snippet{% if page.taxonomy.category %}{% for category in page.taxonomy.category %} {{ category|lower }}{% endfor %}{% endif %}">
+<p>
     {# Title #}
-    <h2>
     {% if page.header.link %}
     <a href="{{ page.header.link }}">{{ page.title }}</a>
     {% else %}
     <a href="{{ page.url }}">{{ page.title }}</a>
-    {% endif %}
-    </h2>
+    {% endif %} - 
 
     {# Subtitle #}
-    {% if page.taxonomy.category or page.header.subtitle %}
-    <span class="subtitle">
-        {% if page.taxonomy.category %}
-        {% for category in page.taxonomy.category %}
-            [<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>]{% if not loop.last %}, {% endif %}
-        {% endfor %}
-        {% endif %}
-        {% if page.header.subtitle %}{% if page.taxonomy.category %} - {{ page.header.subtitle }}{% endif %}{% endif %}
-    </span>
-    {% endif %}
-    
-    {# Text & Follow-Ons #}
-    {% if page.summary != page.content %}
-        <p>{{ page.summary }}</p>
-        <p><a href="{{ page.url }}">Continue Reading...</a></p>
-    {% else %}
-        <p>{{ page.content|truncate(header.summary.size ?? 300) }}</p>
+    {% if page.header.subtitle %}
+    <span class="subtitle">{{ page.header.subtitle }}</span><br/>
     {% endif %}
 
+    {# Text #}
+    {% if page.summary != page.content %}
+        {{ page.summary|replace({'<p>': '', '</p>':''}) }}
+    {% else %}
+        {{ page.content|truncate(header.summary.size ?? 300)|replace({'<p>': '', '</p>':''}) }}...
+    {% endif %}
+
+    {# Category & Subtitle #}
+    {% if page.taxonomy.category %}
+    Categories: [{% for category in page.taxonomy.category %}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{% if not loop.last %}, {% endif %}{% endfor %}]
+    {% endif %}
+
+    {# Children #}
     {% if page.children.visible|length > 0 %}
     <i>Sub-pages</i>
     {% if config.themes.hypertext.style.inlineNavbar %}
@@ -43,4 +40,5 @@
     </ol>
     {% endif %}
     {% endif %}
+</p>
 </div>
