@@ -9,7 +9,7 @@ allowJS: default
 subtitle: This subtitle is all about the wonders of dog ownership.
 ---
 
-An example page about buying and training a new dog.  They're wonderful pets!
+A standard example page with category, tag, subtitle, and summary.
 
 ===
 

@@ -10,7 +10,7 @@ allowCSS: default
 allowJS: default
 ---
 
-Learn more about how to find the cat breed that's right for you.  There are more out there than you might think.
+An example page with category, tags, and summary.
 
 ===
 

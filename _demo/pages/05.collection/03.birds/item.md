@@ -1,4 +1,4 @@
-Birds are an often overlooked pet that can be just as rewarding as a four-legged friend.  This summary is designed to be really long and go on for much longer than someone would read in a single breath so that it wraps many times on your screen.
+Birds are an often overlooked pet that can be just as rewarding as a four-legged friend.  This item has no front-matter at all.
 
 ===
 
