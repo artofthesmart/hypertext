@@ -32,19 +32,17 @@ form:
 
             header.content.items:
               type: textarea
-              toggleable: true
               yaml: true
               label: Items
-              placeholder: '@self.children'
+              default: '@self.children'
               help: Setting this will force which items render. May break tag/category links.
               validate:
                 type: yaml
 
             header.content.order.by:
               type: select
-              toggleable: true
               label: Order By
-              placeholder: date
+              default: date
               options:
                 folder: Folder
                 title: Title
@@ -53,9 +51,8 @@ form:
 
             header.content.order.dir:
               type: select
-              toggleable: true
               label: Order
-              placeholder: desc
+              default: desc
               options:
                 asc: Ascending
                 desc: Descending
