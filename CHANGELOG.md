@@ -1,3 +1,10 @@
+# v1.1.0
+## 02/07/2019
+
+1. [](#new)
+    * Adds a "blog" page type, supplementing the Collection type. Collections are now a trimmed down version, good for text-heavy pages.
+    * Several potentially breaking changes.  Install with care.
+
 # v1.0.3
 ## 02/07/2019
 

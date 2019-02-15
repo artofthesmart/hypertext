@@ -3,12 +3,12 @@ suitable for blogs or multi-part projects. #}
 
 {% embed 'partials/base.html.twig' %}
 
-	{% set collection = page.collection()|length > 0 ? page.collection() : page.children.visible %}
+	{% set collection = page.collection() %}
 
 	{% block content %}
     {{ page.content }}
 
-    {% for child in collection.order(header.content.order.by, header.content.order.dir) %}
+    {% for child in collection.order(header.content.order.by|default('date'), header.content.order.dir|default('desc')) %}
         {% include 'partials/item_snippet.html.twig' with {'page':child, truncate:true} %}
     {% endfor %}
 	{% endblock %}
