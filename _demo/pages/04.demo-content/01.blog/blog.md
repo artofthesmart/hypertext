@@ -1,3 +1,9 @@
+---
+content:
+    order:
+        by: folder
+---
+
 This is a blog collection.  It's where you might have several sequential pages listed in one place.  They can be nested, so any sub-pages you include will have some information about what pages are within that sub-collection.  It doesn't have a summary delimited by `===` so it's interesting to see how much of this introductory section gets used.
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus euismod blandit lectus, id molestie libero mollis vel. Mauris tincidunt elit dui, nec sodales sem laoreet posuere. Vivamus consequat placerat quam, in tincidunt lectus vulputate eu. Nulla nec blandit ex. Curabitur id eleifend magna, in bibendum diam. Vivamus vestibulum diam nec ante vehicula efficitur. *Quisque ut aliquam ante*. 
