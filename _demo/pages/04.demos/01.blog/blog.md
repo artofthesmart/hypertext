@@ -1,7 +1,12 @@
 ---
+allowCSS: default
+allowJS: default
 content:
+    items:
+        - '@self.children'
     order:
         by: folder
+        dir: desc
 ---
 
 This is a blog collection.  It's where you might have several sequential pages listed in one place.  They can be nested, so any sub-pages you include will have some information about what pages are within that sub-collection.  It doesn't have a summary delimited by `===` so it's interesting to see how much of this introductory section gets used.
