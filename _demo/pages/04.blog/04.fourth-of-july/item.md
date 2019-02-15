@@ -6,6 +6,7 @@ taxonomy:
         - dogs
 allowCSS: default
 allowJS: default
+subtitle: The fourth post is the one that includes a subtitle.
 ---
 
 This is a simple post with several taxonomy changes.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus euismod blandit lectus, id molestie libero mollis vel. Mauris tincidunt elit dui, nec sodales sem laoreet posuere. Vivamus consequat placerat quam, in tincidunt lectus vulputate eu. Nulla nec blandit ex. Curabitur id eleifend magna, in bibendum diam. Vivamus vestibulum diam nec ante vehicula efficitur. Quisque ut aliquam ante. Nullam nec consectetur arcu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquet ut massa sed porta. Fusce ullamcorper lacinia odio ut rhoncus. Phasellus efficitur euismod faucibus. Proin at interdum felis.

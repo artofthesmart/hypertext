@@ -1,3 +1,16 @@
+---
+taxonomy:
+    category:
+        - 'no-legs'
+        - 'aquatic'
+        - 'inexpensive'
+        - 'sometimes-expensive'
+        - 'lots-of-categories'
+allowCSS: default
+allowJS: default
+subtitle: This subtitle is an extra long subtitle that goes on just a little too long about how fish are pretty great pets and you should think about them because a lot of people don't really do that when they walk into the pet store.
+---
+
 Freshwater and saltwater fish can be beautiful and inexpensive as pets. Bubble bubble!
 
 ===

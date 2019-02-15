@@ -1,11 +1,5 @@
 allowCSS: 0
 allowJS: 0
-colors:
-  background:
-  text: 
-  link:
-  visitedLink:
-  activeLink:
 layout:
   configuration: 'centered'
   width: 768

@@ -1,3 +1,14 @@
+---
+taxonomy:
+    category:
+        - 'four-legs'
+    tag:
+        - fluffy
+allowCSS: default
+allowJS: default
+subtitle: This subtitle is all about the wonders of dog ownership.
+---
+
 An example page about buying and training a new dog.  They're wonderful pets!
 
 ===
