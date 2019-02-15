@@ -18,6 +18,9 @@ It brings all of the powerful CMS features of [Grav](getgrav.com), but is:
 ### Special Features
 `headless=true` - If you add this query parameter to your URL, Grav will only return the content of the page (including any JS/CSS you enabled/disabled as normal).  This is useful for serving content for other applications like embedded browsers.
 
+### Known Issues
+**Missing Frontmatter** - If you do not specify any frontmatter in a markdown file, Hypertext will work almost perfectly.  However, you won't get filtering by categories.  Hypertext will show you all `item` children within a `blog` or `collection` without filtering them by `category`.
+
 ## Background & Purpose
 I've been thinking a lot lately about frontend development and I think the web has gotten very bloated.  I've built powerful tools and websites before, on a variety of platforms, but lately I've come away thinking that we could do so much more with less.  Imagine you aren't in a major US metro and have low bandwidth as a constant issue.  Or maybe your cellular plan is terribly expensive.  Perhaps you're just in the subway trying to read a blog.
 
