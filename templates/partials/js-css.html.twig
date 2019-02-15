@@ -2,11 +2,17 @@
 {% set colors = config.themes.hypertext.colors %}
 {% set style = config.themes.hypertext.style %}
 {% set beautify = style.beautifyText %}
+{% set allowCSS = page.header.allowCSS == 'enabled' or
+                    (page.header.allowCSS|default('default') == 'default' and 
+                     config.themes.hypertext.allowCSS == '1') %}
+{% set allowJS  = page.header.allowJS  == 'enabled' or
+                    (page.header.allowJS|default('default') == 'default' and 
+                     config.themes.hypertext.allowJS == '1') %}
 
-{% block stylesheets %}
+{% block stylehseets %}
 <style>
 body {
-{{ ( layout.width and layout.width != "default" ) ? "max-width: #{layout.width}px;" : ""}}
+{{ layout.width ? "max-width: #{layout.width}px;" : ""}}
 {{ layout.configuration ? "margin: 40px auto;" : ""}}
 {{ colors.background ? "background: #{colors.background};" : ""}}
 {{ colors.text ? "color: #{colors.text};" : "" }}
@@ -21,33 +27,25 @@ padding:0 10px;
 img { max-width: 80%; }
 h1, h2, h3 { font-family: sans-serif; }
 p { line-height:1.5; }
-table { width: 95%; margin: 0 auto; }
-.pagination { text-align:center; }
-.red { background: #F2DEDE; }
-.yellow { background: #FCF8E3; }
-.green { background: #DFF0D8; }
-.blue { background: #D9EDF7; }
-.callout { background: #F5F5F5; }
-
-.title a { font-weight: bold; }
+.red { background: #F2DEDE }
+.yellow { background: #FCF8E3 }
+.green { background: #DFF0D8 }
+.blue { background: #D9EDF7 }
+.callout { background: #F5F5F5 }
 {% endif %}
 
 {{ colors.link ? "a { color: #{colors.link}; }" : "" }}
 {{ colors.visitedLink ? "a:visited { color: #{colors.visitedLink}; }" : "" }}
 {{ colors.activeLink ? "a:active { color: #{colors.activeLink}; }" : "" }}
-
-{{ config.themes.hypertext.customCSS }}
 </style>
 
-    {% if page.header.allowCSS == 'enabled' or 
-         (page.header.allowCSS == 'default' and config.themes.hypertext.allowCSS == '1') %}
+    {% if allowCSS %}
     {{ assets.css()|raw }}
     {% endif %}
 {% endblock %}
 
 {% block javascripts %}
-    {% if page.header.allowJS == 'enabled' or 
-         (page.header.allowJS == 'default' and config.themes.hypertext.allowJS == '1') %}
+    {% if allowJS %}
     {{ assets.js()|raw }}
     {% endif %}
 {% endblock %} 
