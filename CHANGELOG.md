@@ -1,3 +1,9 @@
+# v1.1.1
+## 02/25/2019
+
+1. [](#bug)
+    * Re-fixing a previously broken customCSS feature.
+    
 # v1.1.0
 ## 02/07/2019
 
