@@ -1,4 +1,4 @@
-<div class="snippet{% if page.taxonomy.category %}{% for category in page.taxonomy.category %} {{ category|lower }}{% endfor %}{% endif %}">
+<div class="snippet{% if page.taxonomy.category %}{% for category in page.taxonomy.category %} cat_{{ category|hyphenize }}{% endfor %}{% endif %}">
 <p>
     {# Title #}
     {% if page.header.link %}
