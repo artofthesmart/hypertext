@@ -11,12 +11,10 @@ suitable for blogs or multi-part projects. #}
     {% for child in collection.order(header.content.order.by|default('date'), header.content.order.dir|default('desc')) %}
         {% include 'partials/item_snippet.html.twig' with {'page':child, truncate:true} %}
     {% endfor %}
-	{% endblock %}
-
-	{% block pagination %}
-        {% if config.plugins.pagination.enabled and collection.params.pagination %}
-            {% include 'partials/pagination.html.twig' with {'base_url':page.url, 'pagination':collection.params.pagination} %}
-	    {% endif %}
+    
+	{% if config.plugins.pagination.enabled and collection.params.pagination %}
+        {% include 'partials/pagination.html.twig' with {'base_url':page.url, 'pagination':collection.params.pagination} %}
+	{% endif %}
 	{% endblock %}
 
 {% endembed %}
