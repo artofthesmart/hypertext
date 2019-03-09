@@ -1,3 +1,10 @@
+# v1.1.2
+## 03/08/2019
+
+1. [](#bug)
+    * Fixes broken pagination. Thanks to [neilpanchal](https://github.com/neilpanchal).
+    * Improves tag handling in classes thanks to [laynee](https://github.com/Laynee).
+
 # v1.1.1
 ## 02/25/2019
 
