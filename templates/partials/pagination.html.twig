@@ -1,0 +1,73 @@
+{% set pagination = pagination|default(page.collection.params.pagination) %}
+{% set base_url = base_url|default(page.url) %}
+{% set allowCSS = page.header.allowCSS == 'enabled' or
+                    (page.header.allowCSS|default('default') == 'default' and 
+                     config.themes.hypertext.allowCSS == '1') %}
+
+{% if pagination|length > 1 %}
+
+{# If we're suppressing CSS, pagination can look bad.
+   This adds an option to render inline if that's the user's general intent. #}
+{% if not allowCSS and config.themes.hypertext.style.inlineNavbar %}
+
+<span class="pagination">Pages:
+    {% if pagination.hasPrev %}
+        {% set url =  (base_url ~ pagination.params ~ pagination.prevUrl)|replace({'//':'/'}) %}
+        <a rel="prev" href="{{ url }}">Previous,</a>
+    {% else %}
+        <span>Previous,</span>
+    {% endif %}
+
+    {% for paginate in pagination %}
+
+        {% if paginate.isCurrent %}
+            <span class="active">{{ paginate.number }},</span>
+        {% elseif paginate.isInDelta %}
+            {% set url = (base_url ~ pagination.params ~ paginate.url)|replace({'//':'/'}) %}
+            <a href="{{ url }}">{{ paginate.number }},</a>
+        {% elseif paginate.isDeltaBorder %}
+            <span class="gap">&hellip;</span>
+        {% endif %}
+
+    {% endfor %}
+    {% if pagination.hasNext %}
+        {% set url = (base_url ~ pagination.params ~ pagination.nextUrl)|replace({'//':'/'}) %}
+        <a rel="next" href="{{ url }}">Next</a>
+    {% else %}
+        <span>Next</span>
+    {% endif %}
+</span>
+
+{% else %}
+
+<ul class="pagination">
+    {% if pagination.hasPrev %}
+        {% set url =  (base_url ~ pagination.params ~ pagination.prevUrl)|replace({'//':'/'}) %}
+        <li><a rel="prev" href="{{ url }}">Previous</a></li>
+    {% else %}
+        <li><span>Previous</span></li>
+    {% endif %}
+
+    {% for paginate in pagination %}
+
+        {% if paginate.isCurrent %}
+            <li><span class="active">{{ paginate.number }}</span></li>
+        {% elseif paginate.isInDelta %}
+            {% set url = (base_url ~ pagination.params ~ paginate.url)|replace({'//':'/'}) %}
+            <li><a href="{{ url }}">{{ paginate.number }}</a></li>
+        {% elseif paginate.isDeltaBorder %}
+            <li class="gap"><span>&hellip;</span></li>
+        {% endif %}
+
+    {% endfor %}
+    {% if pagination.hasNext %}
+        {% set url = (base_url ~ pagination.params ~ pagination.nextUrl)|replace({'//':'/'}) %}
+        <li><a rel="next" href="{{ url }}">Next</a></li>
+    {% else %}
+        <li><span>Next</span></li>
+    {% endif %}
+</ul>
+
+{% endif %} {# End veritcal navigation option #}
+
+{% endif %} {# End if pagination length > 1 #}

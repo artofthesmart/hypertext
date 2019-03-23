@@ -1,3 +1,9 @@
+# v1.1.3
+## 03/22/2019
+
+1. [](#improved)
+    * Adds better pagination support, thanks to [jrswab](https://github/jrswab).
+
 # v1.1.2
 ## 03/08/2019
 
