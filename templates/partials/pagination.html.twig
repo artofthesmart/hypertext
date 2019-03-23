@@ -10,21 +10,21 @@
    This adds an option to render inline if that's the user's general intent. #}
 {% if not allowCSS and config.themes.hypertext.style.inlineNavbar %}
 
-<span id="pagination">Pages: 
+<nav id="pagination">Pages: 
     {% if pagination.hasPrev %}
         {% set url =  (base_url ~ pagination.params ~ pagination.prevUrl)|replace({'//':'/'}) %}
-        <a rel="prev" href="{{ url }}">Previous,</a>
+        <a rel="prev" href="{{ url }}">Previous</a>,
     {% else %}
-        <span>Previous,</span>
+        <span>Previous</span>,
     {% endif %}
 
     {% for paginate in pagination %}
 
         {% if paginate.isCurrent %}
-            <span class="active">{{ paginate.number }},</span>
+            <strong>{{ paginate.number }}</strong>,
         {% elseif paginate.isInDelta %}
             {% set url = (base_url ~ pagination.params ~ paginate.url)|replace({'//':'/'}) %}
-            <a href="{{ url }}">{{ paginate.number }},</a>
+            <a href="{{ url }}">{{ paginate.number }}</a>,
         {% elseif paginate.isDeltaBorder %}
             <span class="gap">&hellip;</span>
         {% endif %}
@@ -36,7 +36,7 @@
     {% else %}
         <span>Next</span>
     {% endif %}
-</span>
+</nav>
 
 {% else %}
 
