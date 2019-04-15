@@ -1,3 +1,10 @@
+# v1.1.4
+## 04/14/2019
+
+1. [](#improved)
+    * Removes the color classes from the CSS since it doesn't look like they're being used and they don't work for dark themes.
+    * Removes the "toggle-able" directive for colors and replaces them with defaults, since it was proving confusing.
+
 # v1.1.3
 ## 03/22/2019
 
