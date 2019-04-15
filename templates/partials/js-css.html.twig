@@ -14,8 +14,8 @@
 body {
 {{ layout.width ? "max-width: #{layout.width}px;" : ""}}
 {{ layout.configuration ? "margin: 40px auto;" : ""}}
-{{ colors.background ? "background: #{colors.background};" : ""}}
-{{ colors.text ? "color: #{colors.text};" : "" }}
+{{ colors.background != "#FFFFFF" ? "background: #{colors.background};" : ""}}
+{{ colors.text != "#000000" ? "color: #{colors.text};" : "" }}
 
 {% if beautify %}
 font-size:large;
@@ -29,9 +29,9 @@ h1, h2, h3 { font-family: sans-serif; }
 p { line-height:1.5; }
 {% endif %}
 
-{{ colors.link ? "a { color: #{colors.link}; }" : "" }}
-{{ colors.visitedLink ? "a:visited { color: #{colors.visitedLink}; }" : "" }}
-{{ colors.activeLink ? "a:active { color: #{colors.activeLink}; }" : "" }}
+{{ colors.link != "#0000EE" ? "a { color: #{colors.link}; }" : "" }}
+{{ colors.visitedLink != "#551A8B" ? "a:visited { color: #{colors.visitedLink}; }" : "" }}
+{{ colors.activeLink != "#EE0000" ? "a:active { color: #{colors.activeLink}; }" : "" }}
 
 {{ config.themes.hypertext.customCSS }}
 </style>

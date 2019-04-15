@@ -61,38 +61,33 @@ form:
             colors.background:
               type: colorpicker
               label: Background Color
-              toggleable: true
-              help: When set to anything but white, this will set a background color for the website.
-              placeholder: "#FFFFFF"
+              help: When set to anything but white, this will set a background color for the website.  Default is FFFFFF.
+              default: "#FFFFFF"
             colors.text:
               type: colorpicker
               label: Text Color
-              toggleable: true
-              help: When set to anything but black, this will set the text color for the website.
-              placeholder: "#000000"
+              help: When set to anything but black, this will set the text color for the website.  Default is 000000.
+              default: "#000000"
             colors.link:
               type: colorpicker
               label: Link Color
-              toggleable: true
-              help: When set to anything but blue, this will set a link color for the website.
-              placeholder: "#0000EE"
+              help: When set to anything but blue, this will set a link color for the website.  Default is 0000EE.
+              default: "#0000EE"
             colors.visitedLink:
               type: colorpicker
               label: Visited Link Color
-              toggleable: true
-              help: When set to anything but purple, this will set a visited link color for the website.
-              placeholder: "#551A8B"
+              help: When set to anything but purple, this will set a visited link color for the website.  Default is 551A8B.
+              default: "#551A8B"
             colors.activeLink:
               type: colorpicker
               label: Clicked Link Color
-              toggleable: true
-              help: When set to anything but red, this will set a hovered link color for the website.
-              placeholder: "#EE0000"
+              help: When set to anything but red, this will set a hovered link color for the website.  Default is EE0000.
+              default: "#EE0000"
             customCSS:
               type: textarea
               label: Custom CSS
-              toggleable: true
               help: Add your custom CSS rules here.
+              placeholder: "e.g. body { font-family: Courier }"
               size: large
         style:
           type: tab
