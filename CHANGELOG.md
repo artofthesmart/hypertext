@@ -1,3 +1,11 @@
+# v1.2.0
+## 04/20/2019
+
+1. [](#new)
+    * Adds the ability to hide the horizontal navigation separator, good for folks who want to add a little CSS.
+2. [](#improved)
+    * Allows more detail around how additional menu items are treated. You can now specify whether to open links in a new window, among other things.
+
 # v1.1.4
 ## 04/14/2019
 

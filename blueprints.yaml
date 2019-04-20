@@ -1,5 +1,5 @@
 name: Hypertext
-version: 1.1.3
+version: 1.2.0
 description: "Hypertext is a zero JS/CSS theme to create simple, fast websites."
 icon: compress
 author:
@@ -121,17 +121,6 @@ form:
                 960: 960px (medium)
                 1024: 1024px (large)
                 1280: 1280px (very large)
-            style.inlineNavbar:
-              type: toggle
-              label: Use inline navigation
-              help: When enabled, the navigation lists will be inline instead of <ul>.
-              default: 1
-              highlight: 1
-              options:
-                1: Enabled
-                0: Disabled
-              validate:
-                type: bool
             style.useFavicon:
               type: toggle
               label: Use favicon
@@ -154,14 +143,104 @@ form:
                 0: Disabled
               validate:
                 type: bool
-        features:
+        menus:
           type: tab
-          title: Menus & Features
+          title: Header & Links
           fields:
-            menuItems:
-              type: array
+            description:
+              type: display
+              size: long
+              label: Description
+              markdown: true
+              content: "This tab lets you control how the header and menu bar along the top looks and add specific links to it if you want.  There're several options for how it renders despite being so simple!"
+            style.inlineNavbar:
+              type: toggle
+              label: Use inline navigation
+              help: When enabled, the navigation lists will be inline instead of <ul>.
+              default: 1
+              highlight: 1
+              options:
+                1: Enabled
+                0: Disabled
+              validate:
+                type: bool
+            menu.useSeparator:
+              type: toggle
+              label: Use separator (inline only)
+              help: When enabled, the site will add a vertical pipe character (|) between inline menu bar links.
+              default: 1
+              highlight: 1
+              options:
+                1: Enabled
+                0: Disabled
+              validate:
+                type: bool
+            menu.nextWord:
+              type: text
+              label: “Next” word
+              size: small
+              help: The word you would use in a link to go to the next page in a sequence. Good if your site is in another language.
+              default: Next
+            menu.prevWord:
+              type: text
+              label: “Previous” word
+              size: small
+              help: The word you would use in a link to go to the next page in a sequence. Good if your site is in another language.
+              default: Previous
+            menu.menuItems:
+              name: menuItems
+              type: list
+              style: vertical
+              size: long
               label: Additional Menu Items
-              help: Add items to have them "tacked on" to the end of the menu bar, like Github or Twitter links.
-              placeholder_key: e.g. Twitter
-              placeholder_value: http://twitter.com/artofthesmart/
-              required: false
+              help: Add manual links to the header of your site.
+              fields:
+                .text:
+                  type: text
+                  label: Link Text
+                  placeholder: Use Google
+                .href:
+                  type: text
+                  label: Full URL
+                  placeholder: http://google.com
+                .isOffsite:
+                  type: toggle
+                  label: Add offsite CSS class
+                  help: When enabled, this will add a CSS class to this item indicating that it is offsite.
+                  default: 0
+                  options:
+                      1: 'Enabled'
+                      0: 'Disabled'
+                  validate:
+                      type: bool
+                .isNewWindow:
+                  type: toggle
+                  label: Open in new window
+                  help: When enabled, this will cause the link to open in a new window when clicked.
+                  default: 0
+                  options:
+                      1: 'Enabled'
+                      0: 'Disabled'
+                  validate:
+                      type: bool
+                .fieldset:
+                  type: fieldset
+                  title: Other Parameters
+                  help: Advanced settings for your new link.  This tries to stick to the HTML 3 spec.
+                  text: Advanced or optional features for this link.
+                  icon: cogs
+                  collapsed: true     # Initial state of fieldset (see collapsible option)
+                  collapsible: true    # Whether one can expand the fieldset or not 
+                  fields:
+                    .rel:
+                      type: text
+                      label: rel
+                      placeholder: The forward relationship, also known as the "link type".
+                    .name:
+                      type: text
+                      label: Name
+                      placeholder: This should be a string defining unique name for the scope of the current HTML document.
+                    .title:
+                      type: text
+                      label: Title
+                      placeholder: An advisory title for the linked resource.
