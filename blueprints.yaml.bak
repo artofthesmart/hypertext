@@ -1,14 +1,14 @@
 name: Hypertext
-version: 2.0.0
+version: 1.2.0
 description: "Hypertext is a zero JS/CSS theme to create simple, fast websites."
 icon: compress
 author:
-  name: Alejo Grigera Sutro
+  name: Alejo Grigera
   email: hypertext@artofthesmart.com
   url: http://artofthesmart.com
 homepage: https://github.com/artofthesmart/hypertext
 demo: http://hypertext.artofthesmart.com
-keywords: theme, simple, compliance, fast, semantic
+keywords: theme, simple, compliance, fast
 bugs: https://github.com/artofthesmart/hypertext/issues
 license: MIT
 
@@ -22,50 +22,32 @@ form:
       fields:
         includes:
           type: tab
-          title: Structural
+          title: CSS & JS
           fields:
             description:
               type: display
               size: long
               label: Description
               markdown: true
-              content: "This tab lets you control core, structural elements of the Hypertext theme."
-            columns:
-              type: columns
-              fields:
-                column1:
-                  type: column
-                  fields:
-                    allowCSS:
-                      type: select
-                      size: small
-                      classes: fancy
-                      label: Allow CSS
-                      help: Determines what CSS is allowed to load. This can be overridden by an individual page.
-                      options:
-                        default: No CSS - Only Hypertext styles
-                        640: 640px (very small)
-                        768: 768px (small)
-                        960: 960px (medium)
-                        1024: 1024px (large)
-                        1280: 1280px (very large)
-                      type: toggle
-                      label: Allow global CSS
-                      help: When disabled, prevent global CSS files from loading, e.g. plugins. Some overrides allowed. See documentation.
-                      default: 1
-                      highlight: 0
-                      options:
-                        1: Enabled
-                        0: Disabled
-                    allowJS:  
-                      type: toggle
-                      label: Allow global JS
-                      help: When disabled, prevent global JS files from loading, e.g. plugins. Some overrides allowed. See documentation.
-                      default: 1
-                      highlight: 0
-                      options:
-                        1: Enabled
-                        0: Disabled
+              content: "This tab lets you control whether or not to include Javascript and CSS during rendering. Removing these cuts down transmission and rendering time by at least 50% for most pages, oftentimes much more. Only turn these on if you're certain that you have a plugin that requires it. Alternatively, you can turn JS/CSS on or off per-page (recommended over turning it on globally)."
+            allowCSS:
+              type: toggle
+              label: Allow global CSS
+              help: When disabled, prevent global CSS files from loading, e.g. plugins. Some overrides allowed. See documentation.
+              default: 1
+              highlight: 0
+              options:
+                1: Enabled
+                0: Disabled
+            allowJS:  
+              type: toggle
+              label: Allow global JS
+              help: When disabled, prevent global JS files from loading, e.g. plugins. Some overrides allowed. See documentation.
+              default: 1
+              highlight: 0
+              options:
+                1: Enabled
+                0: Disabled
         colors:
           type: tab
           title: Colors & Typefaces

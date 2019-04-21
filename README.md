@@ -45,9 +45,19 @@ You should now have all the theme files under
 
     /your/site/grav/user/themes/hypertext
 
-## Default Options
+## Options & Setup
 
-Hypertext comes with a few default options that can be set site-wide.  These options are:
+Hypertext comes with many options, but most of them are disabled by default to prioritize the fastest possible loading.
+
+### Structural Options
+
+```yaml
+allowCSS: 0                   # Prevent any _implicit_ CSS files from being included (e.g. plugins).
+allowJS: 0                    # Prevent any _implicit_ JS files from being included (e.g. plugins).
+```
+
+This is where you can change core, structural information about the theme.
+
 
 ```yaml
 allowCSS: 0                   # Cut out slots for CSS to prevent any _implicit_ CSS from being included (e.g. plugins).
