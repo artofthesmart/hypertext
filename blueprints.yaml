@@ -20,125 +20,16 @@ form:
       active: 0
 
       fields:
-        includes:
+        structure: # STRUCTURAL CONTENT TAB
           type: tab
-          title: Structural
+          title: Structure & Formatting
           fields:
             description:
               type: display
               size: long
               label: Description
               markdown: true
-              content: "This tab lets you control core, structural elements of the Hypertext theme."
-            columns:
-              type: columns
-              fields:
-                column1:
-                  type: column
-                  fields:
-                    allowCSS:
-                      type: select
-                      size: small
-                      classes: fancy
-                      label: Allow CSS
-                      help: Determines what CSS is allowed to load. This can be overridden by an individual page.
-                      options:
-                        default: No CSS - Only Hypertext styles
-                        640: 640px (very small)
-                        768: 768px (small)
-                        960: 960px (medium)
-                        1024: 1024px (large)
-                        1280: 1280px (very large)
-                      type: toggle
-                      label: Allow global CSS
-                      help: When disabled, prevent global CSS files from loading, e.g. plugins. Some overrides allowed. See documentation.
-                      default: 1
-                      highlight: 0
-                      options:
-                        1: Enabled
-                        0: Disabled
-                    allowJS:  
-                      type: toggle
-                      label: Allow global JS
-                      help: When disabled, prevent global JS files from loading, e.g. plugins. Some overrides allowed. See documentation.
-                      default: 1
-                      highlight: 0
-                      options:
-                        1: Enabled
-                        0: Disabled
-        colors:
-          type: tab
-          title: Colors & Typefaces
-          fields:
-            description:
-              type: display
-              size: long
-              label: Description
-              markdown: true
-              content: "This tab lets you control basic colors.  These settings apply regardless of your JS/CSS settings on the other tab or on the page itself. At the bottom you can add your own custom CSS rules (no validation)."
-            colors.background:
-              type: colorpicker
-              label: Background Color
-              help: When set to anything but white, this will set a background color for the website.  Default is FFFFFF.
-              default: "#FFFFFF"
-            colors.text:
-              type: colorpicker
-              label: Text Color
-              help: When set to anything but black, this will set the text color for the website.  Default is 000000.
-              default: "#000000"
-            colors.link:
-              type: colorpicker
-              label: Link Color
-              help: When set to anything but blue, this will set a link color for the website.  Default is 0000EE.
-              default: "#0000EE"
-            colors.visitedLink:
-              type: colorpicker
-              label: Visited Link Color
-              help: When set to anything but purple, this will set a visited link color for the website.  Default is 551A8B.
-              default: "#551A8B"
-            colors.activeLink:
-              type: colorpicker
-              label: Clicked Link Color
-              help: When set to anything but red, this will set a hovered link color for the website.  Default is EE0000.
-              default: "#EE0000"
-            customCSS:
-              type: textarea
-              label: Custom CSS
-              help: Add your custom CSS rules here.
-              placeholder: "e.g. body { font-family: Courier }"
-              size: large
-        style:
-          type: tab
-          title: Style & Formatting
-          fields:
-            description:
-              type: display
-              size: long
-              label: Description
-              markdown: true
-              content: "This tab lets you control some of the look and feel of the site. There are a few, universally supported declarations that add <1KB but greatly enhance the readability and aesthetic of your site. You can enable and disable those features here"
-            layout.configuration:
-              type: select
-              size: medium
-              classes: fancy
-              label: General site layout
-              help: Configures the general layout of the website horizontally.
-              options:
-                default: No style (align left)
-                centered: Centered
-            layout.width:
-              type: select
-              size: medium
-              classes: fancy
-              label: Maximum website width
-              help: Caps the website's maximum width for viewing on very large screens.
-              options:
-                default: No style (full width)
-                640: 640px (very small)
-                768: 768px (small)
-                960: 960px (medium)
-                1024: 1024px (large)
-                1280: 1280px (very large)
+              content: "This tab lets you control how the website gets rendered as HTML."
             style.useFavicon:
               type: toggle
               label: Use favicon
@@ -150,17 +41,81 @@ form:
                 0: Disabled
               validate:
                 type: bool
-            style.beautifyText:
-              type: toggle
-              label: Beautify text
-              help: When enabled, this will add a couple declarations to give your text more space.
-              default: 0
-              highlight: 0
-              options:
-                1: Enabled
-                0: Disabled
-              validate:
-                type: bool
+        style: # STYLE TAB
+          type: tab
+          title: Style & Formatting
+          fields:
+            description:
+              type: display
+              size: long
+              label: Description
+              markdown: true
+              content: This tab lets you control core, structural elements of the Hypertext theme.
+            columns:
+              type: columns
+              fields:
+                column1: # INCLUDES/EXCLUDES COLUMN
+                  type: column
+                  fields:
+                    allowCSS:
+                      type: select
+                      size: small
+                      classes: fancy
+                      label: Global CSS
+                      help: Determines what CSS is allowed to load. This can be overridden by an individual page.
+                      options:
+                        default: No CSS (Hypertext only)
+                        full: Allow all CSS
+                    allowJS:  
+                      type: select
+                      size: small
+                      classes: fancy
+                      label: Global JS
+                      help: Determines what JS is allowed to load. This can be overridden by an individual page.
+                      options:
+                        default: No JS
+                        moderate: All JS deferred
+                        full: Allow all JS
+                column2: # SELECT A STYLE COLUMN
+                  type: column
+                  fields:
+                    description:
+                      type: display
+                      size: long
+                      label: Description
+                      markdown: true
+                      content: Themes here are open-source CSS files available on GitHub and are not my own work. Consider visiting their homepages, contributing, and supporting the authors.  Remember that you can test these styles quickly by adding `?style='water'` to your URL.
+                    stylesheet:
+                      type: select
+                      size: small
+                      classes: fancy
+                      label: Select a Style
+                      help: Selects from a pre-determined list of simple, fast CSS files.
+                      options:
+                        default: hypertext.css (No style)
+                        air: air
+                        latex: latex
+                        marx: marx
+                        sakura: sakura
+                        sakura-dark: sakura-dark
+                        sakura-dark-solar: sakura-dark-solarized
+                        sakura-earth: sakura-earth
+                        sakura-vader: sakura-vader
+                        stylize: stylize
+                        tacit: tacit
+                        tufte: tufte
+                        w3c-chocolate: w3c-chocolate
+                        w3c-midnight: w3c-midnight
+                        w3c-modernist: w3c-modernist
+                        w3c-oldstyle: w3c-oldstyle
+                        w3c-steely: w3c-steely
+                        w3c-swiss: w3c-swiss
+                        w3c-traditional: w3c-traditional
+                        w3c-ultramarine: w3c-ultramarine
+                        water-dark: water-dark
+                        water-light: water-light
+                        writ: writ
+                        yohora: yohora
         menus:
           type: tab
           title: Header & Links
