@@ -59,6 +59,15 @@ This page shows example HTML tags to give you an idea of the look and feel of Hy
 <p>
   This is an abbreviation, made with abbr: <abbr>WWW</abbr>. This is an acronym, made with acronym: <acronym>NATO</acronym>. This is a term that needs a definition, made with dfn: <dfn>Yog-Sothoth</dfn>.
 </p>
+<p>This is a nav element with a ul in it.</p>
+<nav>
+  <ul>
+    <li><a href="#">Home</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Contact Us</a></li>
+    <li><a href="#">Orders</a></li>
+  <ul>
+</nav>
 <p>
   This is an unordered list:
 </p>
@@ -218,6 +227,45 @@ var m = function() { alert('How do you like the service?'); }
     </tr>
   </tbody>
 </table>
+
+<p>Here's a more modest table.</p>
+<table>
+    <caption>My Little Table</caption>
+
+    <thead>
+      <tr>
+        <th>Header 1</th>
+        <th>Header 2</th>
+        <th>Header 3</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>Cell 1</td>
+        <td>Cell 2</td>
+        <td>Cell 3</td>
+      </tr>
+      <tr>
+        <td>Cell 4</td>
+        <td>Cell 5</td>
+        <td>Cell 6</td>
+      </tr>
+      <tr>
+        <td>Cell 7</td>
+        <td>Cell 8</td>
+        <td>Cell 9</td>
+      </tr>
+    </tbody>
+
+    <tfoot>
+      <tr>
+        <td>Footer 1</td>
+        <td>Footer 2</td>
+        <td>Footer 3</td>
+      </tr>
+    </tfoot>
+  </table>
 
 ! This is a level 1 callout box.
 
