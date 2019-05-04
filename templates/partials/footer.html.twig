@@ -1,13 +1,20 @@
 <hr/>
 <p>Running the <a href="http://getgrav.org">Grav CMS</a> using the <a href="http://hypertext.artofthesmart.com">Hypertext theme</a>.</p>
+
 {% block bottom %}
-{% if page.header.allowJS == 'enabled' or 
-         (page.header.allowJS == 'default' and config.themes.hypertext.allowJS == '1') %}
+{# Allow CSS and JS Logic #}
+{% set allowCSS = page.header.allowCSS == 'enabled' or
+                    (page.header.allowCSS|default('default') == 'default' and 
+                     config.themes.hypertext.structure.allowCSS == '1') %}
+{% set allowJS  = page.header.allowJS  == 'enabled' or
+                    (page.header.allowJS|default('default') == 'default' and 
+                     config.themes.hypertext.structure.allowJS == '1') %}
+
+{% if allowJS %}
 {{ assets.js('bottom')|raw }}
 {% endif %}
 
-{% if page.header.allowCSS == 'enabled' or 
-         (page.header.allowCSS == 'default' and config.themes.hypertext.allowCSS == '1') %}
+{% if allowCSS %}
 {{ assets.css('bottom')|raw }}
 {% endif %}
 {% endblock %}
