@@ -22,77 +22,147 @@ form:
       fields:
         structure: # STRUCTURAL CONTENT TAB
           type: tab
-          title: Structure & Formatting
+          title: Structure
           fields:
-            description:
-              type: display
-              size: long
-              label: Description
-              markdown: true
-              content: "This tab lets you control how the website gets rendered as HTML."
-            style.useFavicon:
-              type: toggle
-              label: Use favicon
-              help: When enabled, the site will feed a favicon to the user if present.
-              default: 0
-              highlight: 0
-              options:
-                1: Enabled
-                0: Disabled
-              validate:
-                type: bool
+            columns:
+              type: columns
+              fields:
+                column1: # MENU BAR STRUCTURE
+                  type: column
+                  fields:
+                    navStructureTitle:
+                      type: section
+                      title: Navigation Structure
+                      underline: true
+                    structure.inlineNavbar:
+                      type: toggle
+                      label: Use inline nav elements
+                      help: When enabled, the navigation lists will be inlined instead of <ul>.
+                      default: 1
+                      highlight: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    structure.useSeparator:
+                      type: toggle
+                      label: Use separator (inline only)
+                      help: When enabled, the site will add a vertical pipe character (|) between inline menu bar links.
+                      default: 1
+                      highlight: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    renderStructureTitle:
+                      type: section
+                      title: HTML Structure & Options
+                      underline: true
+                    structure.htmlMode:
+                      type: select
+                      classes: fancy
+                      label: HTML Mode
+                      help: HTML5 includes semantic markup like `article` tags to make built-in stylesheets work, while HTML3 is for extreme speed with little-to-no style.
+                      options:
+                        default: HTML 5 (Recommended)
+                        compatibility: HTML 3.2 (Minimal style)
+                    structure.useFavicon:
+                      type: toggle
+                      label: Use favicon
+                      help: When enabled, the site will feed a favicon to the user if present.
+                      default: 0
+                      highlight: 0
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                column2: # WORDING STRUCTURE
+                  type: column
+                  fields:
+                    wordingStructureTitle:
+                      type: section
+                      title: Words & Phrases
+                      underline: true
+                    structure.nextWord:
+                      type: text
+                      label: “Next” word
+                      help: The word you would use in a link to go to the next page in a sequence. Good if your site is in another language.
+                      default: Next
+                    structure.prevWord:
+                      type: text
+                      label: “Previous” word
+                      help: The word you would use in a link to go to the next page in a sequence. Good if your site is in another language.
+                      default: Previous
+                    structure.readMoreWord:
+                      type: text
+                      label: “Read More...” word
+                      help: The word you would use in a link to go to the page's content after reading a summary of the content.
+                      default: Read More...
         style: # STYLE TAB
           type: tab
           title: Style & Formatting
           fields:
-            description:
-              type: display
-              size: long
-              label: Description
-              markdown: true
-              content: This tab lets you control core, structural elements of the Hypertext theme.
             columns:
               type: columns
               fields:
                 column1: # INCLUDES/EXCLUDES COLUMN
                   type: column
                   fields:
-                    allowCSS:
-                      type: select
-                      size: small
+                    includesTitle:
+                      type: section
+                      title: CSS/JS Settings
+                      underline: true
+                    description:
+                      type: display
+                      label: Description
+                      markdown: true
+                      content: These fields offer settings for whether to allow CSS or JS files. Some plugins include these kinds of files, so this is a great way to suppress them.  Remember that these are *global* settings, which you can override on a per-page basis.  For example, you could install the [syntax highlighting](https://github.com/getgrav/grav-plugin-highlight) plugin, disable CSS/JS here, and then enable it only on pages where you know you are showing code.
+                    style.allowCSS:
+                      type: toggle
                       classes: fancy
-                      label: Global CSS
+                      label: Allow Global CSS
                       help: Determines what CSS is allowed to load. This can be overridden by an individual page.
+                      default: 1
+                      highlight: 0
                       options:
-                        default: No CSS (Hypertext only)
-                        full: Allow all CSS
-                    allowJS:  
-                      type: select
-                      size: small
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    style.allowJS:  
+                      type: toggle
                       classes: fancy
-                      label: Global JS
+                      label: Allow Global JS
                       help: Determines what JS is allowed to load. This can be overridden by an individual page.
+                      default: 1
+                      highlight: 0
                       options:
-                        default: No JS
-                        moderate: All JS deferred
-                        full: Allow all JS
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool                    
                 column2: # SELECT A STYLE COLUMN
                   type: column
                   fields:
+                    styleTitle:
+                      type: section
+                      title: Themes & Styles
+                      underline: true
                     description:
                       type: display
-                      size: long
                       label: Description
                       markdown: true
-                      content: Themes here are open-source CSS files available on GitHub and are not my own work. Consider visiting their homepages, contributing, and supporting the authors.  Remember that you can test these styles quickly by adding `?style='water'` to your URL.
-                    stylesheet:
+                      content: Themes here are open-source CSS files available on GitHub and are not my own work. Consider visiting their homepages, contributing, and supporting the authors.  Remember that you can test these styles quickly by adding the name or number to a style URL parameter, e.g. `YourSite.com/?style=water` or `YourSite.com/?style=4`.
+                    style.stylesheet:
                       type: select
-                      size: small
                       classes: fancy
                       label: Select a Style
                       help: Selects from a pre-determined list of simple, fast CSS files.
                       options:
-                        default: hypertext.css (No style)
+                        default: hypertext (No style)
                         air: air
                         latex: latex
                         marx: marx
@@ -116,6 +186,46 @@ form:
                         water-light: water-light
                         writ: writ
                         yohora: yohora
+                    style.includeType:
+                      type: select
+                      classes: fancy
+                      label: Include Method
+                      help: Determines whether to prioritize single page loads (inline <style>, good for Hypertext or single-serving sites) or multiple page loads (<link>, good for CSS styles or multi-paged sites).
+                      options:
+                        default: Inline (Fast single page loads)
+                        link: Link (Good for enabling JS/CSS)
+                    style.customCSS:
+                      type: textarea
+                      label: Custom CSS
+                      help: Add your custom CSS rules here.
+                      placeholder: "e.g. body { font-family: Courier }"
+                      size: large
+                    configurationTitle:
+                      type: section
+                      title: Other Configurations
+                      underline: true
+                    layout.configuration:
+                      type: select
+                      size: medium
+                      classes: fancy
+                      label: General site layout
+                      help: Configures the general layout of the website horizontally.
+                      options:
+                        default: No style (align left)
+                        centered: Centered
+                    layout.width:
+                      type: select
+                      size: medium
+                      classes: fancy
+                      label: Maximum website width
+                      help: Caps the website's maximum width for viewing on large screens.
+                      options:
+                        default: No style (full width)
+                        640: 640px (very small)
+                        768: 768px (small)
+                        960: 960px (medium)
+                        1024: 1024px (large)
+                        1280: 1280px (very large)
         menus:
           type: tab
           title: Header & Links
@@ -125,41 +235,7 @@ form:
               size: long
               label: Description
               markdown: true
-              content: "This tab lets you control how the header and menu bar along the top looks and add specific links to it if you want.  There're several options for how it renders despite being so simple!"
-            style.inlineNavbar:
-              type: toggle
-              label: Use inline navigation
-              help: When enabled, the navigation lists will be inline instead of <ul>.
-              default: 1
-              highlight: 1
-              options:
-                1: Enabled
-                0: Disabled
-              validate:
-                type: bool
-            menu.useSeparator:
-              type: toggle
-              label: Use separator (inline only)
-              help: When enabled, the site will add a vertical pipe character (|) between inline menu bar links.
-              default: 1
-              highlight: 1
-              options:
-                1: Enabled
-                0: Disabled
-              validate:
-                type: bool
-            menu.nextWord:
-              type: text
-              label: “Next” word
-              size: small
-              help: The word you would use in a link to go to the next page in a sequence. Good if your site is in another language.
-              default: Next
-            menu.prevWord:
-              type: text
-              label: “Previous” word
-              size: small
-              help: The word you would use in a link to go to the next page in a sequence. Good if your site is in another language.
-              default: Previous
+              content: "This tab lets you add more items to the navigation area of your website."
             menu.menuItems:
               name: menuItems
               type: list
