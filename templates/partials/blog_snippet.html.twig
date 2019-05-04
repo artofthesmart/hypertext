@@ -1,4 +1,4 @@
-<div class="snippet{% if page.taxonomy.category %}{% for category in page.taxonomy.category %} cat_{{ category|hyphenize }}{% endfor %}{% endif %}">
+<article class="snippet{% if page.taxonomy.category %}{% for category in page.taxonomy.category %} cat_{{ category|hyphenize }}{% endfor %}{% endif %}">
     {% set item_image = page.media.images[page.header.header_image_file] ?: page.media.images|first %}
 
     {# Title #}
@@ -60,4 +60,4 @@
     </ol>
     {% endif %}
     {% endif %}
-</div>
+</article>

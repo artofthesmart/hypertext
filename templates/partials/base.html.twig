@@ -36,10 +36,10 @@
     </header>
     {% endif %}
     
-    <section id="content">
+    <main>
         {% block content %}
         {% endblock %}
-    </section>
+    </main>
 
     {% if not uri.query('headless') %}
     {% block footer %}
