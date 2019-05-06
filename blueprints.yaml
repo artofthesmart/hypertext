@@ -192,8 +192,8 @@ form:
                       label: Include Method
                       help: Determines whether to prioritize single page loads (inline <style>, good for Hypertext or single-serving sites) or multiple page loads (<link>, good for CSS styles or multi-paged sites).
                       options:
-                        default: Inline (Fast single page loads)
-                        link: Link (Good for enabling JS/CSS)
+                        default: Link (Good for enabling JS/CSS)
+                        inline: Inline (Faster single page loads)
                     style.customCSS:
                       type: textarea
                       label: Custom CSS

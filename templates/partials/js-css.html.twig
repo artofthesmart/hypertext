@@ -9,42 +9,39 @@
 {# Allow CSS and JS Logic #}
 {% set allowCSS = page.header.allowCSS == 'enabled' or
                     (page.header.allowCSS|default('default') == 'default' and 
-                     config.themes.hypertext.structure.allowCSS == '1') %}
+                     style.allowCSS == '1') %}
 {% set allowJS  = page.header.allowJS  == 'enabled' or
                     (page.header.allowJS|default('default') == 'default' and 
-                     config.themes.hypertext.structure.allowJS == '1') %}
+                     style.allowJS == '1') %}
 
 {% block stylehseets %}
 
-{# Set a stylesheet #}
-{% set styleSelection = uri.param('theme') %}
-{% set stylesheet = style.stylesheet %}
-
-{# Process any stylesheet overrides from the URL bar #}
-{% if styleSelection != undefined %}
-    {% if styleSelection matches '/^\\d+$/' %}
-        {% set stylesheet = stylesheets[uri.param('theme') + 0] %}
-    {% else %}
-        {% set stylesheet = stylesheets[uri.param('theme')] %}
-    {% endif %}
+{# Set a stylesheet from URI or style config #}
+{% set stylesheet = uri.query('theme')|default(style.stylesheet) %}
+{# Numbers in the query need to be mapped #}
+{% if stylesheet matches '/^\\d+$/' %}
+    {% set stylesheet = stylesheets[stylesheet] %}
 {% endif %}
 
 {# Add the stylesheet #}
 {# TODO: Add sourcing from unpkg rather than locally #}
-{% if stylesheet != 'default' and stylesheet != undefined %}
-    {% if style.includeType == 'default' %}
-        <style>{{ include('css/' ~ stylesheet ~ '.css') }}</style>
-    {% else if not allowCSS %}
-        {# No CSS but we have to do an import, so link manually #}
+{% if stylesheet != 'default' %}
+    {% if style.includeType == 'inline' %}
+        {# User *explicitly* wants it imported in style tags #}
+        <style>{{ include('theme://css/' ~ stylesheet ~ '.css') }}</style>
+    {% elseif not style.allowCSS %}
+        {# User wants it via href, but doesn't have CSS pipeline running #}
         <link href="{{ url('theme://css/'~stylesheet~'.css') }}" rel="stylesheet" />
     {% else %}
+        {# User wants it href and is allowing CSS #}
         {% do assets.addCss('theme://css/'~stylesheet~'.css') %}
+    {% endif %}
 {% endif %}
 
 {# Regular CSS/JS includes #}
 {% if allowCSS %}
     {{ assets.css()|raw }}
-    {% endif %}
+{% endif %}
 {% endblock %}
 
 {% block javascripts %}
@@ -53,11 +50,15 @@
     {% endif %}
 {% endblock %} 
 
-{# Add custom styles after everything, so the user can adjust #}
+{# Add custom styles (if avialable) after everything, so the user can adjust #}
+{% if layout.width != undefined and 
+      layout.configuration != undefined and 
+      style.customCSS != undefined %}
 <style>
 body {
 {{ layout.width ? "max-width: #{layout.width}px;" : ""}}
 {{ layout.configuration ? "margin: auto;" : ""}}
-
 {{ style.customCSS }}
+}
 </style>
+{% endif %}
