@@ -28,7 +28,7 @@
 {% if stylesheet != 'default' %}
     {% if style.includeType == 'inline' %}
         {# User *explicitly* wants it imported in style tags #}
-        <style>{{ include('theme://css/' ~ stylesheet ~ '.css') }}</style>
+        <style>{{ include('css/' ~ stylesheet ~ '.css') }}</style>
     {% elseif not style.allowCSS %}
         {# User wants it via href, but doesn't have CSS pipeline running #}
         <link href="{{ url('theme://css/'~stylesheet~'.css') }}" rel="stylesheet" />
@@ -51,14 +51,22 @@
 {% endblock %} 
 
 {# Add custom styles (if avialable) after everything, so the user can adjust #}
-{% if layout.width != undefined and 
-      layout.configuration != undefined and 
-      style.customCSS != undefined %}
+{% if style.width != 'default' or 
+      style.configuration != 'default' or
+      style.customCSS != '' %}
 <style>
 body {
-{{ layout.width ? "max-width: #{layout.width}px;" : ""}}
-{{ layout.configuration ? "margin: auto;" : ""}}
-{{ style.customCSS }}
+{{ style.width != 'default' ? "max-width: #{style.width}px;" : ""}}
+{# Set only left and right margins because some stylesheets set vertical. #}
+{% if style.configuration == 'default' %}
+    margin-left: 0;
+    margin-right: 0;
+{% else %}
+    margin-left: auto;
+    margin-right: auto;
+{% endif %}
+
+{{ style.customCSS != '' ? style.customCSS : "" }}
 }
 </style>
 {% endif %}

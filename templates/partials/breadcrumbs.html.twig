@@ -1,0 +1,8 @@
+{% set crumbs = breadcrumbs.get() %}
+{% if crumbs|length > 1 %}
+<span>
+    {% for crumb in crumbs %}
+    <a href="{{ crumb.url }}">{{ crumb.menu }}</a>{% if not loop.last %} &raquo; {% endif %}
+    {% endfor %}
+</span>
+{% endif %}
