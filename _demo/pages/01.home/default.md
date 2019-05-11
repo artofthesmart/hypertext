@@ -6,7 +6,7 @@
 
 **Why does this theme exist?**  Most Grav themes come with heavy JS requirements.  Sometimes 1MB or more!  These slow down browsers and create compatibility issues.  Grav is a very powerful CMS but there should be an option for people who want something as close to hand-coded HTML as possible.  This theme tries to separate form and function to create a truly unique experience.
 
-Read more about the [design decisions behind Hypertext here](/reference).
+Read more about the [design decisions behind Hypertext (and technical documentation) here](/reference).
 
 You can provide feedback at the [github page for this project](https://github.com/artofthesmart/hypertext).
 
