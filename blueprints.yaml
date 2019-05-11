@@ -185,7 +185,7 @@ form:
                         water-dark: water-dark
                         water-light: water-light
                         writ: writ
-                        yohora: yohora
+                        yorha: yorha
                     style.includeType:
                       type: select
                       classes: fancy
@@ -204,7 +204,7 @@ form:
                       type: section
                       title: Other Configurations
                       underline: true
-                    layout.configuration:
+                    style.configuration:
                       type: select
                       size: medium
                       classes: fancy
@@ -213,7 +213,7 @@ form:
                       options:
                         default: No style (align left)
                         centered: Centered
-                    layout.width:
+                    style.width:
                       type: select
                       size: medium
                       classes: fancy
