@@ -13,7 +13,7 @@
     <title>{% if header.title %}{{ header.title|e('html') }} | {% endif %}{{ site.title|e('html') }}</title>
   </head>
   <body>
-  {% block content %}{% endblock %}
+  {{ block('content') }}
   </body>
 </html>
 {% else %}
