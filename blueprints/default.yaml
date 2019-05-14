@@ -1,5 +1,11 @@
 extends@: default
 
+rules:
+  slug:
+    pattern: "[a-z][a-z0-9_\-]+"
+    min: 2
+    max: 80
+
 form:
   fields:
     tabs:

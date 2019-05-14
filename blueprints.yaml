@@ -47,7 +47,7 @@ form:
                         type: bool
                     structure.useSeparator:
                       type: toggle
-                      label: Use separator (inline only)
+                      label: Use separator (inline nav only)
                       help: When enabled, the site will add a vertical pipe character (|) between inline menu bar links.
                       default: 1
                       highlight: 1

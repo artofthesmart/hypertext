@@ -1,18 +1,11 @@
 extends@: default
 child_type: item
 
-rules:
-  slug:
-    pattern: "[a-z][a-z0-9_\-]+"
-    min: 2
-    max: 80
-
 form:
   fields:
     tabs:
       type: tabs
       active: 1
-
       fields:
         advanced:
           fields:
@@ -20,39 +13,37 @@ form:
               fields:
                 header.child_type:
                   default: item
-        collection:
-          type: tab
-          title: Collection Config
-
+        hypertext:
           fields:
-
-            content_title:
-              type: spacer
-              title: Content Definition
-
-            header.content.items:
-              type: textarea
-              yaml: true
-              label: Items
-              default: '@self.children'
-              help: Setting this will force which items render. May break tag/category links.
-              validate:
-                type: yaml
-
-            header.content.order.by:
-              type: select
-              label: Order By
-              default: date
-              options:
-                folder: Folder
-                title: Title
-                date: Date
-                default: Default
-
-            header.content.order.dir:
-              type: select
-              label: Order
-              default: desc
-              options:
-                asc: Ascending
-                desc: Descending
+            columns:
+              fields:
+                overrides_column:
+                  fields:
+                    content_title:
+                      type: spacer
+                      title: Children & Ordering
+                      underline: true
+                    header.content.items:
+                      type: textarea
+                      yaml: true
+                      label: Items
+                      default: '@self.children'
+                      help: Setting this will force which items render. May break tag/category links.
+                      validate:
+                        type: yaml
+                    header.content.order.by:
+                      type: select
+                      label: Order By
+                      default: date
+                      options:
+                        folder: Folder
+                        title: Title
+                        date: Date
+                        default: Default
+                    header.content.order.dir:
+                      type: select
+                      label: Order
+                      default: desc
+                      options:
+                        asc: Ascending
+                        desc: Descending
