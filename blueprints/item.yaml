@@ -1,15 +1,3 @@
-title: Item
-@extends:
-    type: default
-    context: blueprints://pages
-
-form:
-  fields:
-    tabs:
-      fields:
-        hypertext:
-          fields:
-            columns:
-              fields:
-                
-
+# This only exists to improve compatibility with other themes
+# It may be extended in the future, though
+extends@: default

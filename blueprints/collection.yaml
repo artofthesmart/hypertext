@@ -19,21 +19,22 @@ form:
               fields:
                 overrides_column:
                   fields:
-                    content_title:
-                      type: spacer
+                    children_overrides_title:
+                      type: section
                       title: Children & Ordering
                       underline: true
                     header.content.items:
                       type: textarea
                       yaml: true
                       label: Items
-                      default: '@self.children'
                       help: Setting this will force which items render. May break tag/category links.
+                      default: '@self.children'                      
                       validate:
                         type: yaml
                     header.content.order.by:
                       type: select
                       label: Order By
+                      help: The attribute by which to sort child pages during rendering.
                       default: date
                       options:
                         folder: Folder
@@ -43,7 +44,31 @@ form:
                     header.content.order.dir:
                       type: select
                       label: Order
+                      help: The order in which to show them (e.g. Ascending by Date means newer posts appear near the top).
                       default: desc
                       options:
                         asc: Ascending
                         desc: Descending
+                content_column:
+                  fields:
+                    structure_overrides_title:
+                      type: section
+                      title: Child Rendering
+                      underline: true
+                    render.style:
+                      type: select
+                      label: Render Style
+                      default: list
+                      options:
+                        list: Flat List
+                        hlist: Heirarchical List
+                        sectioned: Sectioned
+                        grid: Grid
+                   render.images:
+                      type: select
+                      label: Child Page Images
+                      default: desc
+                      options:
+                        asc: Enabled
+                        desc: Disabled
+
