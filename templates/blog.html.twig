@@ -1,21 +1,5 @@
-{# A collection is a parent page with more detailed information about its children, 
-suitable for blogs or multi-part projects. #}
+{# This only exists to improve compatibility with other themes. #}
+{# It may be extended in the future, though. Use collection if possible. #}
 
-{% embed 'partials/base.html.twig' %}
-
-	{% set collection = page.collection()|length > 0 ? page.collection() : page.children.visible %}
-
-	{% block content %}
-    {{ page.content }}
-
-    {% for child in collection.order(header.content.order.by|default('date'), header.content.order.dir|default('desc')) %}
-        {% include 'partials/blog_snippet.html.twig' with {'page':child} %}
-        {% if not loop.last %}<br/>{% endif %}
-    {% endfor %}
-    
-    {% if config.plugins.pagination.enabled and collection.params.pagination %}
-        {% include 'partials/pagination.html.twig' with {'base_url':page.url, 'pagination':collection.params.pagination} %}
-	{% endif %}
-	{% endblock %}
-
+{% embed 'collection.html.twig' %}
 {% endembed %}
