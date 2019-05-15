@@ -55,16 +55,15 @@
 body {
 {{ style.width != 'default' ? "max-width: #{style.width}px;" : ""}}
 {# Set only left and right margins because some stylesheets set vertical. #}
-{# Also reset to 8px, the Chrome default (`unset` doesn't work). #}
-{% if style.configuration != 'default' %}
-    margin-left: 8px;
-    margin-right: 8px;
+{% if style.configuration == 'default' %}
+    margin-left: 0;
+    margin-right: 0;
 {% else %}
     margin-left: auto;
     margin-right: auto;
 {% endif %}
-}
 
 {{ style.customCSS != '' ? style.customCSS : "" }}
+}
 </style>
 {% endif %}
