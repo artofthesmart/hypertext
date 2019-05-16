@@ -25,7 +25,9 @@
   <link rel="canonical" href="{{ page.url(true, true) }}" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  {% include 'partials/metadata.html.twig' %}
+  {% for meta in page.metadata %}
+    <meta {% if meta.name %}name="{{ meta.name }}" {% endif %}{% if meta.http_equiv %}http-equiv="{{ meta.http_equiv }}" {% endif %}{% if meta.charset %}charset="{{ meta.charset }}" {% endif %}{% if meta.property %}property="{{ meta.property }}" {% endif %}{% if meta.content %}content="{{ meta.content }}" {% endif %}/>
+  {% endfor %}
 
   <title>{% if header.title %}{{ header.title|e('html') }} | {% endif %}{{ site.title|e('html') }}</title>
 

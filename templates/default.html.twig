@@ -1,66 +1,70 @@
 {% embed 'partials/base.html.twig' %}
-{% set header_image = page.header.header_image ?? true %}
+{% set header_image = page.header.show_header_image == 'default' ? parent.header.render.images : page.header.show_header_image %}
 {% set header_image_width  = page.header.header_image_width ?? config.themes.hypertext.layout.width * 0.80 %}
 {% set header_image_height = page.header.header_image_height ?? 300 %}
 {% set header_image_file = page.header.header_image_file ?? false %}
     
-	{% block content %}
-    {{ html5 ? '<article>' : '<div class="item"'}}
-    
+{% block content %}
+  {{ html5 ? '<article>' : '<div class="item"'}}
 
-    {# Titles #}
-    {% if page.header.link %}
-    <h2><a href="{{ page.header.link }}">{{ page.title }}</a></h2>
-    {% else %}
-        <h2><a href="{{ page.url }}" class="u-url">{{ page.title }}</a></h2>
-    {% endif %}
+  {# Titles #}
+  {% if page.header.link %}
+  <h2><a href="{{ page.header.link }}">{{ page.title }}</a></h2>
+  {% else %}
+      <h2><a href="{{ page.url }}" class="u-url">{{ page.title }}</a></h2>
+  {% endif %}
 
-    {% if page.header.subtitle %}
-    <span class="subtitle"><time datetime="{{ page.date|date("c") }}">{{ page.date|date(system.pages.dateformat.short) }}</time> - <u>{{ page.header.subtitle }}</u>
-    {% endif %}
+  {% if page.header.subtitle %}
+  <span class="subtitle"><time datetime="{{ page.date|date("c") }}">{{ page.date|date(system.pages.dateformat.short) }}</time> - <u>{{ page.header.subtitle }}</u>
+  {% endif %}
 
-    {# Taxonomies #}
-    {% if page.taxonomy.category %}
-    <span class="categories">
-    Categories: 
-        {% for category in page.taxonomy.category %}
-        <a href="{{ blog.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ category }}">{{ category }}</a>
-        {% endfor %}
-    </span><br/>
-    {% endif %}
+  {# Taxonomies #}
+  {% if page.taxonomy.category %}
+  <span class="categories">
+  Categories: 
+      {% for category in page.taxonomy.category %}
+      <a href="{{ blog.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ category }}">{{ category }}</a>
+      {% endfor %}
+  </span><br/>
+  {% endif %}
 
-    {% if page.taxonomy.tag %}
-    <span class="tags">
-    Tags: 
-        {% for tag in page.taxonomy.tag %}
-        <a href="{{ blog.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ tag }}">{{ tag }}</a>
-        {% endfor %}
-    </span>
-    {% endif %}
+  {% if page.taxonomy.tag %}
+  <span class="tags">
+  Tags: 
+      {% for tag in page.taxonomy.tag %}
+      <a href="{{ blog.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ tag }}">{{ tag }}</a>
+      {% endfor %}
+  </span>
+  {% endif %}
 
-    {# Headline Image #}
-    {% if header_image %}
-        {% if header_image_file %}
-            {% set header_image_media = page.media.images[header_image_file] %}
-        {% else %}
-            {% set header_image_media = page.media.images|first %}
-        {% endif %}
-        
-        <br/>
-        {{ header_image_media.cropZoom(header_image_width, header_image_height).html }}
-    {% endif %}
+  {# Headline Image #}
+  {% if header_image %}
+      {% if header_image_file %}
+          {% set header_image_media = page.media.images[header_image_file] %}
+      {% else %}
+          {% set header_image_media = page.media.images|first %}
+      {% endif %}
+      
+      <br/>
+      {{ header_image_media.cropZoom(header_image_width, header_image_height).html }}
+  {% endif %}
 
-    {# Content #}
-    {{ page.content }}
+  {# Content #}
+  {% if page.summary != page.content %}
+      <p>{{ page.summary }}</p>
+      <p><a href="{{ page.url }}">Continue Reading...</a></p>
+  {% else %}
+      <p>{{ page.content|truncate(header.summary.size ?? 300) }}</p>
+  {% endif %}
 
-    <span class="pagination">
-    {% if not page.isLast %}
-        <a href="{{ page.prevSibling.url }}">&#xab; Previous Post</a>
-    {% endif %}
-    {% if not page.isFirst %}
-        <a href="{{ page.nextSibling.url }}">Next Post &raquo;</a>
-    {% endif %}
-    </span>
-    {{ html5 ? '</article>' : '</div>'}}
-	{% endblock %}
+  <span class="pagination">
+  {% if not page.isLast %}
+      <a href="{{ page.prevSibling.url }}">&#xab; Previous Post</a>
+  {% endif %}
+  {% if not page.isFirst %}
+      <a href="{{ page.nextSibling.url }}">Next Post &raquo;</a>
+  {% endif %}
+  </span>
+  {{ html5 ? '</article>' : '</div>'}}
+{% endblock %}
 {% endembed %}
