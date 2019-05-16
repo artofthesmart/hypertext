@@ -19,7 +19,7 @@ form:
               fields:
                 overrides_column:
                   fields:
-                    children_overrides_title:
+                    child_overrides_title:
                       type: section
                       title: Children & Ordering
                       underline: true
@@ -55,20 +55,30 @@ form:
                       type: section
                       title: Child Rendering
                       underline: true
-                    render.style:
+                    header.render.style:
                       type: select
                       label: Render Style
-                      default: list
+                      help: How you want child pages presented on the page. See Hypertext docs for examples.
+                      default: summaries
                       options:
-                        list: Flat List
-                        hlist: Heirarchical List
-                        sectioned: Sectioned
+                        summaries: Summaries
+                        list: List
                         grid: Grid
-                   render.images:
+                        table: Table
+                   header.render.images:
                       type: select
                       label: Child Page Images
-                      default: desc
+                      help: When enabled, this will display of child page's images. Can be over-ridden by child pages.
+                      default: enabled
                       options:
-                        asc: Enabled
-                        desc: Disabled
+                        enabled: Enabled
+                        disabled: Disabled
+                    header.render.nested_content:
+                      type: select
+                      label: Render Nested Children
+                      help: When enabled, this will list the children of any child pages, if available.
+                      default: disabled
+                      options:
+                        enabled: Enabled
+                        disabled: Disabled
 
