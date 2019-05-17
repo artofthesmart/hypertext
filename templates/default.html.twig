@@ -6,10 +6,11 @@
   {{ html5 ? '<article>' : '<div class="item"'}}
 
   {# Titles #}
+  {% if page.home() %}
   {% if page.header.link %}
-  <h2><a href="{{ page.header.link }}">{{ page.title }}</a></h2>
+    <h2><a href="{{ page.header.link }}">{{ page.title }}</a></h2>
   {% else %}
-      <h2><a href="{{ page.url }}" class="u-url">{{ page.title }}</a></h2>
+    <h2><a href="{{ page.url }}" class="u-url">{{ page.title }}</a></h2>
   {% endif %}
 
   {% if page.header.subtitle %}
@@ -41,8 +42,7 @@
           {% set header_image_media = page.media.images[header_image_file] %}
       {% else %}
           {% set header_image_media = page.media.images|first %}
-      {% endif %}
-      
+      {% endif %}      
       <br/>
       {{ header_image_media.cropZoom(header_image_width, header_image_height).html }}
   {% endif %}
@@ -50,6 +50,8 @@
   {# Content #}
   {{ page.content }}
 
+  {# Pagination #}
+  {% if not page.root() %}
   <span class="pagination">
   {% if not page.isLast %}
       <a href="{{ page.prevSibling.url }}">&#xab; Previous Post</a>
@@ -58,6 +60,7 @@
       <a href="{{ page.nextSibling.url }}">Next Post &raquo;</a>
   {% endif %}
   </span>
+  {% endif %}
   {{ html5 ? '</article>' : '</div>'}}
 {% endblock %}
 {% endembed %}
