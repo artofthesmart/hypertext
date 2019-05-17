@@ -1,15 +1,4 @@
----
-taxonomy:
-    category:
-        - animals
-    tag:
-        - cats
-        - dogs
-allowCSS: default
-allowJS: default
----
-
-This is a basic post with a summary header. Morbi lacus nisi, feugiat sit amet elit sit amet.
+This is a basic post with a summary header, but nothing else.
 
 ===
 

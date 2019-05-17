@@ -9,7 +9,9 @@ allowJS: default
 header_image_file: puppy.jpg
 ---
 
-This is a post with multiple photos. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus euismod blandit lectus, id molestie libero mollis vel.
+Includes everything from #4, but this time with a header image defined in the frontmatter.
+
+===
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus euismod blandit lectus, id molestie libero mollis vel. Mauris tincidunt elit dui, nec sodales sem laoreet posuere. Vivamus consequat placerat quam, in tincidunt lectus vulputate eu. Nulla nec blandit ex. Curabitur id eleifend magna, in bibendum diam. Vivamus vestibulum diam nec ante vehicula efficitur. Quisque ut aliquam ante. Nullam nec consectetur arcu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquet ut massa sed porta. Fusce ullamcorper lacinia odio ut rhoncus. Phasellus efficitur euismod faucibus. Proin at interdum felis.
 
