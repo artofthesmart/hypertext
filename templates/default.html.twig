@@ -21,30 +21,30 @@
   {% if page.taxonomy.category %}
   <span class="categories">
   Categories: 
-      {% for category in page.taxonomy.category %}
-      <a href="{{ blog.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ category }}">{{ category }}</a>
-      {% endfor %}
+    {% for category in page.taxonomy.category %}
+    <a href="{{ blog.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ category }}">{{ category }}</a>
+    {% endfor %}
   </span><br/>
   {% endif %}
 
   {% if page.taxonomy.tag %}
   <span class="tags">
   Tags: 
-      {% for tag in page.taxonomy.tag %}
-      <a href="{{ blog.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ tag }}">{{ tag }}</a>
-      {% endfor %}
+    {% for tag in page.taxonomy.tag %}
+    <a href="{{ blog.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ tag }}">{{ tag }}</a>
+    {% endfor %}
   </span>
   {% endif %}
 
   {# Headline Image #}
   {% if header_image %}
-      {% if header_image_file %}
-          {% set header_image_media = page.media.images[header_image_file] %}
-      {% else %}
-          {% set header_image_media = page.media.images|first %}
-      {% endif %}      
-      <br/>
-      {{ header_image_media.cropZoom(header_image_width, header_image_height).html }}
+    {% if header_image_file %}
+      {% set header_image_media = page.media.images[header_image_file] %}
+    {% else %}
+      {% set header_image_media = page.media.images|first %}
+    {% endif %}      
+    <br/>
+    {{ header_image_media.cropZoom(header_image_width, header_image_height).html }}
   {% endif %}
 
   {# Content #}
@@ -52,14 +52,14 @@
 
   {# Pagination #}
   {% if not page.root() %}
-  <span class="pagination">
-  {% if not page.isLast %}
+    <span class="pagination">
+    {% if not page.isLast %}
       <a href="{{ page.prevSibling.url }}">&#xab; Previous Post</a>
-  {% endif %}
-  {% if not page.isFirst %}
+    {% endif %}
+    {% if not page.isFirst %}
       <a href="{{ page.nextSibling.url }}">Next Post &raquo;</a>
-  {% endif %}
-  </span>
+    {% endif %}
+    </span>
   {% endif %}
   {{ html5 ? '</article>' : '</div>'}}
 {% endblock %}
