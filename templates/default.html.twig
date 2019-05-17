@@ -1,7 +1,5 @@
 {% embed 'partials/base.html.twig' %}
-{% set header_image = page.header.show_header_image == 'default' ? parent.header.render.images : page.header.show_header_image %}
-{% set header_image_width  = page.header.header_image_width ?? config.themes.hypertext.layout.width * 0.80 %}
-{% set header_image_height = page.header.header_image_height ?? 300 %}
+{% set showHeader = page.header.show_header_image == 'default' ? parent.header.render.images : page.header.show_header_image %}
 {% set header_image_file = page.header.header_image_file ?? false %}
     
 {% block content %}
@@ -50,12 +48,7 @@
   {% endif %}
 
   {# Content #}
-  {% if page.summary != page.content %}
-      <p>{{ page.summary }}</p>
-      <p><a href="{{ page.url }}">Continue Reading...</a></p>
-  {% else %}
-      <p>{{ page.content|truncate(header.summary.size ?? 300) }}</p>
-  {% endif %}
+  {{ page.content }}
 
   <span class="pagination">
   {% if not page.isLast %}
