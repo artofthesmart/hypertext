@@ -1,4 +1,4 @@
-This page shows example HTML tags to give you an idea of the look and feel of Hypertext.  You can feel free to copy this code for testing your own themes, too!
+This page shows lots of example HTML tags to give you an idea of the look and feel of Hypertext.
 
 ===
 

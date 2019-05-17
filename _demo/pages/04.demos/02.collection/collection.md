@@ -1,6 +1,4 @@
 ---
-allowCSS: default
-allowJS: default
 content:
     items:
         - '@self.children'

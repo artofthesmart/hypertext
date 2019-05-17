@@ -1,8 +1,7 @@
-This page describes the philosophy behind Hypertext and some of the technical details. It's a good place to learn more about what it can do and why it's built the way it is.
+This page describes the philosophy and technical details behind Hypertext.
 
 ===
 
-## Summary
 You probably work on front-end development, either as a hobbyist or a professional.  Whether you noticed or not websites are getting too heavy, with too many libraries, that take too long to render.  Worse yet, if you don't take the time to include only what you need, there's a good chance you're bloating your UX with code that doesn't ultimately have much impact.
 
 Hypertext theme is an answer to that bloat.
