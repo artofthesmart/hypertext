@@ -6,7 +6,7 @@
   {{ html5 ? '<article>' : '<div class="item"'}}
 
   {# Titles #}
-  {% if page.home() %}
+  {% if not page.home() %}
     {% if page.header.link %}
       <h2><a href="{{ page.header.link }}">{{ page.title }}</a></h2>
     {% else %}
@@ -52,7 +52,7 @@
   {{ page.content }}
 
   {# Pagination #}
-  {% if not page.root() %}
+  {% if not page.parent.root() %}
   <span class="pagination">
   {% if not page.isLast %}
       <a href="{{ page.prevSibling.url }}">&#xab; Previous Post</a>
