@@ -1,21 +1,4 @@
+{% embed 'default.html.twig' %}
 {# A collection is a generic content display, suitable for very lean pages. #}
 {# Blog is going to offer more flexibility. #}
-
-{% embed 'partials/base.html.twig' %}
-
-	{% set collection = page.collection()|length > 0 ? page.collection() : page.children.visible %}
-  {% set collection = collection.order(header.content.order.by|default('date'), header.content.order.dir|default('desc')) %}
-
-	{% block content %}
-    {{ page.content }}
-
-    {% for child in collection %}
-      {% include 'partials/page_snippet.html.twig' with {'page':child, parent:page} %}
-    {% endfor %}
-    
-	{% if config.plugins.pagination.enabled and collection.params.pagination %}
-    {% include 'partials/pagination.html.twig' with {'base_url':page.url, 'pagination':collection.params.pagination} %}
-	{% endif %}
-	{% endblock %}
-
 {% endembed %}

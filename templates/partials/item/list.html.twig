@@ -1,0 +1,44 @@
+{% set show_header = page.header.show_header_image == 'default' ? parent.header.render.images : page.header.show_header_image %}
+{% set show_nested_children = parent.header.render.nestedChildren %}
+{% set header_image_file = page.header.header_image_file ?? false %}
+
+{# Title & Subtitle #}
+<h3>
+  <a href="{{ page.url }}">{{ page.title }}</a>
+  {% if page.header.subtitle %} - <small>{{ page.header.subtitle }}</small>{% endif %}
+</h3>
+
+{% if show_header %}
+  {{ page.media[header_image_file].cropZoom(300,100).html() }}
+{% endif %}
+
+{# Categories #}
+{% if page.taxonomy.category %}
+<p>Categories: <small>{% for category in page.taxonomy.category %}[<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>]{% if not loop.last %}, {% endif %}{% endfor %}]</small></p>
+{% endif %}
+
+{# Tags - Uncomment this section if you want tags in the child view after all. #}
+{## {% if page.taxonomy.tag %}
+  # <p>Tags: <small>{% for tag in page.taxonomy.tag %}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ tag }}">{{ tag }}</a>{% if not loop.last %}, {% # endif %}{% endfor %}</small></p>
+  # {% endif %} 
+#}
+
+{# Text #}
+{% if page.summary != page.content %}
+  {{ page.summary|raw }}
+{% else %}
+  {{ page.content|raw }}
+{% endif %}
+
+{# Children #}
+{% set inner_children = page.collection()|length > 0 ? page.collection() : page.children.visible %}
+{% if show_nested_children and inner_children|length > 0 %}
+{% set inner_children = children.order(page.header.content.order.by|default('date'), page.content.order.dir|default('desc')) %}
+<p>Sub-Pages:
+<ol class="nested-children">
+  {% for child in inner_children %}
+  <li><a href="{{ child.url }}">{{ child.title }}</a>{{ child.header.subtitle ? ' - <span>'~child.header.subtitle~'</span>' : '' }}</li>
+  {% endfor %}
+</ol>
+</p>
+{% endif %} {# End render nested children #}

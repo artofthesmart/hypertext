@@ -17,37 +17,38 @@
 {% set stylesheet = uri.query('theme')|default(style.stylesheet) %}
 {# Numbers in the query need to be mapped #}
 {% if stylesheet matches '/^\\d+$/' %}
-    {% set stylesheet = stylesheets[stylesheet] %}
+  {% set stylesheet = stylesheets[stylesheet % stylesheets|length] %}
 {% endif %}
 
 {# Add the stylesheet #}
-{# TODO: Add sourcing from unpkg rather than locally #}
+{# TODO: Add sourcing options from unpkg rather than locally #}
 {% if stylesheet != 'default' %}
-    {% if style.includeType == 'inline' %}
-        {# User *explicitly* wants it imported in style tags #}
-        <style>{{ include('css/' ~ stylesheet ~ '.css') }}</style>
-    {% elseif not style.allowCSS %}
-        {# User wants it via href, but doesn't have CSS pipeline running #}
-        <link href="{{ url('theme://css/'~stylesheet~'.css') }}" rel="stylesheet" />
-    {% else %}
-        {# User wants it href and is allowing CSS #}
-        {% do assets.addCss('theme://css/'~stylesheet~'.css') %}
-    {% endif %}
-{% endif %}
-
-{# Regular CSS/JS includes #}
-{% if allowCSS %}
-    {{ assets.css()|raw }}
+  {% if style.includeType == 'inline' %}
+    {# User *explicitly* wants it imported in style tags #}
+    <style>{{ include('css/' ~ stylesheet ~ '.css') }}</style>
+  {% elseif not style.allowCSS %}
+    {# User wants it via href, but doesn't have CSS pipeline running #}
+    <link href="{{ url('theme://css/'~stylesheet~'.css') }}" rel="stylesheet" />
+  {% else %}
+    {# User wants it href and is allowing CSS #}
+    {% do assets.addCss('theme://css/'~stylesheet~'.css') %}
+  {% endif %}
 {% endif %}
 {% endblock %}
 
 {% block javascripts %}
-    {% if allowJS %}
-    {{ assets.js()|raw }}
-    {% endif %}
-{% endblock %} 
+  {# Hypertext doesn't add any JS, but if it did it would go here. #}
+{% endblock %}
 
-{# Add custom styles (if avialable) after everything, so the user can adjust #}
+{# Regular CSS/JS includes #}
+{% block assets deferred %}
+  {% if allowCSS %}{{ assets.css()|raw }}{% endif %}
+  {% if allowJS %}{{ assets.js()|raw }}{% endif %}
+{% endblock %}
+
+
+
+{# Add custom styles (if needed) #}
 {% if style.width != 'default' or 
       style.configuration != 'default' or
       style.customCSS != '' %}
@@ -63,8 +64,13 @@ body {
     margin-left: auto;
     margin-right: auto;
 {% endif %}
-
-{{ style.customCSS != '' ? style.customCSS : "" }}
 }
+
+{% if style.header_image_align|default('default') == 'left' %}
+.snippet img { float: left; margin: 0 1em; }
+{% endif %}
+
+{# User's styles #}
+{{ style.customCSS != '' ? style.customCSS : "" }}
 </style>
 {% endif %}

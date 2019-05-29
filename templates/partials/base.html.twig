@@ -6,6 +6,8 @@
 {% set html5 = structure.htmlMode == 'default' %}
 
 <!DOCTYPE html>
+
+
 {# ## HEADLES RENDERING ## #}
 {% if uri.query('headless') %}
 <html>
@@ -16,6 +18,8 @@
   {{ block('content') }}
   </body>
 </html>
+
+
 {% else %}
 {# ## ORDINARY RENDER ## #}
 <html lang="{{ grav.language.getActive ?: grav.config.site.default_lang }}">
@@ -31,33 +35,57 @@
 
   <title>{% if header.title %}{{ header.title|e('html') }} | {% endif %}{{ site.title|e('html') }}</title>
 
-  {% if config.themes.hypertext.style.usefavicon and not uri.query('headless') %}
+  {% if config.themes.hypertext.style.usefavicon %}
   <link rel="icon" type="image/png" href="{{ url('theme://images/favicon.png') }}" />
   {% endif %}
 
-  {% include 'partials/js-css.html.twig' %}
+  {% include 'partials/page/js-css.html.twig' %}
 {% endblock head %}
 </head>
+
+
 <body class="{{ page.template }}{{ body_classes ? ' {{ body_classes }}' : ''}}">
   {# ## HEADER ## #}
   {{ html5 ? '<header>' : '<div class="header">' }}
   {% block header %}
-    {% include 'partials/header.html.twig' %}
+    {% include 'partials/page/header.html.twig' %}
   {% endblock %}
   {{ html5 ? '</header>' : '</div>' }}
   
   {# ## BODY ## #}
   {{ html5 ? '<main>' : '<div class="main">' }}
-    {% block content %}
+    {{ html5 ? '<article>' : '<div class="item">'}}
+
+    {# ARTICLE HEAD #}
+    {% block item_head %}
+    {% include 'partials/item/header.html.twig' %}
     {% endblock %}
+
+    {# ARTICLE BODY #}
+    {% block content %}
+    {{ page.content|raw }}
+    {% endblock %}
+
+    {# CHILD PAGES #}
+    {% block children %}
+    {% include 'partials/item/children.html.twig' %}
+    {% endblock %}
+
+    {# ARTICLE FOOTER #}
+    {% block item_footer %}
+    {% include 'partials/item/footer.html.twig' %}
+    {% endblock %}
+
+    {{ html5 ? '</article>' : '</div>'}}
   {{ html5 ? '</main>' : '</div>' }}
 
   {# ## FOOTER ## #}
   {{ html5 ? '<footer>' : '<div class="footer">' }}
   {% block footer %}
-    {% include 'partials/footer.html.twig' %}
+    {% include 'partials/page/footer.html.twig' %}
   {% endblock %}
   {{ html5 ? '</footer>' : '</div>' }}
+
 </body>
 {% endif %}
 </html>
