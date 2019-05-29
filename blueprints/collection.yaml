@@ -55,13 +55,13 @@ form:
                       type: section
                       title: Child Rendering
                       underline: true
-                    header.render.style:
+                    header.render.child_style:
                       type: select
                       label: Render Style
                       help: How you want child pages presented on the page. See Hypertext docs for examples.
                       default: summaries
                       options:
-                        summaries: Summaries
+                        summary: Summaries
                         list: List
                         grid: Grid
                         table: Table
