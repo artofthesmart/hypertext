@@ -12,7 +12,7 @@
 
     {% include 'partials/item/'~page.header.render.child_style|default('summary')~'.html.twig' with {'page':child, parent:page} %}
     
-    {{ html5 ? '</article>' : '</div>' }}
+    {{ html5 ? '</section>' : '</div>' }}
   {% endfor %}
     
   {% if config.plugins.pagination.enabled and collection.params.pagination %}
