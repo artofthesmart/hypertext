@@ -7,9 +7,9 @@
 {% endif %}
 
 {% block header_navigation %}
-    {% include 'partials/navigation.html.twig' %}
+    {% include 'partials/page/navigation.html.twig' %}
 {% endblock %}
 
 {% if grav.messages.all %}
-    {% include 'partials/messages.html.twig' %}
+    {% include 'partials/page/messages.html.twig' %}
 {% endif %}
