@@ -10,7 +10,7 @@
       <div class="snippet{% if child.taxonomy.category %}{% for cat in child.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}{% endif %}">
     {% endif %}
 
-    {% include 'partials/item/'~page.header.render.child_style~'.html.twig' with {'page':child, parent:page} %}
+    {% include 'partials/item/'~page.header.render.child_style|default('summary')~'.html.twig' with {'page':child, parent:page} %}
     
     {{ html5 ? '</article>' : '</div>' }}
   {% endfor %}
