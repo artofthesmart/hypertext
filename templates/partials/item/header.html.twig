@@ -17,13 +17,6 @@
 <h2><a href="{{ page.url }}">{{ page.title }}</a>{% if page.header.subtitle %}<small> - {{ page.header.subtitle }}{% endif %}</h2>
 {% endif %}
 
-<p>
-{% if html5 %}
-  <time datetime="{{ page.date|date("c") }}">{{ page.date|date(system.pages.dateformat.short) }}</time>
-{% else %}
-  <span class="datetime">{{ page.date|date(system.pages.dateformat.short) }}</span>
-{% endif %}
-
 {# Taxonomies #}
 {% if page.taxonomy.category %}
   <br/>
@@ -44,7 +37,6 @@
   {% endfor %}
   </span>
 {% endif %}
-</p>
 
 {# Header Image #}
 {% if show_header_image %}
