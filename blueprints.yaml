@@ -40,8 +40,8 @@ form:
                       underline: true
                     structure.inline_navbar:
                       type: toggle
-                      label: Use inline nav elements
-                      help: When enabled, the navigation lists will be inlined instead of <ul>. Enable if using no theme.
+                      label: Use inline menu bar
+                      help: When enabled, the navigation list at the top of the page will be inlined instead of <ul>. Enable if using no theme.
                       default: 0
                       highlight: 0
                       options:
