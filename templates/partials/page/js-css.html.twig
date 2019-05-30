@@ -66,9 +66,12 @@ body {
 {% endif %}
 }
 
+{# This was a bad idea.
 {% if style.header_image_align|default('default') == 'left' %}
 .snippet img { float: left; margin: 0 1em; }
-{% endif %}
+section { clear: both; }
+{% endif %} 
+#}
 
 {# User's styles #}
 {{ style.customCSS != '' ? style.customCSS : "" }}

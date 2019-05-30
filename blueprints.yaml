@@ -228,15 +228,16 @@ form:
                         960: 960px (medium)
                         1024: 1024px (large)
                         1280: 1280px (very large)
-                    style.header_image_align:
-                      type: select
-                      size: medium
-                      classes: fancy
-                      label: Header Image Alignment
-                      help: Inlines header images to look better.
-                      options:
-                        default: No style (block)
-                        left: Pull left
+                    #This was a bad idea.
+                    #style.header_image_align:
+                    #  type: select
+                    #  size: medium
+                    #  classes: fancy
+                    #  label: Header Image Alignment
+                    #  help: Inlines header images to look better.
+                    #  options:
+                    #    default: No style (block)
+                    #    left: Pull left
         menus:
           type: tab
           title: Header & Links
