@@ -14,7 +14,7 @@
 
 {# Categories #}
 {% if page.taxonomy.category %}
-<p>Categories: <small>{% for category in page.taxonomy.category %}[<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{% if not loop.last %}, {% endif %}{% endfor %}]</small></p>
+<p>Categories: <small>{% for category in page.taxonomy.category %}[<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>]{% if not loop.last %}, {% endif %}{% endfor %}]</small></p>
 {% endif %}
 
 {# Tags - Uncomment this section if you want tags in the child view after all. #}

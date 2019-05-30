@@ -65,7 +65,7 @@ form:
                         list: List
                         grid: Grid
                         table: Table
-                   header.render.images:
+                    header.render.images:
                       type: select
                       label: Child Page Images
                       help: When enabled, this will display of child page's images. Can be over-ridden by child pages.
