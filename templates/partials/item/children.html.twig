@@ -18,7 +18,7 @@
     
     {{ html5 ? '</section>' : '</div>' }}
   {% endfor %}
-    
+  
   {% if config.plugins.pagination.enabled and collection.params.pagination %}
     {% include 'partials/page/pagination.html.twig' with {'base_url':page.url, 'pagination':collection.params.pagination} %}
   {% endif %}

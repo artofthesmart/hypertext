@@ -13,13 +13,15 @@
 {# ------------------------------------------------------------------------ #}
 
 {# Date #}
+{% if structure.show_date %}
 <p align="right"><sub>
-{% if html5 %}
-  <time datetime="{{ page.date|date("c") }}">{{ page.date|date(system.pages.dateformat.short) }}</time>
-{% else %}
-  <span class="datetime">{{ page.date|date(system.pages.dateformat.short) }}</span>
-{% endif %}
+  {% if html5 %}
+    <time datetime="{{ page.date|date("c") }}">{{ page.date|date(system.pages.dateformat.short) }}</time>
+  {% else %}
+    <span class="datetime">{{ page.date|date(system.pages.dateformat.short) }}</span>
+  {% endif %}
 </sub></p>
+{% endif %}
 
 {# Titles #}
 {% if not page.home() %}

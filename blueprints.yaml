@@ -38,21 +38,21 @@ form:
                       type: section
                       title: Navigation Structure
                       underline: true
-                    structure.inlineNavbar:
+                    structure.inline_navbar:
                       type: toggle
                       label: Use inline nav elements
-                      help: When enabled, the navigation lists will be inlined instead of <ul>.
-                      default: 1
-                      highlight: 1
+                      help: When enabled, the navigation lists will be inlined instead of <ul>. Enable if using no theme.
+                      default: 0
+                      highlight: 0
                       options:
                         1: Enabled
                         0: Disabled
                       validate:
                         type: bool
-                    structure.useSeparator:
+                    structure.inline_pagination:
                       type: toggle
-                      label: Use separator (inline nav only)
-                      help: When enabled, the site will add a vertical pipe character (|) between inline menu bar links.
+                      label: Use inline pagination
+                      help: When enabled, and you have installed the pagination plugin, pagination will be inlined instead of <ul>.
                       default: 1
                       highlight: 1
                       options:
@@ -60,6 +60,20 @@ form:
                         0: Disabled
                       validate:
                         type: bool
+                    structure.use_decorators:
+                      type: toggle
+                      label: Use decorator text
+                      help: When enabled, spacers are added to inline navigation and brackets around category links. Just decorators.
+                      default: 1
+                      highlight: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                column2: # RENDER STRUCTURE
+                  type: column
+                  fields:
                     renderStructureTitle:
                       type: section
                       title: HTML Structure & Options
@@ -72,7 +86,7 @@ form:
                       options:
                         default: HTML 5 (Recommended)
                         compatibility: HTML 3.2 (Minimal style)
-                    structure.useFavicon:
+                    structure.use_favicon:
                       type: toggle
                       label: Use favicon
                       help: When enabled, the site will feed a favicon to the user if present.
@@ -83,28 +97,17 @@ form:
                         0: Disabled
                       validate:
                         type: bool
-                column2: # WORDING STRUCTURE
-                  type: column
-                  fields:
-                    wordingStructureTitle:
-                      type: section
-                      title: Words & Phrases
-                      underline: true
-                    structure.nextWord:
-                      type: text
-                      label: “Next” word
-                      help: The word you would use in a link to go to the next page in a sequence. Good if your site is in another language.
-                      default: Next
-                    structure.prevWord:
-                      type: text
-                      label: “Previous” word
-                      help: The word you would use in a link to go to the next page in a sequence. Good if your site is in another language.
-                      default: Previous
-                    structure.readMoreWord:
-                      type: text
-                      label: “Read More...” word
-                      help: The word you would use in a link to go to the page's content after reading a summary of the content.
-                      default: Read More...
+                    structure.show_date:
+                      type: toggle
+                      label: Show last updated date
+                      help: When enabled, the date that the page was published will appear.
+                      default: 0
+                      highlight: 0
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool                    
         style: # STYLE TAB
           type: tab
           title: Style & Formatting

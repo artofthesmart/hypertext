@@ -5,6 +5,8 @@
 {% set body_classes = page.header.bodyClasses %}
 {% set html5 = structure.htmlMode == 'default' %}
 
+{# ------------------------------------------------------------------------ #}
+
 <!DOCTYPE html>
 
 
@@ -35,7 +37,7 @@
 
   <title>{% if header.title %}{{ header.title|e('html') }} | {% endif %}{{ site.title|e('html') }}</title>
 
-  {% if config.themes.hypertext.style.usefavicon %}
+  {% if config.themes.hypertext.style.use_favicon %}
   <link rel="icon" type="image/png" href="{{ url('theme://images/favicon.png') }}" />
   {% endif %}
 
