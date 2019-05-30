@@ -1,9 +1,14 @@
 {% set structure = config.themes.hypertext.structure %}
 {% set style = config.themes.hypertext.style %}
 {% set menu = config.themes.hypertext.menu %}
-
-{% set body_classes = page.header.bodyClasses %}
 {% set html5 = structure.htmlMode == 'default' %}
+
+{% set allowCSS = page.header.allowCSS == 'enabled' or
+                    (page.header.allowCSS|default('default') == 'default' and 
+                     style.allowCSS == '1') %}
+{% set allowJS  = page.header.allowJS  == 'enabled' or
+                    (page.header.allowJS|default('default') == 'default' and 
+                     style.allowJS == '1') %}
 
 {# ------------------------------------------------------------------------ #}
 
@@ -46,7 +51,7 @@
 </head>
 
 
-<body class="{{ page.template }}{{ body_classes ? ' {{ body_classes }}' : ''}}">
+<body class="{{ page.template }}{{ page.header.bodyClasses ? ' {{ page.header.bodyClasses }}' : ''}}">
   {# ## HEADER ## #}
   {{ html5 ? '<header>' : '<div class="header">' }}
   {% block header %}

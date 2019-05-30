@@ -3,14 +3,6 @@
 <p>{{ 'THEME_HYPERTEXT.FOOTER.BY_LINE'|t }}</p>
 
 {% block bottom %}
-{# Allow CSS and JS Logic #}
-{% set allowCSS = page.header.allowCSS == 'enabled' or
-                    (page.header.allowCSS|default('default') == 'default' and 
-                     config.themes.hypertext.structure.allowCSS == '1') %}
-{% set allowJS  = page.header.allowJS  == 'enabled' or
-                    (page.header.allowJS|default('default') == 'default' and 
-                     config.themes.hypertext.structure.allowJS == '1') %}
-
 {% if allowJS %}
 {{ assets.js('bottom')|raw }}
 {% endif %}

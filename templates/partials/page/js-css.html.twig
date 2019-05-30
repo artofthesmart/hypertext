@@ -3,14 +3,6 @@
                       'w3c-steely', 'w3c-swiss', 'w3c-traditional', 'w3c-ultramarine', 'water-dark', 'water-light', 'writ',
                       'yorha'] %}
 
-{# Allow CSS and JS Logic #}
-{% set allowCSS = page.header.allowCSS == 'enabled' or
-                    (page.header.allowCSS|default('default') == 'default' and 
-                     style.allowCSS == '1') %}
-{% set allowJS  = page.header.allowJS  == 'enabled' or
-                    (page.header.allowJS|default('default') == 'default' and 
-                     style.allowJS == '1') %}
-
 {% block stylehseets %}
 
 {# Set a stylesheet from URI or style config #}
