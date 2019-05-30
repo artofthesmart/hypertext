@@ -37,7 +37,7 @@ Pages:
 {% else %} {# Otherwise, we're doing UL-based navigation, like for a theme #}
 
 {{ html5 ? '<nav class="pagination">' : '<div class="pagination">' }}
-<ul class="pagination">
+<ul>
   {% if pagination.hasPrev %}
     {% set url = (base_url ~ pagination.params ~ pagination.prevUrl)|replace({'//':'/'}) %}
     <li><a rel="prev" href="{{ url }}">{{ 'THEME_HYPERTEXT.PAGINATION.PREVIOUS_PAGE'|t }}</a></li>
