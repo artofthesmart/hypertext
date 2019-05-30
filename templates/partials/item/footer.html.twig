@@ -3,7 +3,7 @@
 
 <p>
 {# Render the next/prev buttons, unless suppressed. #}
-{% if not page.parent.root() and page.header.content.sibling_links|default(false) %}
+{% if not page.parent.root() and page.parent.header.content.sibling_links|default(false) %}
   <span class="pagination">
   {% if not page.isLast %}
     <a href="{{ page.prevSibling.url }}">&#xab; {{ structure.prevWord }}</a>
