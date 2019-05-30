@@ -7,7 +7,6 @@
 
 {% if structure.inline_pagination %}
 {{ html5 ? '<nav class="pagination">' : '<div class="pagination">' }}
-Pages: 
   {% if pagination.hasPrev %}
     {% set url = (base_url ~ pagination.params ~ pagination.prevUrl)|replace({'//':'/'}) %}
     <a rel="prev" href="{{ url }}">{{ 'THEME_HYPERTEXT.PAGINATION.PREVIOUS_PAGE'|t }}</a>
