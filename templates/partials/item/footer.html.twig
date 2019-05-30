@@ -2,8 +2,8 @@
 {# Add the date, unless suppressed.  TODO: Build in suppression option.  #}
 
 <p>
-{# Render the next/prev buttons, unless suppressed. TODO: Build in suppression option. #}
-{% if not page.parent.root() %}
+{# Render the next/prev buttons, unless suppressed. #}
+{% if not page.parent.root() and page.header.content.sibling_links|default(false) %}
   <span class="pagination">
   {% if not page.isLast %}
     <a href="{{ page.prevSibling.url }}">&#xab; {{ structure.prevWord }}</a>
