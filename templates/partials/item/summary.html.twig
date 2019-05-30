@@ -20,6 +20,7 @@
     {{ page.media[header_image_file].cropZoom(style.width - 10, style.width / 5).html() }}
   {% else %}
     {{ page.media[header_image_file].html() }}
+  {% endif %}
 {% endif %}
 
 {# Categories #}
