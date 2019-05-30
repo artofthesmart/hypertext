@@ -1,6 +1,13 @@
-{% set show_header = page.header.show_header_image == 'default' ? parent.header.render.images : page.header.show_header_image %}
-{% set show_nested_children = parent.header.render.nestedChildren %}
+{% if page.header.show_header_image|default('default') == 'default' %}
+  {% set show_header_image = parent.header.render.children.images|default('enabled') %}
+{% else %}
+  {% set show_header_image = page.header.show_header_image %}
+{% endif %}
+
+{% set show_nested_children = parent.header.render.children.render_nested %}
 {% set header_image_file = page.header.header_image_file ?? false %}
+
+{# ------------------------------------------------------------------------ #}
 
 {# Title & Subtitle #}
 <h3>
@@ -8,7 +15,7 @@
   {% if page.header.subtitle %} - <small>{{ page.header.subtitle }}</small>{% endif %}
 </h3>
 
-{% if show_header %}
+{% if show_header_image == 'enabled' %}
   {{ page.media[header_image_file].cropZoom(300,100).html() }}
 {% endif %}
 
