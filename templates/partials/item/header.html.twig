@@ -48,6 +48,7 @@
 {% endif %}
 
 {# Header Image #}
-{% if show_header_image %}
-  <p>{{ header_image_media.html }}</p>
-{% endif %}
+{% if style.image_cropping|default(false) %}
+    <p>{{ page.media[header_image_file].cropZoom(style.width - 10, style.width / 5).html() }}</p>
+  {% else %}
+    <p>{{ page.media[header_image_file].html() }}</p>

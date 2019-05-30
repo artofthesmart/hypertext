@@ -14,6 +14,8 @@ license: MIT
 dependencies:
   { name: grav, version: '>=1.5.10' }
 
+# TODO: Add inline pagination, nav decorators, 
+
 form:
   validation: strict
   fields:
@@ -228,6 +230,19 @@ form:
                         960: 960px (medium)
                         1024: 1024px (large)
                         1280: 1280px (very large)
+                    style.image_cropping:
+                      type: toggle
+                      size: medium
+                      label: Auto-resize header images
+                      help: When enabled, this will cropzoom header images of pages to a default size. When *disabled* header images will render with whatever size you upload them at.
+                      default: 0
+                      options:
+                          1: 'Enabled'
+                          0: 'Disabled'
+                      validate:
+                          type: bool
+
+
                     #This was a bad idea.
                     #style.header_image_align:
                     #  type: select
