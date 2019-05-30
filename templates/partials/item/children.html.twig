@@ -7,6 +7,7 @@
                                        header.content.order.dir|default('desc')) %}
 
   {% for child in collection %}
+    <hr/>
     {% if html5 %}
       <section class="snippet{% if child.taxonomy.category %}{% for cat in child.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}{% endif %}">
     {% else %}
@@ -19,6 +20,6 @@
   {% endfor %}
     
   {% if config.plugins.pagination.enabled and collection.params.pagination %}
-    {% include 'partials/pagination.html.twig' with {'base_url':page.url, 'pagination':collection.params.pagination} %}
+    {% include 'partials/page/pagination.html.twig' with {'base_url':page.url, 'pagination':collection.params.pagination} %}
   {% endif %}
 {% endif %}

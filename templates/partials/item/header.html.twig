@@ -12,6 +12,15 @@
 
 {# ------------------------------------------------------------------------ #}
 
+{# Date #}
+<p align="right"><sub>
+{% if html5 %}
+  <time datetime="{{ page.date|date("c") }}">{{ page.date|date(system.pages.dateformat.short) }}</time>
+{% else %}
+  <span class="datetime">{{ page.date|date(system.pages.dateformat.short) }}</span>
+{% endif %}
+</sub></p>
+
 {# Titles #}
 {% if not page.home() %}
 <h2><a href="{{ page.url }}">{{ page.title }}</a>{% if page.header.subtitle %}<small> - {{ page.header.subtitle }}</small>{% endif %}</h2>
