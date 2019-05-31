@@ -99,8 +99,8 @@ form:
                         type: bool
                     structure.show_date:
                       type: toggle
-                      label: Show last updated date
-                      help: When enabled, the date that the page was published will appear.
+                      label: Show last updated dates
+                      help: When enabled, the date that the page was published will appear in various places.
                       default: 0
                       highlight: 0
                       options:

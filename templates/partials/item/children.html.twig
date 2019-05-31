@@ -8,27 +8,52 @@
                                        header.content.order.dir|default('desc')) %}
   
   {% if child_style == 'grid' %}
-    <table>
-      {% for child in collection %}
+  
+  {# GRID #}
+  <table>
+    {% for child in collection %}
+      {% if loop.index % 2 == 0 %}
+        <tr>
         {% include 'partials/item/grid.html.twig' with {'page':child, parent:page} %}
-      {% endfor %}
-    </table>
+        {{ loop.last ? '<td></td></tr>' : '' }} {# Close the row if this is the last item. #}
+      {% else %}
+        {% include 'partials/item/grid.html.twig' with {'page':child, parent:page} %}
+        </tr>
+      {% endif %}
+    {% endfor %}
+  </table>
+
   {% elseif child_style == 'table' %}
-    <table>
-      {% for child in collection %}
-        {% include 'partials/item/table.html.twig' with {'page':child, parent:page} %}
-      {% endfor %}
-    </table>
+  
+  {# TABLE #}
+  <table>
+    {{ html5 ? '<thead>' : ''}}<tr>
+      <td width="40%">Title</td>
+      <td width="20%">Categories</td>
+      <td width="20%">Last Edited</td>
+    {{ html5 ? '</thead>' : ''}}</tr>
+    {% for child in collection %}
+      {% include 'partials/item/table.html.twig' with {'page':child, parent:page} %}
+    {% endfor %}
+    
+  </table>
+
   {% elseif child_style == 'list' %}
-    <ol>
-      {% for child in collection %}
-        {% include 'partials/item/list.html.twig' with {'page':child, parent:page} %}
-      {% endfor %}
-    </ol>
-  {% else %} {# Summary, which is also the default #}
+
+  {# LIST #}
+  <ol>
+    {% for child in collection %}
+      {% include 'partials/item/list.html.twig' with {'page':child, parent:page} %}
+    {% endfor %}
+  </ol>
+
+  {% else %}
+
+  {# SUMMARY #}
     {% for child in collection %}
       {% include 'partials/item/summary.html.twig' with {'page':child, parent:page} %}
     {% endfor %}
+
   {% endif %}
 
   {% if config.plugins.pagination.enabled and collection.params.pagination %}
