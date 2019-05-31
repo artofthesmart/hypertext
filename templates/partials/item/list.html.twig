@@ -10,7 +10,7 @@
 
 {# ------------------------------------------------------------------------ #}
 
-<li{% if page.taxonomy.category %} class="{% for cat in page.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}{% endif %}">
+<li{% if page.taxonomy.category %} class="{% for cat in page.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}"{% endif %}>
   <h3>
     <a href="{{ page.url }}">{{ page.title }}</a>
     {% if page.header.subtitle %} - <small>{{ page.header.subtitle }}</small>{% endif %}
