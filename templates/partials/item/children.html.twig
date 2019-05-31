@@ -1,4 +1,5 @@
 {% set collection = page.collection()|length > 0 ? page.collection() : page.children.visible %}
+{% set child_style = page.header.render.children.style|default('summary') %}
 
 {# ------------------------------------------------------------------------ #}
 
@@ -6,19 +7,18 @@
   {% set collection = collection.order(header.content.order.by|default('date'), 
                                        header.content.order.dir|default('desc')) %}
 
-  {% for child in collection %}
-    <hr/>
-    {% if html5 %}
-      <section class="snippet{% if child.taxonomy.category %}{% for cat in child.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}{% endif %}">
-    {% else %}
-      <div class="snippet{% if child.taxonomy.category %}{% for cat in child.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}{% endif %}">
-    {% endif %}
+  {% if child_style == 'list' %}
+    <ol>
+      {% for child in collection %}
+        {% include 'partials/item/list.html.twig' with {'page':child, parent:page} %}
+      {% endfor %}
+    </ol>
+  {% else %} {# Summary, which is also the default #}
+    {% for child in collection %}
+      {% include 'partials/item/summary.html.twig' with {'page':child, parent:page} %}
+    {% endfor %}
+  {% endif %}
 
-    {% include 'partials/item/'~page.header.render.children.style|default('summary')~'.html.twig' with {'page':child, parent:page} %}
-    
-    {{ html5 ? '</section>' : '</div>' }}
-  {% endfor %}
-  
   {% if config.plugins.pagination.enabled and collection.params.pagination %}
     {% include 'partials/page/pagination.html.twig' with {'base_url':page.url, 'pagination':collection.params.pagination} %}
   {% endif %}

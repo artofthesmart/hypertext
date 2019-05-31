@@ -8,6 +8,12 @@
 {% set header_image_file = page.header.header_image_file ?? false %}
 
 {# ------------------------------------------------------------------------ #}
+<hr/>
+{% if html5 %}
+  <section class="snippet{% if page.taxonomy.category %}{% for cat in page.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}{% endif %}">
+{% else %}
+  <div class="snippet{% if page.taxonomy.category %}{% for cat in page.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}{% endif %}">
+{% endif %}
 
 {# Title & Subtitle #}
 <h3>
@@ -57,3 +63,5 @@
 </ol>
 </p>
 {% endif %} {# End render nested children #}
+
+{{ html5 ? '</section>' : '</div>' }}
