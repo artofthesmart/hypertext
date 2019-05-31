@@ -6,18 +6,17 @@
 
 {% set show_nested_children = parent.header.render.children.render_nested|default('disabled') %}
 {% set header_image_file = page.header.header_image_file ?? false %}
+{% set inner_children = page.collection()|length > 0 ? page.collection() : page.children.visible %}
 
 {# ------------------------------------------------------------------------ #}
 
-<li>
+<li{% if page.taxonomy.category %} class="{% for cat in page.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}{% endif %}">
   <h3>
     <a href="{{ page.url }}">{{ page.title }}</a>
     {% if page.header.subtitle %} - <small>{{ page.header.subtitle }}</small>{% endif %}
   </h3>
 
   {# Children #}
-  {% set inner_children = page.collection()|length > 0 ? page.collection() : page.children.visible %}
-
   {% if show_nested_children and inner_children|length > 0 %}
   {% set inner_children = inner_children.order(page.header.content.order.by|default('date'), page.content.order.dir|default('desc')) %}
   <ol class="nested-children">

@@ -6,6 +6,7 @@
 
 {% set show_nested_children = parent.header.render.children.render_nested|default('disabled') %}
 {% set header_image_file = page.header.header_image_file ?? false %}
+{% set inner_children = page.collection()|length > 0 ? page.collection() : page.children.visible %}
 
 {# ------------------------------------------------------------------------ #}
 <hr/>
@@ -51,8 +52,6 @@
 {% endif %}
 
 {# Children #}
-{% set inner_children = page.collection()|length > 0 ? page.collection() : page.children.visible %}
-
 {% if show_nested_children and inner_children|length > 0 %}
 {% set inner_children = inner_children.order(page.header.content.order.by|default('date'), page.content.order.dir|default('desc')) %}
 <p>Sub-Pages:

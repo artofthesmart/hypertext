@@ -6,7 +6,19 @@
 {% if collection|length > 0 %}
   {% set collection = collection.order(header.content.order.by|default('date'), 
                                        header.content.order.dir|default('desc')) %}
-
+  
+  {% if child_style == 'grid' %}
+    <table>
+      {% for child in collection %}
+        {% include 'partials/item/grid.html.twig' with {'page':child, parent:page} %}
+      {% endfor %}
+    </table>
+  {% if child_style == 'table' %}
+    <table>
+      {% for child in collection %}
+        {% include 'partials/item/table.html.twig' with {'page':child, parent:page} %}
+      {% endfor %}
+    </table>
   {% if child_style == 'list' %}
     <ol>
       {% for child in collection %}
