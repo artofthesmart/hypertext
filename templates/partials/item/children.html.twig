@@ -10,9 +10,9 @@
   {% if child_style == 'grid' %}
   
   {# GRID #}
-  <table>
+  <table width="100%">
     {% for child in collection %}
-      {% if loop.index % 2 == 0 %}
+      {% if loop.index0 % 2 == 0 %}
         <tr>
         {% include 'partials/item/grid.html.twig' with {'page':child, parent:page} %}
         {{ loop.last ? '<td></td></tr>' : '' }} {# Close the row if this is the last item. #}
