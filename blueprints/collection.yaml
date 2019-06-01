@@ -132,7 +132,7 @@ form:
                     header.render.children.nested_children:
                       type: toggle
                       label: Show nested children
-                      help: When enabled, any sub-children that a child page has will be shown.
+                      help: When enabled, any sub-children that a child page has will be shown (if possible).
                       default: 1
                       highlight: 1
                       options:
