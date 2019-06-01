@@ -1,5 +1,5 @@
 {# Does not show images #}
-{% set show_subtitle = parent.header.render.children.subtitle ?? true %}
+{% set show_subtitle = parent.header.render.children.subtitle ?? false %}
 {% set show_cat = parent.header.render.children.category ?? true %}
 {% set show_date = parent.header.render.children.date ?? false %}
 {% set show_children = parent.header.render.children.nested_children ?? true %}
