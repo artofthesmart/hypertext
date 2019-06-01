@@ -86,3 +86,5 @@ To make modifications, you can copy the `user/themes/hypertext/hypertext.yaml` f
 Individual pages have toggles to give you the opportunity to turn on and off global CSS and JS.  Useful for preventing plugins from loading except where you want them.
 
 > Recommend making all your images the same size...
+
+> Use metadata > Description for subtitles.

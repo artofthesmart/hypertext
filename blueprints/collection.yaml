@@ -85,20 +85,58 @@ form:
                         list: List
                         grid: Grid
                         table: Table
-                    header.render.children.images:
-                      type: select
-                      label: Child Page Images
-                      help: When enabled, this will display of child page's images. Can be over-ridden by child pages.
-                      default: enabled
+                    header.render.children.image:
+                      type: toggle
+                      label: Show image
+                      help: When enabled, child page header images will be shown (if possible).
+                      default: 1
+                      highlight: 1
                       options:
-                        enabled: Enabled
-                        disabled: Disabled
-                    header.render.children.render_nested:
-                      type: select
-                      label: Render Nested Children
-                      help: When enabled, this will list the children of any child pages, if available.
-                      default: disabled
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    header.render.children.description:
+                      type: toggle
+                      label: Show description
+                      help: When enabled, child page `description` metadata will be shown (if possible).
+                      default: 0
+                      highlight: 0
                       options:
-                        enabled: Enabled
-                        disabled: Disabled
-
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    header.render.children.category:
+                      type: toggle
+                      label: Show categories
+                      help: When enabled, child page categories will be shown (if possible).
+                      default: 1
+                      highlight: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    header.render.children.date:
+                      type: toggle
+                      label: Show publish date
+                      help: When enabled, the date that a child page was published will be shown (if possible).
+                      default: 0
+                      highlight: 0
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    header.render.children.nested_children:
+                      type: toggle
+                      label: Show nested children
+                      help: When enabled, any sub-children that a child page has will be shown.
+                      default: 1
+                      highlight: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool

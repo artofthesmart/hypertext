@@ -1,29 +1,46 @@
-{% if page.header.show_header_image|default('default') == 'default' %}
-  {% set show_header_image = parent.header.render.children.images|default('enabled') %}
-{% else %}
-  {% set show_header_image = page.header.show_header_image %}
-{% endif %}
+{# Does not show images #}
+{% set show_desc = parent.header.render.children.description|default(true) %}
+{% set show_cat = parent.header.render.children.category|default(true) %}
+{% set show_date = parent.header.render.children.date|default(false) %}
+{% set show_children = parent.header.render.children.nested_children|default(true) %}
 
-{% set show_nested_children = parent.header.render.children.render_nested|default('disabled') == 'enabled' %}
 {% set header_image_file = page.header.header_image_file ?? false %}
 {% set inner_children = page.collection()|length > 0 ? page.collection() : page.children.visible %}
 
 {# ------------------------------------------------------------------------ #}
 
-<li{% if page.taxonomy.category %} class="{% for cat in page.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}"{% endif %}>
-  <h3>
+<li class="child-level-{{ level }}{% for cat in page.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}">
+  {# Date #}
+  {% if show_date %}
+    {% if html5 %}
+      {{ structure.use_decorators ? '[' : '' }}<time datetime="{{ page.date|date("c") }}">{{ page.date|date(system.pages.dateformat.short) }}</time>{{ structure.use_decorators ? ']' : ' '}}
+    {% else %}
+      {{ structure.use_decorators ? '[' : '' }}<span class="datetime">{{ page.date|date(system.pages.dateformat.short) }}</span>{{ structure.use_decorators ? ']' : ' '}}
+    {% endif %}
+  {% endif %}
+
+  <strong>
     <a href="{{ page.url }}">{{ page.title }}</a>
-    {% if page.header.subtitle %} - <small>{{ page.header.subtitle }}</small>{% endif %}
-  </h3>
+    {% if page.header.subtitle and show_desc %} - <small>{{ page.header.subtitle }}</small>{% endif %}
+  </strong>
+
+  {# Categories #}
+  {% if page.taxonomy.category and show_cat %}
+    <br/>
+    Categories: <small>
+    {% for category in page.taxonomy.category %}
+      {{ structure.use_decorators ? '[' : '' }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ structure.use_decorators ? ']' : '' }}{{ not loop.last ? ',' : '' }}
+    {% endfor %}</small>
+  {% else %}
+  {% endif %}
 
   {# Children #}
-  {% if show_nested_children and inner_children|length > 0 %}
+  {% if show_children and inner_children|length > 0 %}
   {% set inner_children = inner_children.order(page.header.content.order.by|default('date'), page.content.order.dir|default('desc')) %}
-  <ol class="nested-children">
+  <ul class="nested-children">
     {% for child in inner_children %}
-    <li><a href="{{ child.url }}">{{ child.title }}</a>{{ child.header.subtitle ? ' - <span>'~child.header.subtitle~'</span>' : '' }}</li>
+      {% include 'partials/item/list.html.twig' with {'page':child, parent:page, level:level + 1} %}
     {% endfor %}
-  </ol>
+  </ul>
   {% endif %} {# End render nested children #}
 </li>
-

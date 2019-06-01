@@ -100,7 +100,7 @@ form:
                     structure.show_date:
                       type: toggle
                       label: Show last updated dates
-                      help: When enabled, the date that the page was published will appear in various places.
+                      help: When enabled, the date that the page was published will appear on individual pages. Collections/blog pages have this option also.
                       default: 0
                       highlight: 0
                       options:
