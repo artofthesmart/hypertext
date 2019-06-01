@@ -96,10 +96,10 @@ form:
                         0: Disabled
                       validate:
                         type: bool
-                    header.render.children.description:
+                    header.render.children.subtitle:
                       type: toggle
-                      label: Show description
-                      help: When enabled, child page `description` metadata will be shown (if possible).
+                      label: Show subtitle
+                      help: When enabled, child page subtitle will be shown (if possible).
                       default: 0
                       highlight: 0
                       options:
