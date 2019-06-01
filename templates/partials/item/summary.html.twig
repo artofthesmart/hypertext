@@ -3,10 +3,10 @@
 {% else %}
   {% set show_header_image = page.header.show_header_image %}
 {% endif %}
-{% set show_desc = parent.header.render.children.subtitle|default(true) %}
-{% set show_cat = parent.header.render.children.category|default(true) %}
-{% set show_date = parent.header.render.children.date|default(false) %}
-{% set show_children = parent.header.render.children.nested_children|default(true) %}
+{% set show_subtitle = parent.header.render.children.subtitle ?? true %}
+{% set show_cat = parent.header.render.children.category ?? true %}
+{% set show_date = parent.header.render.children.date ?? false %}
+{% set show_children = parent.header.render.children.nested_children ?? true %}
 
 {% set header_image_file = page.header.header_image_file ?? false %}
 {% set inner_children = page.collection()|length > 0 ? page.collection() : page.children.visible %}
@@ -23,7 +23,7 @@
 {# Title & Subtitle #}
 <h3>
   <a href="{{ page.url }}">{{ page.title }}</a>
-  {% if page.header.subtitle %} - <small>{{ page.header.subtitle }}</small>{% endif %}
+  {% if page.header.subtitle and show_subtitle %} - <small>{{ page.header.subtitle }}</small>{% endif %}
 </h3>
 
 <p> {# The next set of items should be somewhat close together.}
@@ -76,7 +76,7 @@
 <p>Sub-Pages:
 <ol class="nested-children">
   {% for child in inner_children %}
-  <li><a href="{{ child.url }}">{{ child.title }}</a>{{ child.header.subtitle ? ' - <span>'~child.header.subtitle~'</span>' : '' }}</li>
+  <li><a href="{{ child.url }}">{{ child.title }}</a>{{ child.header.subtitle and show_subtitle ? ' - <span>'~child.header.subtitle~'</span>' : '' }}</li>
   {% endfor %}
 </ol>
 </p>
