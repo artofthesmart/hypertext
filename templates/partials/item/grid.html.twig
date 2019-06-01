@@ -16,7 +16,7 @@
 <td width="50%"{% if page.taxonomy.category %} class="{% for cat in page.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}"{% endif %}>
 
   {# Image #}
-  {% if show_image %}
+  {% if show_image and header_image_file %}
     {% if style.image_cropping|default(false) %}
       <a href="{{ page.url }}">{{ page.media[header_image_file].cropZoom((style.width / 2) - 10, style.width / 5).html() }}</a>
     {% else %}
@@ -28,7 +28,7 @@
   <p>
   <strong>
     <a href="{{ page.url }}">{{ page.title }}</a>
-    {% if show_subtitle %}
+    {% if show_subtitle and page.header.subtitle %}
       - {{ page.header.subtitle }}
     {% endif %}
   </strong>

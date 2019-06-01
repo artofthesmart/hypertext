@@ -29,7 +29,7 @@
 <p> {# The next set of items should be somewhat close together.}
 
 {# Header Image #}
-{% if show_image %}
+{% if show_image and header_image_file %}
   <a href="{{ page.url }}">
   {% if style.image_cropping|default(false) %}
     {{ page.media[header_image_file].cropZoom(style.width - 10, style.width / 5).html() }}
