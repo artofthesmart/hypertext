@@ -13,56 +13,68 @@
 
 {# ------------------------------------------------------------------------ #}
 
-<td width="50%"{% if page.taxonomy.category %} class="{% for cat in page.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}"{% endif %}>
+<tr{% if page.taxonomy.category %} class="{% for cat in page.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}"{% endif %}>
 
   {# Image #}
+  <td rowspan="3" class="image" width="20%">
   {% if show_image and header_image %}
     {% if style.image_cropping|default(false) %}
-      <a href="{{ page.url }}">{{ header_image.cropZoom((style.width / 2) - 10, style.width / 5).html() }}</a>
+      <a href="{{ page.url }}">{{ header_image.cropZoom((style.width / 7), style.width / 7).html() }}</a>
     {% else %}
       <a href="{{ page.url }}">{{ header_image.html() }}</a>
     {% endif %}
   {% endif %}
+  </td>
+  
 
-  {# Title & Subtitle #}
-  <p>
+  {# Title #}
+  <td colspan="2">
   <strong>
     <a href="{{ page.url }}">{{ page.title }}</a>
-    {% if show_subtitle and page.header.subtitle %}
-      - {{ page.header.subtitle }}
-    {% endif %}
   </strong>
+  </td>
+</tr>
 
-  {# Date #}
+{# Subtitle #}
+<tr{% if page.taxonomy.category %} class="{% for cat in page.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}"{% endif %}>
+  <td colspan="2">
+    {% if show_subtitle and page.header.subtitle %}
+      {{ page.header.subtitle }}
+    {% endif %}
+  </td>
+</tr>
+
+<tr{% if page.taxonomy.category %} class="{% for cat in page.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}"{% endif %}>
+
+{# Date #}
+<td>
   {% if show_date %}
-    <br>
     {% if html5 %}
       {{ 'THEME_HYPERTEXT.DATES.PUBLISHED'|t }}: <time datetime="{{ page.date|date("c") }}">{{ page.date|date(system.pages.dateformat.short) }}</time>
     {% else %}
       {{ 'THEME_HYPERTEXT.DATES.PUBLISHED'|t }}: <span class="datetime">{{ page.date|date(system.pages.dateformat.short) }}</span>
     {% endif %}
   {% endif %}
-
-  {# Categories #}
-  {% if page.taxonomy.category and show_cat %}
-    <br>
-    {{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t }}: 
-    {% for category in page.taxonomy.category %}
-      {{ structure.use_decorators ? '[' : '' }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ structure.use_decorators ? ']' : '' }}{{ not loop.last ? ',' : '' }}
-    {% endfor %}
-  {% else %}
-  {% endif %}
-
-  {# Children #}
-  {% if show_children and inner_children|length > 0 %}
-  {% set inner_children = inner_children.order(page.header.content.order.by|default('date'), page.content.order.dir|default('desc')) %}
-  <br>
-  Sub-Pages:
-  <ol class="nested-children">
-    {% for child in inner_children %}
-    <li><a href="{{ child.url }}">{{ child.title }}</a>{{ child.header.subtitle and show_subtitle ? ' - <span>'~child.header.subtitle~'</span>' : '' }}</li>
-    {% endfor %}
-  </ol>
-  {% endif %} {# End render nested children #}
-  </p>
 </td>
+
+{# Categories #}
+<td>
+{% if page.taxonomy.category and show_cat %}
+  {{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t }}: 
+  {% for category in page.taxonomy.category %}
+    {{ structure.use_decorators ? '[' : '' }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ structure.use_decorators ? ']' : '' }}{{ not loop.last ? ',' : '' }}
+  {% endfor %}
+{% endif %}
+</td></tr>
+
+{# Children 
+{% if show_children and inner_children|length > 0 %}
+{% set inner_children = inner_children.order(page.header.content.order.by|default('date'), page.content.order.dir|default('desc')) %}
+<br>
+Sub-Pages:
+<ol class="nested-children">
+  {% for child in inner_children %}
+  <li><a href="{{ child.url }}">{{ child.title }}</a>{{ child.header.subtitle and show_subtitle ? ' - <span>'~child.header.subtitle~'</span>' : '' }}</li>
+  {% endfor %}
+</ol>
+{% endif %} {# End render nested children #}
