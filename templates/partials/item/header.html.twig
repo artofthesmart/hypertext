@@ -1,14 +1,4 @@
-{# ## HEADER IMAGE SETUP ## #}
-{% set show_header_image = page.header.show_header_image|default('default') == 'default' ? parent.header.render.images : page.header.show_header_image %}
-{% set header_image_file = page.header.header_image_file ?? false %}
-
-{% if show_header_image %}    {# if the user wants an image... #}
-  {% if header_image_file %}  {# if there's an image specified... #}
-    {% set header_image_media = page.media.images[header_image_file] %}
-  {% else %}                  {# if there's NO image specified... #}
-    {% set header_image_media = page.media.images|first %}
-  {% endif %}
-{% endif %}
+{% include 'partials/item/components/child_variables.html.twig' %}
 
 {# ------------------------------------------------------------------------ #}
 

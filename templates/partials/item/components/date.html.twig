@@ -1,0 +1,5 @@
+{% if html5 %}
+  {{ structure.use_decorators ? '[' : '' }}<time datetime="{{ page.date|date("c") }}">{{ page.date|date(system.pages.dateformat.short) }}</time>{{ structure.use_decorators ? ']' : ' '}}
+{% else %}
+  {{ structure.use_decorators ? '[' : '' }}<span class="datetime">{{ page.date|date(system.pages.dateformat.short) }}</span>{{ structure.use_decorators ? ']' : ' '}}
+{% endif %}

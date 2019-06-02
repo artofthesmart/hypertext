@@ -1,0 +1,7 @@
+{% if show_image and header_image %}
+  {% if style.image_cropping|default(false) %}
+    <a href="{{ page.url }}">{{ header_image.cropZoom((style.width / 2) - 10, style.width / 5).html() }}</a>
+  {% else %}
+    <a href="{{ page.url }}">{{ header_image.html() }}</a>
+  {% endif %}
+{% endif %}
