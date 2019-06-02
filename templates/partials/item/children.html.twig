@@ -23,6 +23,15 @@
     {% endfor %}
   </table>
 
+  {% elseif child_style == 'layout' %}
+  
+  {# LAYOUT #}
+  <table>
+    {% for child in collection %}
+      {% include 'partials/item/layout.html.twig' with {'page':child, parent:page} %}
+    {% endfor %}    
+  </table>
+
   {% elseif child_style == 'table' %}
   
   {# TABLE #}

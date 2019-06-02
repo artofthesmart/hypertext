@@ -84,7 +84,8 @@ form:
                         summary: Summaries
                         list: List
                         grid: Grid
-                        table: Table
+                        layout: Table (Layout)
+                        table: Table (Tabular)
                     header.render.children.image:
                       type: toggle
                       label: Show image
