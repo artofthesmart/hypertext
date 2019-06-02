@@ -65,14 +65,16 @@ form:
                       style: fancy
 
                     header.show_header_image:
-                      type: select
-                      label: Display Header Image
-                      help: Determines when to show the header image.
-                      classes: fancy
+                      type: toggle
+                      label: Show header image
+                      help: When enabled, the header image will be shown at the top of this page.  If you don't specify one, the first image will be shown.
+                      default: 1
+                      highlight: 1
                       options:
-                        default: Use parent setting
-                        enabled: Always show
-                        disabled: Never show
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
                     header.header_image_file:
                       type: text
                       toggleable: true
