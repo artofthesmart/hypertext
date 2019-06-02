@@ -1,6 +1,4 @@
-{% set show_nested_children = parent.header.render.children.render_nested|default('disabled') == 'enabled' %}
-{% set header_image_file = page.header.header_image_file ?? false %}
-{% set inner_children = page.collection()|length > 0 ? page.collection() : page.children.visible %}
+{% include 'partials/item/components/child_variables.html.twig' %}
 
 {# ------------------------------------------------------------------------ #}
 
