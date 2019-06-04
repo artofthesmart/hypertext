@@ -90,3 +90,5 @@ Individual pages have toggles to give you the opportunity to turn on and off glo
 > Use metadata > Description for subtitles.
 
 > Image width is capped at 100% of viewport width, even for zero style themes.  The W3C could never have known about the rise of mobile devices and limited horizontal space. 
+
+> Against my better judgement, I'm going to leave tabular view in place. You can easily shoot yourself in the foot, so don't turn on all the columns.
