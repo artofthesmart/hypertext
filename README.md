@@ -88,3 +88,5 @@ Individual pages have toggles to give you the opportunity to turn on and off glo
 > Recommend making all your images the same size...
 
 > Use metadata > Description for subtitles.
+
+> Image width is capped at 100% of viewport width, even for zero style themes.  The W3C could never have known about the rise of mobile devices and limited horizontal space. 

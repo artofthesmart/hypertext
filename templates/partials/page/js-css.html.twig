@@ -58,6 +58,9 @@ body {
 {% endif %}
 }
 
+{# This is the one piece of style that is unavoidable. See documentation for details. #}
+img { max-width: 100%; }
+
 {# This was a bad idea.
 {% if style.header_image_align|default('default') == 'left' %}
 .snippet img { float: left; margin: 0 1em; }
