@@ -44,6 +44,7 @@
   <ul class="nested-children">
     {% for child in inner_children %}
       {% include 'partials/item/list.html.twig' with {'page':child, 'parent':parent, level:level + 1} %}
+      <br>
     {% endfor %}
   </ul>
   {% endif %} {# End render nested children #}
