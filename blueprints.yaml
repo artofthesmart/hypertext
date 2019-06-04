@@ -239,6 +239,7 @@ form:
                       label: Auto-resize header images
                       help: When enabled, this will cropzoom header images of pages to a default size. When *disabled* header images will render with whatever size you upload them at.
                       default: 0
+                      highlight: 0
                       options:
                           1: 'Enabled'
                           0: 'Disabled'
