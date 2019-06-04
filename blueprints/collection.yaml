@@ -83,9 +83,9 @@ form:
                       options:
                         summary: Summaries
                         list: List
-                        grid: Grid
-                        layout: Table (Layout)
-                        table: Table (Tabular)
+                        # grid: Grid # A column-based grid layout I tried. It was AWFUL.
+                        # layout: Table (Layout) # A geocities-like tabular layout version. It was AWFUL.
+                        table: Table
                     header.render.children.image:
                       type: toggle
                       label: Show image
