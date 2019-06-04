@@ -39,7 +39,8 @@
 
 {# Date #}
 {% if show_date %}
-<br><sub>
+{{ show_image and header_image ? '<br>' : '' }}
+<sub>
   {% if html5 %}
     <time datetime="{{ page.date|date("c") }}">{{ page.date|date(system.pages.dateformat.short) }}</time>
   {% else %}
