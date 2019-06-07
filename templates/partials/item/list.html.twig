@@ -23,10 +23,10 @@
     {% endif %}
   {% endif %}
 
-  <strong>
+  {{ level > 1 ? '' : '<strong>' }}
     <a href="{{ page.url }}">{{ page.title }}</a>
     {% if page.header.subtitle and show_subtitle %} - <small>{{ page.header.subtitle }}</small>{% endif %}
-  </strong>
+  {{ level > 1 ? '' : '</strong>' }}
 
   {# Categories #}
   {% if page.taxonomy.category and show_cat %}
