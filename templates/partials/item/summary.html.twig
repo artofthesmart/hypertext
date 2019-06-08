@@ -3,7 +3,12 @@
 {% else %}
   {% set show_image = page.header.show_header_image == 'enabled' %}
 {% endif %}
+
 {% set header_image = page.media.images[page.header.header_image_file] ?? page.media.images|first %}
+{% set use_image_crop = style.image_cropping|default(false) %}
+{% set image_width = use_image_crop ? style.width / 7 : header_image.width %}
+{% set image_height = use_image_crop ? style.width / 7 : header_image.height %}
+{% set header_image_url = header_image.cropZoom(image_width, image_height).url : header_image.url %}
 
 {% set show_subtitle = parent.header.render.children.subtitle ?? true %}
 {% set show_cat = parent.header.render.children.category ?? true %}
@@ -30,11 +35,9 @@
 
 {# Image #}
 {% if show_image and header_image %}
-  {% if style.image_cropping|default(false) %}
-    <a href="{{ page.url }}">{{ header_image.cropZoom((style.width / 2) - 10, style.width / 5).html() }}</a>
-  {% else %}
-    <a href="{{ page.url }}">{{ header_image.html() }}</a>
-  {% endif %}
+  <a href="{{ page.url }}">
+    <img src="{{ header_image_url }}" width="{{ header_image_width }}" height="{{ header_image_height }}">
+  </a>
 {% endif %}
 
 {# Date #}
