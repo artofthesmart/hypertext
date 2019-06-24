@@ -1,14 +1,9 @@
-{% if page.header.show_header_image|default('default') == 'default' %}
-  {% set show_image = parent.header.render.children.image ?? true %}
-{% else %}
-  {% set show_image = page.header.show_header_image == 'enabled' %}
-{% endif %}
-
-{% set header_image = page.media.images[page.header.header_image_file] ?? page.media.images|first %}
-{% set use_image_crop = style.image_cropping|default(false) %}
-{% set image_width = use_image_crop ? style.width / 7 : header_image.width %}
-{% set image_height = use_image_crop ? style.width / 7 : header_image.height %}
-{% set header_image_url = header_image.cropZoom(image_width, image_height).url : header_image.url %}
+{% set show_image = parent.header.render.children.image ?? true %}
+  {% set thumbnail_image = page.media.images[page.header.thumbnail_image_file] ?? page.media.images[page.header.header_image_file] ?? page.media.images|first %}
+  {% set use_image_crop = style.image_cropping|default(false) %}
+  {% set image_width = use_image_crop ? style.width / 7 : thumbnail_image.width %}
+  {% set image_height = use_image_crop ? style.width / 7 : thumbnail_image.height %}
+  {% set header_image_url = thumbnail_image.cropZoom(image_width, image_height).url : thumbnail_image.url %}
 
 {% set show_subtitle = parent.header.render.children.subtitle ?? true %}
 {% set show_cat = parent.header.render.children.category ?? true %}
@@ -34,7 +29,7 @@
 <p> {# The next set of items should be somewhat close together.}
 
 {# Image #}
-{% if show_image and header_image %}
+{% if show_image and thumbnail_image %}
   <a href="{{ page.url }}">
     <img src="{{ header_image_url }}" width="{{ header_image_width }}" height="{{ header_image_height }}">
   </a>
@@ -42,7 +37,7 @@
 
 {# Date #}
 {% if show_date %}
-{{ show_image and header_image ? '<br>' : '' }}
+{{ show_image and thumbnail_image ? '<br>' : '' }}
 <sub>
   {% if html5 %}
     <time datetime="{{ page.date|date("c") }}">{{ page.date|date(system.pages.dateformat.short) }}</time>

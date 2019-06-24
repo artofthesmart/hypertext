@@ -245,8 +245,6 @@ form:
                           0: 'Disabled'
                       validate:
                           type: bool
-
-
                     #This was a bad idea.
                     #style.header_image_align:
                     #  type: select
