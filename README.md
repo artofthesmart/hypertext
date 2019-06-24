@@ -1,35 +1,48 @@
 # Hypertext Theme
 
-**Hypertext** is a [Grav](http://github.com/getgrav/grav) theme that focuses on speed and simplicity by using little-to-no JS or CSS.  Hypertext is meant to be used with the latest version of the Grav CMS.
+[Hypertext](http://hypertext.artofthesmart.com) is a theme for [Grav CMS](google.com) that prioritizes speed and simplicity.  It does not require (nor does it include) any Javascript and it keeps styles to a bare minimum.  This ensures a fast, consistent user experience across browsers and devices.
 
 [You can see it live here](http://hypertext.artofthesmart.com).
 
----
-
-## Screenshot
-
 ![The Hypertext theme keeps things minimal.](assets/screenshot.png)
+
+**Why does this theme exist?**  Most Grav themes come with heavy JS requirements.  Sometimes 1MB or more!  These slow down browsers and create compatibility issues.  Grav is a very powerful CMS but there should be an option for people who want something as close to hand-coded HTML as possible.  This theme tries to separate form and function to create a truly unique experience.
 
 ## Features
 
 * Virtually weightless for maximum performance
 * CSS/JS squelches to completely cut out any unnecessary stuff
 * Fully responsive across almost any device
-* Multiple page template types
 * Includes `headless` parameter for serving only content
+* HTML 3 & HTML 5 compliance modes
+* Built-in open source style sheets
 
 ### Supported Page Templates
 
 * Default view template `default.md`
 * Error view template `error.md`
-* Blog view template `collection.md`
+* Directory view template `collection.md`
+* Blog view template `blog.md`
 * Blog item view template `item.md`
 
-# Installation
+## Getting started
 
-Installing the Hypertext theme can be done in one of two ways. Our GPM (Grav Package Manager) installation method enables you to quickly and easily install the theme with a simple terminal command, while the manual method enables you to do so via a zip file. 
+Here are some links to get you started:
+*  Read the installation guide below to download and install the theme.
+*  [Visit the Hypertext home page](https://hypertext.artofthesmart.com) to learn more about the philosophy behind the project.
+*  [Read the reference guide for caveats and gotchas](https://hypertext.artofthesmart.com/reference) to avoid common mistakes with Hypertext.
+*  [Read the FAQ](https://hypertext.artofthesmart.com/FAQ) or [visit the issues page in Github](https://github.com/artofthesmart/hypertext/issues) if you run into problems.
+*  [Contribute to Hypertext via Github](https://github.com/artofthesmart/hypertext) and help make the web faster!
 
-## GPM Installation (Preferred)
+> **Special thanks** go out to [Ricardo](https://urbansquid.london), the theme champion in the Grav Discord server, [Andy Miller](https://twitter.com/rhuk) creator of Grav CMs, and my wife who's sick of hearing about this project by now.
+
+---
+
+## Installation
+
+Installing the theme can be done in one of two ways. Grav's GPM (Grav Package Manager) installation method enables you to quickly and easily install the theme with a simple terminal command, while the manual method enables you to do so via a zip file.
+
+### GPM Installation (Preferred)
 
 The simplest way to install this theme is via the [Grav Package Manager (GPM)](http://learn.getgrav.org/advanced/grav-gpm) through your system's Terminal (also called the command line).  From the root of your Grav install type:
 
@@ -37,7 +50,7 @@ The simplest way to install this theme is via the [Grav Package Manager (GPM)](h
 
 This will install the Hypertext theme into your `/user/themes` directory within Grav. Its files can be found under `/your/site/grav/user/themes/hypertext`.
 
-## Manual Installation
+### Manual Installation
 
 To install this theme, just download the zip version of this repository and unzip it under `/your/site/grav/user/themes`. Then, rename the folder to `hypertext`. You can find these files either on [GitHub](https://github.com/artofthesmart/hypertext) or via [GetGrav.org](http://getgrav.org/downloads/themes).
 
@@ -45,51 +58,43 @@ You should now have all the theme files under
 
     /your/site/grav/user/themes/hypertext
 
-## Options & Setup
+>> NOTE: This theme is a modular component for Grav which requires the [Grav](http://github.com/getgrav/grav), [Error](https://github.com/getgrav/grav-theme-error) and [Problems](https://github.com/getgrav/grav-plugin-problems) plugins.
 
-Hypertext comes with many options, but most of them are disabled by default to prioritize the fastest possible loading.
+## Updating
 
-### Structural Options
+As development for the Hypertext theme continues, new versions may become available that add additional features and functionality, improve compatibility with newer Grav releases, and generally provide a better user experience. Updating Hypertext is easy, and can be done through Grav's GPM system, as well as manually.
 
-```yaml
-allowCSS: 0                   # Prevent any _implicit_ CSS files from being included (e.g. plugins).
-allowJS: 0                    # Prevent any _implicit_ JS files from being included (e.g. plugins).
-```
+### GPM Update (Preferred)
 
-This is where you can change core, structural information about the theme.
+The simplest way to update this theme is via the [Grav Package Manager (GPM)](http://learn.getgrav.org/advanced/grav-gpm). You can do this with this by navigating to the root directory of your Grav install using your system's Terminal (also called command line) and typing the following:
 
+    bin/gpm update hypertext
 
-```yaml
-allowCSS: 0                   # Cut out slots for CSS to prevent any _implicit_ CSS from being included (e.g. plugins).
-allowJS: 0                    # Cut out slots for JS to prevent any _implicit_ JS from being included (e.g. plugins).
-tagline:                      # An optinal tagline to appear under the title of your website
-colors:
-  background:                 # An optional background color
-  text:                       # An optional text color
-  link:                       # An optional link color
-  activeLink:                 # An optional hover color
-  visitedLink:                # An optional visited color
-layout:
-  configuration: 'centered'   # Whether to pull content to the left or center it
-  width: 768                  # The max-width of the theme
-style:
-  inlineNavbar: 1             # When enabled uses in-line navigation (rather than a list).
-  useFavicon: 0               # When enabled, provides the user with a favicon if one is available.
-  beautifyText: 0             # When enabled, provides a little CSS for better text spacing.
-```
+This command will check your Grav install to see if your Hypertext theme is due for an update. If a newer release is found, you will be asked whether or not you wish to update. To continue, type `y` and hit enter. The theme will automatically update and clear Grav's cache.
 
-To make modifications, you can copy the `user/themes/hypertext/hypertext.yaml` file to `user/config/themes/` folder and modify, or you can use the admin plugin.
+### Manual Update
 
-> NOTE: Do not modify the `user/themes/hypertext/hypertext.yaml` file directly or your changes will be lost with any updates
+Manually updating Hypertext is pretty simple. Here is what you will need to do to get this done:
 
-## Override Options
-Individual pages have toggles to give you the opportunity to turn on and off global CSS and JS.  Useful for preventing plugins from loading except where you want them.
+* Delete the `your/site/user/themes/hypertext` directory.
+* Downalod the new version of the Hypertext theme from either [GitHub](https://github.com/getgrav/hypertext) or [GetGrav.org](http://getgrav.org/downloads/themes#extras).
+* Unzip the zip file in `your/site/user/themes` and rename the resulting folder to `hypertext`.
+* Clear the Grav cache. The simplest way to do this is by going to the root Grav directory in terminal and typing `bin/grav clear-cache`.
 
-> Recommend making all your images the same size...
+> Note: Any changes you have made to any of the files listed under this directory will also be removed and replaced by the new set. Any files located elsewhere (for example a YAML settings file placed in `user/config/themes`) will remain intact.
 
-> You can add images to the assets folder if you want.
+### Dependencies
 
-> Image width is capped at 100% of viewport width, even for zero style themes.  The W3C could never have known about the rise of mobile devices and limited horizontal space. 
+This Hypertext theme runs on the latest version(s) of Grav CMS, namely 1.6 or higher.
 
-> Against my better judgement, I'm going to leave tabular view in place. You can easily shoot yourself in the foot, so don't turn on all the columns.
+## Setup
 
+If you want to set Hypertext as the default theme, you can do so by following these steps:
+
+* Navigate to `/your/site/grav/user/config`.
+* Open the **system.yaml** file.
+* Change the `theme:` setting to `theme: hypertext`.
+* Save your changes.
+* Clear the Grav cache. The simplest way to do this is by going to the root Grav directory in Terminal and typing `bin/grav clear-cache`.
+
+Once this is done, you should be able to see the new theme on the frontend. Keep in mind any customizations made to the previous theme will not be reflected as all of the theme and templating information is now being pulled from the **hypertext** folder.
