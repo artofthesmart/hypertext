@@ -29,10 +29,9 @@
 <p> {# The next set of items should be somewhat close together.}
 
 {# Image #}
+{# Must be one line to avoid dangling, clickable space #}
 {% if show_image and thumbnail_image %}
-  <a href="{{ page.url }}">
-    <img src="{{ header_image_url }}" width="{{ header_image_width }}" height="{{ header_image_height }}">
-  </a>
+  <a href="{{ page.url }}"><img src="{{ header_image_url }}" width="{{ header_image_width }}" height="{{ header_image_height }}"></a>
 {% endif %}
 
 {# Date #}
