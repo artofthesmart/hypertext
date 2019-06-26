@@ -1,7 +1,7 @@
 ---
 allowCSS: default
 allowJS: default
-subtitle: 'April has some rain where I\'m from'
+subtitle: 'April has some rain where I'm from'
 show_header_image: true
 header_image_file: apr-header.jpg
 thumbnail_image_file: calendar.jpg
