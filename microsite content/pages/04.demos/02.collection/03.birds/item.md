@@ -1,3 +1,16 @@
+---
+taxonomy:
+    category:
+        - 'two-legs'
+    tag:
+        - playful
+        - noisy
+        - trainable
+allowCSS: default
+allowJS: default
+subtitle: Birds can take to the air and send imaginations soaring
+---
+
 Birds are an often overlooked pet that can be just as rewarding as a four-legged friend.  This item has no front-matter at all.
 
 ===
@@ -7,3 +20,4 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sagittis ph
 Etiam et rhoncus mi. Sed in luctus lectus, at molestie dui. Vivamus condimentum ligula eget libero porta molestie vitae efficitur augue. Suspendisse et magna et orci ultrices imperdiet. Duis malesuada rutrum aliquet. Vivamus bibendum semper urna at porta. Vivamus bibendum porta pharetra.
 
 Aliquam non leo non nunc finibus varius. Phasellus nec odio tincidunt, dignissim urna finibus, eleifend libero. Maecenas id volutpat massa. Donec venenatis aliquam sem. Quisque quis ex fermentum, auctor dui vitae, suscipit lectus.
+

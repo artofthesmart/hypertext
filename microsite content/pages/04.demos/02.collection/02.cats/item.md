@@ -6,6 +6,7 @@ taxonomy:
     tag:
         - playful
         - sly
+        - trainable
 allowCSS: default
 allowJS: default
 subtitle: Cats are often where it's at
