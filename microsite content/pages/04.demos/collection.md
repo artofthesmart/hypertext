@@ -8,6 +8,11 @@ content:
         by: folder
         dir: desc
 ---
-This section contains pages that demonstrate the features of the Hypertext theme.  Each section gives you a good understanding of how the theme handles different kinds of content.
 
-This page is also an example of the `collection` page type.  It's a collection of sub-pages, suitable for any length of child pages.
+A demo collection that shows other content as child pages.
+
+===
+
+This page demonstrates the collection/blog features of the Hypertext theme.  Each section is a group of fake pages that give you an idea of how the theme responds to different kinds of content.
+
+This page is also an example of the `collection` page type.  It's a collection of sub-pages, and is identical to the `blog` and `blog_list` page types in other themes.
