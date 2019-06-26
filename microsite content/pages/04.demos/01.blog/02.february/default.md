@@ -1,7 +1,7 @@
 ---
 allowCSS: default
 allowJS: default
-subtitle: 'February has Valentine's day'
+subtitle: 'February is shorter than other months'
 show_header_image: true
 header_image_file: feb-header.jpg
 thumbnail_image_file: calendar.jpg
