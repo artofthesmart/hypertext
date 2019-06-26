@@ -1,3 +1,14 @@
+---
+allowCSS: default
+allowJS: default
+content:
+    items:
+        - '@self.children'
+    order:
+        by: folder
+        dir: desc
+---
+
 This is an example `collection` page with many children to demonstrate long lists of sequential content.
 
 ===
