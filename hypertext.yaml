@@ -1,5 +1,16 @@
 structure:
-  inline_navbar: 1
+  inline_navbar: true
+  inline_pagination: true
+  use_decorators: true
+  html_mode: default
+  use_favicon: false
+  show_date: false
 style:
   configuration: centered
   width: 768
+  allowCSS: true
+  allowJS: true
+  stylesheet: default
+  include_type: default
+  image_cropping: false
+  inline_navbar: 1

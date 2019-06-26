@@ -78,7 +78,7 @@ form:
                       type: section
                       title: HTML Structure & Options
                       underline: true
-                    structure.htmlMode:
+                    structure.html_mode:
                       type: select
                       classes: fancy
                       label: HTML Mode
@@ -193,7 +193,7 @@ form:
                         water-light: water-light
                         writ: writ
                         yorha: yorha
-                    style.includeType:
+                    style.include_type:
                       type: select
                       classes: fancy
                       label: Include Method

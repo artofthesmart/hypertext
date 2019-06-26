@@ -15,7 +15,7 @@
 {# Add the stylesheet #}
 {# TODO: Add sourcing options from unpkg rather than locally #}
 {% if stylesheet != 'default' %}
-  {% if style.includeType == 'inline' %}
+  {% if style.include_type == 'inline' %}
     {# User *explicitly* wants it imported in style tags #}
     <style>{{ include('css/' ~ stylesheet ~ '.css') }}</style>
   {% elseif not style.allowCSS %}
