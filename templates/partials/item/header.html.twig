@@ -10,9 +10,11 @@
 {# ------------------------------------------------------------------------ #}
 
 {# Title & Subtitle #}
+{% if not page.home() %}
 <h2>
   <a href="{{ page.url }}">{{ page.title }}</a>
 </h2>
+{% endif %}
 {% if page.header.subtitle %}<strong>{{ page.header.subtitle }}</strong>{% endif %}
 
 <p> {# The next set of items should be somewhat close together.}
