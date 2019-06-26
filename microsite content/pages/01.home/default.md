@@ -60,17 +60,21 @@ This was the easiest rule to follow and it's core to the philosophy of this them
 ### No Theme File Fetches
 Everything that has to be loaded after the first HTML response is considered harmful.  If you, the user, want to add images and other cool stuff to your page, that's up to you, but this theme tries- no, _strives_- to provide as much data as possible to the client up front to ensure a fast, smooth rendering process.
 
-Consider the following results from some basic testing of Hypertext page loads.
+Consider the following results from some basic testing of Hypertext page loads.  Basically, small styles like `sakura` load fast no matter what, but large styles like `latex` load faster when you use linking.
 
-| Loading Type              | Caching   | Fetch Size \ Load Size | Speed |
-|---------------------------|-----------|------------------------|-------|
-| No Style                  | FALSE     | | |
-| Stylesheet, inline        | FALSE     | | |
-| Stylesheet, inline        | TRUE      | | |
-| Stylesheet, via `href`    | FALSE     | | |
-| Stylesheet, via `href`    | TRUE      | | |
-| Big stylesheet, via `href`| FALSE     | | |
-| Big stylesheet, via `href`| TRUE      | | |
+| Loading Type              | Caching   | Transfer Size | Speed |
+|---------------------------|-----------|---------------|-------|
+| No Style                  | FALSE     | 8.8KB         | 649ms |
+| Stylesheet, inline        | FALSE     | 12.1KB        | 686ms |
+| Stylesheet, inline        | TRUE      | 12.1KB        | 671ms |
+| Stylesheet, via `href`    | FALSE     | 10.4KB        | 1.2s  |
+| Stylesheet, via `href`    | TRUE      | 8.9KB         | 670ms |
+| Big stylesheet, via `href`| FALSE     | 399KB         | 2.53s |
+| Big stylesheet, via `href`| TRUE      | 8.9KB         | 660ms |
+| Wikipedia homepage        | FALSE     | 549B          | 1.47s |
+| Wikipedia homepage        | TRUE      | 61KB          | 1.47s |
+
+!! Tested in an incognito window of Chrome with the `Fast 3G` throttling settings.
 
 ### No Styles
 I wanted to avoid adding styles as much as possible because these can get quite large.  That goes double if you're using an off-the-shelf stylesheet.  This page you're reading is only about 8KB but the [Spectre CSS framework](https://picturepan2.github.io/spectre/) is already 8KB when minified and [Bootstrap's CSS alone](getbootstrap.com) weighs in at over 40KB.  It is far too easy to load up a bunch of stylesheets that overlap and override each other, eating bandwidth and accomplishing little.
