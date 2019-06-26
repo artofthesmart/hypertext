@@ -3,7 +3,7 @@
   {% set use_image_crop = style.image_cropping|default(false) %}
   {% set image_width = use_image_crop ? style.width / 7 : thumbnail_image.width %}
   {% set image_height = use_image_crop ? style.width / 7 : thumbnail_image.height %}
-  {% set header_image_url = thumbnail_image.cropZoom(image_width, image_height).url : thumbnail_image.url %}
+  {% set header_image_url = use_image_crop ? thumbnail_image.cropZoom(image_width, image_height).url : thumbnail_image.url %}
 
 {% set show_subtitle = parent.header.render.children.subtitle ?? true %}
 {% set show_cat = parent.header.render.children.category ?? true %}
