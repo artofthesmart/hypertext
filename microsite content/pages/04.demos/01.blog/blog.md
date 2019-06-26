@@ -9,7 +9,7 @@ content:
         dir: desc
 ---
 
-This is an example `collection` page with many children to demonstrate long lists of sequential content.
+This is an example `blog` page with many children to demonstrate long lists of sequential content.
 
 ===
 

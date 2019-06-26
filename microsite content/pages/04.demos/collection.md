@@ -6,7 +6,7 @@ content:
         - '@self.children'
     order:
         by: folder
-        dir: desc
+        dir: asc
 ---
 
 A demo collection that shows other content as child pages.

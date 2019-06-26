@@ -2,8 +2,12 @@
 taxonomy:
     category:
         - 'four-legs'
+        - 'furry'
     tag:
-        - fluffy
+        - obedient
+        - playful
+        - work-oriented
+        - trainable
 allowCSS: default
 allowJS: default
 subtitle: This subtitle is all about the wonders of dog ownership.

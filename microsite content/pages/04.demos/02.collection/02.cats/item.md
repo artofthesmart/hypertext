@@ -2,15 +2,16 @@
 taxonomy:
     category:
         - 'four-legs'
+        - 'furry'
     tag:
-        - fluffy
         - playful
-        - feline
+        - sly
 allowCSS: default
 allowJS: default
+subtitle: Cats are often where it's at
 ---
 
-An example page with category, tags, and summary.
+A standard example page with category, tag, subtitle, and summary.
 
 ===
 

@@ -18,8 +18,8 @@
 
   {{ level > 1 ? '' : '<strong>' }}
     <a href="{{ page.url }}">{{ page.title }}</a>
-    {% if page.header.subtitle and show_subtitle %} - <small>{{ page.header.subtitle }}</small>{% endif %}
   {{ level > 1 ? '' : '</strong>' }}
+  {% if page.header.subtitle and show_subtitle %} - <small>{{ page.header.subtitle }}</small>{% endif %}
 
   {# Categories #}
   {% if page.taxonomy.category and show_cat %}
