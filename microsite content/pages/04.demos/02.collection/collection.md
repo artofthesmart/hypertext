@@ -4,7 +4,7 @@ content:
         - '@self.children'
     order:
         by: folder
-        dir: desc
+        dir: asc
 ---
 
 This is an example `collection` page, including several children in order to demonstrate a leaner presentation method than `blog`.

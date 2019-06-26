@@ -5,9 +5,9 @@
 [Hypertext](http://hypertext.artofthesmart.com) is a theme for [Grav CMS](google.com) that prioritizes speed and simplicity.  It does not require (nor does it include) any Javascript and it keeps styles to a bare minimum.  This ensures a fast, consistent user experience across browsers and devices.
 
 Special features include:
-*  HTML 3 & HTML 5 compliance modes - [Read more](#)
-*  Built-in open source style sheets - [Read more](#)
-*  Headless mode for in-app serving - [Read more](#)
+*  HTML 3 & HTML 5 compliance modes
+*  Built-in open source style sheets
+*  Headless mode for in-app serving
 
 **Why does this theme exist?**  Most Grav themes come with heavy JS requirements.  Sometimes 1MB or more!  These slow down browsers and create compatibility issues.  Grav is a very powerful CMS but there should be an option for people who want something as close to hand-coded HTML as possible.  This theme tries to separate form and function to create a truly unique experience.
 
