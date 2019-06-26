@@ -1,4 +1,9 @@
-style
-  inline_navbar: 1
-  configuration: centered
+allowCSS: 0
+allowJS: 0
+layout:
+  configuration: 'centered'
   width: 768
+style:
+  inlineNavbar: 1
+  useFavicon: 0
+  beautifyText: 0

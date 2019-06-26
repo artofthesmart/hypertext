@@ -68,7 +68,7 @@ form:
                       type: toggle
                       label: Show header image
                       help: When enabled, the header image will be shown at the top of this page.  If you don't specify one, the first image will be shown.
-                      default: 0
+                      default: 1
                       highlight: 1
                       options:
                         1: Enabled
