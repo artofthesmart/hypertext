@@ -1,4 +1,5 @@
-style:
+structure:
   inline_navbar: 1
+style:
   configuration: centered
   width: 768
