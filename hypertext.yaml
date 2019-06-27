@@ -8,8 +8,8 @@ structure:
 style:
   configuration: centered
   width: 768
-  allowCSS: true
-  allowJS: true
+  allowCSS: false
+  allowJS: false
   stylesheet: default
   include_type: default
   image_cropping: false
