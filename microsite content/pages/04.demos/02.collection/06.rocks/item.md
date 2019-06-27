@@ -1,15 +1,13 @@
 ---
 taxonomy:
     category:
-        - 'four-legs'
-        - 'aquatic'
-        - 'desert'
+        - 'no-legs'
+        - 'inexpensive'
     tags:
         - 'untrainable'
-        - 'bite-y'
 allowCSS: default
 allowJS: default
-subtitle: Reptiles are mellow, but don't pet them
+subtitle: The pet rock was a fad a long time ago
 ---
 
 Phasellus nec odio tincidunt, dignissim urna finibus, eleifend libero. Maecenas id volutpat massa. Donec venenatis aliquam sem. Quisque quis ex fermentum, auctor dui vitae, suscipit lectus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sagittis pharetra mauris a ultricies. Maecenas scelerisque faucibus elit, sed faucibus nulla varius vestibulum. Quisque id sapien luctus, pretium libero et, fermentum dolor. In justo nisi, consectetur a finibus sit amet, vestibulum at urna. Suspendisse ut ex et nisi lobortis mollis. Aliquam non leo non nunc finibus varius. 
