@@ -32,7 +32,6 @@ The `default` page type is the parent for all page types.  Single page types lik
 
 
 ### Theme Settings
-
 ![To see settings, click "Themes" in the Grav navigation, then on Hypertext.](theme_settings_intro.png)
 
 The theme-level settings include structural changes, style changes, and the menu bar.  A lot of these global settings can be overridden by child settings, so keep an eye out for those.
@@ -48,6 +47,7 @@ The structure tab contains settings that influence what structural decisions Hyp
 * **Show Last Updated Dates** - Blogs and periodicals want dates at the tops of pages, while evergreen content doesn't need it. Here you can turn that stuff on and off for single-page views.
 
 #### Style Options
+
 The style tab contains settings that influence how your content looks or gets rendered.  This is the real core of the theme.
 
 ##### CSS/JS
@@ -61,7 +61,9 @@ These fields offer settings for whether to allow CSS or JS files. Some plugins i
 
 Themes here are open-source CSS files available on GitHub and are not my own work. Consider visiting their homepages, contributing, and supporting the authors. Remember that you can test these styles quickly by adding the name or number to a style URL parameter, e.g. `YourSite.com/?style=water` or `YourSite.com/?style=4`.
 
-> TODO: Add the table with theme thumbnails and author info.
+!!! This is a great way to quickly thumb through styles for your website.  Use the numbers to find what looks good, then match it to the style in the Theme settings.
+
+You can check the [style examples table](#style_table) in the Appendix to see what each style looks like.
 
 * **Include Method** - Link is the usual `href` process of adding a CSS file, and forces the browser to load another file.  You should do this if bandwidth is the priority (using fewer bytes).  Inline will add the contents of the stylesheet directly to the HTML, resulting in a faster page load at the expense of sending the stylesheet with every page rather than relying on cached copies.  You should do this if speed is the priority.  [See the home page for a speed analysis](/) between these two options.
 
@@ -122,6 +124,33 @@ The toggle switches in this section like `Show Image` and `Show Subtitle` enable
 * **Order** - Here you get to pick whether to show them ascending or descending.
 * **Show Prev/Next Links** - When it's on, Hypertext will show `Next` and `Previous` links when a user is viewing a child page of this parent page.  This is useful if you have highly ordered content like blog entries or multi-page content stored under a collection.
 
-To make modifications, you can copy the `user/themes/hypertext/hypertext.yaml` file to `user/config/themes/` folder and modify, or you can use the admin plugin.
+### Appendix
 
-> NOTE: Do not modify the `user/themes/hypertext/hypertext.yaml` file directly or your changes will be lost with any updates
+<a id="style_table"></a>
+
+| Screenshot                                | Name                  |
+| ------------------------------------------| ----------------------|
+| ![Theme #0](0.png?cropResize=300,500)     | #0 air		        |
+| ![Theme #1](1.png?cropResize=300,500)	    | #1 hypertext++		|
+| ![Theme #2](2.png?cropResize=300,500)     | #2 latex		        |
+| ![Theme #3](3.png?cropResize=300,500)     | #3 marx		        |
+| ![Theme #4](4.png?cropResize=300,500)     | #4 sakura		        |
+| ![Theme #5](5.png?cropResize=300,500)     | #5 sakura-dark		|
+| ![Theme #6](6.png?cropResize=300,500)	    | #6 sakura-dark-solar	|
+| ![Theme #7](7.png?cropResize=300,500)	    | #7 sakura-earth		|
+| ![Theme #8](8.png?cropResize=300,500)	    | #8 sakura-vader		|
+| ![Theme #9](9.png?cropResize=300,500)  	| #9 stylize		    |
+| ![Theme #10](10.png?cropResize=300,500)   | #10 tacit		        |
+| ![Theme #11](11.png?cropResize=300,500)   | #11 tufte		        |
+| ![Theme #12](12.png?cropResize=300,500)	| #12 w3c-chocolate		|
+| ![Theme #13](13.png?cropResize=300,500)	| #13 w3c-midnight		|
+| ![Theme #14](14.png?cropResize=300,500)	| #14 w3c-modernist		|
+| ![Theme #15](15.png?cropResize=300,500)	| #15 w3c-oldstyle		|
+| ![Theme #16](16.png?cropResize=300,500)	| #16 w3c-steely		|
+| ![Theme #17](17.png?cropResize=300,500)	| #17 w3c-swiss		    |
+| ![Theme #18](18.png?cropResize=300,500)	| #18 w3c-traditional	|
+| ![Theme #19](19.png?cropResize=300,500)	| #19 w3c-ultramarine	|
+| ![Theme #20](20.png?cropResize=300,500)	| #20 water-dark		|
+| ![Theme #21](21.png?cropResize=300,500)	| #21 water-light		|
+| ![Theme #22](22.png?cropResize=300,500)	| #22 writ		        |
+| ![Theme #23](23.png?cropResize=300,500)	| #23 yorha		        |
