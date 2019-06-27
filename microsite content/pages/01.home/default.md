@@ -13,7 +13,7 @@ Special features include:
 
 It brings all of the powerful CMS features of [Grav](getgrav.com), but is:
 * **Lightweight** - Coming in at 0KB of Javascript and ~1KB of CSS (optional).
-* **Compatible** - Works on any browser built after 1995.  [No, really!](win95.png)
+* **Compatible** - Works on any browser built after 1995.  [No, really!](/user/pages/01.home/win95.png)
 * **Consistent** - Looks identical across any browser, no matter what.
 * **Responsive** - Adjusts automatically to any screen size.
 * **Accessible** - Works with screen readers and any OS language.
