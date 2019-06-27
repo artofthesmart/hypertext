@@ -171,6 +171,7 @@ form:
                       options:
                         default: hypertext (No style)
                         air: air
+                        hypertext++: hypertext++
                         latex: latex
                         marx: marx
                         sakura: sakura
