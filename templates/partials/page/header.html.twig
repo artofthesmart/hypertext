@@ -1,9 +1,9 @@
 <h1><a href="{{ home_url }}">{{ site.title|e('html') }}</a></h1>
 
 {% if site.metadata.description %}
-<p class="subtitle">
+<aside class="subtitle">
   {{ site.metadata.description }}
-</p>
+</aside>
 {% endif %}
 
 {% block header_navigation %}
