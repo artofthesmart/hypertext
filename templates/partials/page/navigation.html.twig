@@ -60,9 +60,9 @@
   {% endif %} {# End of navigation links #}
 
   {# Drop in a separator if there's no theme at all OR we have breadcrumbs. #}
-  {% if uri.query('theme')|default(style.stylesheet) == 'default' or breadcrumbs.get()|length > 1 %}
+  {#{% if uri.query('theme')|default(style.stylesheet) == 'default' or breadcrumbs.get()|length > 1 %}#}
     <hr>
-  {% endif %}
+  {#{% endif %}#}
   
   {# Breadcrumbs #}
   {% if config.plugins.breadcrumbs.enabled %}
