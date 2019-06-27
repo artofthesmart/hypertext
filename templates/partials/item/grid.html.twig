@@ -71,6 +71,7 @@
 </td></tr>
 
 {# Children 
+ # Not sure how to implement this just yet...
 {% if show_children and inner_children|length > 0 %}
 {% set inner_children = inner_children.order(page.header.content.order.by|default('default'), page.header.content.order.dir|default('default')) %}
 <br>
