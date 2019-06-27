@@ -1,7 +1,7 @@
 {% set structure = config.themes.hypertext.structure %}
 {% set style = config.themes.hypertext.style %}
 {% set menu = config.themes.hypertext.menu %}
-{% set html5 = structure.html_mode == 'default' %}
+{% set html5 = structure.html_mode|default('default') == 'default' %}
 
 {% set allowCSS = page.header.allowCSS == 'enabled' or
                     (page.header.allowCSS|default('default') == 'default' and 
