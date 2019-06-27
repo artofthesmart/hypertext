@@ -6,7 +6,7 @@
 
 ![The Hypertext theme keeps things minimal.](assets/screenshot.png)
 
-**Why does this theme exist?**  Most Grav themes come with heavy JS requirements.  Sometimes 1MB or more!  These slow down browsers and create compatibility issues.  Grav is a very powerful CMS but there should be an option for people who want something as close to hand-coded HTML as possible.  This theme tries to separate form and function to create a truly unique experience.
+**Why does this theme exist?**  Most Grav themes come with heavy JS requirements.  Sometimes 1MB or more!  These slow down browsers and create compatibility issues.  Grav is a very powerful CMS but there should be an option for people who want something as close to hand-coded HTML as possible.  This theme tries to separate form and function to create a truly unique experience.  [It even works in windows 95](assets/win95.png)!
 
 ## Features
 
@@ -15,15 +15,15 @@
 * Fully responsive across almost any device
 * Includes `headless` parameter for serving only content
 * HTML 3 & HTML 5 compliance modes
-* Built-in open source style sheets
+* Built-in open source stylesheets
 
 ### Supported Page Templates
 
 * Default view template `default.md`
 * Error view template `error.md`
 * Directory view template `collection.md`
-* Blog view template `blog.md`
-* Blog item view template `item.md`
+* Blog view template `blog.md` and `blog_list.md`
+* Blog item view template `item.md` and `blog_item.md`
 
 ## Getting started
 
