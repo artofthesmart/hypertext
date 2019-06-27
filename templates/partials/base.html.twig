@@ -55,7 +55,7 @@
   <title>{% if header.title %}{{ header.title|e('html') }} | {% endif %}{{ site.title|e('html') }}</title>
 
   {% if structure.use_favicon %}
-  <link rel="icon" type="image/png" href="{{ page.url('theme://images/favicon.png') }}" />
+  <link rel="icon" type="image/png" href="{{ url('theme://images/favicon.png') }}" />
   {% endif %}
 
   {% include 'partials/page/js-css.html.twig' %}
