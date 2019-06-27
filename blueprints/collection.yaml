@@ -44,7 +44,7 @@ form:
                       type: select
                       label: Order By
                       help: The attribute by which to sort child pages during rendering.
-                      default: date
+                      default: folder
                       options:
                         folder: Folder
                         title: Title
@@ -83,15 +83,15 @@ form:
                       options:
                         summary: Summaries
                         list: List
-                        # grid: Grid # A column-based grid layout I tried. It was AWFUL.
-                        # layout: Table (Layout) # A geocities-like tabular layout version. It was AWFUL.
+                        # grid: Grid # A column-based grid layout I tried. It was AWFUL on mobile.
+                        # layout: Table (Layout) # A Frontpage-like "table layout" version. It was AWFUL on mobile.
                         table: Table
                     header.render.children.image:
                       type: toggle
                       label: Show image
                       help: When enabled, child page header images will be shown (if possible).
-                      default: 1
-                      highlight: 1
+                      default: 0
+                      highlight: 0
                       options:
                         1: Enabled
                         0: Disabled
@@ -101,8 +101,8 @@ form:
                       type: toggle
                       label: Show subtitle
                       help: When enabled, child page subtitle will be shown (if possible).
-                      default: 0
-                      highlight: 0
+                      default: 1
+                      highlight: 1
                       options:
                         1: Enabled
                         0: Disabled
