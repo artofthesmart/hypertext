@@ -5,5 +5,5 @@ use Grav\Common\Theme;
 
 class Hypertext extends Theme
 {
-
+    
 }

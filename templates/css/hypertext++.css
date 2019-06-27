@@ -2,6 +2,7 @@ body {
     color: #353535;
     font-size:large;
     padding:0 10px;
+    margin: 40px auto;
 }
 img { max-width: 80%; }
 h1, h2, h3 { font-family: sans-serif; }
