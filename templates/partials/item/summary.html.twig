@@ -1,5 +1,11 @@
 {% set show_image = parent.header.render.children.image ?? true %}
-  {% set thumbnail_image = page.media.images[page.header.thumbnail_image_file] ?? page.media.images[page.header.header_image_file] ?? page.media.images|first %}
+  {% set thumbnail_filename = page.header.thumbnail_image_file|default('thumbnail.png') %}
+  {% set thumbnail_image = page.media.images[thumbnail_filename] ??
+                      media['image://' ~ thumbnail_filename] ??
+                      media['image://' ~ page.slug()~'_thumbnail.png'] ??
+                      media['image://' ~ page.slug()~'_thumbnail.jpg'] ??
+                      media['image://' ~ page.slug()~'_thumbnail.gif'] ??
+                      page.media.images|first %}
   {% set use_image_crop = style.image_cropping|default(false) %}
   {% set image_width = use_image_crop ? style.width / 7 : thumbnail_image.width %}
   {% set image_height = use_image_crop ? style.width / 7 : thumbnail_image.height %}
@@ -26,7 +32,7 @@
   {% if page.header.subtitle and show_subtitle %} - <small>{{ page.header.subtitle }}</small>{% endif %}
 </h3>
 
-<p> {# The next set of items should be somewhat close together.}
+<p> {# The next set of items should be somewhat close together. #}
 
 {# Image #}
 {# Must be one line to avoid dangling, clickable space #}

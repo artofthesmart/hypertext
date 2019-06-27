@@ -43,7 +43,7 @@ The structure tab contains settings that influence what structural decisions Hyp
 * **Inline Pagination** - When it's on, you get one row of page buttons for multi-page content.  When it's off, you get `ul` navigation.
 * **Use Decorator Text** - When it's on, you get braces around categories and vertical pipes between inline navigation items.  When it's off, there's no text between items (good for using your own styles).
 * **HTML Mode** - HTML5 will use modern tags like `<article>` and `<nav>`, while HTML3.2 will use vanilla tags with classes like `<div class="nav">`.
-* **Use Favicon** - If you have a favicon, turn this on in order to load it to the client (off by default because it's another lookup).
+* **Use Favicon** - If you have a favicon, turn this on in order to load it to the client (off by default because it's another lookup).  You can keep your Favicon in the `hypertext/images` directory, or `user/images`, whichever is easier for you.
 * **Show Last Updated Dates** - Blogs and periodicals want dates at the tops of pages, while evergreen content doesn't need it. Here you can turn that stuff on and off for single-page views.
 
 #### Style Options
@@ -99,8 +99,16 @@ Here you can define additional content and metadata for your page, similar to ot
 
 * **Subtitle** - The subtitle is an elongated title addition or explanation of the content that will sometimes appear in Hypertext.
 * **Show header image** - When it's on, the header image will appear at the top of this page.  
-* **Header image file** - You can specify which image to use for the header here.  If you don't specify an image file, Hypertext will use the first image it finds.
-* **Thumbnail image file** - You can specify which image to use for the thumbnail of this page here.  If you don't specify an image file, Hypertext will try to use the header image file instead.
+* **Header image file** - You can specify which image to use for the header here.  If you don't specify one, Hypertext will, by default, look for `header.png`.  Either way, if you enable header images, Hypertext will look for a header image with the following rules:
+1.  Is the specified image in the same directory as the page?  If so, use that.
+2.  Is the specified image in the `user/images` directory?  If so, use that.
+3.  Is there an image in the `user/images` directory with the same name as the slug of this page?  If so, use that.
+4.  Otherwise, use the first image in this page's directory.
+* **Thumbnail image file** -  You can specify which image to use for the page thumbnail here.  If you don't specify one, Hypertext will, by default, look for `thumbnail.png`.  Either way, if a thumbnail is needed by a parent page, Hypertext will look for a thumbnail image with the following rules:
+1.  Is the specified thumbnail in the same directory as the page?  If so, use that.
+2.  Is the specified thumbnail in the `user/images` directory?  If so, use that.
+3.  Is there an image in the `user/images` directory with the name of the slug of this page, plus `_thumbnail` afterwards (e.g. `winter-vacation_thumbnail`)?  If so, use that.
+4.  Otherwise, use the first image in this page's directory.
 * **Summary delimiter** - By default, this is `===` and you use it to separate the Summary for this page from the rest of the contents.  I recommend you leave this as the default.
 * **Summary length** - If you don't specify a summary for this page, this value determines how long the automatically generated summary should be.  By default, it's 300 characters.
 

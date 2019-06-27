@@ -16,7 +16,7 @@
   {{ html5 ? '</thead>' : ''}}</tr>
 
   {% for child in collection %}
-    {# Never show the image; it's hideous.
+    {# Never show the image; it's hideous on mobile.
      #
      # {% if child.header.show_header_image|default('default') == 'default' %}
      #   {% set show_image = parent.header.render.children.image ?? true %}
