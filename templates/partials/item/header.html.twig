@@ -1,4 +1,4 @@
-{% set show_image = page.header.show_header_image ?? true %}
+{% set show_image = page.header.show_header_image|default(false) %}
 {% set header_image = page.media.images[page.header.header_image_file] ?? page.media.images|first %}
 {% set use_image_crop = style.image_cropping|default(false) %}
 {% set image_width = use_image_crop ? style.width - 10 : header_image.width %}
