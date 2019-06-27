@@ -38,9 +38,6 @@ The `default` page type is the parent for all page types.  Single page types lik
 The theme-level settings include structural changes, style changes, and the menu bar.  A lot of these global settings can be overridden by child settings, so keep an eye out for those.
 
 #### Structural Options
-
-![The structure tab is the first tab on the page.](structure_tab.png)
-
 The structure tab contains settings that influence what structural decisions Hypertext makes in drawing your content.  Generally this means semantics, but it can also mean the use of semantic elements for decorative purposes (like adding brackets around category names, like this: `[category_name]`).
 
 * **Inline Menu Bar** - When it's on, you get one line of navigation.  When it's off, you get `ul` navigation.
@@ -51,9 +48,6 @@ The structure tab contains settings that influence what structural decisions Hyp
 * **Show Last Updated Dates** - Blogs and periodicals want dates at the tops of pages, while evergreen content doesn't need it. Here you can turn that stuff on and off for single-page views.
 
 #### Style Options
-
-![The style tab is the second tab on the page.](TODO)
-
 The style tab contains settings that influence how your content looks or gets rendered.  This is the real core of the theme.
 
 ##### CSS/JS

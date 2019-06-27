@@ -21,12 +21,12 @@ It brings all of the powerful CMS features of [Grav](getgrav.com), but is:
 
 Here are some links to get you started:
 *  [Read the installation guide](https://github.com/artofthesmart/hypertext) to download and install the theme.
-*  [Visit the Hypertext home page](https://hypertext.artofthesmart.com) to learn more about the philosophy behind the project.
-*  [Read the reference guide for caveats and gotchas](https://hypertext.artofthesmart.com/reference) to avoid common mistakes with Hypertext.
-*  [Read the FAQ](https://hypertext.artofthesmart.com/FAQ) or [visit the issues page in Github](https://github.com/artofthesmart/hypertext/issues) if you run into problems.
+*  [Visit the Hypertext home page](http://hypertext.artofthesmart.com) to learn more about the philosophy behind the project.
+*  [Read the reference guide for caveats and gotchas](http://hypertext.artofthesmart.com/reference) to avoid common mistakes with Hypertext.
+*  [Read the FAQ](http://hypertext.artofthesmart.com/FAQ) or [visit the issues page in Github](https://github.com/artofthesmart/hypertext/issues) if you run into problems.
 *  [Contribute to Hypertext via Github](https://github.com/artofthesmart/hypertext) and help make the web faster!
 
-> **Special thanks** go out to [Ricardo](https://urbansquid.london), the theme champion in the Grav Discord server, [Andy Miller](https://twitter.com/rhuk) creator of Grav CMs, and my wife who's sick of hearing about this project by now.
+> **Special thanks** go out to [Ricardo](http://urbansquid.london), the theme champion in the Grav Discord server, [Andy Miller](https://twitter.com/rhuk) creator of Grav CMs, and my wife who's sick of hearing about this project by now.
 
 -------------------------------------------------------------------------------
 
@@ -44,7 +44,7 @@ All of those create barriers between users and content.  Each line of JS or styl
 
 The web used to be about function over form and I'd like to get back to that a little.
 
-!!! Remember; if you want plugins or other CSS/JS to load, you will need to explicitly enable it with Hypertext!  This can be done globally via the theme settings- e.g. `gravsite.com/admin/themes/hypertext` or locally for each page in the `Advanced` tab.  [Details in the reference guide](https://hypertext.artofthesmart.com/reference).
+!!! Remember; if you want plugins or other CSS/JS to load, you will need to explicitly enable it with Hypertext!  This can be done globally via the theme settings- e.g. `gravsite.com/admin/themes/hypertext` or locally for each page in the `Advanced` tab.  [Details in the reference guide](http://hypertext.artofthesmart.com/reference).
 
 ## Philosophy
 I tried to keep the theme consistent throughout by following a few key design principles.  Hypertext follows these rules, in order of priority:
@@ -81,7 +81,7 @@ I wanted to avoid adding styles as much as possible because these can get quite 
 
 That said, there were a few compromises, listed below.
 
-**Images are capped at 100% of parent width.** The first was that the W3C couldn't have known in 1995 about the rise of mobile devices.  Back then, it was reasonable to assume that screens would always be wider than the widest reasonable image.  That's not true on mobile devices, which have an effective width of about 400px or about 5" wide by 1995 standards at 72dpi.  So if you load a modern website on a very old browser or a mobile device _without the assistance of meta tags and CSS_ you end up with lots of images that overflow horizontally([example](#TODO)).
+**Images are capped at 100% of parent width.** The first was that the W3C couldn't have known in 1995 about the rise of mobile devices.  Back then, it was reasonable to assume that screens would always be wider than the widest reasonable image.  That's not true on mobile devices, which have an effective width of about 400px or about 5" wide by 1995 standards at 72dpi.  So if you load a modern website on a very old browser or a mobile device _without the assistance of meta tags and CSS_ you end up with lots of images that overflow horizontally.
 
 There are some options for allowing a tiny amount of CSS that come built-in to help make sites look better.  This site uses them because they add a trivial amount of size and *zero additional requests*.
 
@@ -92,6 +92,6 @@ I get past this with one CSS rule to fix 99% of problems: `img { max-width: 100%
 [The Hypertext reference guide](/reference) has [a table with all of the styles included in the theme by default](/reference#style_table), along with screenshots.
 
 ### Use HTML Like It's 1995
-I liked the 3.2 spec.  I felt like it was that great combination of "here's how you should do it" and "but- hey- do whatever you want".  Hypertext tries to stick to the spirit of that specification in a few ways.  The most obvious is that you can choose whether to use [HTML3 tags or HTML5 tags](/reference#html_table).
+I liked the 3.2 spec.  I felt like it was that great combination of "here's how you should do it" and "but- hey- do whatever you want".  Hypertext tries to stick to the spirit of that specification in a few ways.  The most obvious is that you can choose whether to use HTML3 tags or HTML5 tags.
 
 It also minimizes the use of classes and IDs.  In part this is to keep sizes low but also because at the time you would be have been using semantic selectors like `li` and `span`.  So there are almost no IDs, and classes only where one item has considerable metadata that cannot otherwise be reasonably distinguished (e.g. the `active` class in a nav item to indicate that is the currently loaded page).
