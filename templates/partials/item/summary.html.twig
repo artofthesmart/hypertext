@@ -26,7 +26,7 @@
   {% if page.header.subtitle and show_subtitle %} - <small>{{ page.header.subtitle }}</small>{% endif %}
 </h3>
 
-<p> {# The next set of items should be somewhat close together. #}
+<p> {# The next set of items should be somewhat close together.}
 
 {# Image #}
 {# Must be one line to avoid dangling, clickable space #}
@@ -68,7 +68,7 @@
 
 {# Children #}
 {% if show_children and inner_children|length > 0 %}
-{% set inner_children = inner_children.order(page.header.content.order.by|default('date'), page.header.content.order.by|default('desc')) %}
+{% set inner_children = inner_children.order(page.header.content.order.by|default('date'), page.content.order.dir|default('desc')) %}
 <p>Sub-Pages:
 <ol class="nested-children">
   {% for child in inner_children %}
