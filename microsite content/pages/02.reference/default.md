@@ -61,7 +61,7 @@ These fields offer settings for whether to allow CSS or JS files. Some plugins i
 
 Themes here are open-source CSS files available on GitHub and are not my own work. Consider visiting their homepages, contributing, and supporting the authors. Remember that you can test these styles quickly by adding the name or number to a style URL parameter, e.g. `YourSite.com/?style=water` or `YourSite.com/?style=4`.
 
-!!! This is a great way to quickly thumb through styles for your website.  Use the numbers to find what looks good, then match it to the style in the Theme settings.
+!!! This is a great way to quickly thumb through styles for your website.  Use the numbers to find what looks good, then match it to the style in the Theme settings.  Try it here on the microsite!  [Theme 3](/reference?theme=3), [Theme 6](/reference?theme=6), [Theme 9](/reference?theme=9), [Theme 12](/reference?theme=12).
 
 You can check the [style examples table](#style_table) in the Appendix to see what each style looks like.
 

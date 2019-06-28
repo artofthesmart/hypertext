@@ -26,7 +26,7 @@ Here are some links to get you started:
 *  [Read the FAQ](http://hypertext.artofthesmart.com/FAQ) or [visit the issues page in Github](https://github.com/artofthesmart/hypertext/issues) if you run into problems.
 *  [Contribute to Hypertext via Github](https://github.com/artofthesmart/hypertext) and help make the web faster!
 
-> **Special thanks** go out to [Ricardo](http://urbansquid.london), the theme champion in the Grav Discord server, [Andy Miller](https://twitter.com/rhuk) creator of Grav CMs, and my wife who's sick of hearing about this project by now.
+!!! **Special thanks** go out to [Ricardo](http://urbansquid.london), the theme champion in the Grav Discord server, [Andy Miller](https://twitter.com/rhuk) creator of Grav CMS, and my wife who's sick of hearing about this project by now.
 
 -------------------------------------------------------------------------------
 
@@ -44,7 +44,7 @@ All of those create barriers between users and content.  Each line of JS or styl
 
 The web used to be about function over form and I'd like to get back to that a little.
 
-!!! Remember; if you want plugins or other CSS/JS to load, you will need to explicitly enable it with Hypertext!  This can be done globally via the theme settings- e.g. `gravsite.com/admin/themes/hypertext` or locally for each page in the `Advanced` tab.  [Details in the reference guide](http://hypertext.artofthesmart.com/reference).
+!!! Remember; if you want plugins or other CSS/JS to load, you will need to _explicitly enable it_ with Hypertext!  This can be done globally via the theme settings- e.g. `<gravsite.com>/admin/themes/hypertext` or locally for each page in the `Advanced` tab.  [Details in the reference guide](http://hypertext.artofthesmart.com/reference).
 
 ## Philosophy
 I tried to keep the theme consistent throughout by following a few key design principles.  Hypertext follows these rules, in order of priority:
