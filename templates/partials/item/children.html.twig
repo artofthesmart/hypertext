@@ -4,8 +4,8 @@
 {# ------------------------------------------------------------------------ #}
 
 {% if collection|length > 0 %}
-  {% set collection = collection.order(header.content.order.by|default('folder'), 
-                                       header.content.order.dir|default('desc')) %}
+  {% set collection = collection.order(page.header.content.order.by|default(system.pages.order.by), 
+                                       page.header.content.order.dir|default(system.pages.order.dir)) %}
 
   {# TABLE #}
   {% if child_style == 'table' %} 

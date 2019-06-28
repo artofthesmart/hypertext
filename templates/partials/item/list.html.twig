@@ -33,7 +33,8 @@
 
   {# Children #}
   {% if show_children and inner_children|length > 0 %}
-  {% set inner_children = inner_children.order(page.header.content.order.by|default('default'), page.header.content.order.dir|default('default')) %}
+  {% set inner_children = inner_children.order(page.header.content.order.by|default(system.pages.order.by), 
+                                               page.header.content.order.dir|default(system.pages.order.dir)) %}
   <ul class="nested-children">
     {% for child in inner_children %}
       {% include 'partials/item/list.html.twig' with {'page':child, 'parent':parent, level:level + 1} %}
