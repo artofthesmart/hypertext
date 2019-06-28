@@ -1,8 +1,21 @@
 # v2.0.0
-## 07/04/2019
+## 06/29/2019
 
 1. [](#new)
-    * 
+    * **Massive overhaul.**  Incompatible with 1.x.x versions.
+    * **Adds open source stylesheets.**  Hypertext is still plenty fast with very small CSS sheets.
+        * Optional `inline` vs `href` include modes.
+        * Quickly leaf through options via `?theme=1` URL parameter.
+    * **HTML 3 & HTML 5 compliance modes.**  You can now choose whether to use HTML3.2 or HTML5 conventions.
+    * **Collection rendering options.**  There are now three ways to render page children, all of which have options to configure which kinds of data get shown:
+        * `list`, which is an ordered list of items.
+        * `table`, which is a tabular view.
+        * `summary`, which is the more standard, structured view of children.
+    * **Header images & thumbnails.**  Add images to the tops of pages and thumbnails for rendering as children of some parent page.
+2. [](#improved)
+    * **Simplified page types.** All pages are now one of two types:
+        * `default` for [pages](https://learn.getgrav.org/16/content/content-pages), which supports `item` and `blog_item` page types also.
+        * `collection` for [page collections](https://learn.getgrav.org/16/content/collections), which supports `blog` and `blog_list` page types also.
 
 # v1.2.0
 ## 04/20/2019

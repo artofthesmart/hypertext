@@ -8,11 +8,11 @@ author:
   url: http://artofthesmart.com
 homepage: https://github.com/artofthesmart/hypertext
 demo: http://hypertext.artofthesmart.com
-keywords: theme, simple, compliance, fast, semantic
+keywords: theme, simple, compliance, fast, semantic, 1995
 bugs: https://github.com/artofthesmart/hypertext/issues
 license: MIT
 dependencies:
-  { name: grav, version: '>=1.5.10' }
+  { name: grav, version: '>=1.6.0' }
 
 form:
   validation: strict
