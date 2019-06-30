@@ -1,0 +1,15 @@
+<h1><a href="{{ home_url }}">{{ site.title|e('html') }}</a></h1>
+
+{% if site.metadata.description %}
+{{ html5 ? '<aside>' : '<p class="subtitle">' }}
+  {{ site.metadata.description }}
+{{ html5 ? '</aside>' : '</p>' }}
+{% endif %}
+
+{% block header_navigation %}
+    {% include 'partials/page/navigation.html.twig' %}
+{% endblock %}
+
+{% if grav.messages.all %}
+    {% include 'partials/page/messages.html.twig' %}
+{% endif %}

@@ -1,0 +1,84 @@
+{% if page.header.show_header_image|default('default') == 'default' %}
+  {% set show_image = parent.header.render.children.image ?? true %}
+{% else %}
+  {% set show_image = page.header.show_header_image == 'enabled' %}
+{% endif %}
+
+{% set header_image = page.media.images[page.header.header_image_file] ?? page.media.images|first %}
+{% set use_image_crop = style.image_cropping|default(false) %}
+{% set image_width = use_image_crop ? style.width / 7 : header_image.width %}
+{% set image_height = use_image_crop ? style.width / 7 : header_image.height %}
+{% set header_image_url = header_image.cropZoom(image_width, image_height).url : header_image.url %}
+
+{% set show_subtitle = parent.header.render.children.subtitle ?? true %}
+{% set show_cat = parent.header.render.children.category ?? true %}
+{% set show_date = parent.header.render.children.date ?? false %}
+{% set show_children = parent.header.render.children.nested_children ?? true %}
+{% set inner_children = page.collection()|length > 0 ? page.collection() : page.children.visible %}
+
+{# ------------------------------------------------------------------------ #}
+
+<tr{% if page.taxonomy.category %} class="{% for cat in page.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}"{% endif %}>
+
+  {# Image #}
+  <td rowspan="3" class="image" width="20%">
+  {% if show_image and header_image %}
+    <a href="{{ page.url }}">
+      <img src="{{ header_image_url }}" width="{{ header_image_width }}" height="{{ header_image_height }}">
+    </a>
+  {% endif %}
+  </td>
+  
+
+  {# Title #}
+  <td colspan="2">
+  <strong>
+    <a href="{{ page.url }}">{{ page.title }}</a>
+  </strong>
+  </td>
+</tr>
+
+{# Subtitle #}
+<tr{% if page.taxonomy.category %} class="{% for cat in page.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}"{% endif %}>
+  <td colspan="2">
+    {% if show_subtitle and page.header.subtitle %}
+      {{ page.header.subtitle }}
+    {% endif %}
+  </td>
+</tr>
+
+<tr{% if page.taxonomy.category %} class="{% for cat in page.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}"{% endif %}>
+
+{# Date #}
+<td>
+  {% if show_date %}
+    {% if html5 %}
+      {{ 'THEME_HYPERTEXT.DATES.PUBLISHED'|t }}: <time datetime="{{ page.date|date("c") }}">{{ page.date|date(system.pages.dateformat.short) }}</time>
+    {% else %}
+      {{ 'THEME_HYPERTEXT.DATES.PUBLISHED'|t }}: <span class="datetime">{{ page.date|date(system.pages.dateformat.short) }}</span>
+    {% endif %}
+  {% endif %}
+</td>
+
+{# Categories #}
+<td>
+{% if page.taxonomy.category and show_cat %}
+  {{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t }}: 
+  {% for category in page.taxonomy.category %}
+    {{ structure.use_decorators ? '[' : '' }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ structure.use_decorators ? ']' : '' }}{{ not loop.last ? ',' : '' }}
+  {% endfor %}
+{% endif %}
+</td></tr>
+
+{# Children 
+ # Not sure how to implement this just yet...
+{% if show_children and inner_children|length > 0 %}
+{% set inner_children = inner_children.order(page.header.content.order.by|default('default'), page.header.content.order.dir|default('default')) %}
+<br>
+Sub-Pages:
+<ol class="nested-children">
+  {% for child in inner_children %}
+  <li><a href="{{ child.url }}">{{ child.title }}</a>{{ child.header.subtitle and show_subtitle ? ' - <span>'~child.header.subtitle~'</span>' : '' }}</li>
+  {% endfor %}
+</ol>
+{% endif %} {# End render nested children #}

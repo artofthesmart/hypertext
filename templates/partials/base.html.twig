@@ -1,7 +1,32 @@
-{% set body_classes = page.header.bodyClasses %}
-{% set html5 = structure.htmlMode == 'default' %}
+{% set structure = config.themes.hypertext.structure %}
+{% set style = config.themes.hypertext.style %}
+{% set menu = config.themes.hypertext.menu %}
+{% set html5 = structure.html_mode|default('default') == 'default' %}
+
+{% set allowCSS = page.header.allowCSS == 'enabled' or
+                    (page.header.allowCSS|default('default') == 'default' and 
+                     style.allowCSS == '1') %}
+{% set allowJS  = page.header.allowJS  == 'enabled' or
+                    (page.header.allowJS|default('default') == 'default' and 
+                     style.allowJS == '1') %}
+
+{# Why set this here? Because we might want to pivot semantic flow depending on the sheet someday. #}
+{% set stylesheets = ['air', 'hypertext++', 'latex', 'marx', 'modest', 'sakura-dark-solarized', 'sakura-dark',
+                      'sakura-earthly', 'sakura-vader','sakura', 'stylize', 'tacit', 'tufte', 'w3c-chocolate', 'w3c-midnight', 'w3c-modernist',
+                      'w3c-oldstyle', 'w3c-steely', 'w3c-swiss', 'w3c-traditional', 'w3c-ultramarine', 'water-dark', 'water-light', 'writ',
+                      'yorha'] %}
+
+{# Set a stylesheet from URI or style config #}
+{% set stylesheet = uri.query('theme')|default(style.stylesheet) %}
+{% if stylesheet matches '/^\\d+$/' %}
+  {% set stylesheet = stylesheets[stylesheet % stylesheets|length] %}
+{% endif %}
+
+{# ------------------------------------------------------------------------ #}
 
 <!DOCTYPE html>
+
+
 {# ## HEADLES RENDERING ## #}
 {% if uri.query('headless') %}
 <html>
@@ -9,9 +34,11 @@
     <title>{% if header.title %}{{ header.title|e('html') }} | {% endif %}{{ site.title|e('html') }}</title>
   </head>
   <body>
-  {% block content %}{% endblock %}
+  {{ block('content') }}
   </body>
 </html>
+
+
 {% else %}
 {# ## ORDINARY RENDER ## #}
 <html lang="{{ grav.language.getActive ?: grav.config.site.default_lang }}">
@@ -21,37 +48,63 @@
   <link rel="canonical" href="{{ page.url(true, true) }}" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  {% include 'partials/metadata.html.twig' %}
+  {% for meta in page.metadata %}
+    <meta {% if meta.name %}name="{{ meta.name }}" {% endif %}{% if meta.http_equiv %}http-equiv="{{ meta.http_equiv }}" {% endif %}{% if meta.charset %}charset="{{ meta.charset }}" {% endif %}{% if meta.property %}property="{{ meta.property }}" {% endif %}{% if meta.content %}content="{{ meta.content }}" {% endif %}/>
+  {% endfor %}
 
   <title>{% if header.title %}{{ header.title|e('html') }} | {% endif %}{{ site.title|e('html') }}</title>
 
-  {% if config.themes.hypertext.style.usefavicon and not uri.query('headless') %}
+  {% if structure.use_favicon %}
   <link rel="icon" type="image/png" href="{{ url('theme://images/favicon.png') }}" />
   {% endif %}
 
-  {% include 'partials/js-css.html.twig' %}
+  {% include 'partials/page/js-css.html.twig' %}
 {% endblock head %}
 </head>
-<body class="{{ page.template }}{{ body_classes ? ' {{ body_classes }}' : ''}}">
+
+
+<body class="{{ page.template }}{{ page.header.bodyClasses ? ' {{ page.header.bodyClasses }}' : ''}}">
   {# ## HEADER ## #}
   {{ html5 ? '<header>' : '<div class="header">' }}
   {% block header %}
-    {% include 'partials/header.html.twig' %}
+    {% include 'partials/page/header.html.twig' %}
   {% endblock %}
   {{ html5 ? '</header>' : '</div>' }}
   
   {# ## BODY ## #}
   {{ html5 ? '<main>' : '<div class="main">' }}
-    {% block content %}
+    {{ html5 ? '<article>' : '<div class="item">'}}
+
+    {# ARTICLE HEAD #}
+    {% block item_head %}
+    {% include 'partials/item/header.html.twig' %}
     {% endblock %}
+
+    {# ARTICLE BODY #}
+    {% block content %}
+    {{ page.content|raw }}
+    {% endblock %}
+
+    {# CHILD PAGES #}
+    {% block children %}
+    {% include 'partials/item/children.html.twig' %}
+    {% endblock %}
+
+    {# ARTICLE FOOTER #}
+    {% block item_footer %}
+    {% include 'partials/item/footer.html.twig' %}
+    {% endblock %}
+
+    {{ html5 ? '</article>' : '</div>'}}
   {{ html5 ? '</main>' : '</div>' }}
 
   {# ## FOOTER ## #}
   {{ html5 ? '<footer>' : '<div class="footer">' }}
   {% block footer %}
-    {% include 'partials/footer.html.twig' %}
+    {% include 'partials/page/footer.html.twig' %}
   {% endblock %}
   {{ html5 ? '</footer>' : '</div>' }}
+
 </body>
 {% endif %}
 </html>

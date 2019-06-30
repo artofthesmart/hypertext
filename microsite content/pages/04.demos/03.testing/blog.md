@@ -1,0 +1,1 @@
+This collection exists only for testing and isn't meant to be a real demo of what content would look like in this theme.  i.e. Every page has different content/data instead of being uniform, so it's going to look really weird.

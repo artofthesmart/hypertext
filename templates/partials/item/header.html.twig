@@ -1,0 +1,67 @@
+{% set show_image = page.header.show_header_image|default(false) %}
+  {% set header_image_name = page.header.header_image_file|default('header.png') %}
+  {% set header_image = page.media.images[header_image_name] ??
+                        media['image://' ~ header_image_name] ??
+                        media['image://' ~ page.slug()~'.png'] ??
+                        media['image://' ~ page.slug()~'.jpg'] ??
+                        media['image://' ~ page.slug()~'.gif'] ??
+                        page.media.images|first %}
+  {% set use_image_crop = style.image_cropping|default(false) %}
+  {% set image_width = use_image_crop ? style.width - 10 : header_image.width %}
+  {% set image_height = use_image_crop ? style.width / 5 : header_image.height %}
+  {% set header_image_url = use_image_crop ? header_image.cropZoom(image_width, image_height).url : header_image.url %}
+
+{% set show_date = structure.show_date ?? false %}
+
+{# ------------------------------------------------------------------------ #}
+
+{# Title & Subtitle #}
+{% if not page.home() %}
+<h2>
+  <a href="{{ page.url }}">{{ page.title }}</a>
+</h2>
+{% endif %}
+{% if page.header.subtitle %}<strong>{{ page.header.subtitle }}</strong>{% endif %}
+
+<p> {# The next set of items should be somewhat close together. #}
+
+{# Image #}
+{% if show_image and header_image %}
+  <a href="{{ page.url }}">
+    <img src="{{ header_image_url }}" width="{{ header_image_width }}" height="{{ header_image_height }}">
+  </a>
+{% endif %}
+
+{# Date #}
+{% if show_date %}
+<br><sub>
+  {% if html5 %}
+    <time datetime="{{ page.date|date("c") }}">{{ page.date|date(system.pages.dateformat.short) }}</time>
+  {% else %}
+    <span class="datetime">{{ page.date|date(system.pages.dateformat.short) }}</span>
+  {% endif %}
+</sub>
+{% endif %}
+
+{# Categories #}
+{% if page.taxonomy.category %}
+  <br>
+  Categories: <small>
+  {% for category in page.taxonomy.category %}
+    {{ structure.use_decorators ? '[' : '' }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ structure.use_decorators ? ']' : '' }}{{ not loop.last ? ',' : '' }}
+  {% endfor %}</small>
+{% else %}
+{% endif %}
+
+{% if page.taxonomy.tag %}
+  <br>
+  Tags: <small>
+  {% for tag in page.taxonomy.tag %}
+    <a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ tag }}">{{ tag }}</a>{{ not loop.last ? ',' : '' }}
+  {% endfor %}</small>
+  {% for tag in page.taxonomy.tag %}
+    <a href="{{ blog.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ tag }}">{{ tag }}</a>
+  {% endfor %}
+{% endif %}
+
+</p>

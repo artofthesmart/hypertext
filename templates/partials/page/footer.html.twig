@@ -1,0 +1,13 @@
+<hr/>
+{# Be cool; please leave the attirbution in unless you really need to remove it. ;) #}
+<p>{{ 'THEME_HYPERTEXT.FOOTER.BY_LINE'|t }}</p>
+
+{% block bottom %}
+{% if allowJS %}
+{{ assets.js('bottom')|raw }}
+{% endif %}
+
+{% if allowCSS %}
+{{ assets.css('bottom')|raw }}
+{% endif %}
+{% endblock %}

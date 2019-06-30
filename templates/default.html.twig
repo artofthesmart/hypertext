@@ -1,5 +1,3 @@
-{% extends 'partials/base.html.twig' %}
-
-{% block content %}
-	{{ page.content }}
-{% endblock %}
+{% embed 'partials/base.html.twig' %}
+{# This only exists to improve compatibility with other themes #}
+{% endembed %}

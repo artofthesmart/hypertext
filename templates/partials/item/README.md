@@ -1,0 +1,1 @@
+This folder contains snippets necessary for rendering children within some larger page.  e.g. the `<h2>` title of a page's `<article>` but not necessarily the `<header>` of the whole document.

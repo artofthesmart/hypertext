@@ -1,3 +1,23 @@
+# v2.0.0
+## 06/29/2019
+
+1. [](#new)
+    * **Massive overhaul.**  Incompatible with 1.x.x versions.  If you need to roll back to a prior version, you can [download the last 1.x version from Github](https://github.com/artofthesmart/hypertext/archive/v1.1.4.zip).
+    * Adds open source stylesheets.  Hypertext is still plenty fast with very small CSS sheets.
+        * Optional `inline` vs `href` include modes.
+        * Quickly leaf through options via `?theme=1` URL parameter.  Pick what works for you!
+        * Want to add your sheet to the supprted list?  [Check out this commit for a template](https://github.com/artofthesmart/hypertext/commit/7a5b5b61e8fe6001013722b2fd03c77369cb065c) then send me a pull request!
+    * HTML 3 & HTML 5 compliance modes.  You can now choose whether to use HTML3.2 or HTML5 conventions.
+    * Collection rendering options.  There are now three ways to render page children, all of which have options to configure which kinds of data get shown:
+        * `list`, which is an ordered list of items.
+        * `table`, which is a tabular view.
+        * `summary`, which is the more standard, structured view of children.
+    * Header images & thumbnails.  Add images to the tops of pages and thumbnails for rendering as children of some parent page.
+2. [](#improved)
+    * Simplified page types. All pages are now one of two types:
+        * `default` for [pages](https://learn.getgrav.org/16/content/content-pages), which supports `item` and `blog_item` page types also.
+        * `collection` for [page collections](https://learn.getgrav.org/16/content/collections), which supports `blog` and `blog_list` page types also.
+
 # v1.2.0
 ## 04/20/2019
 

@@ -1,0 +1,12 @@
+body {
+    color: #353535;
+    font-size:large;
+    padding:0 10px;
+    margin: 40px auto;
+}
+img { max-width: 80%; }
+h1, h2, h3 { font-family: sans-serif; }
+p { line-height:1.5; }
+table { border-spacing: 0; width: 100%; }
+td, th { border-bottom: 2px solid #e1e1e1; padding: 20px 24px; text-align: left; }
+.current { font-weight: bold; }

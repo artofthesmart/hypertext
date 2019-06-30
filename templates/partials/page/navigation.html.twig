@@ -1,0 +1,73 @@
+{% set hasNav = pages.children.visible|length >= 1 or
+                config.themes.hypertext.menu.menuItems|length >= 1 or
+                (config.plugins.login.enabled and grav.user.username) %}
+
+{% if hasNav %}
+{{ dump(config.themes.hypertext) }}
+
+{{ html5 ? '<nav>' : '<div class="nav">' }}
+
+  {# INLINE/TEXT NAV BAR #}
+  {% if structure.inline_navbar %}
+    {% for child in pages.children.visible %}
+      <a href="{{ child.url }}"{{ (child.active or child.activeChild) ? ' class="current"' :'' }}>{{ child.menu }}</a>
+      {% if structure.use_decorators %}
+        {{ not loop.last or menu.menuItems|length >= 1 ? '|' : '' }}
+      {% endif %}
+    {% endfor %} {# End child pages loop #}
+
+    {# Write additional links #}
+    {% if menu.menuItems|length >= 1 %}
+    <span>
+    {% for menuItem in menu.menuItems %}
+      <a href="{{ menuItem.href }}"
+        {{ menuItem.rel ? 'rel="%s" '|format(menuItem.rel) : '' }}
+        {{ menuItem.name ? 'name="%s" '|format(menuItem.name) : '' }}
+        {{ menuItem.isOffsite ? 'class="offsite"' : '' }}
+        {{ menuItem.target ? 'target="%s" '|format(menuItem.target) : '' }}
+        {{ menuItem.isNewWindow ? 'target="_blank"' : '' }}>{{ menuItem.text}}</a>
+      {% if structure.use_decorators %}
+        {{ not loop.last ? '|' : '' }}
+      {% endif %}
+    {% endfor %}
+    </span>
+    {% endif %} {# End additional links loop #}
+    
+    {% if config.plugins.login.enabled and grav.user.username %}
+      [{% include 'partials/login-status.html.twig' %}]
+    {% endif %}
+  {% else %}
+
+  {# UL/LI NAV BAR #}
+  <ul>
+    {% for child in pages.children.visible %}
+    <li><a href="{{ child.url }}"{{ (child.active or child.activeChild) ? ' class="current"' :'' }}>{{ child.menu }}</a></li>
+    {% endfor %}
+
+    {% for menuItem in menu.menuItems %}
+      <li><a href="{{ menuItem.href }}"
+          {{ menuItem.rel ? 'rel="%s" '|format(menuItem.rel) : '' }}
+          {{ menuItem.name ? 'name="%s" '|format(menuItem.name) : '' }}
+          {{ menuItem.isOffsite ? 'class="offsite"' : '' }}
+          {{ menuItem.target ? 'target="%s" '|format(menuItem.target) : '' }}
+          {{ menuItem.isNewWindow ? 'target="_blank"' : '' }}>{{ menuItem.text}}</a></li>
+    {% endfor %}
+
+    {% if config.plugins.login.enabled and grav.user.username %}
+      <li>[{% include 'partials/login-status.html.twig' %}]</li>
+    {% endif %}
+  </ul>
+  {% endif %} {# End of navigation links #}
+
+  {# Drop in a separator if there's no theme at all OR we have breadcrumbs. #}
+  {#{% if uri.query('theme')|default(style.stylesheet) == 'default' or breadcrumbs.get()|length > 1 %}#}
+    <hr>
+  {#{% endif %}#}
+  
+  {# Breadcrumbs #}
+  {% if config.plugins.breadcrumbs.enabled %}
+    {% include 'partials/breadcrumbs.html.twig' %}
+  {% endif %}
+{{ html5 ? '</nav>' : '</div>' }}
+
+{% endif %} {# end if has nav #}

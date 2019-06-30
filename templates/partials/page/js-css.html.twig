@@ -1,0 +1,62 @@
+{% block stylehseets %}
+
+{# Add the stylesheet #}
+{# TODO: Add sourcing options from unpkg rather than locally #}
+{% if stylesheet != 'default' %}
+  {% if style.include_type == 'inline' %}
+    {# User *explicitly* wants it imported in style tags #}
+    <style>{{ include('css/' ~ stylesheet ~ '.css') }}</style>
+  {% elseif not style.allowCSS %}
+    {# User wants it via href, but doesn't have CSS pipeline running #}
+    <link href="{{ url('theme://css/'~stylesheet~'.css') }}" rel="stylesheet" />
+  {% else %}
+    {# User wants it href and is allowing CSS #}
+    {% do assets.addCss('theme://css/'~stylesheet~'.css') %}
+  {% endif %}
+{% endif %}
+{% endblock %}
+
+{% block javascripts %}
+  {# Hypertext doesn't add any JS, but if it did it would go here. #}
+{% endblock %}
+
+{# Regular CSS/JS includes #}
+{% block assets deferred %}
+  {% if allowCSS %}{{ assets.css()|raw }}{% endif %}
+  {% if allowJS %}{{ assets.js()|raw }}{% endif %}
+{% endblock %}
+
+
+
+{# Add custom styles (if needed) #}
+{% if style.width != 'default' or 
+      style.configuration != 'default' or
+      style.customCSS != '' %}
+<style>
+body {
+{{ style.width != 'default' ? "max-width: #{style.width}px;" : ""}}
+{# Set only left and right margins because some stylesheets set vertical. #}
+{# Also reset to 8px, the Chrome default (`unset` doesn't work). #}
+{% if style.configuration == 'default' %}
+    margin-left: 8px;
+    margin-right: 8px;
+{% else %}
+    margin-left: auto;
+    margin-right: auto;
+{% endif %}
+}
+
+{# This is the one piece of style that is unavoidable. See documentation for details. #}
+img { max-width: 100%; }
+
+{# This was a bad idea.
+{% if style.header_image_align|default('default') == 'left' %}
+.snippet img { float: left; margin: 0 1em; }
+section { clear: both; }
+{% endif %} 
+#}
+
+{# User's styles #}
+{{ style.customCSS != '' ? style.customCSS : "" }}
+</style>
+{% endif %}

@@ -1,9 +1,16 @@
-allowCSS: 0
-allowJS: 0
-layout:
-  configuration: 'centered'
-  width: 768
+structure:
+  inline_navbar: true
+  inline_pagination: true
+  use_decorators: true
+  html_mode: default
+  use_favicon: false
+  show_date: false
 style:
-  inlineNavbar: 1
-  useFavicon: 0
-  beautifyText: 0
+  configuration: centered
+  width: 768
+  allowCSS: false
+  allowJS: false
+  stylesheet: default
+  include_type: default
+  image_cropping: false
+  inline_navbar: 1

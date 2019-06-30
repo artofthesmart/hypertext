@@ -1,0 +1,35 @@
+{% set collection = page.collection()|length > 0 ? page.collection() : page.children.visible %}
+{% set child_style = page.header.render.children.style|default('summary') %}
+
+{# ------------------------------------------------------------------------ #}
+
+{% if collection|length > 0 %}
+  {% set collection = collection.order(page.header.content.order.by|default(system.pages.order.by), 
+                                       page.header.content.order.dir|default(system.pages.order.dir)) %}
+
+  {# TABLE #}
+  {% if child_style == 'table' %} 
+  {% include 'partials/item/table.html.twig' with {'parent': page, 'collection': collection} %}
+
+  {% elseif child_style == 'list' %}
+
+  {# LIST #}
+  <ol>
+    {% for child in collection %}
+      {% include 'partials/item/list.html.twig' with {'page':child, parent:page, level:1} %}
+    {% endfor %}
+  </ol>
+
+  {% else %}
+
+  {# SUMMARY #}
+    {% for child in collection %}
+      {% include 'partials/item/summary.html.twig' with {'page':child, parent:page} %}
+    {% endfor %}
+
+  {% endif %}
+
+  {% if config.plugins.pagination.enabled and collection.params.pagination %}
+    {% include 'partials/page/pagination.html.twig' with {'base_url':page.url, 'pagination':collection.params.pagination} %}
+  {% endif %}
+{% endif %}

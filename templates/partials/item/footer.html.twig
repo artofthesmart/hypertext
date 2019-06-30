@@ -1,0 +1,15 @@
+{# If this isn't a top-level page, it has siblings under a `collection` page type. #}
+{# Add the date, unless suppressed.  TODO: Build in suppression option.  #}
+
+<p>
+{# Render the next/prev buttons, unless suppressed. #}
+{% if not page.parent.root() and page.parent.header.content.sibling_links|default(false) %}
+  <span class="pagination">
+  {% if not page.isLast %}
+    <a href="{{ page.prevSibling.url }}">&#xab; {{ structure.prevWord }}</a>
+  {% endif %}
+  {% if not page.isFirst %}
+    <a href="{{ page.nextSibling.url }}">{{ structure.nextWord }} &raquo;</a>
+  {% endif %}
+  </span>
+{% endif %}
