@@ -16,7 +16,9 @@
   {# LIST #}
   <ol>
     {% for child in collection %}
-      {% include 'partials/item/list.html.twig' with {'page':child, parent:page, level:1} %}
+      {% if child.isPage() %}
+        {% include 'partials/item/list.html.twig' with {'page':child, parent:page, level:1} %}
+      {% endif %}
     {% endfor %}
   </ol>
 
@@ -24,7 +26,9 @@
 
   {# SUMMARY #}
     {% for child in collection %}
-      {% include 'partials/item/summary.html.twig' with {'page':child, parent:page} %}
+      {% if child.isPage() %}
+        {% include 'partials/item/summary.html.twig' with {'page':child, parent:page} %}
+      {% endif %}
     {% endfor %}
 
   {% endif %}

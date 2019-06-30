@@ -15,7 +15,7 @@
     {% if show_cat %}<td>{{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t }}</td>{% endif %}
   {{ html5 ? '</thead>' : ''}}</tr>
 
-  {% for child in collection %}
+  {% for child in collection if child.isPage() %}
     {# Never show the image; it's hideous on mobile.
      #
      # {% if child.header.show_header_image|default('default') == 'default' %}
