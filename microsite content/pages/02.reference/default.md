@@ -136,29 +136,29 @@ The toggle switches in this section like `Show Image` and `Show Subtitle` enable
 
 <a id="style_table"></a>
 
-| Screenshot                                | Name                  |
-| ------------------------------------------| ----------------------|
-| ![Theme #0](0.png?cropResize=300,500)     | #0 air		        |
-| ![Theme #1](1.png?cropResize=300,500)	    | #1 hypertext++		|
-| ![Theme #2](2.png?cropResize=300,500)     | #2 latex		        |
-| ![Theme #3](3.png?cropResize=300,500)     | #3 marx		        |
-| ![Theme #4](4.png?cropResize=300,500)     | #4 sakura		        |
-| ![Theme #5](5.png?cropResize=300,500)     | #5 sakura-dark		|
-| ![Theme #6](6.png?cropResize=300,500)	    | #6 sakura-dark-solar	|
-| ![Theme #7](7.png?cropResize=300,500)	    | #7 sakura-earth		|
-| ![Theme #8](8.png?cropResize=300,500)	    | #8 sakura-vader		|
-| ![Theme #9](9.png?cropResize=300,500)  	| #9 stylize		    |
-| ![Theme #10](10.png?cropResize=300,500)   | #10 tacit		        |
-| ![Theme #11](11.png?cropResize=300,500)   | #11 tufte		        |
-| ![Theme #12](12.png?cropResize=300,500)	| #12 w3c-chocolate		|
-| ![Theme #13](13.png?cropResize=300,500)	| #13 w3c-midnight		|
-| ![Theme #14](14.png?cropResize=300,500)	| #14 w3c-modernist		|
-| ![Theme #15](15.png?cropResize=300,500)	| #15 w3c-oldstyle		|
-| ![Theme #16](16.png?cropResize=300,500)	| #16 w3c-steely		|
-| ![Theme #17](17.png?cropResize=300,500)	| #17 w3c-swiss		    |
-| ![Theme #18](18.png?cropResize=300,500)	| #18 w3c-traditional	|
-| ![Theme #19](19.png?cropResize=300,500)	| #19 w3c-ultramarine	|
-| ![Theme #20](20.png?cropResize=300,500)	| #20 water-dark		|
-| ![Theme #21](21.png?cropResize=300,500)	| #21 water-light		|
-| ![Theme #22](22.png?cropResize=300,500)	| #22 writ		        |
-| ![Theme #23](23.png?cropResize=300,500)	| #23 yorha		        |
+| Screenshot                                                | Name                  |
+| --------------------------------------------------------- | --------------------- |
+| ![Theme #0](air.png?cropResize=300,500)                   | #0 air		        |
+| ![Theme #1](ht++.png?cropResize=300,500)	                | #1 hypertext++		|
+| ![Theme #2](latex.png?cropResize=300,500)                 | #2 latex		        |
+| ![Theme #3](marx.png?cropResize=300,500)                  | #3 marx		        |
+| ![Theme #4](sakura.png?cropResize=300,500)                | #4 sakura		        |
+| ![Theme #5](sakura-dark.png?cropResize=300,500)           | #5 sakura-dark		|
+| ![Theme #6](sakura-dark-solar.png?cropResize=300,500)	    | #6 sakura-dark-solar	|
+| ![Theme #7](sakura-earth.png?cropResize=300,500)	        | #7 sakura-earth		|
+| ![Theme #8](sakura-vader.png?cropResize=300,500)	        | #8 sakura-vader		|
+| ![Theme #9](stylize.png?cropResize=300,500)  	            | #9 stylize		    |
+| ![Theme #10](tacit.png?cropResize=300,500)                | #10 tacit		        |
+| ![Theme #11](tufte.png?cropResize=300,500)                | #11 tufte		        |
+| ![Theme #12](w3c-chocolate.png?cropResize=300,500)	    | #12 w3c-chocolate		|
+| ![Theme #13](w3c-midnight.png?cropResize=300,500)	        | #13 w3c-midnight		|
+| ![Theme #14](w3c-modernist.png?cropResize=300,500)	    | #14 w3c-modernist		|
+| ![Theme #15](w3c-oldstyle.png?cropResize=300,500)	        | #15 w3c-oldstyle		|
+| ![Theme #16](w3c-steely.png?cropResize=300,500)	        | #16 w3c-steely		|
+| ![Theme #17](w3c-swiss.png?cropResize=300,500)	        | #17 w3c-swiss		    |
+| ![Theme #18](w3c-traditional.png?cropResize=300,500)	    | #18 w3c-traditional	|
+| ![Theme #19](w3c-ultramarine.png?cropResize=300,500)	    | #19 w3c-ultramarine	|
+| ![Theme #20](water-dark.png?cropResize=300,500)	        | #20 water-dark		|
+| ![Theme #21](water-light.png?cropResize=300,500)	        | #21 water-light		|
+| ![Theme #22](writ.png?cropResize=300,500)	                | #22 writ		        |
+| ![Theme #23](yorha.png?cropResize=300,500)	            | #23 yorha		        |
