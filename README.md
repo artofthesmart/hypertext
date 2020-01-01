@@ -15,7 +15,7 @@
 * Fully responsive across almost any device
 * Includes `headless` parameter for serving only content
 * HTML 3 & HTML 5 compliance modes
-* Built-in open source stylesheets
+* 25 built-in, open source stylesheets
 
 ### Supported Page Templates
 

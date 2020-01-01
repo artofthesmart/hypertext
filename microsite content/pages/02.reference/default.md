@@ -81,9 +81,11 @@ These fields contain other miscellaneous configuration options that override or 
 
 You can add custom menu bar items in this section.  Click "Add item" in the lower right corner to get started and from there you can edit details about your links like adding classes or making them open in a new window.
 
-### Page Settings
+#### Custom Footer Options
 
-![To see page settings, visit the Hypertext tab of your content page.](#TODO)
+You can add a custom footer to every page on your website from this section.
+
+### Page Settings
 
 The page-level settings include overrides to the global settings like whether to show CSS and JS, plus additional content for the page.  If your content is actually a directory, you'll find options around ordering and rendering that content.
 

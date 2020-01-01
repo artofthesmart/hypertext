@@ -1,3 +1,9 @@
+# v2.1.0
+## 01/01/2020
+
+1. [](#new)
+    * Adding the ability to have a custom footer on your website. [Fixes this issue](https://github.com/artofthesmart/hypertext/issues/23).
+
 # v2.0.0
 ## 06/29/2019
 

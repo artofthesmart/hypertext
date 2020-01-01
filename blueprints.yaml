@@ -255,16 +255,16 @@ form:
                     #  options:
                     #    default: No style (block)
                     #    left: Pull left
-        menus: # MENU ITEMS TAB
+        menus: # HEADER, FOOTER, LINKS TAB
           type: tab
-          title: Header & Links
+          title: Headers, Footers, & Links
           fields:
             description:
               type: display
               size: long
               label: Description
               markdown: true
-              content: "This tab lets you add more items to the navigation area of your website."
+              content: "This tab lets you add more items to the navigation areas of your website."
             menu.menuItems:
               name: menuItems
               type: list
@@ -322,3 +322,19 @@ form:
                       type: text
                       label: Title
                       placeholder: An advisory title for the linked resource.
+            partials.footer.custom_footer_type:
+              type: select
+              classes: fancy
+              label: Footer Type
+              help: The footer can be either markdown or HTML, whichever you need.
+              size: large
+              default: markdown
+              options:
+                markdown: Markdown
+                html: HTML  
+            partials.footer.custom_footer:
+              type: textarea
+              label: Footer Content
+              size: large
+              help: Add your optional, custom footer content here. If you need to remove the Hypertext attribution line, you can do it from the theme code in user/themes/hypertext/templates/partials/page/footer.html.twig.
+                        

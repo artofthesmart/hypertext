@@ -1,4 +1,13 @@
 <hr/>
+{# Write the custom footer, if available. #}
+{% if partials.footer.custom_footer|default('') != '' %}
+    {% if partials.footer.custom_footer_type|default('markdown') == 'markdown' %}
+        {{ partials.footer.custom_footer|markdown }}
+    {% else %}
+        {{ partials.footer.custom_footer|raw }}
+    {% endif %}
+{% endif %}
+
 {# Be cool; please leave the attribution in unless you really need to remove it. ;) #}
 <p>{{ 'THEME_HYPERTEXT.FOOTER.BY_LINE'|t }}</p>
 
