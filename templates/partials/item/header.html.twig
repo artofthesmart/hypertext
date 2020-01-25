@@ -30,11 +30,12 @@
   <a href="{{ page.url }}">
     <img src="{{ header_image_url }}" width="{{ header_image_width }}" height="{{ header_image_height }}">
   </a>
+  <br>
 {% endif %}
 
 {# Date #}
 {% if show_date %}
-<br><sub>
+<sub>
   {% if html5 %}
     <time datetime="{{ page.date|date("c") }}">{{ page.date|date(system.pages.dateformat.short) }}</time>
   {% else %}
@@ -45,23 +46,18 @@
 
 {# Categories #}
 {% if page.taxonomy.category %}
-  <br>
   Categories: <small>
   {% for category in page.taxonomy.category %}
     {{ structure.use_decorators ? '[' : '' }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ structure.use_decorators ? ']' : '' }}{{ not loop.last ? ',' : '' }}
   {% endfor %}</small>
-{% else %}
+  {{ page.taxonomy.tag ? '<br>' : '' }}
 {% endif %}
 
 {% if page.taxonomy.tag %}
-  <br>
   Tags: <small>
   {% for tag in page.taxonomy.tag %}
-    <a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ tag }}">{{ tag }}</a>{{ not loop.last ? ',' : '' }}
+    {{ structure.use_decorators ? '[' : '' }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ tag }}">{{ tag }}</a>{{ structure.use_decorators ? ']' : '' }}{{ not loop.last ? ',' : '' }}
   {% endfor %}</small>
-  {% for tag in page.taxonomy.tag %}
-    <a href="{{ blog.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ tag }}">{{ tag }}</a>
-  {% endfor %}
 {% endif %}
 
 </p>

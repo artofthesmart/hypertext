@@ -1,3 +1,13 @@
+# v2.1.1
+## 01/27/2020
+
+1. [](#bug)
+    * [Fixes duplicate tags](https://github.com/artofthesmart/hypertext/issues/25) appearing at the beginning of default pages. Thanks to Github user [mbirth](https://github.com/mbirth) for calling it out!
+    * Removes [extra break line between title and categories](https://github.com/artofthesmart/hypertext/issues/27) at the beginning of pages.
+    * Fixes [typo in page comments](https://github.com/artofthesmart/hypertext/issues/26).
+2. [](#improved)
+    * Tags now have brackets around them when rendered.
+
 # v2.1.0
 ## 01/01/2020
 
