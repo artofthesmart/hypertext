@@ -105,3 +105,15 @@ form:
                       validate:
                         type: int
                         min: 1
+                    
+                    header.hide_clickthrough:
+                      type: toggle
+                      label: "Continue Reading..." link
+                      help: When disabled, this page will not render a link to read more content in this page after the snippet.
+                      default: 1
+                      highlight: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool

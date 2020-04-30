@@ -1,3 +1,10 @@
+# v2.2.0
+## 04/28/2020
+
+1.  [](#new)
+    * Added the ability to [suppress the "Read More..." link in a collection](https://github.com/artofthesmart/hypertext/issues/31). Useful for when you have a collection page that doesn't have much content and instead is only meant to introduce other child pages.
+    * 
+
 # v2.1.1
 ## 01/27/2020
 

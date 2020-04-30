@@ -69,7 +69,7 @@
   {{ page.summary|raw }}
 {% else %}
   {{ page.content|truncate(550)|raw }}
-  <p><a href="{{ page.url }}">Continue Reading...</a></p>
+  {{ if page.header.hide_clickthrough }}<p><a href="{{ page.url }}">Continue Reading...</a></p> {{ endif }}
 {% endif %}
 
 {# Children #}
