@@ -106,9 +106,9 @@ form:
                         type: int
                         min: 1
                     
-                    header.hide_clickthrough:
+                    header.show_clickthrough:
                       type: toggle
-                      label: "Continue Reading..." link
+                      label: Add `Continue Reading` link
                       help: When disabled, this page will not render a link to read more content in this page after the snippet.
                       default: 1
                       highlight: 1

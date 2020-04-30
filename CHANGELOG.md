@@ -2,8 +2,8 @@
 ## 04/28/2020
 
 1.  [](#new)
-    * Added the ability to [suppress the "Read More..." link in a collection](https://github.com/artofthesmart/hypertext/issues/31). Useful for when you have a collection page that doesn't have much content and instead is only meant to introduce other child pages.
-    * 
+    * Added the ability to [suppress the "Continue Reading..." link in a collection](https://github.com/artofthesmart/hypertext/issues/31). Useful for when you have a collection page that doesn't have much content and instead is only meant to introduce other child pages.
+    * Fixes a linebreak in List sub-children where it would add a new line after every child, when really I only wanted one after a set of sub-children is complete. Might delete it entirely someday.
 
 # v2.1.1
 ## 01/27/2020
