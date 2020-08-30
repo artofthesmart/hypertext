@@ -1,3 +1,10 @@
+# v2.2.1
+## 08/30/2020
+
+1.  [](#bug)
+    * Logic problem with "Continue Reading..." feature fixed, thanks to [takanotume24](https://github.com/takanotume24).
+    * Fix to GPM version #s, also spotted by [takanotume24](https://github.com/takanotume24).
+
 # v2.2.0
 ## 04/28/2020
 
