@@ -11,8 +11,6 @@ demo: http://hypertext.artofthesmart.com
 keywords: theme, simple, compliance, fast, semantic, 1995
 bugs: https://github.com/artofthesmart/hypertext/issues
 license: MIT
-dependencies:
-  { name: grav, version: '>=1.6.6' }
 
 form:
   validation: strict
