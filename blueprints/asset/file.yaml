@@ -26,9 +26,9 @@ form:
       type: upload
       label: Upload
       allow:
-        @media.*.keys
+        '@media.*.keys'
       accept:
-        @media.*.values
+        '@media.*.values'
 
     filename:
       type: text
