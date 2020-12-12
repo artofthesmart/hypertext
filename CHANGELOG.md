@@ -1,3 +1,8 @@
+# v2.2.2
+## 12/11/2020
+1.  [](#bug)
+    * User [roslavych](https://github.com/roslavych) identified and fixed an error in one of the CSS theme names.
+
 # v2.2.1
 ## 08/30/2020
 
