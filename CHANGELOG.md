@@ -1,7 +1,7 @@
 # v2.2.3
 ## 01/09/2021
 1.  [](#new)
-    * Adds a visually impaired mode that replaces the default `body` font family of any style with the [Braille Institute's Atkinson Hyperlegible Font](https://brailleinstitute.org/freefont). This makes websites more readable at the click of a button, at the cost of ~100kb.
+    * Adds a visually impaired mode that replaces the default `<p>` and `<li>` font family of any style with the [Braille Institute's Atkinson Hyperlegible Font](https://brailleinstitute.org/freefont). This makes websites more readable at the click of a button, at the cost of ~100kb.
 2.  [](#improved)
     * Makes `max-width` CSS required for all users instead of optional, greatly simplifying code. Yes, I know this is against the philosophy of the project but- frankly- HTML 3.2 couldn't have known about mobile devices.
     * Nits and additions to documentation.
