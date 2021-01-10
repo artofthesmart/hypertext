@@ -1,3 +1,10 @@
+---
+allowCSS: default
+allowJS: default
+show_header_image: false
+show_clickthrough: true
+---
+
 > How fast did this page load for you?  
 > Did it feel _nearly instant_?  
 > That's the magic of Hypertext.
