@@ -1,3 +1,8 @@
+# v2.2.3
+## 01/09/2021
+1.  [](#new)
+    * Adds a visually impaired mode that replaces the default `body` font family of any style with the [Braille Institute's Atkinson Hyperlegible Font](https://brailleinstitute.org/freefont). This makes websites more readable at the click of a button, at the cost of ~100kb.
+
 # v2.2.2
 ## 12/11/2020
 1.  [](#bug)
