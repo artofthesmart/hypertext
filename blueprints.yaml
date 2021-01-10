@@ -239,10 +239,22 @@ form:
                       default: 0
                       highlight: 0
                       options:
-                          1: 'Enabled'
-                          0: 'Disabled'
+                        1: 'Enabled'
+                        0: 'Disabled'
                       validate:
-                          type: bool
+                        type: bool
+                    style.visually_impared_mode:
+                      type: toggle
+                      size: medium
+                      label: Hyper-legible body text
+                      help: When enabled, this will replace any stylesheet's default `body` typeface and use the Atkinson Hyperlegible Font for users with poorer eyesight. *WARNING* the font is ~100kb.
+                      default: 0
+                      highlight: 0
+                      options:
+                        1: 'Enabled'
+                        0: 'Disabled'
+                      validate:
+                        type: bool
                     #This was a bad idea.
                     #style.header_image_align:
                     #  type: select
