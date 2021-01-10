@@ -1,3 +1,10 @@
+---
+allowCSS: default
+allowJS: default
+show_header_image: false
+show_clickthrough: true
+---
+
 This page describes the technical details and caveats of using the Hypertext theme.
 
 ===
@@ -130,6 +137,8 @@ The toggle switches in this section like `Show Image` and `Show Subtitle` enable
 ### Appendix
 
 <a id="style_table"></a>
+
+!!! **Got an awesome theme you want in Hypertext?** Submit a pull request via github. Be sure to minify your CSS, add it to both the `/css/` and `/templates/css` directories. I'll take and add the screenshot to this list for you.
 
 | Screenshot                                                | Name                  |
 | --------------------------------------------------------- | --------------------- |
