@@ -85,7 +85,7 @@ form:
                     structure.use_favicon:
                       type: toggle
                       label: Use favicon
-                      help: When enabled, the site will feed a favicon to the user if present.
+                      help: When enabled, the site will use the favicon at `user/images/favicon.png`.
                       default: 0
                       highlight: 0
                       options:
@@ -246,7 +246,7 @@ form:
                     style.visually_impared_mode:
                       type: toggle
                       size: medium
-                      label: Hyper-legible paragraphs
+                      label: Hyperlegible text/lists
                       help: When enabled, this will replace any stylesheet's default `body paragraph` typeface and use the Atkinson Hyperlegible Font for users with poorer eyesight. *WARNING* the font is ~100kb.
                       default: 0
                       highlight: 0
