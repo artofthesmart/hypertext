@@ -134,7 +134,7 @@ The toggle switches in this section like `Show Image` and `Show Subtitle` enable
 | Screenshot                                                | Name                  |
 | --------------------------------------------------------- | --------------------- |
 | ![Theme #0](air.png?cropResize=300,500)                   | #0 air		        |
-| ![Theme #1](ht++.png?cropResize=300,500)	                | #1 hypertext++		|
+| ![Theme #1](htplus.png?cropResize=300,500)	            | #1 hypertext++		|
 | ![Theme #2](latex.png?cropResize=300,500)                 | #2 latex		        |
 | ![Theme #3](marx.png?cropResize=300,500)                  | #3 marx		        |
 | ![Theme #4](modest.png?cropResize=300,500)                | #4 modest             |
