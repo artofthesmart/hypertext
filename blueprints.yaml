@@ -246,8 +246,8 @@ form:
                     style.visually_impared_mode:
                       type: toggle
                       size: medium
-                      label: Hyper-legible body text
-                      help: When enabled, this will replace any stylesheet's default `body` typeface and use the Atkinson Hyperlegible Font for users with poorer eyesight. *WARNING* the font is ~100kb.
+                      label: Hyper-legible paragraphs
+                      help: When enabled, this will replace any stylesheet's default `body paragraph` typeface and use the Atkinson Hyperlegible Font for users with poorer eyesight. *WARNING* the font is ~100kb.
                       default: 0
                       highlight: 0
                       options:
