@@ -26,14 +26,12 @@
   {% if allowJS %}{{ assets.js()|raw }}{% endif %}
 {% endblock %}
 
-{# Add custom styles (if needed) #}
-{% if style.width != 'default' or 
-      style.configuration != 'default' or
-      style.visually_impared_mode|default(false) or
-      style.customCSS != '' %}
 <style>
+{# This is the one piece of style that is practically unavoidable. 
+   Sorry, author's discretion. See website for details. #}
+img { max-width: 100%; }
 
-{# Hyper legible declarations, if needed #}
+{# Hyperlegible font family declarations, if needed #}
 {% if style.visually_impared_mode|default(false) %}
 @font-face {
   font-family: 'AtkinsonHL';
@@ -67,9 +65,8 @@
        url('{{ theme_url }}/fonts/WOFF/Atkinson-Hyperlegible-BoldItalic-102.woff') format('woff'), /* Pretty Modern Browsers */
        url('{{ theme_url }}/fonts/TTF/Atkinson-Hyperlegible-BoldItalic-102.ttf')  format('truetype'); /* Safari, Android, iOS */
 }
-
 body p { font-family: 'AtkinsonHL'; }
-{% endif %}
+{% endif %} {# End Hyperlegible declarations. #}
 
 body {
 {{ style.width != 'default' ? "max-width: #{style.width}px;" : ""}}
@@ -84,17 +81,6 @@ body {
 {% endif %}
 } {# End body section #}
 
-{# This is the one piece of style that is unavoidable. See documentation for details. #}
-img { max-width: 100%; }
-
-{# This was a bad idea.
-{% if style.header_image_align|default('default') == 'left' %}
-.snippet img { float: left; margin: 0 1em; }
-section { clear: both; }
-{% endif %} 
-#}
-
 {# User's custom styles *always* take priority #}
 {{ style.customCSS != '' ? style.customCSS : "" }}
 </style>
-{% endif %}
