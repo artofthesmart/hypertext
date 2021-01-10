@@ -62,17 +62,17 @@ Everything that has to be loaded after the first HTML response is considered har
 
 Consider the following results from some basic testing of Hypertext page loads.  Basically, small styles like `sakura` load fast no matter what, but large styles like `latex` load faster when you use linking.
 
-| Loading Type              | Caching   | Transfer Size | Speed |
-|---------------------------|-----------|---------------|-------|
-| No Style                  | FALSE     | 8.8KB         | 649ms |
-| Stylesheet, inline        | FALSE     | 12.1KB        | 686ms |
-| Stylesheet, inline        | TRUE      | 12.1KB        | 671ms |
-| Stylesheet, via `href`    | FALSE     | 10.4KB        | 1.2s  |
-| Stylesheet, via `href`    | TRUE      | 8.9KB         | 670ms |
-| Big stylesheet, via `href`| FALSE     | 399KB         | 2.53s |
-| Big stylesheet, via `href`| TRUE      | 8.9KB         | 660ms |
-| Wikipedia homepage        | FALSE     | 549B          | 1.47s |
-| Wikipedia homepage        | TRUE      | 61KB          | 1.47s |
+| Loading Type              | Caching   | Transfer Size | Speed  |
+|---------------------------|-----------|---------------|--------|
+| No Style                  | FALSE     |   8,800 Bytes |  649ms |
+| Stylesheet, inline        | FALSE     |  12,100 Bytes |  686ms |
+| Stylesheet, inline        | TRUE      |  12,100 Bytes |  671ms |
+| Stylesheet, via `href`    | FALSE     |  10,400 Bytes | 1200ms |
+| Stylesheet, via `href`    | TRUE      |   8,900 Bytes |  670ms |
+| Big stylesheet, via `href`| FALSE     | 399,000 Bytes | 2530ms |
+| Big stylesheet, via `href`| TRUE      |   8,900 Bytes |  660ms |
+| Wikipedia homepage        | FALSE     |     600 Bytes | 1470ms |
+| Wikipedia homepage        | TRUE      |  61,000 Bytes | 1470ms |
 
 !! Tested in an incognito window of Chrome with the `Fast 3G` throttling settings.
 
