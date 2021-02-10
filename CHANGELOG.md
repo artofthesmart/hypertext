@@ -1,3 +1,8 @@
+# v2.2.4
+## 02/10/2021
+1. [](#bug)
+    * Fixes summary content display because sometimes it would repeat back escapated HTML instead of the contents of your page. Identified by [felixzwettler](https://github.com/felixzwettler).
+
 # v2.2.3
 ## 01/09/2021
 1.  [](#new)
