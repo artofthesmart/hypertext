@@ -53,9 +53,9 @@
 <td>
   {% if show_date %}
     {% if html5 %}
-      {{ 'THEME_HYPERTEXT.DATES.PUBLISHED'|t }}: <time datetime="{{ page.date|date("c") }}">{{ page.date|date(system.pages.dateformat.short) }}</time>
+      {{ 'THEME_HYPERTEXT.DATES.PUBLISHED'|t|raw }}: <time datetime="{{ page.date|date("c") }}">{{ page.date|date(system.pages.dateformat.short) }}</time>
     {% else %}
-      {{ 'THEME_HYPERTEXT.DATES.PUBLISHED'|t }}: <span class="datetime">{{ page.date|date(system.pages.dateformat.short) }}</span>
+      {{ 'THEME_HYPERTEXT.DATES.PUBLISHED'|t|raw }}: <span class="datetime">{{ page.date|date(system.pages.dateformat.short) }}</span>
     {% endif %}
   {% endif %}
 </td>
@@ -63,7 +63,7 @@
 {# Categories #}
 <td>
 {% if page.taxonomy.category and show_cat %}
-  {{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t }}: 
+  {{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t|raw }}: 
   {% for category in page.taxonomy.category %}
     {{ structure.use_decorators ? '[' : '' }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ structure.use_decorators ? ']' : '' }}{{ not loop.last ? ',' : '' }}
   {% endfor %}
