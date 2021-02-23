@@ -46,7 +46,7 @@
 
 {# Categories #}
 {% if page.taxonomy.category %}
-  Categories: <small>
+  {{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t }}: <small>
   {% for category in page.taxonomy.category %}
     {{ structure.use_decorators ? '[' : '' }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ structure.use_decorators ? ']' : '' }}{{ not loop.last ? ',' : '' }}
   {% endfor %}</small>
