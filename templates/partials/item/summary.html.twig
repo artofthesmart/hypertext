@@ -68,7 +68,7 @@
 {% if page.summary == page.content %}
   {{ page.summary|raw }}
 {% else %}
-  {{ page.summary }}
+  {{ page.summary|raw }}
   {% if page.header.show_clickthrough ?? true %}<p><a href="{{ page.url }}">Continue Reading...</a></p> {% endif %}
 {% endif %}
 

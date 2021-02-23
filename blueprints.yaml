@@ -1,5 +1,5 @@
 name: Hypertext
-version: 2.2.1
+version: 2.2.3
 description: "Hypertext is a zero JS/CSS theme to create simple, fast websites."
 icon: compress
 author:
@@ -85,7 +85,7 @@ form:
                     structure.use_favicon:
                       type: toggle
                       label: Use favicon
-                      help: When enabled, the site will feed a favicon to the user if present.
+                      help: When enabled, the site will use the favicon at `user/images/favicon.png`.
                       default: 0
                       highlight: 0
                       options:
@@ -174,7 +174,7 @@ form:
                         sakura:             "#5 sakura"
                         sakura-dark:        "#6 sakura-dark"
                         sakura-dark-solarized: "#7 sakura-dark-solar"
-                        sakura-earth:       "#8 sakura-earth"
+                        sakura-earthly:     "#8 sakura-earthly"
                         sakura-vader:       "#9 sakura-vader"
                         stylize:            "#10 stylize"
                         tacit:              "#11 tacit"
@@ -239,10 +239,22 @@ form:
                       default: 0
                       highlight: 0
                       options:
-                          1: 'Enabled'
-                          0: 'Disabled'
+                        1: 'Enabled'
+                        0: 'Disabled'
                       validate:
-                          type: bool
+                        type: bool
+                    style.visually_impared_mode:
+                      type: toggle
+                      size: medium
+                      label: Hyperlegible text/lists
+                      help: When enabled, this will replace any stylesheet's default `body paragraph` typeface and use the Atkinson Hyperlegible Font for users with poorer eyesight. *WARNING* the font is ~100kb.
+                      default: 0
+                      highlight: 0
+                      options:
+                        1: 'Enabled'
+                        0: 'Disabled'
+                      validate:
+                        type: bool
                     #This was a bad idea.
                     #style.header_image_align:
                     #  type: select

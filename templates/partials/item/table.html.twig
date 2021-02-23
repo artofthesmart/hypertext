@@ -9,10 +9,10 @@
 <table class="children" width="100%">
   {# Header #}
   {{ html5 ? '<thead>' : ''}}<tr>
-    {% if show_image %}<td>{{ 'THEME_HYPERTEXT.THUMBNAIL.THUMBNAIL'|t }}</td>{% endif %}
+    {% if show_image %}<td>{{ 'THEME_HYPERTEXT.THUMBNAIL.THUMBNAIL'|t|raw }}</td>{% endif %}
     <td>Title</td>
-    {% if show_date %}<td>{{ 'THEME_HYPERTEXT.DATES.PUBLISHED'|t }}</td>{% endif %}
-    {% if show_cat %}<td>{{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t }}</td>{% endif %}
+    {% if show_date %}<td>{{ 'THEME_HYPERTEXT.DATES.PUBLISHED'|t|raw }}</td>{% endif %}
+    {% if show_cat %}<td>{{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t|raw }}</td>{% endif %}
   {{ html5 ? '</thead>' : ''}}</tr>
 
   {% for child in collection if child.isPage() %}

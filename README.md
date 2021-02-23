@@ -15,6 +15,7 @@
 * Fully responsive across almost any device
 * Includes `headless` parameter for serving only content
 * HTML 3 & HTML 5 compliance modes
+* Hyperlegible override for visually impaired users
 * 25 built-in, open source stylesheets
 
 ### Supported Page Templates
@@ -34,7 +35,7 @@ Here are some links to get you started:
 *  [Read the FAQ](http://hypertext.artofthesmart.com/FAQ) or [visit the issues page in Github](https://github.com/artofthesmart/hypertext/issues) if you run into problems.
 *  [Contribute to Hypertext via Github](https://github.com/artofthesmart/hypertext) and help make the web faster!
 
-> **Special thanks** go out to [Ricardo](https://urbansquid.london), the theme champion in the Grav Discord server, [Andy Miller](https://twitter.com/rhuk) creator of Grav CMs, and my wife who's sick of hearing about this project by now.
+> **Special thanks** go out to [Ricardo](https://urbansquid.london), the theme champion in the Grav Discord server, [Andy Miller](https://twitter.com/rhuk) creator of Grav CMS, and my wife who's sick of hearing about this project by now.
 
 ---
 

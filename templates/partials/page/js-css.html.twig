@@ -26,13 +26,48 @@
   {% if allowJS %}{{ assets.js()|raw }}{% endif %}
 {% endblock %}
 
-
-
-{# Add custom styles (if needed) #}
-{% if style.width != 'default' or 
-      style.configuration != 'default' or
-      style.customCSS != '' %}
 <style>
+{# This is the one piece of style that is practically unavoidable. 
+   Sorry, author's discretion. See website for details. #}
+img { max-width: 100%; }
+
+{# Hyperlegible font family declarations, if needed #}
+{% if style.visually_impared_mode|default(false) %}
+@font-face {
+  font-family: 'AtkinsonHL';
+  src: 
+       url('{{ theme_url }}/fonts/WOFF2/Atkinson-Hyperlegible-Regular-102a.woff2') format('woff2'), /* Super Modern Browsers */
+       url('{{ theme_url }}/fonts/WOFF/Atkinson-Hyperlegible-Regular-102.woff') format('woff'), /* Pretty Modern Browsers */
+       url('{{ theme_url }}/fonts/TTF/Atkinson-Hyperlegible-Regular-102.ttf')  format('truetype'); /* Safari, Android, iOS */
+}
+@font-face {
+  font-family: 'AtkinsonHL';
+  font-weight: bold;
+  src: 
+       url('{{ theme_url }}/fonts/WOFF2/Atkinson-Hyperlegible-Bold-102a.woff2') format('woff2'), /* Super Modern Browsers */
+       url('{{ theme_url }}/fonts/WOFF/Atkinson-Hyperlegible-Bold-102.woff') format('woff'), /* Pretty Modern Browsers */
+       url('{{ theme_url }}/fonts/TTF/Atkinson-Hyperlegible-Bold-102.ttf')  format('truetype'); /* Safari, Android, iOS */
+}
+@font-face {
+  font-family: 'AtkinsonHL';
+  font-style: italic;
+  src: 
+       url('{{ theme_url }}/fonts/WOFF2/Atkinson-Hyperlegible-Italic-102a.woff2') format('woff2'), /* Super Modern Browsers */
+       url('{{ theme_url }}/fonts/WOFF/Atkinson-Hyperlegible-Italic-102.woff') format('woff'), /* Pretty Modern Browsers */
+       url('{{ theme_url }}/fonts/TTF/Atkinson-Hyperlegible-Italic-102.ttf')  format('truetype'); /* Safari, Android, iOS */
+}
+@font-face {
+  font-family: 'AtkinsonHL';
+  font-weight: bold;
+  font-style: italic;
+  src: 
+       url('{{ theme_url }}/fonts/WOFF2/Atkinson-Hyperlegible-BoldItalic-102a.woff2') format('woff2'), /* Super Modern Browsers */
+       url('{{ theme_url }}/fonts/WOFF/Atkinson-Hyperlegible-BoldItalic-102.woff') format('woff'), /* Pretty Modern Browsers */
+       url('{{ theme_url }}/fonts/TTF/Atkinson-Hyperlegible-BoldItalic-102.ttf')  format('truetype'); /* Safari, Android, iOS */
+}
+p, li { font-family: 'AtkinsonHL'; }
+{% endif %} {# End Hyperlegible declarations. #}
+
 body {
 {{ style.width != 'default' ? "max-width: #{style.width}px;" : ""}}
 {# Set only left and right margins because some stylesheets set vertical. #}
@@ -44,19 +79,8 @@ body {
     margin-left: auto;
     margin-right: auto;
 {% endif %}
-}
+} {# End body section #}
 
-{# This is the one piece of style that is unavoidable. See documentation for details. #}
-img { max-width: 100%; }
-
-{# This was a bad idea.
-{% if style.header_image_align|default('default') == 'left' %}
-.snippet img { float: left; margin: 0 1em; }
-section { clear: both; }
-{% endif %} 
-#}
-
-{# User's styles #}
+{# User's custom styles *always* take priority #}
 {{ style.customCSS != '' ? style.customCSS : "" }}
 </style>
-{% endif %}
