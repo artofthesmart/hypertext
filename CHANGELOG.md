@@ -1,3 +1,11 @@
+# v2.2.5
+## 02/23/2021
+1. [](#bug)
+    * Some pages didn't properly reference translations for words like "Categories". This has been fixed.
+2. [](#improved)
+    * User [nicosomb](https://github.com/nicosomb) added French translations and the fixes above. Many thanks!
+    * **If you know a language besides English, please [feel free to contribute translations](https://github.com/artofthesmart/hypertext/blob/master/languages.yaml)!**
+
 # v2.2.4
 ## 02/10/2021
 1. [](#bug)
