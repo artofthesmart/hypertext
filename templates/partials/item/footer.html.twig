@@ -6,10 +6,10 @@
 {% if not page.parent.root() and page.parent.header.content.sibling_links|default(false) %}
   <span class="pagination">
   {% if not page.isLast %}
-    <a href="{{ page.prevSibling.url }}">&#xab; {{ structure.prevWord }}</a>
+    <a href="{{ page.prevSibling.url }}">&#xab; {{ 'THEME_HYPERTEXT.PAGINATION.PREVIOUS_PAGE'|t }}</a>
   {% endif %}
   {% if not page.isFirst %}
-    <a href="{{ page.nextSibling.url }}">{{ structure.nextWord }} &raquo;</a>
+    <a href="{{ page.nextSibling.url }}">{{ 'THEME_HYPERTEXT.PAGINATION.NEXT_PAGE'|t }} &raquo;</a>
   {% endif %}
   </span>
 {% endif %}
