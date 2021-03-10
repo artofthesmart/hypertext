@@ -1,3 +1,10 @@
+# v2.2.6
+## 03/09/2021
+1. [](#bug)
+    * Forgot to close main PHP file. Fixes that.
+2. [](#improved)
+    * Adds the option of _what kind_ of dates to show on collection pages. Formerly was "Last Modified", but can now be selected explicitly.
+
 # v2.2.5
 ## 02/23/2021
 1. [](#bug)

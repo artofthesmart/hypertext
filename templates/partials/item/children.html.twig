@@ -11,9 +11,8 @@
   {% if child_style == 'table' %} 
   {% include 'partials/item/table.html.twig' with {'parent': page, 'collection': collection} %}
 
-  {% elseif child_style == 'list' %}
-
   {# LIST #}
+  {% elseif child_style == 'list' %}
   <ol>
     {% for child in collection %}
       {% if child.isPage() %}
@@ -22,9 +21,8 @@
     {% endfor %}
   </ol>
 
-  {% else %}
-
   {# SUMMARY #}
+  {% else %}
     {% for child in collection %}
       {% if child.isPage() %}
         {% include 'partials/item/summary.html.twig' with {'page':child, parent:page} %}
