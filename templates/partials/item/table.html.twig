@@ -32,9 +32,9 @@
       {% case 'modified' %}
         {% set date = child.modified %}
       {% case 'published' %}
-        {% set date = child.publish_date %}
+        {% set date = child.publishDate %}
       {% case 'unpublished' %}
-        {% set date = child.unpublish_date %}
+        {% set date = child.unpublishDate %}
       {% case 'date' %}
         {% set date = child.date %}
       {% default %}
