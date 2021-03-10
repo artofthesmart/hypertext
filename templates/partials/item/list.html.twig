@@ -1,8 +1,21 @@
 {% set show_subtitle = parent.header.render.children.subtitle ?? true %}
 {% set show_cat = parent.header.render.children.category ?? true %}
-{% set show_date = parent.header.render.children.date ?? false %}
 {% set show_children = parent.header.render.children.nested_children ?? true %}
 {% set inner_children = page.collection()|length > 0 ? page.collection() : page.children.visible %}
+
+{% set show_date = parent.header.render.children.date ?? false %}
+{% switch parent.header.render.children.which_date|default('date') %}
+  {% case 'modified' %}
+    {% set date = page.modified %}
+  {% case 'published' %}
+    {% set date = page.publish_date %}
+  {% case 'unpublished' %}
+    {% set date = page.unpublish_date %}
+  {% case 'date' %}
+    {% set date = page.date %}
+  {% default %}
+    {% set date = page.date %}
+{% endswitch %}
 
 {# ------------------------------------------------------------------------ #}
 
@@ -10,12 +23,13 @@
   {# Date #}
   {% if show_date %}
     {% if html5 %}
-      {{ structure.use_decorators ? '[' : '' }}<time datetime="{{ page.date|date("c") }}">{{ page.date|date(system.pages.dateformat.short) }}</time>{{ structure.use_decorators ? ']' : ' '}}
+      {{ structure.use_decorators ? '[' : '' }}<time datetime="{{ date|date("c") }}">{{ date|date(system.pages.dateformat.short) }}</time>{{ structure.use_decorators ? ']' : ' '}}
     {% else %}
-      {{ structure.use_decorators ? '[' : '' }}<span class="datetime">{{ page.date|date(system.pages.dateformat.short) }}</span>{{ structure.use_decorators ? ']' : ' '}}
+      {{ structure.use_decorators ? '[' : '' }}<span class="datetime">{{ date|date(system.pages.dateformat.short) }}</span>{{ structure.use_decorators ? ']' : ' '}}
     {% endif %}
   {% endif %}
 
+  {# Title & Subtitle #}
   {{ level > 1 ? '' : '<strong>' }}
     <a href="{{ page.url }}">{{ page.title }}</a>
   {{ level > 1 ? '' : '</strong>' }}

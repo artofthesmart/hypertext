@@ -1,8 +1,10 @@
 {% set show_subtitle = parent.header.render.children.subtitle ?? true %}
 {% set show_cat = parent.header.render.children.category ?? true %}
-{% set show_date = parent.header.render.children.date ?? false %}
 {% set show_children = parent.header.render.children.nested_children ?? true %}
-  {% set inner_children = page.collection()|length > 0 ? page.collection() : page.children.visible %}
+{% set inner_children = page.collection()|length > 0 ? page.collection() : page.children.visible %}
+
+{% set show_date = parent.header.render.children.date ?? false %}
+{# Looking for the switch statement? Look down. #}
 
 {# ------------------------------------------------------------------------ #}
 
@@ -24,12 +26,20 @@
      #   {% set show_image = child.header.show_header_image == 'enabled' %}
      # {% endif %}
      # {% set header_image = child.media.images[child.header.header_image_file] ?? child.media.images|first %} #}
-
-    {% set show_subtitle = parent.header.render.children.subtitle ?? true %}
-    {% set show_cat = parent.header.render.children.category ?? true %}
-    {% set show_date = parent.header.render.children.date ?? false %}
-    {% set show_children = parent.header.render.children.nested_children ?? true %}
     {% set inner_children = child.collection()|length > 0 ? child.collection() : child.children.visible %}
+
+    {% switch page.header.render.children.which_date|default('date') %}
+      {% case 'modified' %}
+        {% set date = child.modified %}
+      {% case 'published' %}
+        {% set date = child.publish_date %}
+      {% case 'unpublished' %}
+        {% set date = child.unpublish_date %}
+      {% case 'date' %}
+        {% set date = child.date %}
+      {% default %}
+        {% set date = child.date %}
+    {% endswitch %}
 
   <tr{% if child.taxonomy.category %} class="{% for cat in child.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}"{% endif %}>
 
@@ -59,9 +69,9 @@
     {% if show_date %}
     <td>
       {% if html5 %}
-        <time datetime="{{ child.date|date("c") }}">{{ child.date|date(system.pages.dateformat.short) }}</time>
+        <time datetime="{{ date|date("c") }}">{{ date|date(system.pages.dateformat.short) }}</time>
       {% else %}
-        <span class="datetime">{{ child.date|date(system.pages.dateformat.short) }}</span>
+        <span class="datetime">{{ date|date(system.pages.dateformat.short) }}</span>
       {% endif %}
     </td>
     {% endif %}
