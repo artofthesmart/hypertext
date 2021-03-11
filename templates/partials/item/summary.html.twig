@@ -92,7 +92,7 @@
 <p>Sub-Pages:
 <ol class="nested-children">
   {% for child in inner_children %}
-  <li><a href="{{ child.url }}">{{ child.title }}</a>{{ child.header.subtitle and show_subtitle ? ' - <span>'~child.header.subtitle~'</span>' : '' }}</li>
+  <li><a href="{{ child.url }}">{{ child.title }}</a>{% if show_subtitle and child.header.subtitle %}- <span><small>{{ child.header.subtitle }}</small></span>{% endif %}</li>
   {% endfor %}
 </ol>
 </p>
