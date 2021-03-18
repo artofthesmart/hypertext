@@ -13,6 +13,19 @@
 
 {% set show_date = structure.show_date ?? false %}
 
+{% switch page.parent.header.render.children.which_date|default('date') %}
+{% case 'modified' %}
+    {% set date = page.modified %}
+{% case 'published' %}
+    {% set date = page.publishDate %}
+{% case 'unpublished' %}
+    {% set date = page.unpublishDate %}
+{% case 'date' %}
+    {% set date = page.date %}
+{% default %}
+    {% set date = page.date %}
+{% endswitch %}
+
 {# ------------------------------------------------------------------------ #}
 
 {# Title & Subtitle #}
@@ -35,13 +48,13 @@
 
 {# Date #}
 {% if show_date %}
-<sub>
+Date: <small>
   {% if html5 %}
-    <time datetime="{{ page.date|date("c") }}">{{ page.date|date(system.pages.dateformat.short) }}</time>
+      {{ structure.use_decorators ? '[' : '' }}<time datetime="{{ date|date("c") }}">{{ date|date(system.pages.dateformat.short) }}</time>{{ structure.use_decorators ? ']' : '' }}
   {% else %}
-    <span class="datetime">{{ page.date|date(system.pages.dateformat.short) }}</span>
+      {{ structure.use_decorators ? '[' : '' }}<span class="datetime">{{ date|date(system.pages.dateformat.short) }}</span>{{ structure.use_decorators ? ']' : '' }}
   {% endif %}
-</sub>
+</small><br />
 {% endif %}
 
 {# Categories #}
