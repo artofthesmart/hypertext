@@ -3,7 +3,6 @@
                 (config.plugins.login.enabled and grav.user.username) %}
 
 {% if hasNav %}
-{{ dump(config.themes.hypertext) }}
 
 {{ html5 ? '<nav>' : '<div class="nav">' }}
 
@@ -32,7 +31,7 @@
     {% endfor %}
     </span>
     {% endif %} {# End additional links loop #}
-    
+
     {% if config.plugins.login.enabled and grav.user.username %}
       [{% include 'partials/login-status.html.twig' %}]
     {% endif %}
@@ -63,7 +62,7 @@
   {#{% if uri.query('theme')|default(style.stylesheet) == 'default' or breadcrumbs.get()|length > 1 %}#}
     <hr>
   {#{% endif %}#}
-  
+
   {# Breadcrumbs #}
   {% if config.plugins.breadcrumbs.enabled %}
     {% include 'partials/breadcrumbs.html.twig' %}

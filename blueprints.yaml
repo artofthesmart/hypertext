@@ -1,5 +1,5 @@
 name: Hypertext
-version: 2.0.0
+version: 2.2.6
 description: "Hypertext is a zero JS/CSS theme to create simple, fast websites."
 icon: compress
 author:
@@ -11,8 +11,6 @@ demo: http://hypertext.artofthesmart.com
 keywords: theme, simple, compliance, fast, semantic, 1995
 bugs: https://github.com/artofthesmart/hypertext/issues
 license: MIT
-dependencies:
-  { name: grav, version: '>=1.6.6' }
 
 form:
   validation: strict
@@ -87,7 +85,7 @@ form:
                     structure.use_favicon:
                       type: toggle
                       label: Use favicon
-                      help: When enabled, the site will feed a favicon to the user if present.
+                      help: When enabled, the site will use the favicon at `user/images/favicon.png`.
                       default: 0
                       highlight: 0
                       options:
@@ -176,7 +174,7 @@ form:
                         sakura:             "#5 sakura"
                         sakura-dark:        "#6 sakura-dark"
                         sakura-dark-solarized: "#7 sakura-dark-solar"
-                        sakura-earth:       "#8 sakura-earth"
+                        sakura-earthly:     "#8 sakura-earthly"
                         sakura-vader:       "#9 sakura-vader"
                         stylize:            "#10 stylize"
                         tacit:              "#11 tacit"
@@ -241,10 +239,22 @@ form:
                       default: 0
                       highlight: 0
                       options:
-                          1: 'Enabled'
-                          0: 'Disabled'
+                        1: 'Enabled'
+                        0: 'Disabled'
                       validate:
-                          type: bool
+                        type: bool
+                    style.visually_impared_mode:
+                      type: toggle
+                      size: medium
+                      label: Hyperlegible text/lists
+                      help: When enabled, this will replace any stylesheet's default `body paragraph` typeface and use the Atkinson Hyperlegible Font for users with poorer eyesight. *WARNING* the font is ~100kb.
+                      default: 0
+                      highlight: 0
+                      options:
+                        1: 'Enabled'
+                        0: 'Disabled'
+                      validate:
+                        type: bool
                     #This was a bad idea.
                     #style.header_image_align:
                     #  type: select
@@ -255,16 +265,22 @@ form:
                     #  options:
                     #    default: No style (block)
                     #    left: Pull left
-        menus: # MENU ITEMS TAB
+        menus: # HEADER, FOOTER, LINKS TAB
           type: tab
-          title: Header & Links
+          title: Headers, Footers, & Links
           fields:
             description:
               type: display
               size: long
               label: Description
               markdown: true
-              content: "This tab lets you add more items to the navigation area of your website."
+              content: "This tab lets you add more items to the navigation areas of your website."
+            partials.header.custom_header_image:
+              type: textarea
+              label: Header Image HTML
+              help: This is raw HTML that will be included in the header in place of the Site Title.
+              placeholder: "Leave this blank to the site title as the site header. Otherwise, use HTML here. Consider using SVG or base64 encoded images to stay fast."
+              size: large
             menu.menuItems:
               name: menuItems
               type: list
@@ -322,3 +338,19 @@ form:
                       type: text
                       label: Title
                       placeholder: An advisory title for the linked resource.
+            partials.footer.custom_footer_type:
+              type: select
+              classes: fancy
+              label: Footer Type
+              help: The footer can be either markdown or HTML, whichever you need.
+              size: large
+              default: markdown
+              options:
+                markdown: Markdown
+                html: HTML  
+            partials.footer.custom_footer:
+              type: textarea
+              label: Footer Content
+              size: large
+              help: Add your optional, custom footer content here. If you need to remove the Hypertext attribution line, you can do it from the theme code in user/themes/hypertext/templates/partials/page/footer.html.twig.
+                        

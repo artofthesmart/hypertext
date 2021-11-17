@@ -121,8 +121,8 @@ form:
                         type: bool
                     header.render.children.date:
                       type: toggle
-                      label: Show publish date
-                      help: When enabled, the date that a child page was published will be shown (if possible).
+                      label: Show date
+                      help: When enabled, a date will be shown (if possible) for child pages.
                       default: 0
                       highlight: 0
                       options:
@@ -130,6 +130,16 @@ form:
                         0: Disabled
                       validate:
                         type: bool
+                    header.render.children.which_date:
+                      type: select
+                      label: Display date
+                      help: Select which date to show, if you choose to show one.
+                      default: date
+                      options:
+                        date: Default
+                        modified: Last Modified
+                        published: Date Published
+                        unpublished: Date Unpublished
                     header.render.children.nested_children:
                       type: toggle
                       label: Show nested children

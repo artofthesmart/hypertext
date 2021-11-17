@@ -13,6 +13,19 @@
 
 {% set show_date = structure.show_date ?? false %}
 
+{% switch page.parent.header.render.children.which_date|default('date') %}
+{% case 'modified' %}
+    {% set date = page.modified %}
+{% case 'published' %}
+    {% set date = page.publishDate %}
+{% case 'unpublished' %}
+    {% set date = page.unpublishDate %}
+{% case 'date' %}
+    {% set date = page.date %}
+{% default %}
+    {% set date = page.date %}
+{% endswitch %}
+
 {# ------------------------------------------------------------------------ #}
 
 {# Title & Subtitle #}
@@ -30,38 +43,34 @@
   <a href="{{ page.url }}">
     <img src="{{ header_image_url }}" width="{{ header_image_width }}" height="{{ header_image_height }}">
   </a>
+  <br>
 {% endif %}
 
 {# Date #}
 {% if show_date %}
-<br><sub>
+Date: <small>
   {% if html5 %}
-    <time datetime="{{ page.date|date("c") }}">{{ page.date|date(system.pages.dateformat.short) }}</time>
+      {{ structure.use_decorators ? '[' : '' }}<time datetime="{{ date|date("c") }}">{{ date|date(system.pages.dateformat.short) }}</time>{{ structure.use_decorators ? ']' : '' }}
   {% else %}
-    <span class="datetime">{{ page.date|date(system.pages.dateformat.short) }}</span>
+      {{ structure.use_decorators ? '[' : '' }}<span class="datetime">{{ date|date(system.pages.dateformat.short) }}</span>{{ structure.use_decorators ? ']' : '' }}
   {% endif %}
-</sub>
+</small><br />
 {% endif %}
 
 {# Categories #}
 {% if page.taxonomy.category %}
-  <br>
-  Categories: <small>
+  {{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t }}: <small>
   {% for category in page.taxonomy.category %}
     {{ structure.use_decorators ? '[' : '' }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ structure.use_decorators ? ']' : '' }}{{ not loop.last ? ',' : '' }}
   {% endfor %}</small>
-{% else %}
+  {{ page.taxonomy.tag ? '<br>' : '' }}
 {% endif %}
 
 {% if page.taxonomy.tag %}
-  <br>
   Tags: <small>
   {% for tag in page.taxonomy.tag %}
-    <a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ tag }}">{{ tag }}</a>{{ not loop.last ? ',' : '' }}
+    {{ structure.use_decorators ? '[' : '' }}<a href="{{ page.parent.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ tag }}">{{ tag }}</a>{{ structure.use_decorators ? ']' : '' }}{{ not loop.last ? ',' : '' }}
   {% endfor %}</small>
-  {% for tag in page.taxonomy.tag %}
-    <a href="{{ blog.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ tag }}">{{ tag }}</a>
-  {% endfor %}
 {% endif %}
 
 </p>

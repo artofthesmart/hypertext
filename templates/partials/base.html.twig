@@ -1,6 +1,7 @@
 {% set structure = config.themes.hypertext.structure %}
 {% set style = config.themes.hypertext.style %}
 {% set menu = config.themes.hypertext.menu %}
+{% set partials = config.themes.hypertext.partials %}
 {% set html5 = structure.html_mode|default('default') == 'default' %}
 
 {% set allowCSS = page.header.allowCSS == 'enabled' or
@@ -27,7 +28,7 @@
 <!DOCTYPE html>
 
 
-{# ## HEADLES RENDERING ## #}
+{# ## HEADLESS RENDERING ## #}
 {% if uri.query('headless') %}
 <html>
   <head>
@@ -55,7 +56,7 @@
   <title>{% if header.title %}{{ header.title|e('html') }} | {% endif %}{{ site.title|e('html') }}</title>
 
   {% if structure.use_favicon %}
-  <link rel="icon" type="image/png" href="{{ url('theme://images/favicon.png') }}" />
+  <link rel="icon" type="image/png" href="{{ url('image://favicon.png') }}" />
   {% endif %}
 
   {% include 'partials/page/js-css.html.twig' %}

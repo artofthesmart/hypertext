@@ -1,6 +1,6 @@
 # Hypertext Theme
 
-[Hypertext](http://hypertext.artofthesmart.com) is a theme for [Grav CMS](google.com) that prioritizes speed and simplicity.  It does not require (nor does it include) any Javascript and it keeps styles to a bare minimum.  This ensures a fast, consistent user experience across browsers and devices.
+[Hypertext](http://hypertext.artofthesmart.com) is a theme for [Grav CMS](https://getgrav.org/) that prioritizes speed and simplicity.  It does not require (nor does it include) any Javascript and it keeps styles to a bare minimum.  This ensures a fast, consistent user experience across browsers and devices.
 
 [You can see it live here](http://hypertext.artofthesmart.com).
 
@@ -15,7 +15,8 @@
 * Fully responsive across almost any device
 * Includes `headless` parameter for serving only content
 * HTML 3 & HTML 5 compliance modes
-* Built-in open source stylesheets
+* Hyperlegible override for visually impaired users
+* 25 built-in, open source stylesheets
 
 ### Supported Page Templates
 
@@ -29,12 +30,12 @@
 
 Here are some links to get you started:
 *  Read the installation guide below to download and install the theme.
-*  [Visit the Hypertext home page](https://hypertext.artofthesmart.com) to learn more about the philosophy behind the project.
-*  [Read the reference guide for caveats and gotchas](https://hypertext.artofthesmart.com/reference) to avoid common mistakes with Hypertext.
-*  [Read the FAQ](https://hypertext.artofthesmart.com/FAQ) or [visit the issues page in Github](https://github.com/artofthesmart/hypertext/issues) if you run into problems.
+*  [Visit the Hypertext home page](http://hypertext.artofthesmart.com) to learn more about the philosophy behind the project.
+*  [Read the reference guide for caveats and gotchas](http://hypertext.artofthesmart.com/reference) to avoid common mistakes with Hypertext.
+*  [Read the FAQ](http://hypertext.artofthesmart.com/FAQ) or [visit the issues page in Github](https://github.com/artofthesmart/hypertext/issues) if you run into problems.
 *  [Contribute to Hypertext via Github](https://github.com/artofthesmart/hypertext) and help make the web faster!
 
-> **Special thanks** go out to [Ricardo](https://urbansquid.london), the theme champion in the Grav Discord server, [Andy Miller](https://twitter.com/rhuk) creator of Grav CMs, and my wife who's sick of hearing about this project by now.
+> **Special thanks** go out to [Ricardo](https://urbansquid.london), the theme champion in the Grav Discord server, [Andy Miller](https://twitter.com/rhuk) creator of Grav CMS, and my wife who's sick of hearing about this project by now.
 
 ---
 

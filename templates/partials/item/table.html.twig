@@ -1,21 +1,23 @@
 {% set show_subtitle = parent.header.render.children.subtitle ?? true %}
 {% set show_cat = parent.header.render.children.category ?? true %}
-{% set show_date = parent.header.render.children.date ?? false %}
 {% set show_children = parent.header.render.children.nested_children ?? true %}
-  {% set inner_children = page.collection()|length > 0 ? page.collection() : page.children.visible %}
+{% set inner_children = page.collection()|length > 0 ? page.collection() : page.children.visible %}
+
+{% set show_date = parent.header.render.children.date ?? false %}
+{# Looking for the switch statement? Look down. #}
 
 {# ------------------------------------------------------------------------ #}
 
 <table class="children" width="100%">
   {# Header #}
   {{ html5 ? '<thead>' : ''}}<tr>
-    {% if show_image %}<td>{{ 'THEME_HYPERTEXT.THUMBNAIL.THUMBNAIL'|t }}</td>{% endif %}
+    {% if show_image %}<td>{{ 'THEME_HYPERTEXT.THUMBNAIL.THUMBNAIL'|t|raw }}</td>{% endif %}
     <td>Title</td>
-    {% if show_date %}<td>{{ 'THEME_HYPERTEXT.DATES.PUBLISHED'|t }}</td>{% endif %}
-    {% if show_cat %}<td>{{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t }}</td>{% endif %}
+    {% if show_date %}<td>{{ 'THEME_HYPERTEXT.DATES.PUBLISHED'|t|raw }}</td>{% endif %}
+    {% if show_cat %}<td>{{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t|raw }}</td>{% endif %}
   {{ html5 ? '</thead>' : ''}}</tr>
 
-  {% for child in collection %}
+  {% for child in collection if child.isPage() %}
     {# Never show the image; it's hideous on mobile.
      #
      # {% if child.header.show_header_image|default('default') == 'default' %}
@@ -24,12 +26,20 @@
      #   {% set show_image = child.header.show_header_image == 'enabled' %}
      # {% endif %}
      # {% set header_image = child.media.images[child.header.header_image_file] ?? child.media.images|first %} #}
-
-    {% set show_subtitle = parent.header.render.children.subtitle ?? true %}
-    {% set show_cat = parent.header.render.children.category ?? true %}
-    {% set show_date = parent.header.render.children.date ?? false %}
-    {% set show_children = parent.header.render.children.nested_children ?? true %}
     {% set inner_children = child.collection()|length > 0 ? child.collection() : child.children.visible %}
+
+    {% switch page.header.render.children.which_date|default('date') %}
+      {% case 'modified' %}
+        {% set date = child.modified %}
+      {% case 'published' %}
+        {% set date = child.publishDate %}
+      {% case 'unpublished' %}
+        {% set date = child.unpublishDate %}
+      {% case 'date' %}
+        {% set date = child.date %}
+      {% default %}
+        {% set date = child.date %}
+    {% endswitch %}
 
   <tr{% if child.taxonomy.category %} class="{% for cat in child.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}"{% endif %}>
 
@@ -59,9 +69,9 @@
     {% if show_date %}
     <td>
       {% if html5 %}
-        <time datetime="{{ child.date|date("c") }}">{{ child.date|date(system.pages.dateformat.short) }}</time>
+        <time datetime="{{ date|date("c") }}">{{ date|date(system.pages.dateformat.short) }}</time>
       {% else %}
-        <span class="datetime">{{ child.date|date(system.pages.dateformat.short) }}</span>
+        <span class="datetime">{{ date|date(system.pages.dateformat.short) }}</span>
       {% endif %}
     </td>
     {% endif %}

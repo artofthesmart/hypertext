@@ -13,9 +13,22 @@
 
 {% set show_subtitle = parent.header.render.children.subtitle ?? true %}
 {% set show_cat = parent.header.render.children.category ?? true %}
-{% set show_date = parent.header.render.children.date ?? false %}
 {% set show_children = parent.header.render.children.nested_children ?? true %}
 {% set inner_children = page.collection()|length > 0 ? page.collection() : page.children.visible %}
+
+{% set show_date = parent.header.render.children.date ?? false %}
+{% switch parent.header.render.children.which_date|default('date') %}
+  {% case 'modified' %}
+    {% set date = page.modified %}
+  {% case 'published' %}
+    {% set date = page.publishDate %}
+  {% case 'unpublished' %}
+    {% set date = page.unpublishDate %}
+  {% case 'date' %}
+    {% set date = page.date %}
+  {% default %}
+    {% set date = page.date %}
+{% endswitch %}
 
 {# ------------------------------------------------------------------------ #}
 
@@ -45,9 +58,9 @@
 {{ show_image and thumbnail_image ? '<br>' : '' }}
 <sub>
   {% if html5 %}
-    <time datetime="{{ page.date|date("c") }}">{{ page.date|date(system.pages.dateformat.short) }}</time>
+    <time datetime="{{ date|date("c") }}">{{ date|date(system.pages.dateformat.short) }}</time>
   {% else %}
-    <span class="datetime">{{ page.date|date(system.pages.dateformat.short) }}</span>
+    <span class="datetime">{{ date|date(system.pages.dateformat.short) }}</span>
   {% endif %}
 </sub>
 {% endif %}
@@ -55,7 +68,7 @@
 {# Categories #}
 {% if page.taxonomy.category and show_cat %}
 <br>
-  Categories: <small>
+  {{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t }}: <small>
   {% for category in page.taxonomy.category %}
     {{ structure.use_decorators ? '[' : '' }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ structure.use_decorators ? ']' : '' }}{{ not loop.last ? ',' : '' }}
   {% endfor %}</small></p>
@@ -65,21 +78,21 @@
 </p>
 
 {# Text #}
-{% if page.summary != page.content %}
+{% if page.summary == page.content %}
   {{ page.summary|raw }}
 {% else %}
-  {{ page.content|truncate(550)|raw }}
-  <p><a href="{{ page.url }}">Continue Reading...</a></p>
+  {{ page.summary|raw }}
+  {% if page.header.show_clickthrough ?? true %}<p><a href="{{ page.url }}">Continue Reading...</a></p> {% endif %}
 {% endif %}
 
 {# Children #}
 {% if show_children and inner_children|length > 0 %}
-{% set inner_children = inner_children.order(page.header.content.order.by|default(system.pages.order.by), 
+{% set inner_children = inner_children.order(page.header.content.order.by|default(system.pages.order.by),
                                              page.header.content.order.dir|default(system.pages.order.dir)) %}
 <p>Sub-Pages:
 <ol class="nested-children">
   {% for child in inner_children %}
-  <li><a href="{{ child.url }}">{{ child.title }}</a>{{ child.header.subtitle and show_subtitle ? ' - <span>'~child.header.subtitle~'</span>' : '' }}</li>
+  <li><a href="{{ child.url }}">{{ child.title }}</a>{% if show_subtitle and child.header.subtitle %} - <span><small>{{ child.header.subtitle }}</small></span>{% endif %}</li>
   {% endfor %}
 </ol>
 </p>

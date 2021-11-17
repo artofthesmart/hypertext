@@ -9,9 +9,9 @@
 {{ html5 ? '<nav class="pagination">' : '<div class="pagination">' }}
   {% if pagination.hasPrev %}
     {% set url = (base_url ~ pagination.params ~ pagination.prevUrl)|replace({'//':'/'}) %}
-    <a rel="prev" href="{{ url }}">{{ 'THEME_HYPERTEXT.PAGINATION.PREVIOUS_PAGE'|t }}</a>
+    <a rel="prev" href="{{ url }}">{{ 'THEME_HYPERTEXT.PAGINATION.PREVIOUS_PAGE'|t|raw }}</a>
   {% else %}
-    <span>{{ 'THEME_HYPERTEXT.PAGINATION.PREVIOUS_PAGE'|t }}</span>
+    <span>{{ 'THEME_HYPERTEXT.PAGINATION.PREVIOUS_PAGE'|t|raw }}</span>
   {% endif %}
 
   {% for paginate in pagination %}
@@ -27,9 +27,9 @@
 
   {% if pagination.hasNext %}
     {% set url = (base_url ~ pagination.params ~ pagination.nextUrl)|replace({'//':'/'}) %}
-    , <a rel="next" href="{{ url }}">{{ 'THEME_HYPERTEXT.PAGINATION.NEXT_PAGE'|t }}</a>
+    , <a rel="next" href="{{ url }}">{{ 'THEME_HYPERTEXT.PAGINATION.NEXT_PAGE'|t|raw }}</a>
   {% else %}
-    , <span>{{ 'THEME_HYPERTEXT.PAGINATION.NEXT_PAGE'|t }}</span>
+    , <span>{{ 'THEME_HYPERTEXT.PAGINATION.NEXT_PAGE'|t|raw }}</span>
   {% endif %}
 {{ html5 ? '</nav>' : '</div>' }}
 
@@ -39,9 +39,9 @@
 <ul>
   {% if pagination.hasPrev %}
     {% set url = (base_url ~ pagination.params ~ pagination.prevUrl)|replace({'//':'/'}) %}
-    <li><a rel="prev" href="{{ url }}">{{ 'THEME_HYPERTEXT.PAGINATION.PREVIOUS_PAGE'|t }}</a></li>
+    <li><a rel="prev" href="{{ url }}">{{ 'THEME_HYPERTEXT.PAGINATION.PREVIOUS_PAGE'|t|raw }}</a></li>
   {% else %}
-    <li><span>{{ 'THEME_HYPERTEXT.PAGINATION.PREVIOUS_PAGE'|t }}</span></li>
+    <li><span>{{ 'THEME_HYPERTEXT.PAGINATION.PREVIOUS_PAGE'|t|raw }}</span></li>
   {% endif %}
 
   {% for paginate in pagination %}
@@ -58,9 +58,9 @@
   {% endfor %}
   {% if pagination.hasNext %}
     {% set url = (base_url ~ pagination.params ~ pagination.nextUrl)|replace({'//':'/'}) %}
-    <li><a rel="next" href="{{ url }}">{{ 'THEME_HYPERTEXT.PAGINATION.NEXT_PAGE'|t }}</a></li>
+    <li><a rel="next" href="{{ url }}">{{ 'THEME_HYPERTEXT.PAGINATION.NEXT_PAGE'|t|raw }}</a></li>
   {% else %}
-    <li><span>{{ 'THEME_HYPERTEXT.PAGINATION.NEXT_PAGE'|t }}</span></li>
+    <li><span>{{ 'THEME_HYPERTEXT.PAGINATION.NEXT_PAGE'|t|raw }}</span></li>
   {% endif %}
 </ul>
 {{ html5 ? '</nav>' : '</div>' }}

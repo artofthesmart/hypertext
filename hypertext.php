@@ -7,3 +7,4 @@ class Hypertext extends Theme
 {
     
 }
+?>

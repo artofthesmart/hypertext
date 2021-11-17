@@ -2,7 +2,7 @@ extends@: default
 
 rules:
   slug:
-    pattern: "[a-z][a-z0-9_\-]+"
+    pattern: '[a-z][a-z0-9_\-]+'
     min: 2
     max: 80
 
@@ -105,3 +105,15 @@ form:
                       validate:
                         type: int
                         min: 1
+                    
+                    header.show_clickthrough:
+                      type: toggle
+                      label: Add `Continue Reading` link
+                      help: When disabled, this page will not render a link to read more content in this page after the snippet.
+                      default: 1
+                      highlight: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
