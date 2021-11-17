@@ -1,4 +1,8 @@
-<h1><a href="{{ home_url }}">{{ site.title|e('html') }}</a></h1>
+{% if partials.header.custom_header_image != '' %}
+  {{ partials.header.custom_header_image|raw  }}
+{% else %}
+  <h1><a href="{{ home_url }}">{{ site.title|e('html') }}</a></h1>
+{% endif %}
 
 {% if site.metadata.description %}
 {{ html5 ? '<aside>' : '<p class="subtitle">' }}

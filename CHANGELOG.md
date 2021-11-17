@@ -1,5 +1,12 @@
+# v2.2.7
+## 11/16/2021
+
+1. [](#improved)
+    * Adds the option to have custom HTML for the site header instead of always using the site title. This accepts _any_ raw HTML, so you can use an SVG, base64 encoded image, even an image sourced from somewhere else. Sky is the limit. Use with caution.
+
 # v2.2.6
 ## 03/09/2021
+
 1. [](#bug)
     * Forgot to close main PHP file. Fixes that.
 2. [](#improved)
@@ -7,6 +14,7 @@
 
 # v2.2.5
 ## 02/23/2021
+
 1. [](#bug)
     * Some pages didn't properly reference translations for words like "Categories". This has been fixed.
 2. [](#improved)
@@ -15,11 +23,13 @@
 
 # v2.2.4
 ## 02/10/2021
+
 1. [](#bug)
     * Fixes summary content display because sometimes it would repeat back escapated HTML instead of the contents of your page. Identified by [felixzwettler](https://github.com/felixzwettler).
 
 # v2.2.3
 ## 01/09/2021
+
 1.  [](#new)
     * Adds a visually impaired mode that replaces the default `<p>` and `<li>` font family of any style with the [Braille Institute's Atkinson Hyperlegible Font](https://brailleinstitute.org/freefont). This makes websites more readable at the click of a button, at the cost of ~100kb.
 2.  [](#improved)
@@ -28,6 +38,7 @@
 
 # v2.2.2
 ## 12/11/2020
+
 1.  [](#bug)
     * User [roslavych](https://github.com/roslavych) identified and fixed an error in one of the CSS theme names.
 
