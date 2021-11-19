@@ -279,7 +279,7 @@ form:
               type: textarea
               label: Header Image HTML
               help: This is raw HTML that will be included in the header in place of the Site Title.
-              placeholder: "Leave this blank to the site title as the site header. Otherwise, use HTML here. Consider using SVG or base64 encoded images to stay fast."
+              placeholder: "Leave this blank to use the site title as the site header. Otherwise, use HTML here. Consider using SVG or base64 encoded images to stay fast."
               size: large
             menu.menuItems:
               name: menuItems
