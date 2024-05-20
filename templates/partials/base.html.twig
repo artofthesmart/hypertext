@@ -29,7 +29,7 @@
 
 
 {# ## HEADLESS RENDERING ## #}
-{% if uri.query('headless') %}
+{% if (uri.query('headless') or page.header.isHeadless) %}
 <html>
   <head>
     <title>{% if header.title %}{{ header.title|e('html') }} | {% endif %}{{ site.title|e('html') }}</title>
