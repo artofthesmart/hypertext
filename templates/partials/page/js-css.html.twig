@@ -1,7 +1,63 @@
+{% set allowCSS = page.header.allowCSS == 'enabled' or
+                    (page.header.allowCSS|default('default') == 'default' and 
+                     style.allowCSS == '1') %}
+{% set allowJS  = page.header.allowJS  == 'enabled' or
+                    (page.header.allowJS|default('default') == 'default' and 
+                     style.allowJS == '1') %}
+
+{# Why set this here? Because we might want to pivot semantic flow depending on the sheet someday. #}
+{% set stylesheets = ['air', 'hypertext++', 'latex', 'marx', 'modest', 'sakura-dark-solarized', 'sakura-dark',
+                      'sakura-earthly', 'sakura-vader','sakura', 'stylize', 'tacit', 'tufte', 'w3c-chocolate', 'w3c-midnight', 'w3c-modernist',
+                      'w3c-oldstyle', 'w3c-steely', 'w3c-swiss', 'w3c-traditional', 'w3c-ultramarine', 'water-dark', 'water-light', 'writ',
+                      'yorha'] %}
+
+{# Set a stylesheet from the style config, then from the URI if available #}
+{% set stylesheet = uri.query('theme')|default(style.stylesheet) %}
+{% if stylesheet matches '/^\\d+$/' %}
+  {% set stylesheet = stylesheets[stylesheet % stylesheets|length] %}
+{% endif %}
+
+
+
+{# CONFIGURE THEME'S CSS FEATURES #}
+{# Always required. See docs. #}
+{% set requiredStyles = 'img { max-width: 100%; }' %} 
+
+{# Visually Impaired Mode #}
+{% set visually_impaired_mode %}
+  {{ include('css/visual-impaired.css') }}
+{% endset %}
+
+{% if style.visually_impared_mode|default(false) %}
+  {% set requiredStyles = requiredStyles ~ '\r\n' ~ visually_impaired_mode %}
+{% endif %}
+
+{# Max width and centering vs left alignment #}
+{% set bodyBlock %}
+body {
+  {% if style.width != 'default'}
+    "max-width: #{style.width}px;"
+  {% endif %}
+
+  {# Reset to 8px, the Chrome default (`unset` doesnt work). #}
+  {% if style.configuration == 'default' %}
+      margin-left: 8px;
+      margin-right: 8px;
+  {% else %}
+      margin-left: auto;
+      margin-right: auto;
+  {% endif %}
+}
+{% endset %}
+{% set requiredStyles = requiredStyles ~ '\r\n' ~ bodyBlock %}
+
+
+
+{# ------------------------------------------------------------------------ #}
+
 {% block stylehseets %}
 
-{# Add the stylesheet #}
-{# TODO: Add sourcing options from unpkg rather than locally #}
+{# Add the hypertext selected stylesheet #}
 {% if stylesheet != 'default' %}
   {% if style.include_type == 'inline' %}
     {# User *explicitly* wants it imported in style tags #}
@@ -20,67 +76,19 @@
   {# Hypertext doesn't add any JS, but if it did it would go here. #}
 {% endblock %}
 
-{# Regular CSS/JS includes #}
+{# Regular CSS/JS includes, like from plugins #}
 {% block assets deferred %}
   {% if allowCSS %}{{ assets.css()|raw }}{% endif %}
   {% if allowJS %}{{ assets.js()|raw }}{% endif %}
 {% endblock %}
 
 <style>
-{# This is the one piece of style that is practically unavoidable. 
-   Sorry, author's discretion. See website for details. #}
-img { max-width: 100%; }
+  {# Set by the theme. #}
+  {{ requiredStyles }}
 
-{# Hyperlegible font family declarations, if needed #}
-{% if style.visually_impared_mode|default(false) %}
-@font-face {
-  font-family: 'AtkinsonHL';
-  src: 
-       url('{{ theme_url }}/fonts/WOFF2/Atkinson-Hyperlegible-Regular-102a.woff2') format('woff2'), /* Super Modern Browsers */
-       url('{{ theme_url }}/fonts/WOFF/Atkinson-Hyperlegible-Regular-102.woff') format('woff'), /* Pretty Modern Browsers */
-       url('{{ theme_url }}/fonts/TTF/Atkinson-Hyperlegible-Regular-102.ttf')  format('truetype'); /* Safari, Android, iOS */
-}
-@font-face {
-  font-family: 'AtkinsonHL';
-  font-weight: bold;
-  src: 
-       url('{{ theme_url }}/fonts/WOFF2/Atkinson-Hyperlegible-Bold-102a.woff2') format('woff2'), /* Super Modern Browsers */
-       url('{{ theme_url }}/fonts/WOFF/Atkinson-Hyperlegible-Bold-102.woff') format('woff'), /* Pretty Modern Browsers */
-       url('{{ theme_url }}/fonts/TTF/Atkinson-Hyperlegible-Bold-102.ttf')  format('truetype'); /* Safari, Android, iOS */
-}
-@font-face {
-  font-family: 'AtkinsonHL';
-  font-style: italic;
-  src: 
-       url('{{ theme_url }}/fonts/WOFF2/Atkinson-Hyperlegible-Italic-102a.woff2') format('woff2'), /* Super Modern Browsers */
-       url('{{ theme_url }}/fonts/WOFF/Atkinson-Hyperlegible-Italic-102.woff') format('woff'), /* Pretty Modern Browsers */
-       url('{{ theme_url }}/fonts/TTF/Atkinson-Hyperlegible-Italic-102.ttf')  format('truetype'); /* Safari, Android, iOS */
-}
-@font-face {
-  font-family: 'AtkinsonHL';
-  font-weight: bold;
-  font-style: italic;
-  src: 
-       url('{{ theme_url }}/fonts/WOFF2/Atkinson-Hyperlegible-BoldItalic-102a.woff2') format('woff2'), /* Super Modern Browsers */
-       url('{{ theme_url }}/fonts/WOFF/Atkinson-Hyperlegible-BoldItalic-102.woff') format('woff'), /* Pretty Modern Browsers */
-       url('{{ theme_url }}/fonts/TTF/Atkinson-Hyperlegible-BoldItalic-102.ttf')  format('truetype'); /* Safari, Android, iOS */
-}
-p, li { font-family: 'AtkinsonHL'; }
-{% endif %} {# End Hyperlegible declarations. #}
+  {# User's custom styles take priority. #}
+  {{ style.customCSS }}
 
-body {
-{{ style.width != 'default' ? "max-width: #{style.width}px;" : ""}}
-{# Set only left and right margins because some stylesheets set vertical. #}
-{# Also reset to 8px, the Chrome default (`unset` doesn't work). #}
-{% if style.configuration == 'default' %}
-    margin-left: 8px;
-    margin-right: 8px;
-{% else %}
-    margin-left: auto;
-    margin-right: auto;
-{% endif %}
-} {# End body section #}
-
-{# User's custom styles *always* take priority #}
-{{ style.customCSS != '' ? style.customCSS : "" }}
+  {# Page's custom styles take maximum priority. #}
+  {{ page.customCSS}}
 </style>
