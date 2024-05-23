@@ -10,11 +10,7 @@
 
 
 {# ## HEADLESS RENDERING ## #}
-<<<<<<< Updated upstream
-{% if uri.query('headless') %}
-=======
 {% if (uri.query('headless') or page.header.is_headless) %}
->>>>>>> Stashed changes
 <html>
   <head>
     <title>{% if header.title %}{{ header.title|e('html') }} | {% endif %}{{ site.title|e('html') }}</title>

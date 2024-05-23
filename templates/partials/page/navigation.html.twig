@@ -20,10 +20,10 @@
     <span>
     {% for menuItem in menu.menuItems %}
       <a href="{{ menuItem.href }}"
-        {{ menuItem.rel ? 'rel="%s" '|format(menuItem.rel) : '' }}
-        {{ menuItem.name ? 'name="%s" '|format(menuItem.name) : '' }}
+        {{ menuItem.fieldset.rel ? 'rel=%s '|format(menuItem.fieldset.rel) : '' }}
+        {{ menuItem.fieldset.name ? 'name=%s '|format(menuItem.fieldset.name) : '' }}
+        {{ menuItem.fieldset.title ? 'title=%s '|format(menuItem.fieldset.title) : '' }}
         {{ menuItem.isOffsite ? 'class="offsite"' : '' }}
-        {{ menuItem.target ? 'target="%s" '|format(menuItem.target) : '' }}
         {{ menuItem.isNewWindow ? 'target="_blank"' : '' }}>{{ menuItem.text}}</a>
       {% if structure.use_decorators %}
         {{ not loop.last ? '|' : '' }}
