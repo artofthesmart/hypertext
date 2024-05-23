@@ -36,16 +36,16 @@
 {% set bodyBlock %}
 body {
   {% if style.width != 'default' %}
-    "max-width: #{style.width}px;"
+    max-width: {{style.width}}px;
   {% endif %}
 
   {# Reset to 8px, the Chrome default (`unset` doesnt work). #}
   {% if style.configuration == 'default' %}
-      margin-left: 8px;
-      margin-right: 8px;
+    margin-left: 8px;
+    margin-right: 8px;
   {% else %}
-      margin-left: auto;
-      margin-right: auto;
+    margin-left: auto;
+    margin-right: auto;
   {% endif %}
 }
 {% endset %}
