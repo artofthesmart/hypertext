@@ -4,32 +4,13 @@
 {% set partials = config.themes.hypertext.partials %}
 {% set html5 = structure.html_mode|default('default') == 'default' %}
 
-{% set allowCSS = page.header.allowCSS == 'enabled' or
-                    (page.header.allowCSS|default('default') == 'default' and 
-                     style.allowCSS == '1') %}
-{% set allowJS  = page.header.allowJS  == 'enabled' or
-                    (page.header.allowJS|default('default') == 'default' and 
-                     style.allowJS == '1') %}
-
-{# Why set this here? Because we might want to pivot semantic flow depending on the sheet someday. #}
-{% set stylesheets = ['air', 'hypertext++', 'latex', 'marx', 'modest', 'sakura-dark-solarized', 'sakura-dark',
-                      'sakura-earthly', 'sakura-vader','sakura', 'stylize', 'tacit', 'tufte', 'w3c-chocolate', 'w3c-midnight', 'w3c-modernist',
-                      'w3c-oldstyle', 'w3c-steely', 'w3c-swiss', 'w3c-traditional', 'w3c-ultramarine', 'water-dark', 'water-light', 'writ',
-                      'yorha'] %}
-
-{# Set a stylesheet from URI or style config #}
-{% set stylesheet = uri.query('theme')|default(style.stylesheet) %}
-{% if stylesheet matches '/^\\d+$/' %}
-  {% set stylesheet = stylesheets[stylesheet % stylesheets|length] %}
-{% endif %}
-
 {# ------------------------------------------------------------------------ #}
 
 <!DOCTYPE html>
 
 
 {# ## HEADLESS RENDERING ## #}
-{% if uri.query('headless') %}
+{% if (uri.query('headless') or page.header.is_headless) %}
 <html>
   <head>
     <title>{% if header.title %}{{ header.title|e('html') }} | {% endif %}{{ site.title|e('html') }}</title>

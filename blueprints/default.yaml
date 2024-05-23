@@ -117,3 +117,15 @@ form:
                         0: Disabled
                       validate:
                         type: bool
+                    
+                    header.is_headless:
+                      type: toggle
+                      label: Headless rendering
+                      help: When enabled, this page will not render headers, footers, or anything else except the page's content.
+                      default: 0
+                      highlight: 0
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
