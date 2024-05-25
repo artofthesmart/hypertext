@@ -1,3 +1,14 @@
+# v2.2.8
+## 05/25/2023
+
+1. [](#bug)
+    * User [pmoreno-rodriguez](https://github.com/pmoreno-rodriguez) found and fixed a bug with custom header links not properly showing `title`, `rel`, and `name` contents. Thank you!
+    * Custom, per-page CSS rules were not being properly written onto the page. Sorry about that.
+2. [](#improved)
+    * Removing `/blueprints/assets` directory. I don't think it does anything. Let me know if I'm wrong.
+    * Headless rendering is now optional by page rather than only accessible through a url parameter.
+    * Total overhaul of the demo content using ChatGPT to showcase functionality more consistently.
+
 # v2.2.7
 ## 11/16/2021
 
