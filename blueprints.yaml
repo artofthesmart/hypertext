@@ -286,7 +286,7 @@ form:
                       type: file
                       label: Upload Favicon
                       help: This uploads a new image for browser tabs and search engines to use to represent your website. It MUST be called favicon.png and conform to other favicon requirements. See Hypertext homepage for details. 
-                      destination: 'image://favicon/favicon.png'
+                      destination: 'image://favicon'
                       multiple: false
                       autofocus: false
                       accept:
