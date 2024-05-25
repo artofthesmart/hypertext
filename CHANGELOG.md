@@ -1,5 +1,5 @@
 # v2.2.8
-## 11/16/2021
+## 05/25/2023
 
 1. [](#bug)
     * User [pmoreno-rodriguez](https://github.com/pmoreno-rodriguez) found and fixed a bug with custom header links not properly showing `title`, `rel`, and `name` contents. Thank you!
