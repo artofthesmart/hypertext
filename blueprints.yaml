@@ -1,5 +1,5 @@
 name: Hypertext
-version: 2.2.7
+version: 2.2.8
 description: "Hypertext is a zero JS/CSS theme to create simple, fast websites."
 icon: compress
 author:
@@ -17,7 +17,7 @@ form:
   fields:
     tabs:
       type: tabs
-      active: 0
+      active: 1
 
       fields:
         structure: # STRUCTURAL CONTENT TAB
@@ -255,102 +255,134 @@ form:
                         0: 'Disabled'
                       validate:
                         type: bool
-                    #This was a bad idea.
-                    #style.header_image_align:
-                    #  type: select
-                    #  size: medium
-                    #  classes: fancy
-                    #  label: Header Image Alignment
-                    #  help: Inlines header images to look better.
-                    #  options:
-                    #    default: No style (block)
-                    #    left: Pull left
         menus: # HEADER, FOOTER, LINKS TAB
           type: tab
-          title: Headers, Footers, & Links
+          title: Headers, Footers, Links
           fields:
-            description:
-              type: display
-              size: long
-              label: Description
-              markdown: true
-              content: "This tab lets you add more items to the navigation areas of your website."
-            partials.header.custom_header_image:
-              type: textarea
-              label: Header Image HTML
-              help: This is raw HTML that will be included in the header in place of the Site Title.
-              placeholder: "Leave this blank to use the site title as the site header. Otherwise, use HTML here. Consider using SVG or base64 encoded images to stay fast."
-              size: large
-            menu.menuItems:
-              name: menuItems
-              type: list
-              style: vertical
-              size: long
-              label: Additional Menu Items
-              help: Add manual links to the header of your site.
+            columns:
+              type: columns
               fields:
-                .text:
-                  type: text
-                  label: Link Text
-                  placeholder: Use Google
-                .href:
-                  type: text
-                  label: Full URL
-                  placeholder: http://google.com
-                .isOffsite:
-                  type: toggle
-                  label: Add offsite CSS class
-                  help: When enabled, this will add a CSS class to this item indicating that it is offsite.
-                  default: 0
-                  options:
-                      1: 'Enabled'
-                      0: 'Disabled'
-                  validate:
-                      type: bool
-                .isNewWindow:
-                  type: toggle
-                  label: Open in new window
-                  help: When enabled, this will cause the link to open in a new window when clicked.
-                  default: 0
-                  options:
-                      1: 'Enabled'
-                      0: 'Disabled'
-                  validate:
-                      type: bool
-                .fieldset:
-                  type: fieldset
-                  title: Other Parameters
-                  help: Advanced settings for your new link.  This tries to stick to the HTML 3 spec.
-                  text: Advanced or optional features for this link.
-                  icon: cogs
-                  collapsed: true     # Initial state of fieldset (see collapsible option)
-                  collapsible: true    # Whether one can expand the fieldset or not 
+                column1: # Headers, Footers
+                  type: column
                   fields:
-                    .rel:
-                      type: text
-                      label: rel
-                      placeholder: The forward relationship, also known as the "link type".
-                    .name:
-                      type: text
-                      label: Name
-                      placeholder: This should be a string defining unique name for the scope of the current HTML document.
-                    .title:
-                      type: text
-                      label: Title
-                      placeholder: An advisory title for the linked resource.
-            partials.footer.custom_footer_type:
-              type: select
-              classes: fancy
-              label: Footer Type
-              help: The footer can be either markdown or HTML, whichever you need.
-              size: large
-              default: markdown
-              options:
-                markdown: Markdown
-                html: HTML  
-            partials.footer.custom_footer:
-              type: textarea
-              label: Footer Content
-              size: large
-              help: Add your optional, custom footer content here. If you need to remove the Hypertext attribution line, you can do it from the theme code in user/themes/hypertext/templates/partials/page/footer.html.twig.
-                        
+                    headersTitle:
+                      type: section
+                      title: Headers & Icons
+                      underline: true
+                    headersDescription:
+                      type: display
+                      size: long
+                      label: Description
+                      markdown: true
+                      content: "This section lets you change elements near the top of your website like header images, favicons, and more."
+                    partials.header.custom_header_image:
+                      type: textarea
+                      label: Header Image HTML
+                      help: This is raw HTML that will be included in the header in place of the Site Title.
+                      placeholder: "Leave this blank to use the site title as the site header. Otherwise, use HTML here. Consider using SVG or base64 encoded images to stay fast."
+                      size: large
+                    favicon:
+                      name: Favicon
+                      type: file
+                      label: Upload Favicon
+                      help: This uploads a new image for browser tabs and search engines to use to represent your website. It MUST be called favicon.png and conform to other favicon requirements. See Hypertext homepage for details. 
+                      destination: 'image://favicon/favicon.png'
+                      multiple: false
+                      autofocus: false
+                      accept:
+                        - image/png
+                    footersTitle:
+                      type: section
+                      title: Footers
+                      underline: true
+                    footersDescription:
+                      type: display
+                      size: long
+                      label: Description
+                      markdown: true
+                      content: "This section lets you change elements near the bottom of your website like custom disclaimers or content."
+                    partials.footer.custom_footer_type:
+                      type: select
+                      classes: fancy
+                      label: Footer Type
+                      help: The footer can be either markdown or HTML, whichever you need.
+                      size: large
+                      default: markdown
+                      options:
+                        markdown: Markdown
+                        html: HTML  
+                    partials.footer.custom_footer:
+                      type: textarea
+                      label: Footer Content
+                      size: large
+                      help: Add your optional, custom footer content here. If you need to remove the Hypertext attribution line, you can do it from the theme code in user/themes/hypertext/templates/partials/page/footer.html.twig.
+                column2: # Links
+                  type: column
+                  fields:
+                    linksTitle:
+                      type: section
+                      title: Links
+                      underline: true
+                    description:
+                      type: display
+                      size: long
+                      label: Description
+                      markdown: true
+                      content: "This section lets you add custom links to the end of your website's navigation."
+                    menu.menuItems:
+                      name: menuItems
+                      type: list
+                      style: vertical
+                      size: long
+                      label: Additional Menu Items
+                      help: Add manual links to the header of your site.
+                      fields:
+                        .text:
+                          type: text
+                          label: Link Text
+                          placeholder: Use Google
+                        .href:
+                          type: text
+                          label: Full URL
+                          placeholder: http://google.com
+                        .isOffsite:
+                          type: toggle
+                          label: Add offsite CSS class
+                          help: When enabled, this will add a CSS class to this item indicating that it is offsite.
+                          default: 0
+                          options:
+                              1: 'Enabled'
+                              0: 'Disabled'
+                          validate:
+                              type: bool
+                        .isNewWindow:
+                          type: toggle
+                          label: Open in new window
+                          help: When enabled, this will cause the link to open in a new window when clicked.
+                          default: 0
+                          options:
+                              1: 'Enabled'
+                              0: 'Disabled'
+                          validate:
+                              type: bool
+                        .fieldset:
+                          type: fieldset
+                          title: Other Parameters
+                          help: Advanced settings for your new link.  This tries to stick to the HTML 3 spec.
+                          text: Advanced or optional features for this link.
+                          icon: cogs
+                          collapsed: true     # Initial state of fieldset (see collapsible option)
+                          collapsible: true    # Whether one can expand the fieldset or not 
+                          fields:
+                            .rel:
+                              type: text
+                              label: rel
+                              placeholder: The forward relationship, also known as the "link type".
+                            .name:
+                              type: text
+                              label: Name
+                              placeholder: This should be a string defining unique name for the scope of the current HTML document.
+                            .title:
+                              type: text
+                              label: Title
+                              placeholder: An advisory title for the linked resource.
