@@ -50,7 +50,8 @@ The structure tab contains settings that influence what structural decisions Hyp
 * **Inline Pagination** - When it's on, you get one row of page buttons for multi-page content.  When it's off, you get bulleted list navigation.
 * **Use Decorator Text** - When it's on, you get braces around categories and vertical pipes between inline navigation items.  When it's off, there's no text between items (good for using your own styles).
 * **HTML Mode** - HTML5 will use modern tags like `<article>` and `<nav>`, while HTML3.2 will use vanilla tags with classes like `<div class="nav">`.
-* **Use Favicon** - If you have a favicon, turn this on in order to load it to the client (off by default because it's another lookup).  The image **MUST** be named `favicon.png`.  Yes, that name and yes a PNG.  If enough people complain I'll add an uploader.
+* **Use Favicon** - If you have a favicon, turn this on in order to load it to the client (off by default because it's another lookup).  The image **MUST** be named `favicon.png`, **MUST** be uploaded with the uploader or present in the `user/images/favicon` directory, and **SHOULD** be a small square image (like 64px by 64px).  Yes, that name and yes a PNG. You can upload a favicon in the next UI element. If you want to get creative with favicons, you can edit the file `user/themes/hypertext/templates/partials/base.html/twig`. There you can change it to whatever you need and manually upload files to the favicon directory.
+* **Upload Favicon** - Use this uploader to upload a favicon to your site. See above for requirements.
 * **Show Last Updated Dates** - Blogs and periodicals want dates at the tops of pages, while evergreen content doesn't need it. Here you can turn that stuff on and off for single-page views.
 
 #### Style Options

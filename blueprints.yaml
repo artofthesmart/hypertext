@@ -85,7 +85,7 @@ form:
                     structure.use_favicon:
                       type: toggle
                       label: Use favicon
-                      help: When enabled, the site will use the favicon at `user/images/favicon.png`.
+                      help: When enabled, the site will use the favicon at `user/images/favicon/favicon.png`. See Hypertext homepage for details. 
                       default: 0
                       highlight: 0
                       options:
@@ -93,6 +93,16 @@ form:
                         0: Disabled
                       validate:
                         type: bool
+                    favicon:
+                      name: Favicon
+                      type: file
+                      label: Upload Favicon
+                      help: This uploads a new image for browser tabs and search engines to use to represent your website. It MUST be called favicon.png and conform to other favicon requirements. See Hypertext homepage for details. 
+                      destination: 'image://favicon'
+                      multiple: false
+                      autofocus: false
+                      accept:
+                        - image/png
                     structure.show_date:
                       type: toggle
                       label: Show last updated dates
@@ -274,23 +284,13 @@ form:
                       size: long
                       label: Description
                       markdown: true
-                      content: "This section lets you change elements near the top of your website like header images, favicons, and more."
+                      content: "This section lets you change elements near the top of your website like header images and more."
                     partials.header.custom_header_image:
                       type: textarea
                       label: Header Image HTML
                       help: This is raw HTML that will be included in the header in place of the Site Title.
                       placeholder: "Leave this blank to use the site title as the site header. Otherwise, use HTML here. Consider using SVG or base64 encoded images to stay fast."
                       size: large
-                    favicon:
-                      name: Favicon
-                      type: file
-                      label: Upload Favicon
-                      help: This uploads a new image for browser tabs and search engines to use to represent your website. It MUST be called favicon.png and conform to other favicon requirements. See Hypertext homepage for details. 
-                      destination: 'image://favicon'
-                      multiple: false
-                      autofocus: false
-                      accept:
-                        - image/png
                     footersTitle:
                       type: section
                       title: Footers
