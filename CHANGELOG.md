@@ -1,3 +1,10 @@
+# v2.3.0
+## 05/25/2023
+
+1. [](#new)
+    * Adds a favicon uploader to make adding a favicon to your site easy. It must be a `.png` file. The uploader puts the file in `user/images/favicon` and don't forget to enable it with the feature just above it!
+
+
 # v2.2.8
 ## 05/25/2023
 
