@@ -8,7 +8,7 @@
 # v2.2.8
 ## 05/25/2023
 
-1. [](#bug)
+1. [](#bugfix)
     * User [pmoreno-rodriguez](https://github.com/pmoreno-rodriguez) found and fixed a bug with custom header links not properly showing `title`, `rel`, and `name` contents. Thank you!
     * Custom, per-page CSS rules were not being properly written onto the page. Sorry about that.
 2. [](#improved)
@@ -25,7 +25,7 @@
 # v2.2.6
 ## 03/09/2021
 
-1. [](#bug)
+1. [](#bugfix)
     * Forgot to close main PHP file. Fixes that.
 2. [](#improved)
     * Adds the option of _what kind_ of dates to show on collection pages. Formerly was "Last Modified", but can now be selected explicitly.
@@ -33,7 +33,7 @@
 # v2.2.5
 ## 02/23/2021
 
-1. [](#bug)
+1. [](#bugfix)
     * Some pages didn't properly reference translations for words like "Categories". This has been fixed.
 2. [](#improved)
     * User [nicosomb](https://github.com/nicosomb) added French translations and the fixes above. Many thanks!
@@ -42,7 +42,7 @@
 # v2.2.4
 ## 02/10/2021
 
-1. [](#bug)
+1. [](#bugfix)
     * Fixes summary content display because sometimes it would repeat back escapated HTML instead of the contents of your page. Identified by [felixzwettler](https://github.com/felixzwettler).
 
 # v2.2.3
@@ -57,13 +57,13 @@
 # v2.2.2
 ## 12/11/2020
 
-1.  [](#bug)
+1.  [](#bugfix)
     * User [roslavych](https://github.com/roslavych) identified and fixed an error in one of the CSS theme names.
 
 # v2.2.1
 ## 08/30/2020
 
-1.  [](#bug)
+1.  [](#bugfix)
     * Logic problem with "Continue Reading..." feature fixed, thanks to [takanotume24](https://github.com/takanotume24).
     * Fix to GPM version #s, also spotted by [takanotume24](https://github.com/takanotume24).
 
@@ -77,7 +77,7 @@
 # v2.1.1
 ## 01/27/2020
 
-1. [](#bug)
+1. [](#bugfix)
     * [Fixes duplicate tags](https://github.com/artofthesmart/hypertext/issues/25) appearing at the beginning of default pages. Thanks to Github user [mbirth](https://github.com/mbirth) for calling it out!
     * Removes [extra break line between title and categories](https://github.com/artofthesmart/hypertext/issues/27) at the beginning of pages.
     * Fixes [typo in page comments](https://github.com/artofthesmart/hypertext/issues/26).
@@ -134,14 +134,14 @@
 # v1.1.2
 ## 03/08/2019
 
-1. [](#bug)
+1. [](#bugfix)
     * Fixes broken pagination. Thanks to [neilpanchal](https://github.com/neilpanchal).
     * Improves tag handling in classes thanks to [laynee](https://github.com/Laynee).
 
 # v1.1.1
 ## 02/25/2019
 
-1. [](#bug)
+1. [](#bugfix)
     * Re-fixing a previously broken customCSS feature.
     
 # v1.1.0
@@ -154,7 +154,7 @@
 # v1.0.3
 ## 02/07/2019
 
-1. [](#bug)
+1. [](#bugfix)
     * Fixes custom CSS to be properly inserted into head section.
     * Fixes a missing 0 from [shanehoban](https://github.com/shanehoban).
     * Fixes "Next" and "Previous" post options in collections, they were reversed.
@@ -162,7 +162,7 @@
 # v1.0.2
 ## 02/06/2019
 
-1. [](#bug)
+1. [](#bugfix)
     * Fixes CSS/JS in footers. This broke popular plugins like code syntax highlighting.
     * Includes typo and logical fixes from [mbirth](https://github.com/mbirth).
     
