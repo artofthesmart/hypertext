@@ -34,7 +34,12 @@
     <meta {% if meta.name %}name="{{ meta.name }}" {% endif %}{% if meta.http_equiv %}http-equiv="{{ meta.http_equiv }}" {% endif %}{% if meta.charset %}charset="{{ meta.charset }}" {% endif %}{% if meta.property %}property="{{ meta.property }}" {% endif %}{% if meta.content %}content="{{ meta.content }}" {% endif %}/>
   {% endfor %}
 
-  <title>{% if header.title %}{{ header.title|e('html') }} | {% endif %}{{ site.title|e('html') }}</title>
+  {% if structure.add_site_name %}
+    <title>{% if header.title %}{{ header.title|e('html') }} | {% endif %}{{ site.title|e('html') }}</title>
+  {% else %}
+    {% if header.title %}<title>{{ header.title|e('html') }}</title>{% endif %}
+  {% endif %}
+  
 
   {% if structure.use_favicon %}
   <link rel="icon" type="image/png" href="{{ url('image://favicon/favicon.png') }}" />

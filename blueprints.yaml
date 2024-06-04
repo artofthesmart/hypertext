@@ -34,6 +34,17 @@ form:
                       type: section
                       title: Navigation Structure
                       underline: true
+                    structure.add_site_name:
+                      type: toggle
+                      label: Add site name to page titles
+                      help: When enabled, page titles will end with a pipe seperator and the name of the website. When disabled, only your page's title will be used.
+                      default: 1
+                      highlight: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
                     structure.inline_navbar:
                       type: toggle
                       label: Use inline menu bar
