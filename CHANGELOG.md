@@ -1,3 +1,10 @@
+# v2.4.0
+## 05/25/2023
+
+1. [](#new)
+    * Adds an option for whether or not to use the site title in every page `title` element.
+    * 
+
 # v2.3.0
 ## 05/25/2023
 
