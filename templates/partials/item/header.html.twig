@@ -1,10 +1,17 @@
 {% set show_image = page.header.show_header_image|default(false) %}
   {% set header_image_name = page.header.header_image_file|default('header.png') %}
   {% set header_image = page.media.images[header_image_name] ??
+
+                        page.media.images['header.png'] ??
+                        page.media.images['header.gif'] ??
+                        page.media.images['header.jpg'] ??
+                        page.media.images['header.webp'] ??
+
                         media['image://' ~ header_image_name] ??
                         media['image://' ~ page.slug()~'.png'] ??
-                        media['image://' ~ page.slug()~'.jpg'] ??
                         media['image://' ~ page.slug()~'.gif'] ??
+                        media['image://' ~ page.slug()~'.jpg'] ??
+                        media['image://' ~ page.slug()~'.webp'] ??
                         page.media.images|first %}
   {% set use_image_crop = style.image_cropping|default(false) %}
   {% set image_width = use_image_crop ? style.width - 10 : header_image.width %}
