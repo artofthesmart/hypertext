@@ -80,13 +80,13 @@ form:
                       toggleable: true
                       label: Header image file
                       help: Image filename that exists in the page folder to be shown at the top of this page. If not provided, and header image is enabled, Hypertext will use the first image found.
-                      placeholder: my_image.jpg
+                      placeholder: header.jpg
                     header.thumbnail_image_file:
                       type: text
                       toggleable: true
                       label: Thumbnail image file
                       help: Image filename that exists in the page folder. If not provided, the header image will be used if possible.
-                      placeholder: my_thumbnail.jpg
+                      placeholder: thumbnail.jpg
 
                     header.summary.delimiter:
                       type: text

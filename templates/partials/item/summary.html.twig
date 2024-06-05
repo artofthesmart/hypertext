@@ -17,7 +17,9 @@
                     media['image://' ~ page.slug()~'_thumbnail.jpg'] ??
                     media['image://' ~ page.slug()~'_thumbnail.gif'] ??
                     media['image://' ~ page.slug()~'_thumbnail.webp'] ??
-
+                    
+                    page.media.images[page.header.header_image_file] ??
+                    
                     page.media.images|first %}
 {% set use_image_crop = style.image_cropping|default(false) %}
 {% set image_width = use_image_crop ? style.width / 7 : thumbnail_image.width %}
