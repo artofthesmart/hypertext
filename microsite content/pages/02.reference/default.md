@@ -99,20 +99,29 @@ Similar to the global settings, this section lets you override CSS and JS exclus
 You can also add custom CSS to just this page in order to add custom style.
 
 #### Extra Content
-Here you can define additional content and metadata for your page, similar to other themes.  
+Here you can define additional content and metadata for your page, similar to other themes.
 
 * **Subtitle** - The subtitle is an elongated title addition or explanation of the content that will sometimes appear in Hypertext.
 * **Show header image** - When it's on, the header image will appear at the top of this page.  
-* **Header image file** - You can specify which image to use for the header here.  If you don't specify one, Hypertext will, by default, look for `header.png`.  Either way, if you enable header images, Hypertext will look for a header image with the following rules:
-1.  Is the specified image in the same directory as the page?  If so, use that.
-2.  Is the specified image in the `user/images` directory?  If so, use that.
-3.  Is there an image in the `user/images` directory with the same name as the slug of this page?  If so, use that.
-4.  Otherwise, use the first image in this page's directory.
-* **Thumbnail image file** -  You can specify which image to use for the page thumbnail here.  If you don't specify one, Hypertext will, by default, look for `thumbnail.png`.  Either way, if a thumbnail is needed by a parent page, Hypertext will look for a thumbnail image with the following rules:
-1.  Is the specified thumbnail in the same directory as the page?  If so, use that.
-2.  Is the specified thumbnail in the `user/images` directory?  If so, use that.
-3.  Is there an image in the `user/images` directory with the name of the slug of this page, plus `_thumbnail` afterwards (e.g. `winter-vacation_thumbnail`)?  If so, use that.
-4.  Otherwise, use the first image in this page's directory.
+* **Header image file** - You can specify which image to use for the page header here.  It's an image that appears at the top of the page, If you don't name an image specifically, Hypertext will try to find one automatically, e.g. using the file name pattern `header.*` within the page directory and `<page_slug>_header.*` in other locations. When you enable header images, Hypertext will look for a header image with the following rules:
+
+    0.  For any of the following, look for `png`, then `gif`, then `jpg`, then `webp` file types.
+    1.  Try to use the specified filename in the page directory.
+    2.  Try to use the specified filename in the `user/images` directory.
+    3.  Try to find an image named `header.*` in the page directory.
+    4.  Try to find an image named `<page slug>.*` in the `user/images` directory.
+    5.  Try to find an image named `<page slug>_header.*` in the `user/images` directory.
+    6.  Try to use the first image in this page's directory.
+* **Thumbnail image file** -  You can specify which image to use for the page thumbnail here.  It's an image used by a parent page trying to draw child pages.  If you don't name an image specifically, Hypertext will try to find one automatically, for example using the file name pattern `thumbnail.*` within the page directory and `<page_slug>_thumbnail.*` in other locations. When you enable header images, Hypertext will look for a thumbnail image with the following rules:
+    0.  For any of the following, look for `png`, then `gif`, then `jpg`, then `webp` file types.
+    1.  Try to use the specified filename in the page directory.
+    2.  Try to use the specified filename in the `user/images` directory.
+    3.  Try to find an image named `thumbnail.*` in the page directory.
+    4.  Try to find an image named `<page slug>_thumbnail.*` in the `user/images` directory.
+    5.  Try to find an image named `<header image filename>_thumbnail.*` in the page directory, if a header image was specified.
+    6.  Try to find an image named `<header image filename>_thumbnail.*` in the `user/images` directory, , if a header image was specified.
+    7.  Try to use the header image search method described above and use the header image.
+    8.  Try to use the first image in this page's directory.
 * **Summary delimiter** - By default, this is `===` and you use it to separate the Summary for this page from the rest of the contents.  I recommend you leave this as the default.
 * **Summary length** - If you don't specify a summary for this page, this value determines how long the automatically generated summary should be.  By default, it's 300 characters.
 
