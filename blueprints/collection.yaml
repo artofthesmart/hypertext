@@ -69,6 +69,17 @@ form:
                         0: Disabled
                       validate:
                         type: bool
+                    header.content.show_empty_children:
+                      type: toggle
+                      label: Show empty children
+                      help: When enabled, children of this page that have will have "Previous" and "Next" links at the bottom, useful for sequential content.
+                      default: 0
+                      highlight: 0
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
                 content_column:
                   fields:
                     structure_overrides_title:
