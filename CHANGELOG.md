@@ -1,6 +1,8 @@
-# v2.4.0
+# v2.3.1
 ## 05/25/2023
 
+1. [](#bugfix)
+    * Thumbnail and header image rendering were not working properly. This fix clarifies the search order for header and thumbnail images, and ensures it works as intended.
 1. [](#new)
     * Adds an option for whether or not to use the site title in every page `title` element.
     * 
