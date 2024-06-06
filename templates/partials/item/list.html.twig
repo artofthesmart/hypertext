@@ -19,6 +19,10 @@
 
 {# ------------------------------------------------------------------------ #}
 
+{% if page.isDir() %}
+<li><strong>{{ page.title }}</strong></li>
+{% else %}
+
 <li class="child-level-{{ level }}{% for cat in page.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}">
   {# Date #}
   {% if show_date %}
@@ -57,3 +61,4 @@
   </ul>
   {% endif %} {# End render nested children #}
 </li>
+{% endif %}

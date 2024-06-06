@@ -15,7 +15,7 @@
   {% elseif child_style == 'list' %}
   <ol>
     {% for child in collection %}
-      {% if child.isPage() %}
+      {% if (child.isPage() or child.isDir()) %}
         {% include 'partials/item/list.html.twig' with {'page':child, parent:page, level:1} %}
       {% endif %}
     {% endfor %}
