@@ -179,11 +179,11 @@ form:
                       type: display
                       label: Description
                       markdown: true
-                      content: Themes here are open-source CSS files available on GitHub and are not my own work. Consider visiting their homepages, contributing, and supporting the authors.  Remember that you can test these styles quickly by adding the name or number to a style URL parameter, e.g. `YourSite.com/?style=water` or `YourSite.com/?style=4`.
+                      content: Themes here are open-source CSS files available on GitHub and are not my own work. Consider visiting their homepages, contributing, and supporting the authors.  Remember that you can test these styles quickly by adding the name or number to a theme URL parameter, e.g. `YourSite.com/?theme=water` or `YourSite.com/?theme=4`.
                     style.stylesheet:
                       type: select
                       classes: fancy
-                      label: Select a Style
+                      label: Select a Theme
                       help: Selects from a pre-determined list of simple, fast CSS files.
                       options:
                         default:            "hypertext (No style)"

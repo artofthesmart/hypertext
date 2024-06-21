@@ -1,5 +1,11 @@
+# v2.3.2
+## 06/21/2024
+
+1. [](#bugfix)
+    * Error with the microsite content fixed, identified by [Kay Urbach](https://github.com/erdnuesse).
+
 # v2.3.1
-## 05/25/2023
+## 05/25/2024
 
 1. [](#bugfix)
     * Thumbnail and header image rendering were not working properly. This fix clarifies the search order for header and thumbnail images, and ensures it works as intended.
@@ -8,13 +14,13 @@
     * Adds more and more consistent search locations for header and thumbnail images, suitable for mechanically generated sites. See reference guide for details.
 
 # v2.3.0
-## 05/25/2023
+## 05/25/2024
 
 1. [](#new)
     * Adds a favicon uploader to make adding a favicon to your site easy. It must be a `.png` file. The uploader puts the file in `user/images/favicon` and don't forget to enable it with the feature just above it!
 
 # v2.2.8
-## 05/25/2023
+## 05/25/2024
 
 1. [](#bugfix)
     * User [pmoreno-rodriguez](https://github.com/pmoreno-rodriguez) found and fixed a bug with custom header links not properly showing `title`, `rel`, and `name` contents. Thank you!
