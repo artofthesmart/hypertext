@@ -536,3 +536,16 @@ blockquote footer {
     background-color: var(--color-scrollbar);
     border-radius: 10px;
 }
+
+/* HYPERTEXT CUSTOMIZATION */
+
+/* margins are huge in HTML5 mode. SO HUGE. */
+nav { 
+    margin-bottom: 0;
+}
+header {
+    margin-bottom: 0;
+}
+main {
+    padding: 0 3rem;
+}

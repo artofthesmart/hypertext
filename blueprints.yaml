@@ -209,18 +209,10 @@ form:
                         stylize:            "#19 stylize (4KB)"
                         tacit:              "#20 tacit (7KB)"
                         tufte:              "#21 tufte (12KB)"
-                        w3c-chocolate:      "#22 w3c-chocolate (14KB)"
-                        w3c-midnight:       "#23 w3c-midnight (14KB)"
-                        w3c-modernist:      "#24 w3c-modernist (14KB)"
-                        w3c-oldstyle:       "#25 w3c-oldstyle (14KB)"
-                        w3c-steely:         "#26 w3c-steely (14KB)"
-                        w3c-swiss:          "#27 w3c-swiss (14KB)"
-                        w3c-traditional:    "#28 w3c-traditional (14KB)"
-                        w3c-ultramarine:    "#29 w3c-ultramarine (14KB)"
-                        water-dark:         "#30 water-dark (2KB)"
-                        water-light:        "#31 water-light (2KB)"
-                        writ:               "#32 writ (2KB)"
-                        yorha:              "#33 yorha (8KB)"
+                        water-dark:         "#22 water-dark (2KB)"
+                        water-light:        "#23 water-light (2KB)"
+                        writ:               "#24 writ (2KB)"
+                        yorha:              "#25 yorha (8KB)"
 
 
                     style.include_type:

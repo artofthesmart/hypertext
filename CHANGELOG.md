@@ -1,7 +1,7 @@
 # v2.4.0
 ## 06/21/2024
 
-!! Warning: This changes some theme names and contents that may be a breaking change. Double check that your theme is looking right after the update.
+!! Warning: This changes some theme names, contents, and minor rendering tweaks that may be a breaking change. Double check that your theme is looking right after the update.
 
 !! Note: Updated and added CSS themes may not work on legacy browsers.
 

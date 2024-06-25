@@ -445,3 +445,8 @@ input {
 	box-shadow: none;
 	box-sizing: border-box;
 }
+
+/* The theme needs no seperator. */
+header > hr {
+    display: none;
+}

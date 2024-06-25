@@ -58,15 +58,14 @@
   </ul>
   {% endif %} {# End of navigation links #}
 
-  {# Drop in a separator if there's no theme at all OR we have breadcrumbs. #}
-  {#{% if uri.query('theme')|default(style.stylesheet) == 'default' or breadcrumbs.get()|length > 1 %}#}
-    <hr>
-  {#{% endif %}#}
+  {{ html5 ? '</nav>' : '</div>' }}
 
   {# Breadcrumbs #}
   {% if config.plugins.breadcrumbs.enabled %}
     {% include 'partials/breadcrumbs.html.twig' %}
   {% endif %}
-{{ html5 ? '</nav>' : '</div>' }}
 
+  {# Drop in a separator as most themes need this or will hide it. #}
+  <hr>
+  
 {% endif %} {# end if has nav #}
