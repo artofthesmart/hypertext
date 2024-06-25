@@ -70,6 +70,8 @@ Themes in Hypertext are open-source CSS files available on GitHub and are not my
 
 You can check the [style examples table](#style_table) in the Appendix to see what each style looks like.
 
+!!! Remember that many of these themes offer customization. Search for them on Github and read their documentation about how to customize things like colors.
+
 * **Include Method** - "Link" is the usual `href` process of adding a CSS file, and forces the browser to load another file.  You should do this if bandwidth is the priority (using fewer bytes).  "Inline" will add the contents of the stylesheet directly to the HTML, resulting in a faster page load at the expense of sending the stylesheet with every page rather than relying on cached copies.  You should do this if speed is the priority.  [See the home page for a speed analysis](/) between these two options.
 
 * **Custom CSS** - This is CSS that will be added after _everything else_ on every page load.  Good for adding your own touches or fixes to individual style sheets to make sure they always take priority.

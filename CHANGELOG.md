@@ -1,15 +1,27 @@
-# v2.3.2
+# v2.4.0
 ## 06/21/2024
 
+!! Warning: This changes some theme names and contents that may be a breaking change. Double check that your theme is looking right after the update.
+
+!! Note: Updated and added CSS themes may not work on legacy browsers.
+
 1. [](#bugfix)
-    * Error with the microsite content fixed, identified by [Kay Urbach](https://github.com/erdnuesse).
+    * Error with the microsite content and incorrect theme names fixed, identified by [Kay Urbach](https://github.com/erdnuesse).
+2. [](#new)
+    * Updates existing Sakura themes and adds the rest of his excellent collection. If you like them, say thanks to [Mitesh Shah of Oxal](https://github.com/oxalorg/sakura).
+    
+    * Adds [Milligram CSS](https://milligram.io/) by [CJ Patoilo](https://x.com/cjpatoilo).
+    * Adds [MVP.css](https://github.com/andybrewer/mvp/) by [Andy Brewer](https://andybrewer.github.io/mvp/).
+    * Adds [newcss](https://newcss.net/) by [xz](https://github.com/xz/new.css).
+    * Adds [Simple.css](https://simplecss.org/) by [Kev Quirk](https://kevquirk.com/).
+
 
 # v2.3.1
 ## 05/25/2024
 
 1. [](#bugfix)
     * Thumbnail and header image rendering were not working properly. This fix clarifies the search order for header and thumbnail images, and ensures it works as intended.
-1. [](#new)
+2. [](#new)
     * Adds an option for whether or not to use the site title in every page `title` element.
     * Adds more and more consistent search locations for header and thumbnail images, suitable for mechanically generated sites. See reference guide for details.
 
