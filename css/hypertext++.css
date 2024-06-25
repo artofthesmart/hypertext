@@ -9,4 +9,3 @@ h1, h2, h3 { font-family: sans-serif; }
 p { line-height:1.5; }
 table { border-spacing: 0; width: 100%; }
 td, th { border-bottom: 2px solid #e1e1e1; padding: 20px 24px; text-align: left; }
-.current { font-weight: bold; }
