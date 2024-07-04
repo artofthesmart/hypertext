@@ -84,7 +84,7 @@ Consider the following results from some basic testing of Hypertext page loads. 
 !! Tested in an incognito window of Chrome with the `Fast 3G` throttling settings.
 
 ### No Styles
-I wanted to avoid adding styles as much as possible because these can get quite large.  That goes double if you're using an off-the-shelf stylesheet.  This page you're reading is only about 8KB but the [Spectre CSS framework](https://picturepan2.github.io/spectre/) is already 8KB when minified and [Bootstrap's CSS alone](http://getbootstrap.com) weighs in at over 40KB.  It is far too easy to load up a bunch of stylesheets that overlap and override each other, eating bandwidth and accomplishing little.
+I wanted to avoid adding styles as much as possible because these can get quite large.  That goes double if you're using an off-the-shelf stylesheet.  This page you're reading is only about 8KB but the [Spectre CSS framework](https://picturepan2.github.io/spectre/) is already 8KB when minified and [Bootstrap's CSS alone](https://getbootstrap.com) weighs in at over 40KB.  It is far too easy to load up a bunch of stylesheets that overlap and override each other, eating bandwidth and accomplishing little.
 
 That said, there were a few compromises, listed below.
 
