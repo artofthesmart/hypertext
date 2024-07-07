@@ -81,6 +81,7 @@ body {
 
 <style>
   {# Set by the theme. #}
+  {% autoescape false %}
   {{ requiredStyles }}
 
   {# User's custom styles take priority. #}
@@ -88,4 +89,5 @@ body {
 
   {# Page's custom styles take maximum priority. #}
   {{ page.customCSS}}
+  {% endautoescape %}
 </style>
