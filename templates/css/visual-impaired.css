@@ -30,4 +30,4 @@
          url('{{ theme_url }}/fonts/WOFF/Atkinson-Hyperlegible-BoldItalic-102.woff') format('woff'), /* Pretty Modern Browsers */
          url('{{ theme_url }}/fonts/TTF/Atkinson-Hyperlegible-BoldItalic-102.ttf')  format('truetype'); /* Safari, Android, iOS */
   }
-  p, li { font-family: 'AtkinsonHL'; }
+  body, h1, h2, h3, h4, h5, h6 { font-family: 'AtkinsonHL'; }
