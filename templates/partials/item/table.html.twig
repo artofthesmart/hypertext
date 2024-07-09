@@ -48,7 +48,7 @@
     <td class="thumbnail">
     {% if header_image %}
       {% if style.image_cropping|default(false) %}
-        <a href="{{ child.url }}">{{ header_image.cropZoom((style.width / 24), style.width / 24).html() }}</a>
+        <a href="{{ child.url }}">{{ header_image.cropZoom(((style.width == 'default' ? 1024 : style.width) / 24), (style.width == 'default' ? 1024 : style.width) / 24).html() }}</a>
       {% else %}
         <a href="{{ child.url }}">{{ header_image.html() }}</a>
       {% endif %}
