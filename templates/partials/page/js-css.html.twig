@@ -22,6 +22,8 @@
   body {
     {% if style.width != 'default' %}
       max-width: {{style.width}}px;
+    {% else %}
+      max-width: 100%;
     {% endif %}
 
     {# Reset to 8px, the Chrome default (`unset` doesnt work). #}
