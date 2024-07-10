@@ -4,7 +4,7 @@
   <h1><a href="{{ home_url }}">{{ site.title|e('html') }}</a></h1>
 {% endif %}
 
-{% if site.metadata.description %}
+{% if site.metadata.description and partials.header.show_subtitle %}
 <p class="subtitle">{{ site.metadata.description }}</p>
 {% endif %}
 
