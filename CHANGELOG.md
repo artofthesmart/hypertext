@@ -4,6 +4,9 @@
 1. [](#bugfix)
     * Fixes honoring thumbnail drawing even when using full width style.
     * Fixes CSS pipelining glitches.
+2. [](#new)
+    * Adds Vietnamese translations and fixes "Continue Reading" text, thanks to [Johndo](https://github.com/johndo100).
+    * 
 
 # v2.4.0
 ## 06/21/2024
