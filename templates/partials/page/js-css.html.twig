@@ -4,9 +4,9 @@
 {% set allowJS  = page.header.allowJS  == 'enabled' or
                     (page.header.allowJS|default('default') == 'default' and 
                      style.allowJS == '1') %}
+{% set use_visually_impaired = style.visually_impared_mode|default(false) %}
 
 {% set stylesheets = ['air', 'hypertext++', 'latex', 'marx', 'milligram', 'modest', 'mvp', 'newcss-default', 'newcss-night', 'newcss-terminal', 'sakura', 'sakura-dark', 'sakura-dark-solarized', 'sakura-earthly', 'sakura-ink', 'sakura-pink', 'sakura-radical', 'sakura-vader', 'simple', 'stylize', 'tacit', 'tufte', 'water-dark', 'water-light', 'writ', 'yorha'] %}
-
 
 {# Set a stylesheet from the style config, then from the URI if available #}
 {% set stylesheet = uri.query('theme')|default(style.stylesheet) %}
@@ -14,41 +14,30 @@
   {% set stylesheet = stylesheets[stylesheet % stylesheets|length] %}
 {% endif %}
 
+{# Always required and hard to serve via href. See docs. #}
+{% set required_styles %}
+  img { max-width: 100%; }
+
+  {# Max width and centering vs left alignment #}
+  body {
+    {% if style.width != 'default' %}
+      max-width: {{style.width}}px;
+    {% endif %}
+
+    {# Reset to 8px, the Chrome default (`unset` doesnt work). #}
+    {% if style.configuration == 'default' %}
+      margin-left: 8px;
+      margin-right: 8px;
+    {% else %}
+      margin-left: auto;
+      margin-right: auto;
+    {% endif %}
+  }
+{% endset %}
+
 
 
 {# CONFIGURE THEME'S CSS FEATURES #}
-{# Always required. See docs. #}
-{% set requiredStyles = 'img { max-width: 100%; }' %} 
-
-{# Visually Impaired Mode #}
-{% set visually_impaired_mode %}
-  {{ include('css/visual-impaired.css') }}
-{% endset %}
-
-{% if style.visually_impared_mode|default(false) %}
-  {% set requiredStyles = requiredStyles ~ '\r\n' ~ visually_impaired_mode %}
-{% endif %}
-
-{# Max width and centering vs left alignment #}
-{% set bodyBlock %}
-body {
-  {% if style.width != 'default' %}
-    max-width: {{style.width}}px;
-  {% endif %}
-
-  {# Reset to 8px, the Chrome default (`unset` doesnt work). #}
-  {% if style.configuration == 'default' %}
-    margin-left: 8px;
-    margin-right: 8px;
-  {% else %}
-    margin-left: auto;
-    margin-right: auto;
-  {% endif %}
-}
-{% endset %}
-{% set requiredStyles = requiredStyles ~ '\r\n' ~ bodyBlock %}
-
-
 
 {# ------------------------------------------------------------------------ #}
 
@@ -56,17 +45,22 @@ body {
 
 {# Add the hypertext selected stylesheet #}
 {% if stylesheet != 'default' %}
+
   {% if style.include_type == 'inline' %}
-    {# User *explicitly* wants it imported in style tags #}
     <style>{{ include('css/' ~ stylesheet ~ '.css') }}</style>
-  {% elseif not style.allowCSS %}
+  
+  {% elseif not allowCSS %}
     {# User wants it via href, but doesn't have CSS pipeline running #}
     <link href="{{ url('theme://css/'~stylesheet~'.css') }}" rel="stylesheet" />
+    {% if use_visually_impaired %}<link href="{{ url('theme://css/visual-impaired.css') }}" rel="stylesheet" /> {% endif %}
+  
   {% else %}
-    {# User wants it href and is allowing CSS #}
+    {# User wants it href and is allowing CSS pipeline, so use that. #}
     {% do assets.addCss('theme://css/'~stylesheet~'.css') %}
+    {% if use_visually_impaired %}{% do assets.addCss('theme://css/visual-impaired.css') %} {%endif %}
   {% endif %}
-{% endif %}
+
+{% endif %} {# END if style isn't default #}
 {% endblock %}
 
 {% block javascripts %}
@@ -79,6 +73,7 @@ body {
   {% if allowJS %}{{ assets.js()|raw }}{% endif %}
 {% endblock %}
 
+{# Add any final required styling like max-width, centering, and user-provided values #}
 <style>
   {# Set by the theme. #}
   {% autoescape false %}
