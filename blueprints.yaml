@@ -299,11 +299,23 @@ form:
                       label: Description
                       markdown: true
                       content: "This section lets you change elements near the top of your website like header images and more."
+                    partials.header.show_subtitle:
+                      type: toggle
+                      classes: fancy
+                      label: Show Site Subtitle
+                      help: When enabled, if you have one, your site's Configuration => Site => Metadata => Description will appear under the site title. When disabled, it's not rendered.
+                      default: 1
+                      highlight: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
                     partials.header.custom_header_image:
                       type: textarea
-                      label: Header Image HTML
-                      help: This is raw HTML that will be included in the header in place of the Site Title.
-                      placeholder: "Leave this blank to use the site title as the site header. Otherwise, use HTML here. Consider using SVG or base64 encoded images to stay fast."
+                      label: Title/Header HTML
+                      help: This is raw HTML that will be included in the header instead of the Site Title. Write your own custom site title, use an image, or ads.
+                      placeholder: "Leave this blank to use the site title as the site header. Otherwise, write HTML here. You can include images. Consider using SVG or base64 encoded images to stay fast."
                       size: large
                     footersTitle:
                       type: section
