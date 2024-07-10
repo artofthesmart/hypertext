@@ -1,3 +1,15 @@
+# v2.4.1
+## 07/09/2024
+
+1. [](#bugfix)
+    * Fixes honoring thumbnail drawing even when using full width style.
+    * Fixes CSS pipelining glitches.
+    * Fixes relative URLs for visually-impaired mode.
+    * Fixes CSS glitch where single-page CSS rules weren't being written.
+2. [](#new)
+    * Adds Vietnamese translations and fixes "Continue Reading" text, thanks to [Johndo](https://github.com/johndo100).
+    * 
+
 # v2.4.0
 ## 06/21/2024
 
@@ -9,7 +21,6 @@
     * Error with the microsite content and incorrect theme names fixed, identified by [Kay Urbach](https://github.com/erdnuesse).
 2. [](#new)
     * Updates existing Sakura themes and adds the rest of his excellent collection. If you like them, say thanks to [Mitesh Shah of Oxal](https://github.com/oxalorg/sakura).
-    
     * Adds [Milligram CSS](https://milligram.io/) by [CJ Patoilo](https://x.com/cjpatoilo).
     * Adds [MVP.css](https://github.com/andybrewer/mvp/) by [Andy Brewer](https://andybrewer.github.io/mvp/).
     * Adds [newcss](https://newcss.net/) by [xz](https://github.com/xz/new.css).
