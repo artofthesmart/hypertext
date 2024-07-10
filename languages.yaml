@@ -3,6 +3,7 @@ en:
     PAGINATION:
       PREVIOUS_PAGE: Previous
       NEXT_PAGE: Next
+      CONTINUE_READING: Continue Reading...
     CATEGORIES:
       CATEGORIES: Categories
     DATES:
@@ -17,6 +18,7 @@ fr:
     PAGINATION:
       PREVIOUS_PAGE: Précédent
       NEXT_PAGE: Suivant
+      CONTINUE_READING: Continuer la lecture...
     CATEGORIES:
       CATEGORIES: Catégories
     DATES:
@@ -25,3 +27,18 @@ fr:
       THUMBNAIL: Miniature
     FOOTER:
       BY_LINE: Fonctionne avec <a href="http://getgrav.org">Grav CMS</a> et le thème <a href="http://hypertext.artofthesmart.com">Hypertext</a>.
+
+vi:
+  THEME_HYPERTEXT:
+    PAGINATION:
+      PREVIOUS_PAGE: Trang trước
+      NEXT_PAGE: Trang sau
+      CONTINUE_READING: Đọc tiếp...
+    CATEGORIES:
+      CATEGORIES: Danh mục
+    DATES:
+      PUBLISHED: Đã xuất bản
+    THUMBNAIL:
+      THUMBNAIL: Hình thu nhỏ
+    FOOTER:
+      BY_LINE: Chạy <a href="http://getgrav.org">Grav CMS</a> bằng chủ đề <a href="http://hypertext.artofthesmart.com">Siêu văn-bản</a>.

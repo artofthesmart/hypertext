@@ -97,7 +97,7 @@
   {{ page.summary|raw }}
 {% else %}
   {{ page.summary|raw }}
-  {% if page.header.show_clickthrough ?? true %}<p><a href="{{ page.url }}">Continue Reading...</a></p> {% endif %}
+  {% if page.header.show_clickthrough ?? true %}<p><a href="{{ page.url }}">{{ 'THEME_HYPERTEXT.PAGINATION.CONTINUE_READING'|t }}</a></p> {% endif %}
 {% endif %}
 
 {# Children #}
