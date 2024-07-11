@@ -75,7 +75,7 @@
 {% if show_children and inner_children|length > 0 %}
 {% set inner_children = inner_children.order(page.header.content.order.by|default('default'), page.header.content.order.dir|default('default')) %}
 <br>
-Sub-Pages:
+{{ 'THEME_HYPERTEXT.PAGINATION.SUB_PAGES'|t }}:
 <ol class="nested-children">
   {% for child in inner_children %}
   <li><a href="{{ child.url }}">{{ child.title }}</a>{{ child.header.subtitle and show_subtitle ? ' - <span>'~child.header.subtitle~'</span>' : '' }}</li>

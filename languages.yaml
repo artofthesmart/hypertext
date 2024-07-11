@@ -3,7 +3,8 @@ en:
     PAGINATION:
       PREVIOUS_PAGE: Previous
       NEXT_PAGE: Next
-      CONTINUE_READING: Continue Reading...
+      CONTINUE_READING: Continue Reading
+      SUB_PAGES: Sub-Pages
     CATEGORIES:
       CATEGORIES: Categories
     DATES:
@@ -18,7 +19,8 @@ fr:
     PAGINATION:
       PREVIOUS_PAGE: Précédent
       NEXT_PAGE: Suivant
-      CONTINUE_READING: Continuer la lecture...
+      CONTINUE_READING: Continuer la lecture
+      SUB_PAGES: Sous-Pages
     CATEGORIES:
       CATEGORIES: Catégories
     DATES:
@@ -33,7 +35,8 @@ vi:
     PAGINATION:
       PREVIOUS_PAGE: Trang trước
       NEXT_PAGE: Trang sau
-      CONTINUE_READING: Đọc tiếp...
+      CONTINUE_READING: Đọc tiếp
+      SUB_PAGES: Trang-con
     CATEGORIES:
       CATEGORIES: Danh mục
     DATES:
