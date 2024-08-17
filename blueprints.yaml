@@ -115,14 +115,14 @@ form:
                       accept:
                         - image/png
                     structure.show_date:
-                      type: toggle
+                      type: select
                       label: Show last updated dates
-                      help: When enabled, the date that the page was published will appear on individual pages. Collections/blog pages have this option also.
-                      default: 0
-                      highlight: 0
+                      help: When enabled, the date that the page was published will appear on individual pages.
                       options:
-                        1: Enabled
-                        0: Disabled
+                        default: No dates
+                        minimal: Only on child pages
+                        hohome: Everywhere but the home page
+                        everywhere: Everywhere
                       validate:
                         type: bool                    
         style: # STYLE TAB

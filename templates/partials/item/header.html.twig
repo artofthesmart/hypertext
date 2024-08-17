@@ -60,14 +60,19 @@
 {% endif %}
 
 {# Date #}
-{% if show_date %}
-Date: <small>
-  {% if html5 %}
-      {{ structure.use_decorators ? '[' : '' }}<time datetime="{{ date|date("c") }}">{{ date|date(system.pages.dateformat.short) }}</time>{{ structure.use_decorators ? ']' : '' }}
-  {% else %}
-      {{ structure.use_decorators ? '[' : '' }}<span class="datetime">{{ date|date(system.pages.dateformat.short) }}</span>{{ structure.use_decorators ? ']' : '' }}
+{% if (not show_date == 0) and (not show_date == default) %}
+  {% if (show_date == "everywhere" or show_date == 1) or 
+     if (show_date == "nothome" and not page.home()) or
+     if (show_date == "children" and page.template() in ['default', 'blog_item', 'item', 'modular'])
+  %}
+    Date: <small>
+      {% if html5 %}
+          {{ structure.use_decorators ? '[' : '' }}<time datetime="{{ date|date("c") }}">{{ date|date(system.pages.dateformat.short) }}</time>{{ structure.use_decorators ? ']' : '' }}
+      {% else %}
+          {{ structure.use_decorators ? '[' : '' }}<span class="datetime">{{ date|date(system.pages.dateformat.short) }}</span>{{ structure.use_decorators ? ']' : '' }}
+      {% endif %}
+    </small><br />
   {% endif %}
-</small><br />
 {% endif %}
 
 {# Categories #}
