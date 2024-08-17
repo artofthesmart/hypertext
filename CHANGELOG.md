@@ -1,3 +1,9 @@
+# v2.4.2
+## 08/17/2024
+
+1. [](#new)
+    * Updates the `show_date` option to offer more possibilities. Hide dates on the home page, collection pages, or all pages!
+
 # v2.4.1
 ## 07/09/2024
 
