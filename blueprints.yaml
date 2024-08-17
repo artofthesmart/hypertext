@@ -120,8 +120,8 @@ form:
                       help: When enabled, the date that the page was published will appear on individual pages.
                       options:
                         default: No dates
-                        minimal: Only on child pages
-                        hohome: Everywhere but the home page
+                        children: Only on child pages
+                        not-home: Everywhere but the home page
                         everywhere: Everywhere
                       validate:
                         type: bool                    
