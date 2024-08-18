@@ -117,6 +117,16 @@ form:
                         0: Disabled
                       validate:
                         type: bool
+
+                    header.show_date:
+                      type: select
+                      label: Add Date
+                      help: Locally configures whether the date that the page was published will appear on this page. You can set this globally in theme settings.
+                      classes: fancy
+                      options:
+                        default: Use global setting
+                        enabled: Show date
+                        disabled: Hide date
                     
                     header.is_headless:
                       type: toggle

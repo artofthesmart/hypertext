@@ -52,7 +52,7 @@ The structure tab contains settings that influence what structural decisions Hyp
 * **HTML Mode** - HTML5 will use modern tags like `<article>` and `<nav>`, while HTML3.2 will use vanilla tags with classes like `<div class="nav">`.
 * **Use Favicon** - If you have a favicon, turn this on in order to load it to the client (off by default because it's another lookup).  The image **MUST** be named `favicon.png`, **MUST** be uploaded with the uploader or present in the `user/images/favicon` directory, and **SHOULD** be a small square image (like 64px by 64px).  Yes, that name and yes a PNG. You can upload a favicon in the next UI element. If you want to get creative with favicons, you can edit the file `user/themes/hypertext/templates/partials/base.html/twig`. There you can change it to whatever you need and manually upload files to the favicon directory.
 * **Upload Favicon** - Use this uploader to upload a favicon to your site. See above for requirements.
-* **Show Last Updated Dates** - Blogs and periodicals want dates at the tops of pages, while evergreen content doesn't need it. Here you can turn that stuff on and off for single-page views.
+* **Show Last Updated Dates** - Blogs and periodicals want dates at the tops of pages, while evergreen content doesn't need it. Here you can globally configure whether you want to show that for all pages, none of your pages, everywhere except the home page, or only on child page types like `default`, `blog_item`, `item`, and `modular`. You can also configure this per-page to override this setting.
 
 #### Style Options
 The style tab contains settings that influence how your content looks or gets rendered.  This is the real core of the theme.
@@ -126,6 +126,7 @@ Here you can define additional content and metadata for your page, similar to ot
     8.  Try to use the first image in this page's directory.
 * **Summary delimiter** - By default, this is `===` and you use it to separate the Summary for this page from the rest of the contents.  I recommend you leave this as the default.
 * **Summary length** - If you don't specify a summary for this page, this value determines how long the automatically generated summary should be.  By default, it's 300 characters.
+* **Add Dates** - Overrides the theme's global dates setting and lets you choose whether to show the publication date on this page or not.
 
 !!! **What's the difference between a Summary and a Subtitle?**  A subtitle is usally an extension to the original title.  For example, "Raising a puppy" might be the title of my page, and the subtitle might be "How I learned to raise a dog in 2018".  On the other hand, a summary is a short introduction or paragraph for the content the user is about to read or click through to.  In this same example, the summary would be a 300 character teaser about how cute the puppy was, how excited I was, and how I would learn a lot while training the puppy to be a good boy.
 
