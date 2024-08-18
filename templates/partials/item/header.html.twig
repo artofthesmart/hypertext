@@ -24,7 +24,7 @@
 {% set image_height = use_image_crop ? (style.width == 'default' ? 1024 : style.width) / 5 : header_image.height %}
 {% set header_image_url = use_image_crop ? header_image.cropZoom(image_width, image_height).url : header_image.url %}
 
-{% set show_date = structure.show_date ?? false %}
+{% set show_date = structure.show_date|default(false) %}
 
 {% switch page.parent.header.render.children.which_date|default('date') %}
 {% case 'modified' %}
@@ -60,10 +60,11 @@
 {% endif %}
 
 {# Date #}
-{% if (not show_date == 0) and (not show_date == default) %}
-  {% if (show_date == "everywhere" or show_date == 1) or 
-     if (show_date == "nothome" and not page.home()) or
-     if (show_date == "children" and page.template() in ['default', 'blog_item', 'item', 'modular'])
+{% if (show_date != 0) and (show_date != default) and page.header.show_date != 'disabled' %}
+  {% if (show_date == 'everywhere' or show_date == 1) or 
+     (show_date == 'not-home' and not isHome) or
+     (show_date == 'children' and page.template() in ['default', 'blog_item', 'item', 'modular'] and not isHome) or
+     page.header.show_date == 'enabled'
   %}
     Date: <small>
       {% if html5 %}
