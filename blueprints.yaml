@@ -116,6 +116,7 @@ form:
                         - image/png
                     structure.show_date:
                       type: select
+                      classes: fancy
                       label: Show last updated dates
                       help: When enabled, the date that the page was published will appear on individual pages.
                       options:
@@ -123,8 +124,6 @@ form:
                         children: Only on child pages
                         not-home: Everywhere but the home page
                         everywhere: Everywhere
-                      validate:
-                        type: bool                    
         style: # STYLE TAB
           type: tab
           title: Style & Formatting
