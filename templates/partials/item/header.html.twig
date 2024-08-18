@@ -60,6 +60,7 @@
 {% endif %}
 
 {# Date #}
+{% set isHome = page.home() %}
 {% if (show_date != 0) and (show_date != default) and page.header.show_date != 'disabled' %}
   {% if (show_date == 'everywhere' or show_date == 1) or 
      (show_date == 'not-home' and not isHome) or
