@@ -4,7 +4,7 @@ structure:
   use_decorators: true
   html_mode: default
   use_favicon: false
-  show_date: false
+  show_date: default
 style:
   configuration: centered
   width: 768
