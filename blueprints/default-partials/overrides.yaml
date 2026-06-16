@@ -1,0 +1,26 @@
+form:
+  fields:
+    header.allowCSS:
+      type: select
+      label: Allow CSS Override
+      help: Allow CSS only for this page, overriding any global settings.
+      classes: fancy
+      options:
+        default: Use global setting
+        enabled: Allow CSS
+        disabled: Block CSS
+    header.allowJS:
+      type: select
+      label: Allow JS Override
+      help: Allow JS only for this page, overriding any global settings.
+      classes: fancy
+      options:
+        default: Use global setting
+        enabled: Allow JS
+        disabled: Block JS
+    header.customCSS:
+      type: textarea
+      label: Custom CSS
+      size: large
+      help: Add your page-specific, custom CSS rules here.
+      placeholder: "e.g. table { font-family: Courier }"

@@ -1,16 +1,38 @@
 ---
+title: "Alex Rivera's Tech Blog"
+date: 2023-06-15 10:00
+author: "Alex Rivera"
 allowCSS: default
 allowJS: default
+subtitle: "Thoughts on JavaScript, UI/UX, and web development"
+show_header_image: true
+header_image_file: blog-header.jpg
+thumbnail_image_file: blog-thumbnail.jpg
+taxonomy:
+    category:
+        - 'blog'
+    tags:
+        - 'tech'
+        - 'development'
+        - 'javascript'
+        - 'web'
 content:
-    items:
-        - '@self.children'
+    items: '@self.children'
+    limit: 10
     order:
-        by: folder
+        by: date
         dir: desc
+    sibling_links: true
+render:
+    children:
+        style: summary
+        image: true
+        subtitle: true
+        category: true
+        date: true
+        which_date: published
 ---
 
-This is an example `blog` page with many children to demonstrate long lists of sequential content.
+Welcome to my tech blog! Here you'll find posts about JavaScript, frontend development, UI/UX trends, and open-source contributions. I write about my experiences, tutorials, and thoughts on the ever-evolving world of web development.
 
-===
-
-This is a blog and it is functionally identical to a [collection](../collection).  The only difference is how it's representing the content.
+Check out the latest posts below, or browse by category or tag.

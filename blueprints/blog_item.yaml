@@ -1,4 +1,0 @@
-# Functionally identical to a collection, this only exists
-# to make compatibility with other themes easier.
-
-extends@: default
