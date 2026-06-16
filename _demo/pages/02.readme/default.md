@@ -63,11 +63,11 @@ These features are responsible for what renders at the top and bottom of your si
 
 **Sitename In Page Titles** - Boolean. Adds the sitename to the H1 of the page/item title. It is displayed as "Sitename - Item Title" (for example: "Alex's Blog - My First Post").
 
-**Header Style** - Dropdown. Changes how the header/sitename is displayed. There are five options:
+**Site Header Style** - Dropdown. Changes how the header/sitename is displayed. There are five options:
 - `Text` - Default. The text name of the site.
 - `Image` - A banner image to render where the site name would normally be. It's linked to your home page.
 - `Both` - The site name followed by rendering the image below it. Useful when you want a little branding but also want the name of the site visible.
-- `Modular` - Searches for a page named `_header.md` and renders that. See details below about Modular Content.
+- `Modular` - Searches for a page named `_site_header.md` and renders that. See details below about Modular Content.
 - `None` - Renders nothing above the navigation bar.
 
 Note: When `image` or `both` is selected, you'll have an option to upload an image.
@@ -78,7 +78,7 @@ Note: This is different from GravCMS's standard site description which is useful
 
 **Footer** - Dropdown. Determines what/how to render a footer for the site.
 - `Content` - Default. The user is presented with a text box where they can add markdown footer content.
-- `Modular` - Searches for a page named `_footer.md` and renders that. See details below about Modular Content.
+- `Modular` - Searches for a page named `_site_footer.md` and renders that. See details below about Modular Content.
 - `None` - Renders no footer after the content of the site.
 
 #### Navigation
@@ -112,6 +112,7 @@ These features define how navigation gets rendered on the screen. Relevant class
 
 #### Plugin Support
 In a perfect world we would support all of the GravCMS default plugins offered by the company. Below are a few examples:
+- Pagination
 - Shortcodes
 - TOC
 - Breadcrumbs
@@ -214,10 +215,10 @@ You can check the [style examples table](#style_table) in the Appendix to see wh
 ### Page Settings
 The page-level settings include overrides to the global settings as well as controls for how to render your content. Remember that these values can be set at the Theme level, at the Collection level, or the page level at the lowest. The lowest level wins.
 
-Below are settings for individual pages, items, blog posts, and other "single pages". These also appear in `Collection` pages because they control how child pages get rendered, too.
+Below are settings for individual pages, items, blog posts, and other "single pages". These also appear in `Collection` pages because they control how child pages get rendered both in the collection list and on the child page itself as a form of overrides. For example you might want a subsection of your site to be `blog` where you want the `author` field rendered, while other parts of the site don't do that.
 
-#### Page Content
-These values let you decide what frontmatter and metadata get rendered on the page to the end user.
+#### Content Display Settings
+These values let you decide what frontmatter and metadata get rendered on the page to the end user. Changing these values in a `Collection` page will set defaults for child pages when they are visited.
 
 **Show Title** - Boolean. Determines whether or not to show the title of the page.
 **Show Subtitle** - Boolean. Determines whether or not to show the subtitle of the page.
@@ -229,48 +230,56 @@ These values let you decide what frontmatter and metadata get rendered on the pa
 **Show Categories** - Boolean. Determines whether or not to show the categories of the page.
 **Use Headless Mode** - Boolean. Determines whether or not this page is rendered in headless mode. If true, the theme will not render anything except the page's content. No header, no metadata, no titles, no footer, nothing. Just the body content of parsed markdown into HTML. The content will get a `<body>` tag and the proper DOCTYPE.
 
-##### Collection Page Content
-These content settings only appear for collection pages to help define how their children get rendered.
-**Show Summary** - Boolean. Determines whether or not to show the summary of the page.
-**Show Clickthru** - Boolean. Determines whether or not to show the "Read More" click-through text on page summaries. These words are defined in `languages.yaml` and can be changed.
+#### Additional Page Content
+Here you can define additional content and metadata for your page, similar to other themes. These are avialable for all page types.
 
+**Page Header Style** - Dropdown. Changes how the page's "title" area is displayed. There are five options:
+- `Text` - Default. The text title of the page and its metadata.
+- `Image` - A banner image to render where the page title would normally be. Usually the width of your site (960px Default) by 100px high.
+- `Both` - The page title followed by rendering the image below it. Useful when you want a little branding but also want the name of the page visible.
+- `Modular` - Searches for a page named `_page_header.md` and renders that. See details below about Modular Content.
+- `None` - Renders nothing before the page's content.
 
-#### Additional Content
-Here you can define additional content and metadata for your page, similar to other themes.
+**Page Footer Style** - Dropdown. Changes how the page's "footer" area is displayed. There are five options:
+- `None` - Default. Renders nothing after the page's content.
+- `Text` - Renders custom text at the end of a post or page.
+- `Image` - A banner image to render after the content. Usually the width of your site (960px Default) by 100px high.
+- `Both` - Custom text followed by rendering the image below it.
+- `Modular` - Searches for a page named `_page_footer.md` and renders that. See details below about Modular Content.
 
-**Subtitle** - The subtitle is a longer title addition or explanation of the content that will sometimes appear in Hypertext. For example, a title could be "CSS 101" and the subtitle could be "Learning how to make your website more beautiful".
-
-**Header Image File** - The header image appears at the top of the page under the page title. You can specify which image to use for the page header here.  It's an image that appears at the top of the page.  If you don't name an image specifically, Hypertext will try to find one automatically, e.g. using the file name pattern `header.*` within the page directory and `<page_slug>_header.*` in other locations. When you enable header images, Hypertext will look for a header image with the following rules:
-
-    0.  For any of the following, look for `png`, then `gif`, then `jpg`, then `webp` file types.
+**Page Header Image File** - The header image appears at the top of a page under the page title if your settings allow it at the theme, collection, or page level. You can name an image to use for the page header here. If you don't name an image specifically or it cannot be found, Hypertext will attempt to find another one automatically using the following process:
+    0.  For any of the following, look for `webp`, then `png`, then `gif`, then `jpg` or `jpeg` file types.
     1.  Try to use the specified filename in the page directory.
     2.  Try to use the specified filename in the `user/images` directory.
     3.  Try to find an image named `header.*` in the page directory.
     4.  Try to find an image named `<page slug>.*` in the `user/images` directory.
     5.  Try to find an image named `<page slug>_header.*` in the `user/images` directory.
-    6.  Try to use the first image in this page's directory.
+    6.  Try to use the first image by name in this page's directory.
+    7.  Render a blank square as the header image.
 
-**Thumbnail image file** -  You can specify which image to use for the page thumbnail here.  It's an image used by a parent page trying to draw child pages.  If you don't name an image specifically, Hypertext will try to find one automatically, for example using the file name pattern `thumbnail.*` within the page directory and `<page_slug>_thumbnail.*` in other locations. When you enable header images, Hypertext will look for a thumbnail image with the following rules:
-    0.  For any of the following, look for `png`, then `gif`, then `jpg`, then `webp` file types.
+**Page Thumbnail image file** -  You can specify which image to use for the page thumbnail here.  It's an image used by a parent page trying to draw child pages.  If you don't name an image specifically, Hypertext will try to find one automatically, for example using the file name pattern `thumbnail.*` within the page directory and `<page_slug>_thumbnail.*` in other locations. When you enable header images, Hypertext will look for a thumbnail image with the following rules:
+    0.  For any of the following, look for `webp`, then `png`, then `gif`, then `jpg` or `jpeg` file types.
     1.  Try to use the specified filename in the page directory.
     2.  Try to use the specified filename in the `user/images` directory.
     3.  Try to find an image named `thumbnail.*` in the page directory.
     4.  Try to find an image named `<page slug>_thumbnail.*` in the `user/images` directory.
     5.  Try to find an image named `<header image filename>_thumbnail.*` in the page directory, if a header image was specified.
     6.  Try to find an image named `<header image filename>_thumbnail.*` in the `user/images` directory, , if a header image was specified.
-    7.  Try to use the header image search method described above and use the header image.
+    7.  Try to use the header image search method described above and use the header image with automatic resizing.
     8.  Try to use the first image in this page's directory.
+    9.  Render a blank square as the thumbnail image.
 
-* **Summary length** - If you don't specify a summary for this page, this value determines how long the automatically generated summary should be.  By default, it's 300 characters.
+**Subtitle** - The subtitle is a longer title addition or explanation of the content that will sometimes appear in Hypertext.
 
-* **Add Dates** - Overrides the theme's global dates setting and lets you choose whether to show the publication date on this page or not.
+**Summary delimiter** - By default, this is `===` and you use it to separate the summary for this page from the rest of the contents. I recommend you leave this as the default.
+
+**Summary length** - If you don't specify a summary for this page, this value determines how long the automatically generated summary should be.  By default, it's 300 characters.
 
 !!! **What's the difference between a Summary and a Subtitle?**  A subtitle is usally an extension to the original title.  For example, "Raising a puppy" might be the title of my page, and the subtitle might be "How I learned to raise a dog in 2018".  On the other hand, a summary is a short introduction or paragraph for the content the user is about to read or click through to.  In this same example, the summary would be a 300 character teaser about how cute the puppy was, how excited I was, and how I would learn a lot while training the puppy to be a good boy.
 
-#### Page Content Settings
-When rendering a page, these settings can be used to override the theme and collection settings for that specific page. If a setting is not set, it will use the theme's default setting. Some settings are specific to how pages and collections function and cannot be set at a site-wide level effectively.
-
-These determine what metadata from the frontmatter should be shown when rendering a page.
+#### Collection Settings
+##### Child Display Settings
+These values let you decide what child page content and metadata get rendered on the `Collection` page to the end user. To be clear, this would control what gets shown on a "Blog List" page and not what appears on an individual "Blog Post" page.
 
 **Show Title** - Boolean. Determines whether or not to show the title of the page.
 **Show Subtitle** - Boolean. Determines whether or not to show the subtitle of the page.
@@ -284,32 +293,46 @@ These determine what metadata from the frontmatter should be shown when renderin
 **Show Clickthru** - Boolean. Determines whether or not to show the "Read More" click-through text on page summaries. These words are defined in `languages.yaml` and can be changed.
 **Use Headless Mode** - Boolean. Determines whether or not this page is rendered in headless mode. If true, the theme will not render anything except the page's content. No header, no metadata, no titles, no footer, nothing. Just the body content of parsed markdown into HTML. The content will get a `<body>` tag and the proper DOCTYPE.
 
-#### Child Rendering (Collections only)
-The render style determines how children of this page will look when rendered in sequence.  I included several different types to help give you a few options depending on the kind of content you have.  Blogs render best with summaries while factual content looks sharp as a list or a table.  Try a few out and see what works best for you.
+##### Collection Render Style
+**Render Style** - Dropdown. Determines the style in which child pages are rendered.
+- `Compact List` - Default. Child pages are rendered in an ordered list with all content appearing on a single line.
+- `Comfy List` - Child pages are rendered in a single column layout, with more breathing room for each frontmatter attribute you choose to render. This is sort of between a compact list and a cards view.
+- `Table` - Child pages are rendered in a table.
+- `Cards` - Child pages are rendered as cards with more structured data views. These can appear in a grid if desired.
+
+**Render Nested** - Boolean. Determines whether or not to render nested child pages. Child pages are only rendered 1 level down. This is useful for high level views of complex page groups like blog posts composed of multiple entries or projects composed of multiple tasks. Keep in mind that rendering nested content often gets super complex and busy.
+
+**Nested Group Title** - Textarea. The title to display for nested child pages. Something like "Content:" is sufficient. It just helps the reader understand what they're looking at.
+
+###### Compact List Settings
+Not Yet Implemented.
+
+###### Comfy List Settings
+Not Yet Implemented.
+
+###### Table Settings
+Not Yet Implemented.
+
+###### Cards Settings
+Not Yet Implemented.
+
+!! In General, blogs render best with summaries while factual content looks sharp as a list or a table. Card views are good for galleries and project portfolios. Try a few out and see what works best for you.
 
 ![Examples for Summary, Table, and List views of child pages.](collection-examples.gif)
 
-The toggle switches in this section like `Show Image` and `Show Subtitle` enable or disable which aspects of a child get rendered.  If you turn them all on, things can get cluttered so pick the ones that make sense for your content and go for it.
 
-!! **Not all switches work for all styles.** For example, the `Table` view doesn't allow you to show images, so that switch does nothing for that particular render style.
+###### Children & Ordering
+**Items** - Setting this will let you customize what children appear for this collection. Normally you'd have a collection page with lots of child pages in nested directories under it. However, here you could define a collection page that instead renders a certain category of pages from any parent directory on your site.
 
-#### Children & Ordering (Collections only)
+**Max Items** - This controls how many items can appear as children of this page.  If you aren't using the [pagination plugin](https://github.com/getgrav/grav-plugin-pagination) then this will show the last N entries out of this page's children.  If you _are_ using that plugin, then this will show N entries per page.
 
-* **Items** - Setting this will let you customize what children appear for this collection.  For example, it's possible to have a collection page that doesn't have any children but instead renders a certain category of pages.
-* **Max Items** - This controls how many items can appear as children of this page.  If you aren't using the [pagination plugin](https://github.com/getgrav/grav-plugin-pagination) then this will show the last N entries out of this page's children.  If you _are_ using that plugin, then this will show N entries per page.
-* **Order By** - Here you get to pick what criterion is used to order the children.
-* **Order** - Here you get to pick whether to show them ascending or descending.
-* **Show Prev/Next Links** - When it's on, Hypertext will show `Next` and `Previous` links when a user is viewing a child page of this parent page.  This is useful if you have highly ordered content like blog entries or multi-page content stored under a collection.
+**Order By** - Here you get to pick what criterion is used to order the children.
 
-#### Collection Settings
-### Render Options
-**Render Style** - Dropdown. Determines the style in which child pages are rendered.
-- `Compact List` - Default. Child pages are rendered in an ordered list with all content appearing on a single line.
-- `Comfy List` - Child pages are rendered in a column, with better spacing for each frontmatter attribute you choose to render. This is sort of between a compact list and a cards view.
-- `Table` - Child pages are rendered in a table.
-- `Cards` - Child pages are rendered as cards with structured data views. These can appear in a grid if desired.
-**Render Nested** - Boolean. Determines whether or not to render nested child pages. Child pages are only rendered 1 level down. This is useful for high level views of complex page groups like blog posts composed of multiple entries or projects composed of multiple tasks. Keep in mind that rendering nested content often gets super complex and busy.
-**Nested Block Title** - Textarea. The title to display for nested child pages. Something like "Content:" is sufficient. It just helps the reader understand what they're looking at.
+**Order** - Here you get to pick whether to show them ascending or descending according to the `Order By` value you picked.
+
+**Show Prev/Next Links** - When it's on, Hypertext will show `Next` and `Previous` links when a user is viewing a child page of this parent page. Good for serialized content. These words are defined in `languages.yaml` and can be changed.
+
+
 
 ### Appendix
 
