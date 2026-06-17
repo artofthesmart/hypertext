@@ -1,16 +1,85 @@
 structure:
-  inline_navbar: true
-  inline_pagination: true
-  use_decorators: true
-  html_mode: default
-  use_favicon: false
-  show_date: default
+  content:
+    a11y-typeface: false
+    a11y-use-aria: true
+  header:
+    style: text
+    modular-file: _site_header.md
+    use-subheader: false
+    subheader: ""
+  footer:
+    style: text
+    content: "Made with GravCMS using the <a target=\"_blank\" href=\"https://hypertext.artofthesmart.com/\">Hypertext</a> theme."
+    modular-file: _site_footer.md
+  navigation:
+    header: 
+      mode: inline
+      text-style: braced
+      alignment: left
+      show-socials: false
+      custom-items: []
+    pagination:
+      style: inline
+      text-style: plain
+handling:
+  images:
+    serving: linked
+    resize: true
+    compress: none
+    allow-url-parameters: admin
+  css:
+    serving: inline
+  js:
+    serving: inline
 style:
-  configuration: centered
-  width: 768
-  allowCSS: false
-  allowJS: false
-  stylesheet: default
-  include_type: default
-  image_cropping: false
-  inline_navbar: 1
+  layout:
+    type: 1-column
+    alignment: left
+    left-width: 320
+    right-width: 320
+    content-width: 960
+  css:
+    enable: false
+    custom-value: ""
+    stylesheet: default
+  js:
+    enable: false
+    custom-value: ""
+page:
+  header:
+    style: text
+    image-name: ""
+    modular-file: _page_header.md
+  footer:
+    style: none
+    image-name: ""
+    modular-file: _page_footer.md
+  content:
+    title: true
+    subtitle: false
+    header-image: false
+    author: false
+    date-last-updated: false
+    date-published: true
+    tags: true
+    categories: true
+    headless: false
+collection:
+  mode: list
+  show-nested: false
+  list-settings:
+  comfy-settings:
+  table-settings:
+  cards-settings:
+  display:
+    title: true
+    subtitle: false
+    header-image: false
+    author: false
+    date-last-updated: false
+    date-published: true
+    tags: true
+    categories: true
+    summary: false
+    click-through: false
+    headless: false

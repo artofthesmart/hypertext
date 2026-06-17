@@ -72,7 +72,7 @@ These features are responsible for what renders at the top and bottom of your si
 
 Note: When `image` or `both` is selected, you'll have an option to upload an image.
 
-**Subheader** - Boolean. Selects whether or not to show the site's subheader at the top of the page. If true, the user will be presented with the option to enter a subheader. 
+**Subheader** - Boolean, default true. Selects whether or not to show the site's subheader at the top of the page. If true, the user will be presented with the option to enter a subheader. 
 
 Note: This is different from GravCMS's standard site description which is useful for SEO.
 
@@ -99,9 +99,10 @@ These features define how navigation gets rendered on the screen. Relevant class
 - `Stacked` - Pagination is displayed in multiple lines.
 
 **Pagination Text Style** - Dropdown. Determines how pagination text is displayed.
-- `Brace Decorated` - Default. The pagination text is rendered with braces, e.g. `[ 1 ] [ 2 ] [ 3 ]`.
+- `Plain` - Default. The pagination text is displayed without decoration, e.g. `1 2 3`.
+- `Brace Decorated` - The pagination text is rendered with braces, e.g. `[ 1 ] [ 2 ] [ 3 ]`.
 - `Angle Decorated` - The pagination text is rendered with angle brackets, e.g. `< 1 > < 2 > < 3 >`.
-- `Plain` - The pagination text is displayed without decoration, e.g. `1 2 3`.
+
 
 **Show Social Buttons** - Dropdown. Selects whether or not to show social buttons. If true, the user will be presented with the option to add social buttons.
 - `None` - Default. Renders no social buttons.
