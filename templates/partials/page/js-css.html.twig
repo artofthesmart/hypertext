@@ -1,15 +1,15 @@
 {% set allowCSS = page.header.allowCSS == 'enabled' or
                     (page.header.allowCSS|default('default') == 'default' and 
-                     style.allowCSS == '1') %}
+                     style.css.enable) %}
 {% set allowJS  = page.header.allowJS  == 'enabled' or
                     (page.header.allowJS|default('default') == 'default' and 
-                     style.allowJS == '1') %}
-{% set use_visually_impaired = style.visually_impared_mode|default(false) %}
+                     style.js.enable) %}
+{% set use_visually_impaired = style['visually-impaired']|default(false) %}
 
 {% set stylesheets = ['air', 'hypertext++', 'latex', 'marx', 'milligram', 'modest', 'mvp', 'newcss-default', 'newcss-night', 'newcss-terminal', 'sakura', 'sakura-dark', 'sakura-dark-solarized', 'sakura-earthly', 'sakura-ink', 'sakura-pink', 'sakura-radical', 'sakura-vader', 'simple', 'stylize', 'tacit', 'tufte', 'water-dark', 'water-light', 'writ', 'yorha'] %}
 
 {# Set a stylesheet from the style config, then from the URI if available #}
-{% set stylesheet = uri.query('theme')|default(style.stylesheet) %}
+{% set stylesheet = uri.query('theme')|default(style.css.stylesheet) %}
 {% if stylesheet matches '/^\\d+$/' %}
   {% set stylesheet = stylesheets[stylesheet % stylesheets|length] %}
 {% endif %}
@@ -20,14 +20,14 @@
 
   {# Max width and centering vs left alignment #}
   body {
-    {% if style.width != 'default' %}
-      max-width: {{style.width}}px;
+    {% if style.layout['content-width'] != 'default' %}
+      max-width: {{ style.layout['content-width'] }}px;
     {% else %}
       max-width: 100%;
     {% endif %}
 
     {# Reset to 8px, the Chrome default (`unset` doesnt work). #}
-    {% if style.configuration == 'default' %}
+    {% if style.layout.alignment == 'left' %}
       margin-left: 8px;
       margin-right: 8px;
     {% else %}
@@ -38,19 +38,26 @@
 {% endset %}
 
 
+{# FONT PRELOADING #}
+{# Preload Atkinson Hyperlegible font when visually impaired mode is active to prevent FOUT and minimize CLS #}
+{% if use_visually_impaired %}
+  <link rel="preload" href="{{ url('theme://fonts/WOFF2/Atkinson-Hyperlegible-Regular-102a.woff2') }}" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="{{ url('theme://fonts/WOFF2/Atkinson-Hyperlegible-Bold-102a.woff2') }}" as="font" type="font/woff2" crossorigin />
+{% endif %}
 
 {# CONFIGURE THEME'S CSS FEATURES #}
 
 {# ------------------------------------------------------------------------ #}
 
-{% block stylehseets %}
+{% block stylesheets %}
 
 {# Add the hypertext selected stylesheet #}
 {% if stylesheet != 'default' %}
 
-  {% if style.include_type == 'inline' %}
+  {% if handling.css.serving == 'inline' %}
     <style>{{ include('css/' ~ stylesheet ~ '.css') }}</style>
-  
+    {% if use_visually_impaired %}<style>{{ include('css/visual-impaired.css') }}</style>{% endif %}
+
   {% elseif not allowCSS %}
     {# User wants it via href, but doesn't have CSS pipeline running #}
     <link href="{{ url('theme://css/'~stylesheet~'.css') }}" rel="stylesheet" />
@@ -75,6 +82,12 @@
   {% if allowJS %}{{ assets.js()|raw }}{% endif %}
 {% endblock %}
 
+{# Feed plugin auto-discovery #}
+{% if config.plugins.feed.enabled is defined and config.plugins.feed.enabled %}
+  <link rel="alternate" type="application/atom+xml" title="{{ site.title }} Feed" href="{{ home_url ~ '/feed:atom' }}" />
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }} Feed" href="{{ home_url ~ '/feed:rss' }}" />
+{% endif %}
+
 {# Add any final required styling like max-width, centering, and user-provided values #}
 <style>
   {# Set by the theme. #}
@@ -82,7 +95,7 @@
   {{ required_styles }}
 
   {# User's custom styles take priority. #}
-  {{ style.customCSS }}
+  {{ style.css['custom-value'] }}
 
   {# Page's custom styles take maximum priority. #}
   {{ page.header.customCSS}}
