@@ -14,7 +14,7 @@
   {% endif %}
 
   {% if search_results %}
-    {% include 'partials/item/collection-render.html.twig' with {'collection': search_results, 'parent': page} %}
+    {% include 'partials/collection/render.html.twig' with {'collection': search_results, 'parent': page} %}
   {% else %}
     <p><em>{{ 'PLUGIN_SIMPLESEARCH.SEARCH_NO_RESULTS'|t|default('No results found.') }}</em></p>
   {% endif %}

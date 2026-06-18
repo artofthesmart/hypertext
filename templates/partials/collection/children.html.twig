@@ -1,0 +1,15 @@
+{% set collection = page.collection()|length > 0 ? page.collection() : page.children.visible %}
+{% set style = page.header.render.children.style|default(config.themes.hypertext.collection.mode|default('summary')) %}
+
+{# ------------------------------------------------------------------------ #}
+
+{% if collection|length > 0 %}
+  {% set collection = collection.order(page.header.content.order.by|default(system.pages.order.by),
+                                       page.header.content.order.dir|default(system.pages.order.dir)) %}
+
+  {% include 'partials/collection/render.html.twig' with {'collection': collection, 'parent': page, 'style': style} %}
+
+  {% if config.plugins.pagination.enabled and collection.params.pagination %}
+    {% include 'partials/collection/pagination.html.twig' with {'base_url': page.url, 'pagination': collection.params.pagination} %}
+  {% endif %}
+{% endif %}
