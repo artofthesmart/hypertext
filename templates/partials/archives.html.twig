@@ -1,0 +1,8 @@
+<section id="archives" aria-label="{{ 'PLUGIN_ARCHIVES.ARCHIVES'|t }}">
+  {% for month, items in archives_data %}
+    <h3>{{ month }} <small>({{ items|length }})</small></h3>
+    {% include 'partials/item/collection-render.html.twig' with {'collection': items, 'parent': page} %}
+  {% else %}
+    <p>{{ 'PLUGIN_ARCHIVES.NO_ARCHIVES'|t|default('No archives found.') }}</p>
+  {% endfor %}
+</section>
