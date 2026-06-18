@@ -1,6 +1,10 @@
-{% set show_subtitle = parent.header.render.children.subtitle ?? true %}
-{% set show_cat = parent.header.render.children.category ?? true %}
-{% set show_children = parent.header.render.children.nested_children ?? true %}
+{% set textStyle = structure['text-style']|default('plain') %}
+{% set decLeft   = textStyle == 'braced' ? '[ ' : (textStyle == 'angled' ? '&lt; ' : '') %}
+{% set decRight  = textStyle == 'braced' ? ' ]' : (textStyle == 'angled' ? ' &gt;' : '') %}
+
+{% set show_subtitle  = parent.header.render.children.subtitle ?? true %}
+{% set show_cat       = parent.header.render.children.category ?? true %}
+{% set show_children  = parent.header.render.children.nested_children ?? true %}
 {% set inner_children = page.collection()|length > 0 ? page.collection() : page.children.visible %}
 
 {% set show_date = parent.header.render.children.date ?? false %}
@@ -17,6 +21,49 @@
     {% set date = page.date %}
 {% endswitch %}
 
+{# ── Image: thumbnail first, then header image fallback ──────────────────── #}
+{% set show_image = parent.header.render.children.image ?? false %}
+{% set thumb_url = null %}
+{% set thumb_size = null %}
+{% if show_image %}
+  {% set thumb_name = page.header.thumbnail_image_file|default(null) %}
+  {% set slug = page.slug() %}
+  {% set header_file = page.header.header_image_file|default('header.png') %}
+  {% set thumb = null %}
+  {% if thumb_name %}
+    {% set thumb_media_name = 'image://' ~ thumb_name %}
+    {% set thumb = page.media.images[thumb_name] ?? media[thumb_media_name] ?? null %}
+  {% endif %}
+  {% set slug_webp = 'image://' ~ slug ~ '_thumbnail.webp' %}
+  {% set slug_png  = 'image://' ~ slug ~ '_thumbnail.png' %}
+  {% set slug_gif  = 'image://' ~ slug ~ '_thumbnail.gif' %}
+  {% set slug_jpg  = 'image://' ~ slug ~ '_thumbnail.jpg' %}
+  {% set thumb = thumb ??
+    page.media.images['thumbnail.webp'] ??
+    page.media.images['thumbnail.png'] ??
+    page.media.images['thumbnail.gif'] ??
+    page.media.images['thumbnail.jpg'] ??
+    media[slug_webp] ??
+    media[slug_png] ??
+    media[slug_gif] ??
+    media[slug_jpg] ??
+    page.media.images[header_file] ??
+    page.media.images['header.webp'] ??
+    page.media.images['header.png'] ??
+    page.media.images['header.gif'] ??
+    page.media.images['header.jpg'] ??
+    page.media.images|first %}
+
+  {% set use_image_crop = handling.images.resize|default(false) %}
+  {% set content_width = style.layout['content-width']|default(960)|int %}
+  {% set content_width = content_width == 0 ? 960 : content_width %}
+  {# Thumbnail is sized relative to content width, ~6% (about 1 line height) #}
+  {% set thumb_size = use_image_crop ? (content_width / 16)|round : null %}
+  {% set thumb_url  = (use_image_crop and thumb_size and thumb)
+      ? thumb.cropZoom(thumb_size, thumb_size).url
+      : (thumb ? thumb.url : null) %}
+{% endif %}
+
 {# ------------------------------------------------------------------------ #}
 
 {% if page.isDir() %}
@@ -24,13 +71,20 @@
 {% else %}
 
 <li class="child-level-{{ level }}{% for cat in page.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}">
+
+  {# Thumbnail #}
+  {% if show_image and thumb_url %}
+    <a href="{{ page.url }}">
+      <img src="{{ thumb_url }}"
+           {% if thumb_size %}width="{{ thumb_size }}" height="{{ thumb_size }}"{% endif %}
+           loading="lazy"
+           alt="{{ page.title|e('html_attr') }}">
+    </a>
+  {% endif %}
+
   {# Date #}
   {% if show_date %}
-    {% if html5 %}
-      {{ structure.use_decorators ? '[' : '' }}<time datetime="{{ date|date("c") }}">{{ date|date(system.pages.dateformat.short) }}</time>{{ structure.use_decorators ? ']' : ' '}}
-    {% else %}
-      {{ structure.use_decorators ? '[' : '' }}<span class="datetime">{{ date|date(system.pages.dateformat.short) }}</span>{{ structure.use_decorators ? ']' : ' '}}
-    {% endif %}
+    {{ decLeft|raw }}<time datetime="{{ date|date('c') }}">{{ date|date(system.pages.dateformat.short) }}</time>{{ decRight|raw }}
   {% endif %}
 
   {# Title & Subtitle #}
@@ -44,9 +98,8 @@
     <br/>
     {{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t }}: <small>
     {% for category in page.taxonomy.category %}
-      {{ structure.use_decorators ? '[' : '' }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ structure.use_decorators ? ']' : '' }}{{ not loop.last ? ',' : '' }}
+      {{ decLeft|raw }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ decRight|raw }}{{ not loop.last ? ',' : '' }}
     {% endfor %}</small>
-  {% else %}
   {% endif %}
 
   {# Children #}

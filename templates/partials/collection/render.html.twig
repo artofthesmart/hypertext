@@ -1,0 +1,58 @@
+{#
+  partials/collection/render.html.twig
+  ────────────────────────────────────
+  Reusable collection rendering dispatcher.
+
+  Expected variables (pass with the 'with' clause or set before including):
+    collection  – iterable of Grav Page objects
+    parent      – the parent Page (used by sub-templates for context/settings)
+    style       – (optional) one of: list | comfy | table | grid | cards
+                  Falls back to config.themes.hypertext.collection.mode,
+                  then to 'list'.
+#}
+
+{% set style = style|default(config.themes.hypertext.collection.mode|default('list')) %}
+
+{# ── LIST (default) ─────────────────────────────────────────────────────────── #}
+{% if style == 'list' %}
+  <ol>
+  {% for child in collection %}
+    {% if child.isPage() or child.isDir() %}
+      {% include 'partials/item/list.html.twig' with {'page': child, 'parent': parent, 'level': 1} %}
+    {% endif %}
+  {% endfor %}
+  </ol>
+
+{# ── COMFY ────────────────────────────────────────────────────────────────── #}
+{% elseif style == 'comfy' %}
+  {% for child in collection %}
+    {% if child.isPage() %}
+      {% include 'partials/item/comfy.html.twig' with {'page': child, 'parent': parent} %}
+    {% endif %}
+  {% endfor %}
+
+{# ── TABLE ────────────────────────────────────────────────────────────────── #}
+{% elseif style == 'table' %}
+  {% include 'partials/item/table.html.twig' with {'parent': parent, 'collection': collection} %}
+
+{# ── GRID (2D table layout) ───────────────────────────────────────────────── #}
+{% elseif style == 'grid' %}
+  <table>
+  {% for child in collection %}
+    {% if child.isPage() %}
+      {% include 'partials/item/grid.html.twig' with {'page': child, 'parent': parent} %}
+    {% endif %}
+  {% endfor %}
+  </table>
+
+{# ── CARDS (floating card blocks) ─────────────────────────────────────────── #}
+{% elseif style == 'cards' %}
+  <div id="cards-collection">
+  {% for child in collection %}
+    {% if child.isPage() %}
+      {% include 'partials/item/cards.html.twig' with {'page': child, 'parent': parent} %}
+    {% endif %}
+  {% endfor %}
+  </div>
+
+{% endif %}

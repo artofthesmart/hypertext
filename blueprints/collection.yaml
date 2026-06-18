@@ -14,10 +14,14 @@ form:
                 header.child_type:
                   default: item
         hypertext:
+          type: tab
+          title: Hypertext
           fields:
             columns:
+              type: columns
               fields:
                 overrides_column:
+                  type: column
                   fields:
                     child_overrides_title:
                       type: section
@@ -70,6 +74,7 @@ form:
                       validate:
                         type: bool
                 content_column:
+                  type: column
                   fields:
                     structure_overrides_title:
                       type: section
@@ -79,13 +84,13 @@ form:
                       type: select
                       label: Render Style
                       help: How you want child pages presented on the page. See Hypertext docs for examples.
-                      default: summaries
+                      default: list
                       options:
-                        summary: Summaries
                         list: List
-                        # grid: Grid # A column-based grid layout I tried. It was AWFUL on mobile.
-                        # layout: Table (Layout) # A Frontpage-like "table layout" version. It was AWFUL on mobile.
-                        table: Table
+                        comfy: Comfy (image + excerpt)
+                        table: Table (compact rows)
+                        grid: Grid (2D table)
+                        cards: Cards (tile layout)
                     header.render.children.image:
                       type: toggle
                       label: Show image
@@ -130,6 +135,7 @@ form:
                         0: Disabled
                       validate:
                         type: bool
+                      classes: fancy
                     header.render.children.which_date:
                       type: select
                       label: Display date

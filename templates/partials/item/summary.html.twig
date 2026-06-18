@@ -1,3 +1,5 @@
+{% set useDecorators = structure.navigation.header['text-style']|default('braced') == 'braced' %}
+
 {% set show_image = parent.header.render.children.image ?? true %}
 {% set thumbnail_filename = page.header.thumbnail_image_file %}
 {% set thumbnail_image = page.media.images[thumbnail_filename] ??
@@ -21,10 +23,10 @@
                     page.media.images[page.header.header_image_file] ??
                     
                     page.media.images|first %}
-{% set use_image_crop = style.image_cropping|default(false) %}
-{% set image_width = use_image_crop ? (style.width == 'default' ? 1024 : style.width) / 7 : thumbnail_image.width %}
-{% set image_height = use_image_crop ? (style.width == 'default' ? 1024 : style.width) / 7 : thumbnail_image.height %}
-{% set header_image_url = use_image_crop ? thumbnail_image.cropZoom(image_width, image_height).url : thumbnail_image.url %}
+{% set use_image_crop = handling.images.resize|default(false) %}
+{% set image_width = use_image_crop ? (style.layout['content-width'] == 'default' ? 1024 : style.layout['content-width']) / 7 : thumbnail_image.width %}
+{% set image_height = use_image_crop ? (style.layout['content-width'] == 'default' ? 1024 : style.layout['content-width']) / 7 : thumbnail_image.height %}
+{% set thumbnail_image_url = use_image_crop ? thumbnail_image.cropZoom(image_width, image_height).url : thumbnail_image.url %}
 
 {% set show_subtitle = parent.header.render.children.subtitle ?? true %}
 {% set show_cat = parent.header.render.children.category ?? true %}
@@ -48,11 +50,7 @@
 {# ------------------------------------------------------------------------ #}
 
 <hr/>
-{% if html5 %}
-  <section class="snippet{% if page.taxonomy.category %}{% for cat in page.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}{% endif %}">
-{% else %}
-  <div class="snippet{% if page.taxonomy.category %}{% for cat in page.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}{% endif %}">
-{% endif %}
+<article class="snippet{% if page.taxonomy.category %}{% for cat in page.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}{% endif %}">
 
 {# Title & Subtitle #}
 <h3>
@@ -65,18 +63,14 @@
 {# Image #}
 {# Must be one line to avoid dangling, clickable space #}
 {% if show_image and thumbnail_image %}
-  <a href="{{ page.url }}"><img src="{{ header_image_url }}" width="{{ header_image_width }}" height="{{ header_image_height }}"></a>
+  <a href="{{ page.url }}"><img src="{{ thumbnail_image_url }}" width="{{ image_width }}" height="{{ image_height }}" loading="lazy" alt="{{ page.title|e('html_attr') }}"></a>
 {% endif %}
 
 {# Date #}
 {% if show_date %}
 {{ show_image and thumbnail_image ? '<br>' : '' }}
 <sub>
-  {% if html5 %}
     <time datetime="{{ date|date("c") }}">{{ date|date(system.pages.dateformat.short) }}</time>
-  {% else %}
-    <span class="datetime">{{ date|date(system.pages.dateformat.short) }}</span>
-  {% endif %}
 </sub>
 {% endif %}
 
@@ -85,7 +79,7 @@
 <br>
   {{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t }}: <small>
   {% for category in page.taxonomy.category %}
-    {{ structure.use_decorators ? '[' : '' }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ structure.use_decorators ? ']' : '' }}{{ not loop.last ? ',' : '' }}
+    {{ useDecorators ? '[' : '' }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ useDecorators ? ']' : '' }}{{ not loop.last ? ',' : '' }}
   {% endfor %}</small></p>
 {% else %}
 {% endif %}
@@ -113,4 +107,4 @@
 </p>
 {% endif %} {# End render nested children #}
 
-{{ html5 ? '</section>' : '</div>' }}
+</article>

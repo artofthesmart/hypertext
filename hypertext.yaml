@@ -8,8 +8,8 @@ structure:
     use-subheader: false
     subheader: ""
   footer:
-    style: text
-    content: "Made with GravCMS using the <a target=\"_blank\" href=\"https://hypertext.artofthesmart.com/\">Hypertext</a> theme."
+    style: none
+    content: ""
     modular-file: _site_footer.md
   navigation:
     header: 
@@ -73,6 +73,7 @@ collection:
   list-settings:
   comfy-settings:
   table-settings:
+  grid-settings:
   cards-settings:
   display:
     title: true

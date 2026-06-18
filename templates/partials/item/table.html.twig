@@ -10,12 +10,12 @@
 
 <table class="children" width="100%">
   {# Header #}
-  {{ html5 ? '<thead>' : ''}}<tr>
+  <thead><tr>
     {% if show_image %}<td>{{ 'THEME_HYPERTEXT.THUMBNAIL.THUMBNAIL'|t|raw }}</td>{% endif %}
     <td>Title</td>
     {% if show_date %}<td>{{ 'THEME_HYPERTEXT.DATES.PUBLISHED'|t|raw }}</td>{% endif %}
     {% if show_cat %}<td>{{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t|raw }}</td>{% endif %}
-  {{ html5 ? '</thead>' : ''}}</tr>
+  </thead></tr>
 
   {% for child in collection if child.isPage() %}
     {# Never show the image; it's hideous on mobile.
@@ -47,8 +47,8 @@
     {% if show_image %} {# Never true, left it in for someone to convince me otherwise. #}
     <td class="thumbnail">
     {% if header_image %}
-      {% if style.image_cropping|default(false) %}
-        <a href="{{ child.url }}">{{ header_image.cropZoom(((style.width == 'default' ? 1024 : style.width) / 24), (style.width == 'default' ? 1024 : style.width) / 24).html() }}</a>
+      {% if handling.images.resize|default(false) %}
+        <a href="{{ child.url }}">{{ header_image.cropZoom(((style.layout['content-width'] == 'default' ? 1024 : style.layout['content-width']) / 24), (style.layout['content-width'] == 'default' ? 1024 : style.layout['content-width']) / 24).html() }}</a>
       {% else %}
         <a href="{{ child.url }}">{{ header_image.html() }}</a>
       {% endif %}
@@ -68,11 +68,7 @@
     {# Date #}
     {% if show_date %}
     <td>
-      {% if html5 %}
         <time datetime="{{ date|date("c") }}">{{ date|date(system.pages.dateformat.short) }}</time>
-      {% else %}
-        <span class="datetime">{{ date|date(system.pages.dateformat.short) }}</span>
-      {% endif %}
     </td>
     {% endif %}
 
@@ -106,11 +102,7 @@
           {# Date #}
           {% if show_date %}
           <td>
-            {% if html5 %}
-              <time datetime="{{ inner_child.date|date("c") }}">{{ child.date|date(system.pages.dateformat.short) }}</time>
-            {% else %}
-              <span class="datetime">{{ inner_child.date|date(system.pages.dateformat.short) }}</span>
-            {% endif %}
+            <time datetime="{{ inner_child.date|date("c") }}">{{ inner_child.date|date(system.pages.dateformat.short) }}</time>
           </td>
           {% endif %}
 

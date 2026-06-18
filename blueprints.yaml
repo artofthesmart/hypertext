@@ -116,6 +116,17 @@ form:
                         children: Only on child pages
                         not-home: Everywhere but the home page
                         everywhere: Everywhere
+                    collection.mode:
+                      type: select
+                      classes: fancy
+                      label: Default collection display mode
+                      help: Determines how child pages are rendered when a page has a collection. Can be overridden per-page via page frontmatter or in the Admin view of the page.
+                      options:
+                        list: List
+                        comfy: Comfy (image + excerpt)
+                        table: Table (compact rows)
+                        grid: Grid (2D table)
+                        cards: Cards (tile layout)
         style: # STYLE TAB
           type: tab
           title: Style & Formatting
