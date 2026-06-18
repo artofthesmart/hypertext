@@ -1,3 +1,7 @@
+{% set textStyle = structure['text-style']|default('plain') %}
+{% set decLeft   = textStyle == 'braced' ? '[ ' : (textStyle == 'angled' ? '&lt; ' : '') %}
+{% set decRight  = textStyle == 'braced' ? ' ]' : (textStyle == 'angled' ? ' &gt;' : '') %}
+
 {% set show_image = page.header.show_header_image|default(false) %}
 {% set header_image_name = page.header.header_image_file|default('header.png') %}
 {% set header_image = page.media.images[header_image_name] ??
@@ -19,12 +23,12 @@
                       media['image://' ~ page.slug()~'_header.webp'] ??
 
                       page.media.images|first %}
-{% set use_image_crop = style.image_cropping|default(false) %}
-{% set image_width = use_image_crop ? (style.width == 'default' ? 1024 : style.width) - 10 : header_image.width %}
-{% set image_height = use_image_crop ? (style.width == 'default' ? 1024 : style.width) / 5 : header_image.height %}
+{% set use_image_crop = handling.images.resize|default(false) %}
+{% set image_width = use_image_crop ? (style.layout['content-width'] == 'default' ? 1024 : style.layout['content-width']) - 10 : header_image.width %}
+{% set image_height = use_image_crop ? (style.layout['content-width'] == 'default' ? 1024 : style.layout['content-width']) / 5 : header_image.height %}
 {% set header_image_url = use_image_crop ? header_image.cropZoom(image_width, image_height).url : header_image.url %}
 
-{% set show_date = structure.show_date|default(false) %}
+{% set show_date = structure['show-date']|default(false) %}
 
 {% switch page.parent.header.render.children.which_date|default('date') %}
 {% case 'modified' %}
@@ -54,7 +58,7 @@
 {# Image #}
 {% if show_image and header_image %}
   <a href="{{ page.url }}">
-    <img src="{{ header_image_url }}" width="{{ header_image_width }}" height="{{ header_image_height }}">
+    <img src="{{ header_image_url }}" width="{{ image_width }}" height="{{ image_height }}" loading="lazy" alt="{{ page.title|e('html_attr') }}">
   </a>
   <br>
 {% endif %}
@@ -67,12 +71,8 @@
      (show_date == 'children' and page.template() in ['default', 'blog_item', 'item', 'modular'] and not isHome) or
      page.header.show_date == 'enabled'
   %}
-    Date: <small>
-      {% if html5 %}
-          {{ structure.use_decorators ? '[' : '' }}<time datetime="{{ date|date("c") }}">{{ date|date(system.pages.dateformat.short) }}</time>{{ structure.use_decorators ? ']' : '' }}
-      {% else %}
-          {{ structure.use_decorators ? '[' : '' }}<span class="datetime">{{ date|date(system.pages.dateformat.short) }}</span>{{ structure.use_decorators ? ']' : '' }}
-      {% endif %}
+    {{ 'THEME_HYPERTEXT.DATES.DATE'|t }}: <small>
+        {{ decLeft|raw }}<time datetime="{{ date|date('c') }}">{{ date|date(system.pages.dateformat.short) }}</time>{{ decRight|raw }}
     </small><br />
   {% endif %}
 {% endif %}
@@ -81,15 +81,15 @@
 {% if page.taxonomy.category %}
   {{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t }}: <small>
   {% for category in page.taxonomy.category %}
-    {{ structure.use_decorators ? '[' : '' }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ structure.use_decorators ? ']' : '' }}{{ not loop.last ? ',' : '' }}
+    {{ decLeft|raw }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ decRight|raw }}{{ not loop.last ? ',' : '' }}
   {% endfor %}</small>
   {{ page.taxonomy.tag ? '<br>' : '' }}
 {% endif %}
 
 {% if page.taxonomy.tag %}
-  Tags: <small>
+  {{ 'THEME_HYPERTEXT.TAGS.TAGS'|t }}: <small>
   {% for tag in page.taxonomy.tag %}
-    {{ structure.use_decorators ? '[' : '' }}<a href="{{ page.parent.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ tag }}">{{ tag }}</a>{{ structure.use_decorators ? ']' : '' }}{{ not loop.last ? ',' : '' }}
+    {{ decLeft|raw }}<a href="{{ page.parent.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ tag }}">{{ tag }}</a>{{ decRight|raw }}{{ not loop.last ? ',' : '' }}
   {% endfor %}</small>
 {% endif %}
 

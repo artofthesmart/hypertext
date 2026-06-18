@@ -1,5 +1,7 @@
 name: Hypertext
-version: 2.4.2
+slug: hypertext
+type: theme
+version: 2.0.0
 description: "Hypertext is a zero JS/CSS theme to create simple, fast websites."
 icon: compress
 author:
@@ -8,9 +10,15 @@ author:
   url: http://artofthesmart.com
 homepage: https://github.com/artofthesmart/hypertext
 demo: http://hypertext.artofthesmart.com
-keywords: theme, simple, compliance, fast, semantic, 1995
+keywords: theme, simple, compliance, fast, semantic, html5, performance
 bugs: https://github.com/artofthesmart/hypertext/issues
 license: MIT
+
+dependencies:
+  - { name: grav, version: '>=2.0.0' }
+
+compatibility:
+  grav: ['2.0']
 
 form:
   validation: strict
@@ -34,7 +42,7 @@ form:
                       type: section
                       title: Navigation Structure
                       underline: true
-                    structure.add_site_name:
+                    structure.add-site-name:
                       type: toggle
                       label: Add site name to page titles
                       help: When enabled, page titles will end with a pipe seperator and the name of the website. When disabled, only your page's title will be used.
@@ -45,39 +53,31 @@ form:
                         0: Disabled
                       validate:
                         type: bool
-                    structure.inline_navbar:
-                      type: toggle
-                      label: Use inline menu bar
-                      help: When enabled, the navigation list at the top of the page will be inlined instead of <ul>. Enable if using no theme.
-                      default: 0
-                      highlight: 0
+                    structure.navigation.header.mode:
+                      type: select
+                      classes: fancy
+                      label: Navigation mode
+                      help: Determines how the menu bar is displayed. Inline renders links separated by decorators. Stacked renders as a bulleted list.
                       options:
-                        1: Enabled
-                        0: Disabled
-                      validate:
-                        type: bool
-                    structure.inline_pagination:
-                      type: toggle
-                      label: Use inline pagination
-                      help: When enabled, and you have installed the pagination plugin, pagination will be inlined instead of <ul>.
-                      default: 1
-                      highlight: 1
+                        inline: Inline
+                        stacked: Stacked (ul/li)
+                    structure.text-style:
+                      type: select
+                      classes: fancy
+                      label: Text decorator style
+                      help: Determines how inline links and metadata labels are decorated throughout the site — navigation, categories, tags, dates, etc.
                       options:
-                        1: Enabled
-                        0: Disabled
-                      validate:
-                        type: bool
-                    structure.use_decorators:
-                      type: toggle
-                      label: Use decorator text
-                      help: When enabled, spacers are added to inline navigation and brackets around category links. Just decorators.
-                      default: 1
-                      highlight: 1
+                        braced: "Braced [ Home ] [ About ]"
+                        angled: "Angled < Home > < About >"
+                        plain: "Plain: Home | About"
+                    structure.navigation.pagination.style:
+                      type: select
+                      classes: fancy
+                      label: Pagination style
+                      help: When you have the pagination plugin installed, determines how pagination is displayed.
                       options:
-                        1: Enabled
-                        0: Disabled
-                      validate:
-                        type: bool
+                        inline: Inline
+                        stacked: Stacked (ul/li)
                 column2: # RENDER STRUCTURE
                   type: column
                   fields:
@@ -85,15 +85,7 @@ form:
                       type: section
                       title: HTML Structure & Options
                       underline: true
-                    structure.html_mode:
-                      type: select
-                      classes: fancy
-                      label: HTML Mode
-                      help: HTML5 includes semantic markup like `article` tags to make built-in stylesheets work, while HTML3 is for extreme speed with little-to-no style.
-                      options:
-                        default: HTML 5 (Recommended)
-                        compatibility: HTML 3.2 (Minimal style)
-                    structure.use_favicon:
+                    structure.use-favicon:
                       type: toggle
                       label: Use favicon
                       help: When enabled, the site will use the favicon at `user/images/favicon/favicon.png`. See Hypertext homepage for details. 
@@ -114,7 +106,7 @@ form:
                       autofocus: false
                       accept:
                         - image/png
-                    structure.show_date:
+                    structure.show-date:
                       type: select
                       classes: fancy
                       label: Show last updated dates
@@ -143,30 +135,62 @@ form:
                       label: Description
                       markdown: true
                       content: These fields offer settings for whether to allow CSS or JS files. Some plugins include these kinds of files, so this is a great way to suppress them.  Remember that these are *global* settings, which you can override on a per-page basis.  For example, you could install the [syntax highlighting](https://github.com/getgrav/grav-plugin-highlight) plugin, disable CSS/JS here, and then enable it only on pages where you know you are showing code.
-                    style.allowCSS:
+                    style.css.enable:
                       type: toggle
                       classes: fancy
                       label: Allow Global CSS
                       help: Determines what CSS is allowed to load. This can be overridden by an individual page.
-                      default: 1
+                      default: 0
                       highlight: 0
                       options:
                         1: Enabled
                         0: Disabled
                       validate:
                         type: bool
-                    style.allowJS:  
+                    style.js.enable:  
                       type: toggle
                       classes: fancy
                       label: Allow Global JS
                       help: Determines what JS is allowed to load. This can be overridden by an individual page.
-                      default: 1
+                      default: 0
                       highlight: 0
                       options:
                         1: Enabled
                         0: Disabled
                       validate:
-                        type: bool                    
+                        type: bool
+                    handlingTitle:
+                      type: section
+                      title: Asset Handling
+                      underline: true
+                    handling.css.serving:
+                      type: select
+                      classes: fancy
+                      label: CSS Include Method
+                      help: "Determines whether to prioritize single page loads (inline <style>, good for Hypertext or single-serving sites) or multiple page loads (<link>, good for CSS styles or multi-paged sites)."
+                      options:
+                        inline: Inline (Faster single page loads)
+                        linked: Link (Good for enabling JS/CSS)
+                    handling.js.serving:
+                      type: select
+                      classes: fancy
+                      label: JS Include Method
+                      help: "Determines how JavaScript is served. Inline embeds scripts in the page, linked uses separate requests."
+                      options:
+                        inline: Inline
+                        linked: Linked
+                    handling.minify-output:
+                      type: toggle
+                      classes: fancy
+                      label: Minify HTML Output
+                      help: When enabled, the final HTML output will be minified (whitespace/comments removed) for smaller payloads. Inline CSS is always auto-minified.
+                      default: 1
+                      highlight: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
                 column2: # SELECT A STYLE COLUMN
                   type: column
                   fields:
@@ -179,7 +203,7 @@ form:
                       label: Description
                       markdown: true
                       content: Themes here are open-source CSS files available on GitHub and are not my own work. Consider visiting their homepages, contributing, and supporting the authors.  Remember that you can test these styles quickly by adding the name or number to a theme URL parameter, e.g. `YourSite.com/?theme=water` or `YourSite.com/?theme=4`.
-                    style.stylesheet:
+                    style.css.stylesheet:
                       type: select
                       classes: fancy
                       label: Select a Theme
@@ -213,16 +237,7 @@ form:
                         writ:               "#24 writ (2KB)"
                         yorha:              "#25 yorha (8KB)"
 
-
-                    style.include_type:
-                      type: select
-                      classes: fancy
-                      label: Include Method
-                      help: Determines whether to prioritize single page loads (inline <style>, good for Hypertext or single-serving sites) or multiple page loads (<link>, good for CSS styles or multi-paged sites).
-                      options:
-                        default: Link (Good for enabling JS/CSS)
-                        inline: Inline (Faster single page loads)
-                    style.customCSS:
+                    style.css.custom-value:
                       type: textarea
                       label: Custom CSS
                       help: Add your custom CSS rules here.
@@ -230,18 +245,18 @@ form:
                       size: large
                     configurationTitle:
                       type: section
-                      title: Other Configurations
+                      title: Layout Configuration
                       underline: true
-                    style.configuration:
+                    style.layout.alignment:
                       type: select
                       size: medium
                       classes: fancy
                       label: General site layout
                       help: Configures the general layout of the website horizontally.
                       options:
-                        default: No style (align left)
+                        left: No style (align left)
                         centered: Centered
-                    style.width:
+                    style.layout.content-width:
                       type: select
                       size: medium
                       classes: fancy
@@ -254,19 +269,19 @@ form:
                         960: 960px (medium)
                         1024: 1024px (large)
                         1280: 1280px (very large)
-                    style.image_cropping:
+                    handling.images.resize:
                       type: toggle
                       size: medium
                       label: Auto-resize header images
                       help: When enabled, this will cropzoom header images of pages to a default size. When *disabled* header images will render with whatever size you upload them at.
-                      default: 0
+                      default: 1
                       highlight: 0
                       options:
                         1: 'Enabled'
                         0: 'Disabled'
                       validate:
                         type: bool
-                    style.visually_impared_mode:
+                    style.visually-impaired:
                       type: toggle
                       size: medium
                       label: Hyperlegible text/lists
@@ -298,19 +313,19 @@ form:
                       label: Description
                       markdown: true
                       content: "This section lets you change elements near the top of your website like header images and more."
-                    partials.header.show_subtitle:
+                    structure.header.use-subheader:
                       type: toggle
                       classes: fancy
                       label: Show Site Subtitle
                       help: When enabled, if you have one, your site's Configuration => Site => Metadata => Description will appear under the site title. When disabled, it's not rendered.
-                      default: 1
+                      default: 0
                       highlight: 1
                       options:
                         1: Enabled
                         0: Disabled
                       validate:
                         type: bool
-                    partials.header.custom_header_image:
+                    structure.header.subheader:
                       type: textarea
                       label: Title/Header HTML
                       help: This is raw HTML that will be included in the header instead of the Site Title. Write your own custom site title, use an image, or ads.
@@ -326,17 +341,17 @@ form:
                       label: Description
                       markdown: true
                       content: "This section lets you change elements near the bottom of your website like custom disclaimers or content."
-                    partials.footer.custom_footer_type:
+                    structure.footer.style:
                       type: select
                       classes: fancy
                       label: Footer Type
                       help: The footer can be either markdown or HTML, whichever you need.
                       size: large
-                      default: markdown
+                      default: text
                       options:
-                        markdown: Markdown
+                        text: Text / Markdown
                         html: HTML  
-                    partials.footer.custom_footer:
+                    structure.footer.content:
                       type: textarea
                       label: Footer Content
                       size: large
@@ -354,8 +369,8 @@ form:
                       label: Description
                       markdown: true
                       content: "This section lets you add custom links to the end of your website's navigation."
-                    menu.menuItems:
-                      name: menuItems
+                    structure.navigation.header.custom-items:
+                      name: custom-items
                       type: list
                       style: vertical
                       size: long
@@ -393,7 +408,7 @@ form:
                         .fieldset:
                           type: fieldset
                           title: Other Parameters
-                          help: Advanced settings for your new link.  This tries to stick to the HTML 3 spec.
+                          help: Advanced settings for your new link.
                           text: Advanced or optional features for this link.
                           icon: cogs
                           collapsed: true     # Initial state of fieldset (see collapsible option)

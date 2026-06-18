@@ -14,13 +14,16 @@ structure:
   navigation:
     header: 
       mode: inline
-      text-style: braced
       alignment: left
       show-socials: false
       custom-items: []
     pagination:
       style: inline
       text-style: plain
+  text-style: braced
+  add-site-name: true
+  use-favicon: false
+  show-date: default
 handling:
   images:
     serving: linked
@@ -31,12 +34,11 @@ handling:
     serving: inline
   js:
     serving: inline
+  minify-output: true
 style:
   layout:
     type: 1-column
     alignment: left
-    left-width: 320
-    right-width: 320
     content-width: 960
   css:
     enable: false
@@ -45,6 +47,7 @@ style:
   js:
     enable: false
     custom-value: ""
+  visually-impaired: false
 page:
   header:
     style: text

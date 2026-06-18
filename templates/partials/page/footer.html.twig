@@ -1,10 +1,10 @@
 <hr/>
 {# Write the custom footer, if available. #}
-{% if partials.footer.custom_footer|default('') != '' %}
-    {% if partials.footer.custom_footer_type|default('markdown') == 'markdown' %}
-        {{ partials.footer.custom_footer|markdown }}
+{% if structure.footer.content|default('') != '' %}
+    {% if structure.footer.style|default('text') == 'text' %}
+        {{ structure.footer.content|markdown }}
     {% else %}
-        {{ partials.footer.custom_footer|raw }}
+        {{ structure.footer.content|raw }}
     {% endif %}
 {% endif %}
 

@@ -1,8 +1,8 @@
 {% set nav = structure.navigation.header %}
 {% set navItems = nav['custom-items']|default([]) %}
 {% set isInline = nav.mode|default('inline') == 'inline' %}
-{% set navStyle = nav['text-style']|default('plain') %}
-{% set decLeft = navStyle == 'braced' ? '[ ' : (navStyle == 'angled' ? '&lt; ' : '') %}
+{% set navStyle = structure['text-style']|default('plain') %}
+{% set decLeft  = navStyle == 'braced' ? '[ ' : (navStyle == 'angled' ? '&lt; ' : '') %}
 {% set decRight = navStyle == 'braced' ? ' ]' : (navStyle == 'angled' ? ' &gt;' : '') %}
 
 {% set hasNav = pages.children.visible|length >= 1 or
