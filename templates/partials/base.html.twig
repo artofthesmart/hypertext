@@ -1,8 +1,6 @@
 {% set structure = config.themes.hypertext.structure %}
+{% set handling = config.themes.hypertext.handling %}
 {% set style = config.themes.hypertext.style %}
-{% set menu = config.themes.hypertext.menu %}
-{% set partials = config.themes.hypertext.partials %}
-{% set html5 = structure.html_mode|default('default') == 'default' %}
 
 {# ------------------------------------------------------------------------ #}
 
@@ -34,16 +32,16 @@
     <meta {% if meta.name %}name="{{ meta.name }}" {% endif %}{% if meta.http_equiv %}http-equiv="{{ meta.http_equiv }}" {% endif %}{% if meta.charset %}charset="{{ meta.charset }}" {% endif %}{% if meta.property %}property="{{ meta.property }}" {% endif %}{% if meta.content %}content="{{ meta.content }}" {% endif %}/>
   {% endfor %}
 
-  {% if structure.add_site_name %}
+  {% if structure['add-site-name'] %}
     <title>{% if header.title %}{{ header.title|e('html') }} | {% endif %}{{ site.title|e('html') }}</title>
   {% else %}
     {% if header.title %}<title>{{ header.title|e('html') }}</title>{% endif %}
   {% endif %}
   
 
-  {% if structure.use_favicon %}
-  <link rel="icon" type="image/png" href="{{ url('image://favicon/favicon.png') }}" />
-  {% endif %}
+  {# Prefer a user-uploaded favicon, fall back to the theme default #}
+  {% set favicon_url = url('user://images/favicon.png', false, true) ?: url('theme://images/favicon.png') %}
+  <link rel="icon" type="image/png" href="{{ favicon_url }}" />
 
   {% include 'partials/page/js-css.html.twig' %}
 {% endblock head %}
@@ -52,15 +50,14 @@
 
 <body class="{{ page.template }}{{ page.header.bodyClasses ? ' {{ page.header.bodyClasses }}' : ''}}">
   {# ## HEADER ## #}
-  {{ html5 ? '<header>' : '<div class="header">' }}
+  <header>
   {% block header %}
     {% include 'partials/page/header.html.twig' %}
   {% endblock %}
-  {{ html5 ? '</header>' : '</div>' }}
+  </header>
   
   {# ## BODY ## #}
-  {{ html5 ? '<main>' : '<div class="main">' }}
-    {{ html5 ? '<article>' : '<div class="item">'}}
+  <main>
 
     {# ARTICLE HEAD #}
     {% block item_head %}
@@ -69,12 +66,14 @@
 
     {# ARTICLE BODY #}
     {% block content %}
-    {{ page.content|raw }}
+    <article>
+      {{ page.content|raw }}
+    </article>
     {% endblock %}
 
     {# CHILD PAGES #}
     {% block children %}
-    {% include 'partials/item/children.html.twig' %}
+    {% include 'partials/collection/children.html.twig' %}
     {% endblock %}
 
     {# ARTICLE FOOTER #}
@@ -82,15 +81,14 @@
     {% include 'partials/item/footer.html.twig' %}
     {% endblock %}
 
-    {{ html5 ? '</article>' : '</div>'}}
-  {{ html5 ? '</main>' : '</div>' }}
+  </main>
 
   {# ## FOOTER ## #}
-  {{ html5 ? '<footer>' : '<div class="footer">' }}
+  <footer>
   {% block footer %}
     {% include 'partials/page/footer.html.twig' %}
   {% endblock %}
-  {{ html5 ? '</footer>' : '</div>' }}
+  </footer>
 
 </body>
 {% endif %}
