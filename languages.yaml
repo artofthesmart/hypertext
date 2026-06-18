@@ -8,7 +8,10 @@ en:
     CATEGORIES:
       CATEGORIES: Categories
     DATES:
+      DATE: Date
       PUBLISHED: Published
+    TAGS:
+      TAGS: Tags
     THUMBNAIL:
       THUMBNAIL: Thumbnail
     FOOTER:
@@ -24,7 +27,10 @@ fr:
     CATEGORIES:
       CATEGORIES: Catégories
     DATES:
+      DATE: Date
       PUBLISHED: Publié
+    TAGS:
+      TAGS: Balises
     THUMBNAIL:
       THUMBNAIL: Miniature
     FOOTER:
@@ -40,8 +46,87 @@ vi:
     CATEGORIES:
       CATEGORIES: Danh mục
     DATES:
+      DATE: Ngày
       PUBLISHED: Đã xuất bản
+    TAGS:
+      TAGS: Thẻ
     THUMBNAIL:
       THUMBNAIL: Hình thu nhỏ
     FOOTER:
       BY_LINE: Chạy <a href="http://getgrav.org">Grav CMS</a> bằng chủ đề <a href="http://hypertext.artofthesmart.com">Siêu văn-bản</a>.
+
+zh:
+  THEME_HYPERTEXT:
+    PAGINATION:
+      PREVIOUS_PAGE: 上一页
+      NEXT_PAGE: 下一页
+      CONTINUE_READING: 继续阅读
+      SUB_PAGES: 子页面
+    CATEGORIES:
+      CATEGORIES: 分类
+    DATES:
+      DATE: 日期
+      PUBLISHED: 发布于
+    TAGS:
+      TAGS: 标签
+    THUMBNAIL:
+      THUMBNAIL: 缩略图
+    FOOTER:
+      BY_LINE: 使用 <a href="http://getgrav.org">Grav CMS</a> 和 <a href="http://hypertext.artofthesmart.com">Hypertext 主题</a> 构建。
+
+es:
+  THEME_HYPERTEXT:
+    PAGINATION:
+      PREVIOUS_PAGE: Anterior
+      NEXT_PAGE: Siguiente
+      CONTINUE_READING: Seguir leyendo
+      SUB_PAGES: Subpáginas
+    CATEGORIES:
+      CATEGORIES: Categorías
+    DATES:
+      DATE: Fecha
+      PUBLISHED: Publicado
+    TAGS:
+      TAGS: Etiquetas
+    THUMBNAIL:
+      THUMBNAIL: Miniatura
+    FOOTER:
+      BY_LINE: Funciona con <a href="http://getgrav.org">Grav CMS</a> usando el tema <a href="http://hypertext.artofthesmart.com">Hypertext</a>.
+
+ar:
+  THEME_HYPERTEXT:
+    PAGINATION:
+      PREVIOUS_PAGE: السابق
+      NEXT_PAGE: التالي
+      CONTINUE_READING: تابع القراءة
+      SUB_PAGES: الصفحات الفرعية
+    CATEGORIES:
+      CATEGORIES: الفئات
+    DATES:
+      DATE: التاريخ
+      PUBLISHED: نُشر في
+    TAGS:
+      TAGS: الوسوم
+    THUMBNAIL:
+      THUMBNAIL: صورة مصغرة
+    FOOTER:
+      BY_LINE: يعمل بـ <a href="http://getgrav.org">Grav CMS</a> باستخدام ثيم <a href="http://hypertext.artofthesmart.com">Hypertext</a>.
+
+pt-BR:
+  THEME_HYPERTEXT:
+    PAGINATION:
+      PREVIOUS_PAGE: Anterior
+      NEXT_PAGE: Próximo
+      CONTINUE_READING: Continuar lendo
+      SUB_PAGES: Subpáginas
+    CATEGORIES:
+      CATEGORIES: Categorias
+    DATES:
+      DATE: Data
+      PUBLISHED: Publicado em
+    TAGS:
+      TAGS: Tags
+    THUMBNAIL:
+      THUMBNAIL: Miniatura
+    FOOTER:
+      BY_LINE: Usando o <a href="http://getgrav.org">Grav CMS</a> com o tema <a href="http://hypertext.artofthesmart.com">Hypertext</a>.
