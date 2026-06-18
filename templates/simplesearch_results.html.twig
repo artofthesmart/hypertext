@@ -1,0 +1,22 @@
+{% extends 'partials/base.html.twig' %}
+
+{% block content %}
+<section id="search-results">
+  {% if query %}
+    {% set count = search_results ? search_results.count : 0 %}
+    <p id="search-results-summary" role="status" aria-live="polite">
+      {% if count == 1 %}
+        {{ 'PLUGIN_SIMPLESEARCH.SEARCH_RESULTS_SUMMARY_SINGULAR'|t(query|e)|raw }}
+      {% else %}
+        {{ 'PLUGIN_SIMPLESEARCH.SEARCH_RESULTS_SUMMARY_PLURAL'|t(query|e, count)|raw }}
+      {% endif %}
+    </p>
+  {% endif %}
+
+  {% if search_results %}
+    {% include 'partials/item/collection-render.html.twig' with {'collection': search_results, 'parent': page} %}
+  {% else %}
+    <p><em>{{ 'PLUGIN_SIMPLESEARCH.SEARCH_NO_RESULTS'|t|default('No results found.') }}</em></p>
+  {% endif %}
+</section>
+{% endblock %}

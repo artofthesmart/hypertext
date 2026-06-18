@@ -1,10 +1,10 @@
-{% if partials.header.custom_header_image != '' %}
-  {{ partials.header.custom_header_image|raw  }}
+{% if structure.header.subheader != '' %}
+  {{ structure.header.subheader|raw  }}
 {% else %}
   <h1><a href="{{ home_url }}">{{ site.title|e('html') }}</a></h1>
 {% endif %}
 
-{% if site.metadata.description and partials.header.show_subtitle %}
+{% if site.metadata.description and structure.header['use-subheader'] %}
 <p class="subtitle">{{ site.metadata.description }}</p>
 {% endif %}
 
