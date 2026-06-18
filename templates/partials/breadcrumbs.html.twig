@@ -1,8 +1,44 @@
 {% set crumbs = breadcrumbs.get() %}
 {% if crumbs|length > 1 %}
-<span id="breadcrumbs">
+<nav id="breadcrumbs" aria-label="{{ 'THEME_HYPERTEXT.BREADCRUMBS'|t|default('Breadcrumb') }}">
+  <ol>
     {% for crumb in crumbs %}
-    <a href="{{ crumb.url }}">{{ crumb.menu }}</a>{% if not loop.last %} &raquo; {% endif %}
+      <li>
+        {% if not loop.last %}
+          <a href="{{ crumb.url }}">{{ crumb.menu }}</a>
+        {% else %}
+          <strong aria-current="page">{{ crumb.menu }}</strong>
+        {% endif %}
+      </li>
     {% endfor %}
-</span>
+  </ol>
+</nav>
 {% endif %}
+
+<!--
+#breadcrumbs ol {
+  /* Reset default list styles */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  
+  /* Layout horizontally, wrapping if necessary */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem; /* Space between words and separators */
+}
+#breadcrumbs li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+/* Add the ">" separator after every item EXCEPT the last one */
+#breadcrumbs li:not(:last-child)::after {
+  content: '>';
+  /* Optional: slightly fade the separator so it doesn't distract from link text */
+  opacity: 0.5; 
+  /* Optional: prevents the separator from being highlighted when users select text */
+  user-select: none;
+}
+-->

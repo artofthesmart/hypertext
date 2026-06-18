@@ -1,0 +1,18 @@
+<form id="site-search" name="search" data-simplesearch-form
+  action="{{ base_url }}{{ config.plugins.simplesearch.route == '@self' ? '' : (config.plugins.simplesearch.route == '/' ? '' : config.plugins.simplesearch.route) }}"
+  method="get">
+  <label for="searchfield">{{ 'PLUGIN_SIMPLESEARCH.SEARCH_PLACEHOLDER'|t|default('Search') }}</label>
+  <input
+    id="searchfield"
+    name="searchfield"
+    type="search"
+    {% if config.get('plugins.simplesearch.min_query_length', 3) > 0 %}
+      minlength="{{ config.get('plugins.simplesearch.min_query_length', 3) }}"
+    {% endif %}
+    required
+    value="{{ query|e }}"
+    data-search-separator="{{ config.system.param_sep }}"
+    data-search-input="{{ base_url }}{{ config.plugins.simplesearch.route == '@self' ? '' : (config.plugins.simplesearch.route == '/' ? '' : config.plugins.simplesearch.route) }}/query"
+  />
+  <button type="submit">{{ 'THEME_HYPERTEXT.SEARCH'|t|default('Search') }}</button>
+</form>

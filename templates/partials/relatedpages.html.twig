@@ -1,0 +1,13 @@
+{% if related_pages|length > 0 %}
+<section id="related-pages">
+  <h4>{{ 'PLUGIN_RELATEDPAGES.RELATED_PAGES'|t|default('Related Pages') }}</h4>
+  <ul>
+    {% for related_path, score in related_pages %}
+      {% set related = grav['pages'].get(related_path) %}
+      {% if related %}
+        <li><a href="{{ related.url }}">{{ related.title }}</a></li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}

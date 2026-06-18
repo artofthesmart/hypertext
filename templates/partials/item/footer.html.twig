@@ -1,6 +1,10 @@
 {# If this isn't a top-level page, it has siblings under a `collection` page type. #}
 {# Add the date, unless suppressed.  TODO: Build in suppression option.  #}
 
+{% if config.plugins.relatedpages.enabled ?? false %}
+  {% include 'partials/relatedpages.html.twig' %}
+{% endif %}
+
 <p>
 {# Render the next/prev buttons, unless suppressed. #}
 {% if not page.parent.root() and page.parent.header.content.sibling_links|default(false) %}
