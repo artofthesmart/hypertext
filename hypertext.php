@@ -28,20 +28,34 @@ class Hypertext extends Theme
     }
 
     /**
+     * Registers the theme classes directory dynamically with Composer's autoloader.
+     * Uses Grav's locator to resolve the 'theme://classes' stream to support child theme inheritance.
+     */
+    public function autoload(): \Composer\Autoload\ClassLoader
+    {
+        $locator = $this->grav['locator'];
+        $classesDir = $locator->findResource('theme://classes', true);
+
+        /** @var \Composer\Autoload\ClassLoader $loader */
+        $loader = $this->grav['loader'];
+        
+        // Maps the namespace prefix to the resolved theme classes directory.
+        // Fallback to local classes directory if theme://classes locator path is not resolved.
+        $loader->addPsr4('Grav\\Theme\\Hypertext\\', $classesDir ?: __DIR__ . '/classes');
+
+        return $loader;
+    }
+
+    /**
      * Minify final HTML output when enabled in theme config.
      *
      * Strips HTML comments (preserving IE conditionals), collapses whitespace,
      * and minifies any inline <style> blocks by removing CSS comments and
-     * collapsing whitespace within them.
+     * collapsing whitespace within them. Also compresses images as needed.
      */
     public function onOutputGenerated(Event $event): void
     {
         $config = $this->config();
-        $shouldMinify = (bool) ($config['handling']['minify-output'] ?? true);
-
-        if (!$shouldMinify) {
-            return;
-        }
 
         // Only process HTML output formats
         $format = $this->grav['page']?->templateFormat() ?? 'html';
@@ -54,70 +68,16 @@ class Hypertext extends Theme
             return;
         }
 
-        // Minify inline <style> blocks first (preserve the tags, compress the CSS)
-        $output = (string) preg_replace_callback(
-            '/<style\b[^>]*>(.*?)<\/style>/si',
-            static function (array $matches): string {
-                $tag = $matches[0];
-                $css = $matches[1];
-                $minifiedCss = self::minifyCss($css);
-                return str_replace($matches[1], $minifiedCss, $tag);
-            },
-            $output
-        );
+        // 1. Process images (handles both compression and ensuring width/height parameters are set)
+        $compressMode = $config['handling']['images']['compress'] ?? 'none';
+        $output = \Grav\Theme\Hypertext\ImageCompressor::process($output, $compressMode);
 
-        // Minify inline <script> blocks (preserve the tags, compress the JS)
-        $output = (string) preg_replace_callback(
-            '/<script\b[^>]*>(.*?)<\/script>/si',
-            static function (array $matches): string {
-                $js = trim($matches[1]);
-                if ($js === '') {
-                    return $matches[0];
-                }
-                // Light JS minification: strip single-line comments, collapse whitespace
-                $minifiedJs = (string) preg_replace('/\/\/.*$/m', '', $js);
-                $minifiedJs = (string) preg_replace('/\s+/', ' ', $minifiedJs);
-                return str_replace($matches[1], $minifiedJs, $matches[0]);
-            },
-            $output
-        );
+        // 2. Minify HTML and inline assets
+        $shouldMinify = (bool) ($config['handling']['minify-output'] ?? true);
+        if ($shouldMinify) {
+            $output = \Grav\Theme\Hypertext\HtmlMinifier::process($output);
+        }
 
-        // Strip HTML comments (but preserve IE conditional comments)
-        $output = (string) preg_replace('/<!--(?!\[if\s).*?-->/s', '', $output);
-
-        // Collapse runs of whitespace (newlines, tabs, spaces) to a single space
-        $output = (string) preg_replace('/\s{2,}/', ' ', $output);
-
-        // Remove spaces between tags
-        $output = (string) preg_replace('/>\s+</', '> <', $output);
-
-        $this->grav->output = trim($output);
-    }
-
-    /**
-     * Minify a CSS string.
-     *
-     * Strips comments, collapses whitespace, and removes unnecessary
-     * semicolons/spaces around CSS syntax characters.
-     */
-    private static function minifyCss(string $css): string
-    {
-        // Remove CSS comments
-        $css = (string) preg_replace('/\/\*.*?\*\//s', '', $css);
-
-        // Collapse whitespace
-        $css = (string) preg_replace('/\s+/', ' ', $css);
-
-        // Remove spaces around structural characters
-        $css = str_replace(
-            [' { ', ' } ', '{ ', ' {', '} ', ' }', '; ', ' ;', ': ', ' :', ', ', ' ,'],
-            ['{',   '}',   '{',  '{',  '}',  '}',  ';',  ';',  ':',  ':',  ',',  ','],
-            $css
-        );
-
-        // Remove trailing semicolons before closing braces
-        $css = str_replace(';}', '}', $css);
-
-        return trim($css);
+        $this->grav->output = $output;
     }
 }

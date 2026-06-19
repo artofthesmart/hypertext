@@ -292,6 +292,17 @@ form:
                         0: 'Disabled'
                       validate:
                         type: bool
+                    handling.images.compress:
+                      type: select
+                      size: medium
+                      label: Image Compression
+                      help: Determines whether or not to compress and re-encode images. This reduces image filesize to speed up delivery.
+                      default: none
+                      options:
+                        none: None
+                        medium: Medium (80% WebP)
+                        high: High (60% WebP)
+                        extreme: Extreme (50% WebP, smaller dimensions)
                     style.visually-impaired:
                       type: toggle
                       size: medium
