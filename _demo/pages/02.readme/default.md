@@ -137,15 +137,12 @@ In a perfect world we would support all of the GravCMS default plugins offered b
 - `Linked` - Default. Images are linked in the site as normal. Results in smaller page sizes but slower overall load times with more network requests. Use for sites that have lots of images or heavy image reuse.
 - `Embedded` - Images are Base64 encoded and embedded into HTML responses. This reduces network requests at the expense of sending a single, larger file at once. Use for sites with few images.
 
-**Resize Images To Fit** - Boolean. Determines whether or not to resize images to fit the site.
-- `TRUE` - Default. Images are resized to Hypertext optimal sizes. For example, a Header image would be crop-resized to 768px wide and 128px high, while a page thumbnail image would be resized to 128px wide and 128px high to fit cards.
-- `FALSE` - Images are rendered at the size you uploaded.
-
-**Image Compression** - Dropdown. Determines whether or not to compress and re-encode images. This reduces image filesize to speed up delivery.
-- `None` - Default. Images are not changed when uploaded.
-- `Medium` - Images are compressed at 80% quality and converted to WebP.
-- `High` - Images are compressed at 60% quality and converted to WebP.
-- `Extreme` - Images are aggressively compressed at 50% quality and converted to WebP, sized smaller than they'll appear on most screens.
+**Image Compression & Handling** - Dropdown. Determines how images are optimized, resized, and encoded. This reduces image file sizes to speed up delivery and prevents layout shifts.
+- `Minimal` - Default. Resizes all images to fit the site's configured maximum layout width (keeping aspect ratio), converts them to WebP format, and serves them at 100% quality. Also automatically crop-zooms header and thumbnail images.
+- `None` - Images are served in their original format, quality, and physical dimensions. No server-side resizing or format conversion is done, but correct `width` and `height` parameters are still added to the HTML tag to prevent page layout shift.
+- `Medium` - Resizes images to fit layout width limits, converts them to WebP at 80% quality, and automatically crop-zooms header and thumbnail images.
+- `High` - Resizes images to fit layout width limits, converts them to WebP at 60% quality, and automatically crop-zooms header and thumbnail images.
+- `Extreme` - Aggressively compresses images at 50% quality as WebP, under-rescales physical dimensions by 10% (0.9 scale) below display width, and automatically crop-zooms header and thumbnail images. The browser naturally stretches the under-rescaled image to fit the display layout, saving significant bandwidth.
 
 **Allow URL Params** - Dropdown. Determines whether or not to allow URL parameters to override theme and page settings.
 - `Admin Only` - Default. URL parameters are only allowed for a signed-in user.

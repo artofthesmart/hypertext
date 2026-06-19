@@ -1,0 +1,42 @@
+{#
+  partials/item/date.html.twig
+  ────────────────────────────
+  Renders the page date with the correct type (modified, published, date, etc.)
+  resolved through the theme, parent collection, and page override hierarchy.
+#}
+{% set page_show_date = page.header.show_date|default('default') %}
+{% if page_show_date == 'enabled' or page_show_date == true %}
+  {% set show_date_resolved = true %}
+{% elseif page_show_date == 'disabled' or page_show_date == false %}
+  {% set show_date_resolved = false %}
+{% else %}
+  {# Fall back to collection/parent setting or theme setting #}
+  {% set theme_show_date = config.themes.hypertext.structure['show-date']|default('default') %}
+  {% set isHome = page.home() %}
+  {% set theme_says_show = (theme_show_date == 'everywhere' or theme_show_date == 1) or 
+                           (theme_show_date == 'not-home' and not isHome) or
+                           (theme_show_date == 'children' and page.template() in ['default', 'blog_item', 'item', 'modular'] and not isHome) %}
+  
+  {% set show_date_resolved = show_date ?? parent.header.render.children.date ?? theme_says_show ?? false %}
+{% endif %}
+
+{% if show_date_resolved %}
+  {% set date_type = page.header.which_date ?? 
+                     parent.header.render.children.which_date ?? 
+                     config.themes.hypertext.structure['which-date'] ?? 
+                     'date' %}
+  {% switch date_type %}
+    {% case 'modified' %}   {% set dt = page.modified %}
+    {% case 'published' %}  {% set dt = page.publishDate %}
+    {% case 'unpublished' %}{% set dt = page.unpublishDate %}
+    {% default %}           {% set dt = page.date %}
+  {% endswitch %}
+  {% if show_label %}
+    {% if date_type == 'modified' %}
+      Last Updated: 
+    {% else %}
+      {{ 'THEME_HYPERTEXT.DATES.PUBLISHED'|t|raw }}: 
+    {% endif %}
+  {% endif %}
+  <time datetime="{{ dt|date('c') }}">{{ dt|date(system.pages.dateformat.short) }}</time>
+{% endif %}

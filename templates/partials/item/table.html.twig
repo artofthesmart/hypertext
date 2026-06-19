@@ -1,20 +1,25 @@
-{% set show_subtitle = parent.header.render.children.subtitle ?? true %}
-{% set show_cat = parent.header.render.children.category ?? true %}
-{% set show_children = parent.header.render.children.nested_children ?? true %}
+{#
+  partials/item/table.html.twig
+  ─────────────────────────────
+  Renders table item view.
+  
+  Note: Global decorator variables `dec_left` and `dec_right` used here
+  are dynamically registered in the theme class via `onTwigSiteVariables()`
+  in `hypertext.php`.
+#}
+{% import 'partials/item/config.html.twig' as item_config %}
+{% set cfg = item_config.resolve(parent, parent)|json_decode %}
 {% set inner_children = page.collection()|length > 0 ? page.collection() : page.children.visible %}
-
-{% set show_date = parent.header.render.children.date ?? false %}
-{# Looking for the switch statement? Look down. #}
 
 {# ------------------------------------------------------------------------ #}
 
 <table class="children" width="100%">
   {# Header #}
   <thead><tr>
-    {% if show_image %}<td>{{ 'THEME_HYPERTEXT.THUMBNAIL.THUMBNAIL'|t|raw }}</td>{% endif %}
+    {% if cfg.show_image %}<td>{{ 'THEME_HYPERTEXT.THUMBNAIL.THUMBNAIL'|t|raw }}</td>{% endif %}
     <td>Title</td>
-    {% if show_date %}<td>{{ 'THEME_HYPERTEXT.DATES.PUBLISHED'|t|raw }}</td>{% endif %}
-    {% if show_cat %}<td>{{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t|raw }}</td>{% endif %}
+    {% if cfg.show_date %}<td>{{ 'THEME_HYPERTEXT.DATES.PUBLISHED'|t|raw }}</td>{% endif %}
+    {% if cfg.show_cat %}<td>{{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t|raw }}</td>{% endif %}
   </thead></tr>
 
   {% for child in collection if child.isPage() %}
@@ -28,26 +33,15 @@
      # {% set header_image = child.media.images[child.header.header_image_file] ?? child.media.images|first %} #}
     {% set inner_children = child.collection()|length > 0 ? child.collection() : child.children.visible %}
 
-    {% switch page.header.render.children.which_date|default('date') %}
-      {% case 'modified' %}
-        {% set date = child.modified %}
-      {% case 'published' %}
-        {% set date = child.publishDate %}
-      {% case 'unpublished' %}
-        {% set date = child.unpublishDate %}
-      {% case 'date' %}
-        {% set date = child.date %}
-      {% default %}
-        {% set date = child.date %}
-    {% endswitch %}
+
 
   <tr{% if child.taxonomy.category %} class="{% for cat in child.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}"{% endif %}>
 
     {# Image #}
-    {% if show_image %} {# Never true, left it in for someone to convince me otherwise. #}
+    {% if cfg.show_image %} {# Never true, left it in for someone to convince me otherwise. #}
     <td class="thumbnail">
     {% if header_image %}
-      {% if handling.images.resize|default(false) %}
+      {% if handling.images.compress|default('none') != 'none' %}
         <a href="{{ child.url }}">{{ header_image.cropZoom(((style.layout['content-width'] == 'default' ? 1024 : style.layout['content-width']) / 24), (style.layout['content-width'] == 'default' ? 1024 : style.layout['content-width']) / 24).html() }}</a>
       {% else %}
         <a href="{{ child.url }}">{{ header_image.html() }}</a>
@@ -62,23 +56,23 @@
       <strong>
         <a href="{{ child.url }}">{{ child.title }}</a>        
       </strong>
-      {% if show_subtitle and child.header.subtitle %}- <span>{{ child.header.subtitle }}</span>{% endif %}
+      {% if cfg.show_subtitle and child.header.subtitle %}- <span>{{ child.header.subtitle }}</span>{% endif %}
     </td>
 
     {# Date #}
-    {% if show_date %}
+    {% if cfg.show_date %}
     <td>
-        <time datetime="{{ date|date("c") }}">{{ date|date(system.pages.dateformat.short) }}</time>
+        {% include 'partials/item/date.html.twig' with {'page': child, 'parent': page, 'show_date': true} %}
     </td>
     {% endif %}
 
     {# Categories #}
-    {% if show_cat %}
+    {% if cfg.show_cat %}
     <td>
       {% if child.taxonomy.category %}
       <small>
         {% for category in child.taxonomy.category %}
-        [<a href="{{ parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>]{% if not loop.last %}, {% endif %}
+        {{ dec_left|raw }}<a href="{{ parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ dec_right|raw }}{{ not loop.last %}, {% endif %}
         {% endfor %}
       </small>
       {% endif %}
@@ -87,7 +81,7 @@
     </tr>
 
     {# Children #}
-    {% if show_children and inner_children|length > 0 %}
+    {% if cfg.show_children and inner_children|length > 0 %}
       {% set inner_children = inner_children.order(page.header.content.order.by|default(system.pages.order.by), 
                                                    page.header.content.order.dir|default(system.pages.order.dir)) %}
       {% for inner_child in inner_children %}
@@ -96,23 +90,23 @@
           {# Title #}
           <td>
             &emsp;<a href="{{ inner_child.url }}">{{ inner_child.title }}</a>        
-            {% if show_subtitle and inner_child.header.subtitle %}- <span>{{ inner_child.header.subtitle }}</span>{% endif %}
+            {% if cfg.show_subtitle and inner_child.header.subtitle %}- <span>{{ inner_child.header.subtitle }}</span>{% endif %}
           </td>
 
           {# Date #}
-          {% if show_date %}
+          {% if cfg.show_date %}
           <td>
-            <time datetime="{{ inner_child.date|date("c") }}">{{ inner_child.date|date(system.pages.dateformat.short) }}</time>
+            {% include 'partials/item/date.html.twig' with {'page': inner_child, 'parent': child, 'show_date': true} %}
           </td>
           {% endif %}
 
           {# Categories #}
-          {% if show_cat %}
+          {% if cfg.show_cat %}
           <td>
             {% if inner_child.taxonomy.category %}
             <small>
               {% for category in inner_child.taxonomy.category %}
-              [<a href="{{ child.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>]{% if not loop.last %}, {% endif %}
+              {{ dec_left|raw }}<a href="{{ child.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ dec_right|raw }}{{ not loop.last %}, {% endif %}
               {% endfor %}
             </small>
             {% endif %}

@@ -1,7 +1,12 @@
-{% set textStyle = structure['text-style']|default('plain') %}
-{% set decLeft   = textStyle == 'braced' ? '[ ' : (textStyle == 'angled' ? '&lt; ' : '') %}
-{% set decRight  = textStyle == 'braced' ? ' ]' : (textStyle == 'angled' ? ' &gt;' : '') %}
-
+{#
+  partials/item/header.html.twig
+  ──────────────────────────────
+  Renders page/item header view.
+  
+  Note: Global decorator variables `dec_left` and `dec_right` used here
+  are dynamically registered in the theme class via `onTwigSiteVariables()`
+  in `hypertext.php`.
+#}
 {% set show_image = page.header.show_header_image|default(false) %}
 {% set header_image_name = page.header.header_image_file|default('header.png') %}
 {% set header_image = page.media.images[header_image_name] ??
@@ -23,25 +28,12 @@
                       media['image://' ~ page.slug()~'_header.webp'] ??
 
                       page.media.images|first %}
-{% set use_image_crop = handling.images.resize|default(false) %}
+{% set use_image_crop = (handling.images.compress|default('none') != 'none') %}
 {% set image_width = use_image_crop ? (style.layout['content-width'] == 'default' ? 1024 : style.layout['content-width']) - 10 : header_image.width %}
 {% set image_height = use_image_crop ? (style.layout['content-width'] == 'default' ? 1024 : style.layout['content-width']) / 5 : header_image.height %}
 {% set header_image_url = use_image_crop ? header_image.cropZoom(image_width, image_height).url : header_image.url %}
 
 {% set show_date = structure['show-date']|default(false) %}
-
-{% switch page.parent.header.render.children.which_date|default('date') %}
-{% case 'modified' %}
-    {% set date = page.modified %}
-{% case 'published' %}
-    {% set date = page.publishDate %}
-{% case 'unpublished' %}
-    {% set date = page.unpublishDate %}
-{% case 'date' %}
-    {% set date = page.date %}
-{% default %}
-    {% set date = page.date %}
-{% endswitch %}
 
 {# ------------------------------------------------------------------------ #}
 
@@ -72,7 +64,7 @@
      page.header.show_date == 'enabled'
   %}
     {{ 'THEME_HYPERTEXT.DATES.DATE'|t }}: <small>
-        {{ decLeft|raw }}<time datetime="{{ date|date('c') }}">{{ date|date(system.pages.dateformat.short) }}</time>{{ decRight|raw }}
+        {{ dec_left|raw }}{% include 'partials/item/date.html.twig' with {'page': page, 'parent': page.parent, 'show_date': true} %}{{ dec_right|raw }}
     </small><br />
   {% endif %}
 {% endif %}
@@ -81,7 +73,7 @@
 {% if page.taxonomy.category %}
   {{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t }}: <small>
   {% for category in page.taxonomy.category %}
-    {{ decLeft|raw }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ decRight|raw }}{{ not loop.last ? ',' : '' }}
+    {{ dec_left|raw }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ dec_right|raw }}{{ not loop.last ? ',' : '' }}
   {% endfor %}</small>
   {{ page.taxonomy.tag ? '<br>' : '' }}
 {% endif %}
@@ -89,7 +81,7 @@
 {% if page.taxonomy.tag %}
   {{ 'THEME_HYPERTEXT.TAGS.TAGS'|t }}: <small>
   {% for tag in page.taxonomy.tag %}
-    {{ decLeft|raw }}<a href="{{ page.parent.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ tag }}">{{ tag }}</a>{{ decRight|raw }}{{ not loop.last ? ',' : '' }}
+    {{ dec_left|raw }}<a href="{{ page.parent.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ tag }}">{{ tag }}</a>{{ dec_right|raw }}{{ not loop.last ? ',' : '' }}
   {% endfor %}</small>
 {% endif %}
 

@@ -27,8 +27,7 @@ structure:
 handling:
   images:
     serving: linked
-    resize: true
-    compress: none
+    compress: minimal
     allow-url-parameters: admin
   css:
     serving: inline

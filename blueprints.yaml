@@ -267,6 +267,7 @@ form:
                       options:
                         left: No style (align left)
                         centered: Centered
+                        right: Right-aligned
                     style.layout.content-width:
                       type: select
                       size: medium
@@ -280,26 +281,15 @@ form:
                         960: 960px (medium)
                         1024: 1024px (large)
                         1280: 1280px (very large)
-                    handling.images.resize:
-                      type: toggle
-                      size: medium
-                      label: Auto-resize header images
-                      help: When enabled, this will cropzoom header images of pages to a default size. When *disabled* header images will render with whatever size you upload them at.
-                      default: 1
-                      highlight: 0
-                      options:
-                        1: 'Enabled'
-                        0: 'Disabled'
-                      validate:
-                        type: bool
                     handling.images.compress:
                       type: select
                       size: medium
                       label: Image Compression
                       help: Determines whether or not to compress and re-encode images. This reduces image filesize to speed up delivery.
-                      default: none
+                      default: minimal
                       options:
-                        none: None
+                        minimal: Minimal (100% WebP, site-width resized)
+                        none: None (No resizing or re-encoding)
                         medium: Medium (80% WebP)
                         high: High (60% WebP)
                         extreme: Extreme (50% WebP, smaller dimensions)

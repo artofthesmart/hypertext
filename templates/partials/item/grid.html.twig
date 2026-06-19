@@ -1,23 +1,21 @@
-{% set textStyle = structure['text-style']|default('plain') %}
-{% set decLeft   = textStyle == 'braced' ? '[ ' : (textStyle == 'angled' ? '&lt; ' : '') %}
-{% set decRight  = textStyle == 'braced' ? ' ]' : (textStyle == 'angled' ? ' &gt;' : '') %}
-{% if page.header.show_header_image|default('default') == 'default' %}
-  {% set show_image = parent.header.render.children.image ?? true %}
-{% else %}
-  {% set show_image = page.header.show_header_image == 'enabled' %}
-{% endif %}
+{#
+  partials/item/grid.html.twig
+  ──────────────────────────
+  Renders grid item view.
+  
+  Note: Global decorator variables `dec_left` and `dec_right` used here
+  are dynamically registered in the theme class via `onTwigSiteVariables()`
+  in `hypertext.php`.
+#}
+{% import 'partials/item/config.html.twig' as item_config %}
+{% set cfg = item_config.resolve(page, parent)|json_decode %}
+{% set inner_children = page.collection()|length > 0 ? page.collection() : page.children.visible %}
 
 {% set header_image = page.media.images[page.header.header_image_file] ?? page.media.images|first %}
-{% set use_image_crop = handling.images.resize|default(false) %}
+{% set use_image_crop = (handling.images.compress|default('none') != 'none') %}
 {% set image_width = use_image_crop ? (style.layout['content-width'] == 'default' ? 1024 : style.layout['content-width']) / 7 : header_image.width %}
 {% set image_height = use_image_crop ? (style.layout['content-width'] == 'default' ? 1024 : style.layout['content-width']) / 7 : header_image.height %}
 {% set header_image_url = use_image_crop ? header_image.cropZoom(image_width, image_height).url : header_image.url %}
-
-{% set show_subtitle = parent.header.render.children.subtitle ?? true %}
-{% set show_cat = parent.header.render.children.category ?? true %}
-{% set show_date = parent.header.render.children.date ?? false %}
-{% set show_children = parent.header.render.children.nested_children ?? true %}
-{% set inner_children = page.collection()|length > 0 ? page.collection() : page.children.visible %}
 
 {# ------------------------------------------------------------------------ #}
 
@@ -25,7 +23,7 @@
 
   {# Image #}
   <td rowspan="3" class="image" width="20%">
-  {% if show_image and header_image %}
+  {% if cfg.show_image and header_image %}
     <a href="{{ page.url }}">
       <img src="{{ header_image_url }}" width="{{ image_width }}" height="{{ image_height }}" loading="lazy" alt="{{ page.title|e('html_attr') }}">
     </a>
@@ -44,7 +42,7 @@
 {# Subtitle #}
 <tr{% if page.taxonomy.category %} class="{% for cat in page.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}"{% endif %}>
   <td colspan="2">
-    {% if show_subtitle and page.header.subtitle %}
+    {% if cfg.show_subtitle and page.header.subtitle %}
       {{ page.header.subtitle }}
     {% endif %}
   </td>
@@ -54,30 +52,28 @@
 
 {# Date #}
 <td>
-  {% if show_date %}
-      {{ 'THEME_HYPERTEXT.DATES.PUBLISHED'|t|raw }}: <time datetime="{{ page.date|date("c") }}">{{ page.date|date(system.pages.dateformat.short) }}</time>
-  {% endif %}
+  {% include 'partials/item/date.html.twig' with {'page': page, 'parent': parent, 'show_date': cfg.show_date, 'show_label': true} %}
 </td>
 
 {# Categories #}
 <td>
-{% if page.taxonomy.category and show_cat %}
+{% if page.taxonomy.category and cfg.show_cat %}
   {{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t|raw }}: 
   {% for category in page.taxonomy.category %}
-    {{ decLeft|raw }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ decRight|raw }}{{ not loop.last ? ',' : '' }}
+    {{ dec_left|raw }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ dec_right|raw }}{{ not loop.last ? ',' : '' }}
   {% endfor %}
 {% endif %}
 </td></tr>
 
 {# Children
  # Not sure how to implement this just yet...
-{% if show_children and inner_children|length > 0 %}
+{% if cfg.show_children and inner_children|length > 0 %}
 {% set inner_children = inner_children.order(page.header.content.order.by|default('default'), page.header.content.order.dir|default('default')) %}
 <br>
 {{ 'THEME_HYPERTEXT.PAGINATION.SUB_PAGES'|t }}:
 <ol class="nested-children">
   {% for child in inner_children %}
-  <li><a href="{{ child.url }}">{{ child.title }}</a>{{ child.header.subtitle and show_subtitle ? ' - <span>'~child.header.subtitle~'</span>' : '' }}</li>
+  <li><a href="{{ child.url }}">{{ child.title }}</a>{{ child.header.subtitle and cfg.show_subtitle ? ' - <span>'~child.header.subtitle~'</span>' : '' }}</li>
   {% endfor %}
 </ol>
 {% endif %} {# End render nested children #}

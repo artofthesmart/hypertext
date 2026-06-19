@@ -1,0 +1,28 @@
+{#
+  partials/item/config.html.twig
+  ──────────────────────────────
+  Resolves child/item display configurations by coalescing parent collection
+  settings and individual page-level overrides.
+#}
+{% macro resolve(page, parent) %}
+  {% set render_children = parent.header.render.children %}
+  {% set show_subtitle = render_children.subtitle ?? true %}
+  {% set show_cat = render_children.category ?? true %}
+  {% set show_children = render_children.nested_children ?? true %}
+  {% set show_date = render_children.date ?? false %}
+  
+  {% set show_image_override = page.header.show_header_image|default('default') %}
+  {% if show_image_override == 'default' %}
+    {% set show_image = render_children.image ?? true %}
+  {% else %}
+    {% set show_image = show_image_override == 'enabled' %}
+  {% endif %}
+
+  {{ {
+    'show_subtitle': show_subtitle,
+    'show_cat': show_cat,
+    'show_children': show_children,
+    'show_date': show_date,
+    'show_image': show_image
+  }|json_encode }}
+{% endmacro %}

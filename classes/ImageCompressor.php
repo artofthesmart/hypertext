@@ -117,6 +117,15 @@ class ImageCompressor
             $htmlHeight = $naturalHeight;
         }
 
+        // Apply maximum site width cap to display dimensions to prevent layout squashing
+        $themeName = $grav['theme']?->name ?? 'hypertext';
+        $maxWidthSetting = $grav['config']->get("themes.{$themeName}.style.layout.content-width", 'default');
+        $maxWidthCap = ($maxWidthSetting !== 'default') ? (int) $maxWidthSetting : null;
+        if ($maxWidthCap !== null && $htmlWidth > $maxWidthCap) {
+            $htmlHeight = (int) round($maxWidthCap * ($htmlHeight / $htmlWidth));
+            $htmlWidth = $maxWidthCap;
+        }
+
         // Delegate to Grav's native Medium framework for handling caching and derivatives
         $medium = MediumFactory::fromFile($physicalPath);
         if (!$medium instanceof ImageMedium) {
@@ -136,9 +145,11 @@ class ImageCompressor
                 } else {
                     if ($mode === 'high') {
                         $medium = $medium->quality(60);
-                    } else {
-                        // Medium mode
+                    } elseif ($mode === 'medium') {
                         $medium = $medium->quality(80);
+                    } else {
+                        // minimal mode (100% quality)
+                        $medium = $medium->quality(100);
                     }
 
                     // If the display dimensions are smaller than natural dimensions,

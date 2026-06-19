@@ -6,32 +6,25 @@
   Unlike grid (which uses <table> rows), each card is
   a standalone <article> that can be floated or placed
   in a CSS grid by the active stylesheet.
-#}
-{% set textStyle = structure['text-style']|default('plain') %}
-{% set decLeft   = textStyle == 'braced' ? '[ ' : (textStyle == 'angled' ? '&lt; ' : '') %}
-{% set decRight  = textStyle == 'braced' ? ' ]' : (textStyle == 'angled' ? ' &gt;' : '') %}
 
-{% if page.header.show_header_image|default('default') == 'default' %}
-  {% set show_image = parent.header.render.children.image ?? true %}
-{% else %}
-  {% set show_image = page.header.show_header_image == 'enabled' %}
-{% endif %}
+  Note: Global decorator variables `dec_left` and `dec_right` used here
+  are dynamically registered in the theme class via `onTwigSiteVariables()`
+  in `hypertext.php`.
+#}
+{% import 'partials/item/config.html.twig' as item_config %}
+{% set cfg = item_config.resolve(page, parent)|json_decode %}
 
 {% set header_image = page.media.images[page.header.header_image_file] ?? page.media.images|first %}
-{% set use_image_crop = handling.images.resize|default(false) %}
+{% set use_image_crop = (handling.images.compress|default('none') != 'none') %}
 {% set image_width  = use_image_crop ? (style.layout['content-width'] == 'default' ? 1024 : style.layout['content-width']|int) / 4 : header_image.width %}
 {% set image_height = image_width %}
 {% set header_image_url = use_image_crop ? header_image.cropZoom(image_width, image_height).url : header_image.url %}
-
-{% set show_subtitle = parent.header.render.children.subtitle ?? true %}
-{% set show_date     = parent.header.render.children.date ?? false %}
-{% set show_cat      = parent.header.render.children.category ?? true %}
 
 {# ------------------------------------------------------------------------ #}
 
 <article{% if page.taxonomy.category %} class="{% for cat in page.taxonomy.category %}cat_{{ cat|hyphenize }} {% endfor %}"{% endif %}>
 
-  {% if show_image and header_image %}
+  {% if cfg.show_image and header_image %}
     <a href="{{ page.url }}">
       <img src="{{ header_image_url }}" width="{{ image_width }}" height="{{ image_height }}" loading="lazy" alt="{{ page.title|e('html_attr') }}">
     </a>
@@ -39,20 +32,20 @@
 
   <strong><a href="{{ page.url }}">{{ page.title }}</a></strong>
 
-  {% if show_subtitle and page.header.subtitle %}
+  {% if cfg.show_subtitle and page.header.subtitle %}
     <br><small>{{ page.header.subtitle }}</small>
   {% endif %}
 
-  {% if show_date %}
+  {% if cfg.show_date %}
     <br><small>
-      <time datetime="{{ page.date|date('c') }}">{{ page.date|date(system.pages.dateformat.short) }}</time>
+      {% include 'partials/item/date.html.twig' with {'page': page, 'parent': parent, 'show_date': true} %}
     </small>
   {% endif %}
 
-  {% if show_cat and page.taxonomy.category %}
+  {% if cfg.show_cat and page.taxonomy.category %}
     <br><small>
     {% for category in page.taxonomy.category %}
-      {{ decLeft|raw }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ decRight|raw }}{{ not loop.last ? ',' : '' }}
+      {{ dec_left|raw }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ dec_right|raw }}{{ not loop.last ? ',' : '' }}
     {% endfor %}
     </small>
   {% endif %}

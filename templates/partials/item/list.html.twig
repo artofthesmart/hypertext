@@ -1,31 +1,20 @@
-{% set textStyle = structure['text-style']|default('plain') %}
-{% set decLeft   = textStyle == 'braced' ? '[ ' : (textStyle == 'angled' ? '&lt; ' : '') %}
-{% set decRight  = textStyle == 'braced' ? ' ]' : (textStyle == 'angled' ? ' &gt;' : '') %}
-
-{% set show_subtitle  = parent.header.render.children.subtitle ?? true %}
-{% set show_cat       = parent.header.render.children.category ?? true %}
-{% set show_children  = parent.header.render.children.nested_children ?? true %}
+{#
+  partials/item/list.html.twig
+  ────────────────────────────
+  Renders list item summary.
+  
+  Note: Global decorator variables `dec_left` and `dec_right` used here
+  are dynamically registered in the theme class via `onTwigSiteVariables()`
+  in `hypertext.php`.
+#}
+{% import 'partials/item/config.html.twig' as item_config %}
+{% set cfg = item_config.resolve(page, parent)|json_decode %}
 {% set inner_children = page.collection()|length > 0 ? page.collection() : page.children.visible %}
 
-{% set show_date = parent.header.render.children.date ?? false %}
-{% switch parent.header.render.children.which_date|default('date') %}
-  {% case 'modified' %}
-    {% set date = page.modified %}
-  {% case 'published' %}
-    {% set date = page.publishDate %}
-  {% case 'unpublished' %}
-    {% set date = page.unpublishDate %}
-  {% case 'date' %}
-    {% set date = page.date %}
-  {% default %}
-    {% set date = page.date %}
-{% endswitch %}
-
 {# ── Image: thumbnail first, then header image fallback ──────────────────── #}
-{% set show_image = parent.header.render.children.image ?? false %}
 {% set thumb_url = null %}
 {% set thumb_size = null %}
-{% if show_image %}
+{% if cfg.show_image %}
   {% set thumb_name = page.header.thumbnail_image_file|default(null) %}
   {% set slug = page.slug() %}
   {% set header_file = page.header.header_image_file|default('header.png') %}
@@ -54,7 +43,7 @@
     page.media.images['header.jpg'] ??
     page.media.images|first %}
 
-  {% set use_image_crop = handling.images.resize|default(false) %}
+  {% set use_image_crop = (handling.images.compress|default('none') != 'none') %}
   {% set content_width = style.layout['content-width']|default(960)|int %}
   {% set content_width = content_width == 0 ? 960 : content_width %}
   {# Thumbnail is sized relative to content width, ~6% (about 1 line height) #}
@@ -73,7 +62,7 @@
 <li class="child-level-{{ level }}{% for cat in page.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}">
 
   {# Thumbnail #}
-  {% if show_image and thumb_url %}
+  {% if cfg.show_image and thumb_url %}
     <a href="{{ page.url }}">
       <img src="{{ thumb_url }}"
            {% if thumb_size %}width="{{ thumb_size }}" height="{{ thumb_size }}"{% endif %}
@@ -83,27 +72,27 @@
   {% endif %}
 
   {# Date #}
-  {% if show_date %}
-    {{ decLeft|raw }}<time datetime="{{ date|date('c') }}">{{ date|date(system.pages.dateformat.short) }}</time>{{ decRight|raw }}
+  {% if cfg.show_date %}
+    {{ dec_left|raw }}{% include 'partials/item/date.html.twig' with {'page': page, 'parent': parent, 'show_date': true} %}{{ dec_right|raw }}
   {% endif %}
 
   {# Title & Subtitle #}
   {{ level > 1 ? '' : '<strong>' }}
     <a href="{{ page.url }}">{{ page.title }}</a>
   {{ level > 1 ? '' : '</strong>' }}
-  {% if page.header.subtitle and show_subtitle %} - <small>{{ page.header.subtitle }}</small>{% endif %}
+  {% if page.header.subtitle and cfg.show_subtitle %} - <small>{{ page.header.subtitle }}</small>{% endif %}
 
   {# Categories #}
-  {% if page.taxonomy.category and show_cat %}
+  {% if page.taxonomy.category and cfg.show_cat %}
     <br/>
     {{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t }}: <small>
     {% for category in page.taxonomy.category %}
-      {{ decLeft|raw }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ decRight|raw }}{{ not loop.last ? ',' : '' }}
+      {{ dec_left|raw }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ dec_right|raw }}{{ not loop.last ? ',' : '' }}
     {% endfor %}</small>
   {% endif %}
 
   {# Children #}
-  {% if show_children and inner_children|length > 0 %}
+  {% if cfg.show_children and inner_children|length > 0 %}
   {% set inner_children = inner_children.order(page.header.content.order.by|default(system.pages.order.by),
                                                page.header.content.order.dir|default(system.pages.order.dir)) %}
   <ul class="nested-children">

@@ -23,8 +23,31 @@ class Hypertext extends Theme
     public static function getSubscribedEvents(): array
     {
         return [
-            'onOutputGenerated' => ['onOutputGenerated', 0],
+            'onTwigSiteVariables' => ['onTwigSiteVariables', 0],
+            'onOutputGenerated'   => ['onOutputGenerated', 0],
         ];
+    }
+
+    /**
+     * Set up global Twig variables for the theme.
+     */
+    public function onTwigSiteVariables(): void
+    {
+        $config = $this->config();
+        $textStyle = $config['structure']['text-style'] ?? 'plain';
+
+        $decLeft = '';
+        $decRight = '';
+        if ($textStyle === 'braced') {
+            $decLeft = '[ ';
+            $decRight = ' ]';
+        } elseif ($textStyle === 'angled') {
+            $decLeft = '< ';
+            $decRight = ' >';
+        }
+
+        $this->grav['twig']->twig_vars['dec_left'] = $decLeft;
+        $this->grav['twig']->twig_vars['dec_right'] = $decRight;
     }
 
     /**
