@@ -1,5 +1,8 @@
 en:
   THEME_HYPERTEXT:
+    TITLES:
+      TITLE: Title
+      SUBTITLE: Subtitle
     PAGINATION:
       PREVIOUS_PAGE: Previous
       NEXT_PAGE: Next
@@ -10,8 +13,11 @@ en:
     DATES:
       DATE: Date
       PUBLISHED: Published
+      MODIFIED: Modified
     TAGS:
       TAGS: Tags
+    SUMMARY:
+      SUMMARY: Summary
     THUMBNAIL:
       THUMBNAIL: Thumbnail
     FOOTER:
@@ -19,6 +25,9 @@ en:
 
 fr:
   THEME_HYPERTEXT:
+    TITLES:
+      TITLE: Titre
+      SUBTITLE: Sous-titre
     PAGINATION:
       PREVIOUS_PAGE: Précédent
       NEXT_PAGE: Suivant
@@ -29,8 +38,11 @@ fr:
     DATES:
       DATE: Date
       PUBLISHED: Publié
+      MODIFIED: Modifié
     TAGS:
       TAGS: Balises
+    SUMMARY:
+      SUMMARY: Résumé
     THUMBNAIL:
       THUMBNAIL: Miniature
     FOOTER:
@@ -38,6 +50,9 @@ fr:
 
 vi:
   THEME_HYPERTEXT:
+    TITLES:
+      TITLE: Tiêu đề
+      SUBTITLE: Phụ đề
     PAGINATION:
       PREVIOUS_PAGE: Trang trước
       NEXT_PAGE: Trang sau
@@ -48,8 +63,11 @@ vi:
     DATES:
       DATE: Ngày
       PUBLISHED: Đã xuất bản
+      MODIFIED: Đã sửa đổi
     TAGS:
       TAGS: Thẻ
+    SUMMARY:
+      SUMMARY: Tóm tắt
     THUMBNAIL:
       THUMBNAIL: Hình thu nhỏ
     FOOTER:
@@ -57,6 +75,9 @@ vi:
 
 zh:
   THEME_HYPERTEXT:
+    TITLES:
+      TITLE: 标题
+      SUBTITLE: 副标题
     PAGINATION:
       PREVIOUS_PAGE: 上一页
       NEXT_PAGE: 下一页
@@ -67,8 +88,11 @@ zh:
     DATES:
       DATE: 日期
       PUBLISHED: 发布于
+      MODIFIED: 修改于
     TAGS:
       TAGS: 标签
+    SUMMARY:
+      SUMMARY: 摘要
     THUMBNAIL:
       THUMBNAIL: 缩略图
     FOOTER:
@@ -76,6 +100,9 @@ zh:
 
 es:
   THEME_HYPERTEXT:
+    TITLES:
+      TITLE: Título
+      SUBTITLE: Subtítulo
     PAGINATION:
       PREVIOUS_PAGE: Anterior
       NEXT_PAGE: Siguiente
@@ -86,8 +113,11 @@ es:
     DATES:
       DATE: Fecha
       PUBLISHED: Publicado
+      MODIFIED: Modificado
     TAGS:
       TAGS: Etiquetas
+    SUMMARY:
+      SUMMARY: Resumen
     THUMBNAIL:
       THUMBNAIL: Miniatura
     FOOTER:
@@ -95,6 +125,9 @@ es:
 
 ar:
   THEME_HYPERTEXT:
+    TITLES:
+      TITLE: العنوان
+      SUBTITLE: العنوان الفرعي
     PAGINATION:
       PREVIOUS_PAGE: السابق
       NEXT_PAGE: التالي
@@ -105,8 +138,11 @@ ar:
     DATES:
       DATE: التاريخ
       PUBLISHED: نُشر في
+      MODIFIED: عُدل في
     TAGS:
       TAGS: الوسوم
+    SUMMARY:
+      SUMMARY: ملخص
     THUMBNAIL:
       THUMBNAIL: صورة مصغرة
     FOOTER:
@@ -114,6 +150,9 @@ ar:
 
 pt-BR:
   THEME_HYPERTEXT:
+    TITLES:
+      TITLE: Título
+      SUBTITLE: Subtítulo
     PAGINATION:
       PREVIOUS_PAGE: Anterior
       NEXT_PAGE: Próximo
@@ -124,8 +163,11 @@ pt-BR:
     DATES:
       DATE: Data
       PUBLISHED: Publicado em
+      MODIFIED: Modificado em
     TAGS:
       TAGS: Tags
+    SUMMARY:
+      SUMMARY: Resumo
     THUMBNAIL:
       THUMBNAIL: Miniatura
     FOOTER:

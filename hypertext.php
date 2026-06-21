@@ -96,7 +96,43 @@ class Hypertext extends Theme
         $output = \Grav\Theme\Hypertext\ImageCompressor::process($output, $compressMode);
 
         // 2. Minify HTML and inline assets
-        $shouldMinify = (bool) ($config['handling']['minify-output'] ?? true);
+        $page = $this->grav['page'] ?? null;
+        $shouldMinify = null;
+        if ($page) {
+            $header = $page->header();
+            $val = null;
+            if (isset($header->handling)) {
+                $handling = $header->handling;
+                if (is_array($handling)) {
+                    $val = $handling['minify-output'] ?? null;
+                } elseif (is_object($handling)) {
+                    $val = $handling->{'minify-output'} ?? null;
+                }
+            }
+            if ($val !== null && $val !== 'default') {
+                $shouldMinify = (bool) $val;
+            } else {
+                $parent = $page->parent();
+                if ($parent) {
+                    $parentHeader = $parent->header();
+                    if (isset($parentHeader->handling)) {
+                        $parentHandling = $parentHeader->handling;
+                        $parentVal = null;
+                        if (is_array($parentHandling)) {
+                            $parentVal = $parentHandling['minify-output'] ?? null;
+                        } elseif (is_object($parentHandling)) {
+                            $parentVal = $parentHandling->{'minify-output'} ?? null;
+                        }
+                        if ($parentVal !== null && $parentVal !== 'default') {
+                            $shouldMinify = (bool) $parentVal;
+                        }
+                    }
+                }
+            }
+        }
+        if ($shouldMinify === null) {
+            $shouldMinify = (bool) ($config['handling']['minify-output'] ?? true);
+        }
         if ($shouldMinify) {
             $output = \Grav\Theme\Hypertext\HtmlMinifier::process($output);
         }

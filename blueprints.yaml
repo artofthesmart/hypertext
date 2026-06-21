@@ -26,26 +26,75 @@ form:
     tabs:
       type: tabs
       active: 1
-
       fields:
         structure: # STRUCTURAL CONTENT TAB
           type: tab
           title: Structure
           fields:
+            navStructureTitle:
+              type: section
+              title: Navigation
+              underline: true
+            description:
+              type: display
+              label: Description
+              markdown: true
+              content: These values let you decide how you want navigation to work.
+            structure.navigation.header.mode:
+              default: inline
+              type: select
+              label: Navigation Display
+              help: Determines how the menu bar is displayed. Inline renders links horizontally separated by decorators and a small bit of CSS. Stacked renders as a bulleted list without CSS.
+              options:
+                inline: Inline
+                stacked: Stacked (ul/li)
+            structure.text-style:
+              default: braced
+              type: select
+              label: Text decorator style
+              help: Determines how inline links and metadata labels are decorated throughout the site — navigation, categories, tags, dates, etc.
+              options:
+                braced: "Braced: [ Home ] [ About ]"
+                angled: "Angled: < Home > < About >"
+                plain: "Plain: Home | About"
+            structure.navigation.pagination.style:
+              default: inline
+              type: select                      
+              label: Pagination style
+              help: When you have the pagination plugin installed, determines how pagination is displayed. Inline renders links horizontally separated by decorators. Stacked renders as a bulleted list. 
+              options:
+                inline: Inline
+                stacked: Stacked (ul/li)
             columns:
               type: columns
               fields:
-                column1: # MENU BAR STRUCTURE
+                column1: # COLLECTION DEFAULTS
                   type: column
                   fields:
-                    navStructureTitle:
+                    collectionDefaultsTitle:
                       type: section
-                      title: Navigation Structure
+                      title: Collection Defaults
                       underline: true
-                    structure.add-site-name:
+                    description:
+                      type: display
+                      label: Description
+                      markdown: true
+                      content: "[Collections](https://learn.getgrav.org/17/content/collections) group and display multiple pages, e.g. a list of blog posts, a 'Cars' section of your site, a portfolio of photos, a predefined search results page of blog posts sorted by category/tag/date, etc. These defaults apply site-wide, but can be overridden on a per-collection basis. [See examples of Hypertext collections in action](https://hypetext.artofthesmart.com)."
+                    collection.mode:
+                      default: list
+                      type: select                      
+                      label: Collection Layout
+                      help: Determines how child pages are rendered when a given page or directory has child pages.
+                      options:
+                        list: List
+                        comfy: Comfy (image + excerpt)
+                        table: Table (compact rows)
+                        grid: Grid (2D table)
+                        cards: Cards (tile layout)
+                    collection.display.title:
                       type: toggle
-                      label: Add site name to page titles
-                      help: When enabled, page titles will end with a pipe seperator and the name of the website. When disabled, only your page's title will be used.
+                      label: Show Title
+                      help: When enabled, child page titles will be shown.
                       default: 1
                       highlight: 1
                       options:
@@ -53,42 +102,21 @@ form:
                         0: Disabled
                       validate:
                         type: bool
-                    structure.navigation.header.mode:
-                      type: select
-                      classes: fancy
-                      label: Navigation mode
-                      help: Determines how the menu bar is displayed. Inline renders links separated by decorators. Stacked renders as a bulleted list.
-                      options:
-                        inline: Inline
-                        stacked: Stacked (ul/li)
-                    structure.text-style:
-                      type: select
-                      classes: fancy
-                      label: Text decorator style
-                      help: Determines how inline links and metadata labels are decorated throughout the site — navigation, categories, tags, dates, etc.
-                      options:
-                        braced: "Braced [ Home ] [ About ]"
-                        angled: "Angled < Home > < About >"
-                        plain: "Plain: Home | About"
-                    structure.navigation.pagination.style:
-                      type: select
-                      classes: fancy
-                      label: Pagination style
-                      help: When you have the pagination plugin installed, determines how pagination is displayed.
-                      options:
-                        inline: Inline
-                        stacked: Stacked (ul/li)
-                column2: # RENDER STRUCTURE
-                  type: column
-                  fields:
-                    renderStructureTitle:
-                      type: section
-                      title: HTML Structure & Options
-                      underline: true
-                    structure.use-favicon:
+                    collection.display.subtitle:
                       type: toggle
-                      label: Use favicon
-                      help: When enabled, the site will use the favicon at `user/images/favicon/favicon.png`. See Hypertext homepage for details. 
+                      label: Show Subtitle
+                      help: When enabled, child page subtitles will be shown (if available).
+                      default: 0
+                      highlight: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    collection.display.header-image:
+                      type: toggle
+                      label: Show Thumbnail
+                      help: When enabled, child page thumbnails will be shown. If one isn't available, the header image is shown instead. If neither exists, nothing is shown.
                       default: 0
                       highlight: 0
                       options:
@@ -96,37 +124,169 @@ form:
                         0: Disabled
                       validate:
                         type: bool
-                    favicon:
-                      name: Favicon
-                      type: file
-                      label: Upload Favicon
-                      help: This uploads a new image for browser tabs and search engines to use to represent your website. It MUST be called favicon.png and conform to other favicon requirements. See Hypertext homepage for details. 
-                      destination: 'image://favicon'
-                      multiple: false
-                      autofocus: false
-                      accept:
-                        - image/png
-                    structure.show-date:
-                      type: select
-                      classes: fancy
-                      label: Show last updated dates
-                      help: When enabled, the date that the page was published will appear on individual pages.
+                    collection.display.date:
+                      type: toggle
+                      label: Show Date
+                      help: When enabled, a date will be shown (if possible) for child pages.
+                      default: 1
+                      highlight: 1
                       options:
-                        default: No dates
-                        children: Only on child pages
-                        not-home: Everywhere but the home page
-                        everywhere: Everywhere
-                    collection.mode:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    collection.display.date-type:
                       type: select
-                      classes: fancy
-                      label: Default collection display mode
-                      help: Determines how child pages are rendered when a page has a collection. Can be overridden per-page via page frontmatter or in the Admin view of the page.
+                      label: Select Date
+                      help: Choose which date Grav should use for displaying dates for child pages.
+                      default: published
                       options:
-                        list: List
-                        comfy: Comfy (image + excerpt)
-                        table: Table (compact rows)
-                        grid: Grid (2D table)
-                        cards: Cards (tile layout)
+                        published: Published Date
+                        modified: Last Modified Date
+                    collection.display.categories:
+                      type: toggle
+                      label: Show Categories
+                      help: When enabled, child page categories will be shown (if available).
+                      default: 1
+                      highlight: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    collection.display.tags:
+                      type: toggle
+                      label: Show Tags
+                      help: When enabled, child page tags will be shown (if available).
+                      default: 1
+                      highlight: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    collection.display.summary:
+                      type: toggle
+                      label: Show Summary
+                      help: When enabled, child page summaries/excerpts will be shown. This is the content before the `===` in the body of a child page.
+                      default: 0
+                      highlight: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    collection.display.click-through:
+                      type: toggle
+                      label: Show "Read More" Link
+                      help: When enabled, a "Read More" or similar link to the full child page will be shown.
+                      default: 0
+                      highlight: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    collection.show-nested:
+                      type: toggle
+                      label: Show nested children
+                      help: When enabled, any sub-children that a child page has will be shown (if possible).
+                      default: 0
+                      highlight: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                column2: # PAGE DEFAULTS
+                  type: column
+                  fields:
+                    pageDefaultsTitle:
+                      type: section
+                      title: Page Defaults
+                      underline: true
+                    description:
+                      type: display
+                      label: Description
+                      markdown: true
+                      content: "[Pages](https://learn.getgrav.org/17/content/content-pages) display individual pages of conetnt, e.g. a blog post, a car article, a portfolio project, etc. These defaults apply site-wide, but can be overridden on a per-page basis."
+                    page.content.title:
+                      type: toggle
+                      label: Show Title
+                      help: When enabled, the page title will be shown.
+                      default: 1
+                      highlight: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    page.content.subtitle:
+                      type: toggle
+                      label: Show Subtitle
+                      help: When enabled, the subtitle will be shown on the page (if available).
+                      default: 0
+                      highlight: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    page.content.header-image:
+                      type: toggle
+                      label: Show Header Image
+                      help: When enabled, the header image will be shown at the top of the page. If you don't specify one, the first image in the post will be shown.
+                      default: 0
+                      highlight: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    page.content.date-published:
+                      type: toggle
+                      label: Show Published Date
+                      help: When enabled, the published date will be shown on the page.
+                      default: 1
+                      highlight: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    page.content.date-last-updated:
+                      type: toggle
+                      label: Show Last Modified Date
+                      help: When enabled, the last modified date will be shown on the page.
+                      default: 0
+                      highlight: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    page.content.categories:
+                      type: toggle
+                      label: Show Categories
+                      help: When enabled, categories will be shown on the page (if available).
+                      default: 1
+                      highlight: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    page.content.tags:
+                      type: toggle
+                      label: Show Tags
+                      help: When enabled, tags will be shown on the page (if available).
+                      default: 1
+                      highlight: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
         style: # STYLE TAB
           type: tab
           title: Style & Formatting
@@ -148,7 +308,7 @@ form:
                       content: These fields offer settings for whether to allow CSS or JS files. Some plugins include these kinds of files, so this is a great way to suppress them.  Remember that these are *global* settings, which you can override on a per-page basis.  For example, you could install the [syntax highlighting](https://github.com/getgrav/grav-plugin-highlight) plugin, disable CSS/JS here, and then enable it only on pages where you know you are showing code.
                     style.css.enable:
                       type: toggle
-                      classes: fancy
+                      
                       label: Allow Global CSS
                       help: Determines what CSS is allowed to load. This can be overridden by an individual page.
                       default: 0
@@ -160,7 +320,7 @@ form:
                         type: bool
                     style.js.enable:  
                       type: toggle
-                      classes: fancy
+                      
                       label: Allow Global JS
                       help: Determines what JS is allowed to load. This can be overridden by an individual page.
                       default: 0
@@ -176,7 +336,7 @@ form:
                       underline: true
                     handling.css.serving:
                       type: select
-                      classes: fancy
+                      
                       label: CSS Include Method
                       help: "Determines whether to prioritize single page loads (inline <style>, good for Hypertext or single-serving sites) or multiple page loads (<link>, good for CSS styles or multi-paged sites)."
                       options:
@@ -184,7 +344,7 @@ form:
                         linked: Link (Good for enabling JS/CSS)
                     handling.js.serving:
                       type: select
-                      classes: fancy
+                      
                       label: JS Include Method
                       help: "Determines how JavaScript is served. Inline embeds scripts in the page, linked uses separate requests."
                       options:
@@ -192,7 +352,7 @@ form:
                         linked: Linked
                     handling.minify-output:
                       type: toggle
-                      classes: fancy
+                      
                       label: Minify HTML Output
                       help: When enabled, the final HTML output will be minified (whitespace/comments removed) for smaller payloads. Inline CSS is always auto-minified.
                       default: 1
@@ -216,7 +376,7 @@ form:
                       content: Themes here are open-source CSS files available on GitHub and are not my own work. Consider visiting their homepages, contributing, and supporting the authors.  Remember that you can test these styles quickly by adding the name or number to a theme URL parameter, e.g. `YourSite.com/?theme=water` or `YourSite.com/?theme=4`.
                     style.css.stylesheet:
                       type: select
-                      classes: fancy
+                      
                       label: Select a Theme
                       help: Selects from a pre-determined list of simple, fast CSS files.
                       options:
@@ -254,6 +414,16 @@ form:
                       help: Add your custom CSS rules here.
                       placeholder: "e.g. body { font-family: Courier }"
                       size: large
+                    favicon:
+                      name: Favicon
+                      type: file
+                      label: Upload Favicon
+                      help: This uploads a new image for browser tabs and search engines to use to represent your website. It must be called favicon.png and conform to other favicon requirements. See Hypertext homepage for details. 
+                      destination: 'image://favicon'
+                      multiple: false
+                      autofocus: false
+                      accept:
+                        - image/png
                     configurationTitle:
                       type: section
                       title: Layout Configuration
@@ -261,7 +431,7 @@ form:
                     style.layout.alignment:
                       type: select
                       size: medium
-                      classes: fancy
+                      
                       label: General site layout
                       help: Configures the general layout of the website horizontally.
                       options:
@@ -271,7 +441,7 @@ form:
                     style.layout.content-width:
                       type: select
                       size: medium
-                      classes: fancy
+                      
                       label: Maximum website width
                       help: Caps the website's maximum width for viewing on large screens.
                       options:
@@ -327,7 +497,7 @@ form:
                       content: "This section lets you change elements near the top of your website like header images and more."
                     structure.header.use-subheader:
                       type: toggle
-                      classes: fancy
+                      
                       label: Show Site Subtitle
                       help: When enabled, if you have one, your site's Configuration => Site => Metadata => Description will appear under the site title. When disabled, it's not rendered.
                       default: 0
@@ -355,7 +525,7 @@ form:
                       content: "This section lets you change elements near the bottom of your website like custom disclaimers or content."
                     structure.footer.style:
                       type: select
-                      classes: fancy
+                      
                       label: Footer Type
                       help: The footer can be either markdown or HTML, whichever you need.
                       size: large
