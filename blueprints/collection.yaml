@@ -76,84 +76,17 @@ form:
                 content_column:
                   type: column
                   fields:
-                    structure_overrides_title:
+                    collection_defaults_title:
                       type: section
                       title: Child Rendering
                       underline: true
-                    header.render.children.style:
-                      type: select
-                      label: Render Style
-                      help: How you want child pages presented on the page. See Hypertext docs for examples.
-                      default: list
-                      options:
-                        list: List
-                        comfy: Comfy (image + excerpt)
-                        table: Table (compact rows)
-                        grid: Grid (2D table)
-                        cards: Cards (tile layout)
-                    header.render.children.image:
-                      type: toggle
-                      label: Show image
-                      help: When enabled, child page header images will be shown (if possible).
-                      default: 0
-                      highlight: 0
-                      options:
-                        1: Enabled
-                        0: Disabled
-                      validate:
-                        type: bool
-                    header.render.children.subtitle:
-                      type: toggle
-                      label: Show subtitle
-                      help: When enabled, child page subtitle will be shown (if possible).
-                      default: 1
-                      highlight: 1
-                      options:
-                        1: Enabled
-                        0: Disabled
-                      validate:
-                        type: bool
-                    header.render.children.category:
-                      type: toggle
-                      label: Show categories
-                      help: When enabled, child page categories will be shown (if possible).
-                      default: 1
-                      highlight: 1
-                      options:
-                        1: Enabled
-                        0: Disabled
-                      validate:
-                        type: bool
-                    header.render.children.date:
-                      type: toggle
-                      label: Show date
-                      help: When enabled, a date will be shown (if possible) for child pages.
-                      default: 0
-                      highlight: 0
-                      options:
-                        1: Enabled
-                        0: Disabled
-                      validate:
-                        type: bool
-                      classes: fancy
-                    header.render.children.which_date:
-                      type: select
-                      label: Display date
-                      help: Select which date to show, if you choose to show one.
-                      default: date
-                      options:
-                        date: Default
-                        modified: Last Modified
-                        published: Date Published
-                        unpublished: Date Unpublished
-                    header.render.children.nested_children:
-                      type: toggle
-                      label: Show nested children
-                      help: When enabled, any sub-children that a child page has will be shown (if possible).
-                      default: 1
-                      highlight: 1
-                      options:
-                        1: Enabled
-                        0: Disabled
-                      validate:
-                        type: bool
+                      import@:
+                        type: collection_defaults
+                        context: theme://blueprints/partials
+                    page_defaults_title:
+                      type: section
+                      title: Page Rendering
+                      underline: true
+                      import@:
+                        type: page_defaults
+                        context: theme://blueprints/partials

@@ -12,11 +12,22 @@
 {% import 'partials/item/config.html.twig' as item_config %}
 {% set cfg = item_config.resolve(page, parent)|json_decode %}
 
-{% set header_image = page.media.images[page.header.header_image_file] ?? page.media.images|first %}
+{% import 'partials/item/image.html.twig' as image_finder %}
+{% set img_desc = image_finder.find_thumbnail(page)|trim %}
+{% set header_image = null %}
+{% if img_desc %}
+  {% set parts = img_desc|split(':', 2) %}
+  {% if parts[0] == 'page' %}{% set header_image = page.media.images[parts[1]] %}
+  {% elseif parts[0] == 'global' %}{% set header_image = media['image://' ~ parts[1]] %}
+  {% elseif parts[0] == 'first' %}{% set header_image = page.media.images|first %}
+  {% endif %}
+{% endif %}
+
+{% set theme_style = config.themes.hypertext.style %}
 {% set use_image_crop = (handling.images.compress|default('none') != 'none') %}
-{% set image_width  = use_image_crop ? (style.layout['content-width'] == 'default' ? 1024 : style.layout['content-width']) / 6 : header_image.width %}
-{% set image_height = use_image_crop ? image_width : header_image.height %}
-{% set image_url    = use_image_crop ? header_image.cropZoom(image_width, image_height).url : header_image.url %}
+{% set image_width = (use_image_crop and header_image) ? (theme_style.layout['content-width'] == 'default' ? 1024 : theme_style.layout['content-width']) / 6 : (header_image ? header_image.width : 0) %}
+{% set image_height = (use_image_crop and header_image) ? image_width : (header_image ? header_image.height : 0) %}
+{% set image_url = (use_image_crop and header_image) ? header_image.cropZoom(image_width, image_height).url : (header_image ? header_image.url : '') %}
 
 {# ─────────────────────────────────────────────────────────────────────────── #}
 <hr>
@@ -31,8 +42,15 @@
   <strong><a href="{{ page.url }}">{{ page.title }}</a></strong>
   {% if cfg.show_subtitle and page.header.subtitle %} — <small>{{ page.header.subtitle }}</small>{% endif %}
 
-  {% if cfg.show_date %}
-    <br><small>{% include 'partials/item/date.html.twig' with {'page': page, 'parent': parent, 'show_date': true} %}</small>
+  {% if cfg.show_date_published or cfg.show_date_modified %}
+    <br><small>
+      {% 
+        include 'partials/item/date.html.twig' 
+        with {
+          'page': page, 
+          'parent': parent
+        } %}
+    </small>
   {% endif %}
 
   {% if cfg.show_cat and page.taxonomy.category %}
@@ -43,10 +61,12 @@
     </small>
   {% endif %}
 
-  {% if page.summary != page.content %}
-    <p>{{ page.summary|raw }} <a href="{{ page.url }}">{{ 'THEME_HYPERTEXT.PAGINATION.CONTINUE_READING'|t }}…</a></p>
-  {% else %}
-    <p>{{ page.summary|raw }}</p>
+  {% if cfg.show_summary %}
+    {% if page.summary != page.content %}
+      <p>{{ page.summary|raw }} {% if cfg.show_click_through %}<a href="{{ page.url }}">{{ 'THEME_HYPERTEXT.PAGINATION.CONTINUE_READING'|t }}…</a>{% endif %}</p>
+    {% else %}
+      <p>{{ page.summary|raw }}</p>
+    {% endif %}
   {% endif %}
 
 </article>

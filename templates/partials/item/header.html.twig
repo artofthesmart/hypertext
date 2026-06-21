@@ -7,48 +7,39 @@
   are dynamically registered in the theme class via `onTwigSiteVariables()`
   in `hypertext.php`.
 #}
-{% set show_image = page.header.show_header_image|default(false) %}
-{% set header_image_name = page.header.header_image_file|default('header.png') %}
-{% set header_image = page.media.images[header_image_name] ??
-                      media['image://' ~ header_image_name] ??
+{% import 'partials/item/config.html.twig' as item_config %}
+{% set cfg = item_config.resolve(page)|json_decode %}
 
-                      page.media.images['header.png'] ??
-                      page.media.images['header.gif'] ??
-                      page.media.images['header.jpg'] ??
-                      page.media.images['header.webp'] ??
+{% import 'partials/item/image.html.twig' as image_finder %}
+{% set header_desc = image_finder.find_header(page)|trim %}
+{% set header_image = null %}
+{% if header_desc %}
+  {% set parts = header_desc|split(':', 2) %}
+  {% if parts[0] == 'page' %}{% set header_image = page.media.images[parts[1]] %}
+  {% elseif parts[0] == 'global' %}{% set header_image = media['image://' ~ parts[1]] %}
+  {% elseif parts[0] == 'first' %}{% set header_image = page.media.images|first %}
+  {% endif %}
+{% endif %}
 
-                      media['image://' ~ page.slug()~'.png'] ??
-                      media['image://' ~ page.slug()~'.gif'] ??
-                      media['image://' ~ page.slug()~'.jpg'] ??
-                      media['image://' ~ page.slug()~'.webp'] ??
-
-                      media['image://' ~ page.slug()~'_header.png'] ??
-                      media['image://' ~ page.slug()~'_header.gif'] ??
-                      media['image://' ~ page.slug()~'_header.jpg'] ??
-                      media['image://' ~ page.slug()~'_header.webp'] ??
-
-                      page.media.images|first %}
 {% set use_image_crop = (handling.images.compress|default('none') != 'none') %}
-{% set image_width = use_image_crop ? (style.layout['content-width'] == 'default' ? 1024 : style.layout['content-width']) - 10 : header_image.width %}
-{% set image_height = use_image_crop ? (style.layout['content-width'] == 'default' ? 1024 : style.layout['content-width']) / 5 : header_image.height %}
-{% set header_image_url = use_image_crop ? header_image.cropZoom(image_width, image_height).url : header_image.url %}
-
-{% set show_date = structure['show-date']|default(false) %}
+{% set image_width = (use_image_crop and header_image) ? (style.layout['content-width'] == 'default' ? 1024 : style.layout['content-width']) - 10 : (header_image ? header_image.width : 0) %}
+{% set image_height = (use_image_crop and header_image) ? (style.layout['content-width'] == 'default' ? 1024 : style.layout['content-width']) / 5 : (header_image ? header_image.height : 0) %}
+{% set header_image_url = (use_image_crop and header_image) ? header_image.cropZoom(image_width, image_height).url : (header_image ? header_image.url : '') %}
 
 {# ------------------------------------------------------------------------ #}
 
 {# Title & Subtitle #}
-{% if not page.home() %}
+{% if cfg.show_title and not page.home() %}
 <h2>
   <a href="{{ page.url }}">{{ page.title }}</a>
 </h2>
 {% endif %}
-{% if page.header.subtitle %}<strong>{{ page.header.subtitle }}</strong>{% endif %}
+{% if cfg.show_subtitle and page.header.subtitle %}<strong>{{ page.header.subtitle }}</strong>{% endif %}
 
 <p> {# The next set of items should be somewhat close together. #}
 
 {# Image #}
-{% if show_image and header_image %}
+{% if cfg.show_image and header_image %}
   <a href="{{ page.url }}">
     <img src="{{ header_image_url }}" width="{{ image_width }}" height="{{ image_height }}" loading="lazy" alt="{{ page.title|e('html_attr') }}">
   </a>
@@ -56,21 +47,20 @@
 {% endif %}
 
 {# Date #}
-{% set isHome = page.home() %}
-{% if (show_date != 0) and (show_date != default) and page.header.show_date != 'disabled' %}
-  {% if (show_date == 'everywhere' or show_date == 1) or 
-     (show_date == 'not-home' and not isHome) or
-     (show_date == 'children' and page.template() in ['default', 'blog_item', 'item', 'modular'] and not isHome) or
-     page.header.show_date == 'enabled'
-  %}
-    {{ 'THEME_HYPERTEXT.DATES.DATE'|t }}: <small>
-        {{ dec_left|raw }}{% include 'partials/item/date.html.twig' with {'page': page, 'parent': page.parent, 'show_date': true} %}{{ dec_right|raw }}
-    </small><br />
-  {% endif %}
+{% if cfg.show_date_published or cfg.show_date_modified %}
+  {{ 'THEME_HYPERTEXT.DATES.DATE'|t }}: <small>
+    {{ dec_left|raw }}{% 
+      include 'partials/item/date.html.twig' 
+      with {
+        'page': page, 
+        'parent': page.parent, 
+        'show_label': false
+      } %}{{ dec_right|raw }}
+  </small><br />
 {% endif %}
 
 {# Categories #}
-{% if page.taxonomy.category %}
+{% if cfg.show_cat and page.taxonomy.category %}
   {{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t }}: <small>
   {% for category in page.taxonomy.category %}
     {{ dec_left|raw }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ dec_right|raw }}{{ not loop.last ? ',' : '' }}
@@ -78,7 +68,7 @@
   {{ page.taxonomy.tag ? '<br>' : '' }}
 {% endif %}
 
-{% if page.taxonomy.tag %}
+{% if cfg.show_tags and page.taxonomy.tag %}
   {{ 'THEME_HYPERTEXT.TAGS.TAGS'|t }}: <small>
   {% for tag in page.taxonomy.tag %}
     {{ dec_left|raw }}<a href="{{ page.parent.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ tag }}">{{ tag }}</a>{{ dec_right|raw }}{{ not loop.last ? ',' : '' }}

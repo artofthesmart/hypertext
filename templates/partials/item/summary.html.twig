@@ -11,32 +11,22 @@
 {% set cfg = item_config.resolve(page, parent)|json_decode %}
 {% set inner_children = page.collection()|length > 0 ? page.collection() : page.children.visible %}
 
-{% set thumbnail_filename = page.header.thumbnail_image_file %}
-{% set thumbnail_image = page.media.images[thumbnail_filename] ??
-                    media['image://' ~ thumbnail_filename] ??
+{% import 'partials/item/image.html.twig' as image_finder %}
+{% set img_desc = image_finder.find_thumbnail(page)|trim %}
+{% set thumbnail_image = null %}
+{% if img_desc %}
+  {% set parts = img_desc|split(':', 2) %}
+  {% if parts[0] == 'page' %}{% set thumbnail_image = page.media.images[parts[1]] %}
+  {% elseif parts[0] == 'global' %}{% set thumbnail_image = media['image://' ~ parts[1]] %}
+  {% elseif parts[0] == 'first' %}{% set thumbnail_image = page.media.images|first %}
+  {% endif %}
+{% endif %}
 
-                    page.media.images['thumbnail.png'] ??
-                    page.media.images['thumbnail.jpg'] ??
-                    page.media.images['thumbnail.gif'] ??
-                    page.media.images['thumbnail.webp'] ??
-                    
-                    page.media.images[page.slug()~'_thumbnail.png'] ??
-                    page.media.images[page.slug()~'_thumbnail.jpg'] ??
-                    page.media.images[page.slug()~'_thumbnail.gif'] ??
-                    page.media.images[page.slug()~'_thumbnail.webp'] ??
-
-                    media['image://' ~ page.slug()~'_thumbnail.png'] ??
-                    media['image://' ~ page.slug()~'_thumbnail.jpg'] ??
-                    media['image://' ~ page.slug()~'_thumbnail.gif'] ??
-                    media['image://' ~ page.slug()~'_thumbnail.webp'] ??
-                    
-                    page.media.images[page.header.header_image_file] ??
-                    
-                    page.media.images|first %}
+{% set theme_style = config.themes.hypertext.style %}
 {% set use_image_crop = (handling.images.compress|default('none') != 'none') %}
-{% set image_width = use_image_crop ? (style.layout['content-width'] == 'default' ? 1024 : style.layout['content-width']) / 7 : thumbnail_image.width %}
-{% set image_height = use_image_crop ? (style.layout['content-width'] == 'default' ? 1024 : style.layout['content-width']) / 7 : thumbnail_image.height %}
-{% set thumbnail_image_url = use_image_crop ? thumbnail_image.cropZoom(image_width, image_height).url : thumbnail_image.url %}
+{% set image_width = (use_image_crop and thumbnail_image) ? (theme_style.layout['content-width'] == 'default' ? 1024 : theme_style.layout['content-width']) / 7 : (thumbnail_image ? thumbnail_image.width : 0) %}
+{% set image_height = (use_image_crop and thumbnail_image) ? (theme_style.layout['content-width'] == 'default' ? 1024 : theme_style.layout['content-width']) / 7 : (thumbnail_image ? thumbnail_image.height : 0) %}
+{% set thumbnail_image_url = (use_image_crop and thumbnail_image) ? thumbnail_image.cropZoom(image_width, image_height).url : (thumbnail_image ? thumbnail_image.url : '') %}
 
 {# ------------------------------------------------------------------------ #}
 
@@ -58,10 +48,15 @@
 {% endif %}
 
 {# Date #}
-{% if cfg.show_date %}
+{% if cfg.show_date_published or cfg.show_date_modified %}
 {{ cfg.show_image and thumbnail_image ? '<br>' : '' }}
 <sub>
-    {% include 'partials/item/date.html.twig' with {'page': page, 'parent': parent, 'show_date': true} %}
+    {% 
+      include 'partials/item/date.html.twig' 
+      with {
+        'page': page, 
+        'parent': parent
+      } %}
 </sub>
 {% endif %}
 
@@ -78,11 +73,13 @@
 </p>
 
 {# Text #}
-{% if page.summary == page.content %}
-  {{ page.summary|raw }}
-{% else %}
-  {{ page.summary|raw }}
-  {% if page.header.show_clickthrough ?? true %}<p><a href="{{ page.url }}">{{ 'THEME_HYPERTEXT.PAGINATION.CONTINUE_READING'|t }}...</a></p> {% endif %}
+{% if cfg.show_summary %}
+  {% if page.summary == page.content %}
+    {{ page.summary|raw }}
+  {% else %}
+    {{ page.summary|raw }}
+    {% if cfg.show_click_through %}<p><a href="{{ page.url }}">{{ 'THEME_HYPERTEXT.PAGINATION.CONTINUE_READING'|t }}...</a></p> {% endif %}
+  {% endif %}
 {% endif %}
 
 {# Children #}

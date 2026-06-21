@@ -1,12 +1,11 @@
 {% set collection = page.collection()|length > 0 ? page.collection() : page.children.visible %}
-{% set style = page.header.render.children.style|default(config.themes.hypertext.collection.mode|default('summary')) %}
+{% set style = (page.header.collection.mode|default('default') != 'default') ? page.header.collection.mode : config.themes.hypertext.collection.mode|default('summary') %}
 
 {# ------------------------------------------------------------------------ #}
 
 {% if collection|length > 0 %}
   {% set collection = collection.order(page.header.content.order.by|default(system.pages.order.by),
                                        page.header.content.order.dir|default(system.pages.order.dir)) %}
-
   {% include 'partials/collection/render.html.twig' with {'collection': collection, 'parent': page, 'style': style} %}
 
   {% if config.plugins.pagination.enabled and collection.params.pagination %}

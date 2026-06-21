@@ -12,11 +12,11 @@
 <p>{{ 'THEME_HYPERTEXT.FOOTER.BY_LINE'|t|raw }}</p>
 
 {% block bottom %}
-{% if allowJS %}
+{% if js_enabled %}
 {{ assets.js('bottom')|raw }}
 {% endif %}
 
-{% if allowCSS %}
+{% if css_enabled %}
 {{ assets.css('bottom')|raw }}
 {% endif %}
 {% endblock %}

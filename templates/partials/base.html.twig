@@ -40,7 +40,7 @@
   
 
   {# Prefer a user-uploaded favicon, fall back to the theme default #}
-  {% set favicon_url = url('user://images/favicon.png', false, true) ?: url('theme://images/favicon.png') %}
+  {% set favicon_url = url('images://favicon.png', false, true) ?: url('theme://images/favicon.png') %}
   <link rel="icon" type="image/png" href="{{ favicon_url }}" />
 
   {% include 'partials/page/js-css.html.twig' %}

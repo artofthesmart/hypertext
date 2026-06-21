@@ -1,9 +1,57 @@
-{% set allowCSS = page.header.allowCSS == 'enabled' or
-                    (page.header.allowCSS|default('default') == 'default' and 
-                     style.css.enable) %}
-{% set allowJS  = page.header.allowJS  == 'enabled' or
-                    (page.header.allowJS|default('default') == 'default' and 
-                     style.js.enable) %}
+{% set parent = page.parent %}
+
+{# 1. Allow CSS #}
+{% set page_val = page.header.style.css.enable ?? null %}
+{% if page_val is not null and page_val != 'default' %}
+  {% set css_enabled = (page_val == 1) %}
+{% else %}
+  {% set parent_val = (parent is not null and parent.header is defined) ? (parent.header.style.css.enable ?? null) : null %}
+  {% if parent_val is not null and parent_val != 'default' %}
+    {% set css_enabled = (parent_val == 1) %}
+  {% else %}
+    {% set css_enabled = style.css.enable %}
+  {% endif %}
+{% endif %}
+
+{# 2. Allow JS #}
+{% set page_val = page.header.style.js.enable ?? null %}
+{% if page_val is not null and page_val != 'default' %}
+  {% set js_enabled = (page_val == 1) %}
+{% else %}
+  {% set parent_val = (parent is not null and parent.header is defined) ? (parent.header.style.js.enable ?? null) : null %}
+  {% if parent_val is not null and parent_val != 'default' %}
+    {% set js_enabled = (parent_val == 1) %}
+  {% else %}
+    {% set js_enabled = style.js.enable %}
+  {% endif %}
+{% endif %}
+
+{# 3. CSS Include Method #}
+{% set page_val = page.header.handling.css.serving ?? null %}
+{% if page_val is not null and page_val != 'default' %}
+  {% set css_serving = page_val %}
+{% else %}
+  {% set parent_val = (parent is not null and parent.header is defined) ? (parent.header.handling.css.serving ?? null) : null %}
+  {% if parent_val is not null and parent_val != 'default' %}
+    {% set css_serving = parent_val %}
+  {% else %}
+    {% set css_serving = handling.css.serving %}
+  {% endif %}
+{% endif %}
+
+{# 4. JS Include Method #}
+{% set page_val = page.header.handling.js.serving ?? null %}
+{% if page_val is not null and page_val != 'default' %}
+  {% set js_serving = page_val %}
+{% else %}
+  {% set parent_val = (parent is not null and parent.header is defined) ? (parent.header.handling.js.serving ?? null) : null %}
+  {% if parent_val is not null and parent_val != 'default' %}
+    {% set js_serving = parent_val %}
+  {% else %}
+    {% set js_serving = handling.js.serving %}
+  {% endif %}
+{% endif %}
+
 {% set use_visually_impaired = style['visually-impaired']|default(false) %}
 
 {% set stylesheets = ['air', 'hypertext++', 'latex', 'marx', 'milligram', 'modest', 'mvp', 'newcss-default', 'newcss-night', 'newcss-terminal', 'sakura', 'sakura-dark', 'sakura-dark-solarized', 'sakura-earthly', 'sakura-ink', 'sakura-pink', 'sakura-radical', 'sakura-vader', 'simple', 'stylize', 'tacit', 'tufte', 'water-dark', 'water-light', 'writ', 'yorha'] %}
@@ -57,11 +105,11 @@
 {# Add the hypertext selected stylesheet #}
 {% if stylesheet != 'default' %}
 
-  {% if handling.css.serving == 'inline' %}
+  {% if css_serving == 'inline' %}
     <style>{{ include('css/' ~ stylesheet ~ '.css') }}</style>
     {% if use_visually_impaired %}<style>{{ include('css/visual-impaired.css') }}</style>{% endif %}
 
-  {% elseif not allowCSS %}
+  {% elseif not css_enabled %}
     {# User wants it via href, but doesn't have CSS pipeline running #}
     <link href="{{ url('theme://css/'~stylesheet~'.css') }}" rel="stylesheet" />
     {% if use_visually_impaired %}<link href="{{ url('theme://css/visual-impaired.css') }}" rel="stylesheet" /> {% endif %}
@@ -81,8 +129,8 @@
 
 {# Regular CSS/JS includes, like from plugins #}
 {% block assets deferred %}
-  {% if allowCSS %}{{ assets.css()|raw }}{% endif %}
-  {% if allowJS %}{{ assets.js()|raw }}{% endif %}
+  {% if css_enabled %}{{ assets.css()|raw }}{% endif %}
+  {% if js_enabled %}{{ assets.js()|raw }}{% endif %}
 {% endblock %}
 
 {# Feed plugin auto-discovery #}
@@ -101,6 +149,12 @@
   {{ style.css['custom-value'] }}
 
   {# Page's custom styles take maximum priority. #}
-  {{ page.header.customCSS}}
+  {# Page's custom styles (or inherited from parent) take maximum priority. #}
+  {% set page_custom_css = page.header.style.css['custom-value'] ?? null %}
+  {% if page_custom_css is empty %}
+    {% set parent_custom_css = (parent is not null and parent.header is defined) ? (parent.header.style.css['custom-value'] ?? null) : null %}
+    {% set page_custom_css = parent_custom_css %}
+  {% endif %}
+  {{ page_custom_css }}
   {% endautoescape %}
 </style>

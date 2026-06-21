@@ -15,36 +15,20 @@
 {% set thumb_url = null %}
 {% set thumb_size = null %}
 {% if cfg.show_image %}
-  {% set thumb_name = page.header.thumbnail_image_file|default(null) %}
-  {% set slug = page.slug() %}
-  {% set header_file = page.header.header_image_file|default('header.png') %}
+  {% import 'partials/item/image.html.twig' as image_finder %}
+  {% set img_desc = image_finder.find_thumbnail(page)|trim %}
   {% set thumb = null %}
-  {% if thumb_name %}
-    {% set thumb_media_name = 'image://' ~ thumb_name %}
-    {% set thumb = page.media.images[thumb_name] ?? media[thumb_media_name] ?? null %}
+  {% if img_desc %}
+    {% set parts = img_desc|split(':', 2) %}
+    {% if parts[0] == 'page' %}{% set thumb = page.media.images[parts[1]] %}
+    {% elseif parts[0] == 'global' %}{% set thumb = media['image://' ~ parts[1]] %}
+    {% elseif parts[0] == 'first' %}{% set thumb = page.media.images|first %}
+    {% endif %}
   {% endif %}
-  {% set slug_webp = 'image://' ~ slug ~ '_thumbnail.webp' %}
-  {% set slug_png  = 'image://' ~ slug ~ '_thumbnail.png' %}
-  {% set slug_gif  = 'image://' ~ slug ~ '_thumbnail.gif' %}
-  {% set slug_jpg  = 'image://' ~ slug ~ '_thumbnail.jpg' %}
-  {% set thumb = thumb ??
-    page.media.images['thumbnail.webp'] ??
-    page.media.images['thumbnail.png'] ??
-    page.media.images['thumbnail.gif'] ??
-    page.media.images['thumbnail.jpg'] ??
-    media[slug_webp] ??
-    media[slug_png] ??
-    media[slug_gif] ??
-    media[slug_jpg] ??
-    page.media.images[header_file] ??
-    page.media.images['header.webp'] ??
-    page.media.images['header.png'] ??
-    page.media.images['header.gif'] ??
-    page.media.images['header.jpg'] ??
-    page.media.images|first %}
 
+  {% set theme_style = config.themes.hypertext.style %}
   {% set use_image_crop = (handling.images.compress|default('none') != 'none') %}
-  {% set content_width = style.layout['content-width']|default(960)|int %}
+  {% set content_width = theme_style.layout['content-width']|default(960)|int %}
   {% set content_width = content_width == 0 ? 960 : content_width %}
   {# Thumbnail is sized relative to content width, ~6% (about 1 line height) #}
   {% set thumb_size = use_image_crop ? (content_width / 16)|round : null %}
@@ -72,8 +56,13 @@
   {% endif %}
 
   {# Date #}
-  {% if cfg.show_date %}
-    {{ dec_left|raw }}{% include 'partials/item/date.html.twig' with {'page': page, 'parent': parent, 'show_date': true} %}{{ dec_right|raw }}
+  {% if cfg.show_date_published or cfg.show_date_modified %}
+    {{ dec_left|raw }}{% 
+      include 'partials/item/date.html.twig' 
+      with {
+        'page': page, 
+        'parent': parent
+      } %}{{ dec_right|raw }}
   {% endif %}
 
   {# Title & Subtitle #}

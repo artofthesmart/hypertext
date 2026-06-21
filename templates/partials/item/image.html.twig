@@ -1,0 +1,95 @@
+{#
+  partials/item/image.html.twig
+  ─────────────────────────────
+  Helper macros to find header and thumbnail images for pages.
+  Returns a descriptor string of the form:
+    - "page:filename"
+    - "global:filename"
+    - "first" (fallback to first page image)
+    - "" (not found)
+
+  To resolve the returned descriptor into an image object in your template:
+  
+  {% import 'partials/item/image.html.twig' as image_finder %}
+  {% set desc = image_finder.find_header(page)|trim %}
+  {% set img = null %}
+  {% if desc %}
+    {% set parts = desc|split(':', 2) %}
+    {% if parts[0] == 'page' %}{% set img = page.media.images[parts[1]] %}
+    {% elseif parts[0] == 'global' %}{% set img = media['image://' ~ parts[1]] %}
+    {% elseif parts[0] == 'first' %}{% set img = page.media.images|first %}
+    {% endif %}
+  {% endif %}
+#}
+
+{% macro find_header(page, custom_name = null) %}
+  {% set name = custom_name|default(page.header.header_image_file)|default('header.png') %}
+  {% if page.media.images[name] is defined %}
+    {{ 'page:' ~ name }}
+  {% elseif media['image://' ~ name] is defined %}
+    {{ 'global:' ~ name }}
+  {% elseif page.media.images['header.png'] is defined %}
+    {{ 'page:header.png' }}
+  {% elseif page.media.images['header.gif'] is defined %}
+    {{ 'page:header.gif' }}
+  {% elseif page.media.images['header.jpg'] is defined %}
+    {{ 'page:header.jpg' }}
+  {% elseif page.media.images['header.webp'] is defined %}
+    {{ 'page:header.webp' }}
+  {% elseif media['image://' ~ page.slug() ~ '.png'] is defined %}
+    {{ 'global:' ~ page.slug() ~ '.png' }}
+  {% elseif media['image://' ~ page.slug() ~ '.gif'] is defined %}
+    {{ 'global:' ~ page.slug() ~ '.gif' }}
+  {% elseif media['image://' ~ page.slug() ~ '.jpg'] is defined %}
+    {{ 'global:' ~ page.slug() ~ '.jpg' }}
+  {% elseif media['image://' ~ page.slug() ~ '.webp'] is defined %}
+    {{ 'global:' ~ page.slug() ~ '.webp' }}
+  {% elseif media['image://' ~ page.slug() ~ '_header.png'] is defined %}
+    {{ 'global:' ~ page.slug() ~ '_header.png' }}
+  {% elseif media['image://' ~ page.slug() ~ '_header.gif'] is defined %}
+    {{ 'global:' ~ page.slug() ~ '_header.gif' }}
+  {% elseif media['image://' ~ page.slug() ~ '_header.jpg'] is defined %}
+    {{ 'global:' ~ page.slug() ~ '_header.jpg' }}
+  {% elseif media['image://' ~ page.slug() ~ '_header.webp'] is defined %}
+    {{ 'global:' ~ page.slug() ~ '_header.webp' }}
+  {% elseif page.media.images|length > 0 %}
+    {{ 'first' }}
+  {% endif %}
+{% endmacro %}
+
+{% macro find_thumbnail(page, custom_name = null) %}
+  {% set name = custom_name|default(page.header.thumbnail_image_file) %}
+  {% if name and page.media.images[name] is defined %}
+    {{ 'page:' ~ name }}
+  {% elseif name and media['image://' ~ name] is defined %}
+    {{ 'global:' ~ name }}
+  {% elseif page.media.images['thumbnail.png'] is defined %}
+    {{ 'page:thumbnail.png' }}
+  {% elseif page.media.images['thumbnail.jpg'] is defined %}
+    {{ 'page:thumbnail.jpg' }}
+  {% elseif page.media.images['thumbnail.gif'] is defined %}
+    {{ 'page:thumbnail.gif' }}
+  {% elseif page.media.images['thumbnail.webp'] is defined %}
+    {{ 'page:thumbnail.webp' }}
+  {% elseif page.media.images[page.slug() ~ '_thumbnail.png'] is defined %}
+    {{ 'page:' ~ page.slug() ~ '_thumbnail.png' }}
+  {% elseif page.media.images[page.slug() ~ '_thumbnail.jpg'] is defined %}
+    {{ 'page:' ~ page.slug() ~ '_thumbnail.jpg' }}
+  {% elseif page.media.images[page.slug() ~ '_thumbnail.gif'] is defined %}
+    {{ 'page:' ~ page.slug() ~ '_thumbnail.gif' }}
+  {% elseif page.media.images[page.slug() ~ '_thumbnail.webp'] is defined %}
+    {{ 'page:' ~ page.slug() ~ '_thumbnail.webp' }}
+  {% elseif media['image://' ~ page.slug() ~ '_thumbnail.png'] is defined %}
+    {{ 'global:' ~ page.slug() ~ '_thumbnail.png' }}
+  {% elseif media['image://' ~ page.slug() ~ '_thumbnail.jpg'] is defined %}
+    {{ 'global:' ~ page.slug() ~ '_thumbnail.jpg' }}
+  {% elseif media['image://' ~ page.slug() ~ '_thumbnail.gif'] is defined %}
+    {{ 'global:' ~ page.slug() ~ '_thumbnail.gif' }}
+  {% elseif media['image://' ~ page.slug() ~ '_thumbnail.webp'] is defined %}
+    {{ 'global:' ~ page.slug() ~ '_thumbnail.webp' }}
+  {% else %}
+    {# Fall back to header image search #}
+    {% import _self as self %}
+    {{ self.find_header(page, page.header.header_image_file) }}
+  {% endif %}
+{% endmacro %}

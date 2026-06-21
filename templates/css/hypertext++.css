@@ -1,11 +1,66 @@
 body {
     color: #353535;
-    font-size:large;
-    padding:0 10px;
+    font-size: large;
+    padding: 0 10px;
     margin: 40px auto;
 }
-img { max-width: 80%; }
-h1, h2, h3 { font-family: sans-serif; }
-p { line-height:1.5; }
-table { border-spacing: 0; width: 100%; }
-td, th { border-bottom: 2px solid #e1e1e1; padding: 20px 24px; text-align: left; }
+
+img {
+    max-width: 80%;
+}
+
+h1,
+h2,
+h3 {
+    font-family: sans-serif;
+}
+
+p {
+    line-height: 1.5;
+}
+
+table {
+    border-spacing: 0;
+    width: 100%;
+}
+
+td,
+th {
+    border-bottom: 2px solid #e1e1e1;
+    padding: 20px 24px;
+    text-align: left;
+}
+
+#breadcrumbs ol {
+    /* Reset default list styles */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    /* Layout horizontally, wrapping if necessary */
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    /* Space between words and separators */
+}
+
+#breadcrumbs li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Add the ">" separator after every item EXCEPT the last one */
+#breadcrumbs li:not(:last-child)::after {
+    content: '>';
+    /* Optional: slightly fade the separator so it doesn't distract from link text */
+    opacity: 0.5;
+    /* Optional: prevents the separator from being highlighted when users select text */
+    user-select: none;
+}
+
+#breadcrumbs li,
+nav a {
+    white-space: nowrap;
+}

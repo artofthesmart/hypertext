@@ -1,28 +1,244 @@
 {#
   partials/item/config.html.twig
   ──────────────────────────────
-  Resolves child/item display configurations by coalescing parent collection
-  settings and individual page-level overrides.
+  Resolves child/item display configurations by coalescing three layers of priority:
+  1. Highest: Page-level local overrides/frontmatter
+  2. Middle: Parent collection page render settings (only if rendering as a collection child)
+  3. Lowest: Theme-level global default configuration
 #}
-{% macro resolve(page, parent) %}
-  {% set render_children = parent.header.render.children %}
-  {% set show_subtitle = render_children.subtitle ?? true %}
-  {% set show_cat = render_children.category ?? true %}
-  {% set show_children = render_children.nested_children ?? true %}
-  {% set show_date = render_children.date ?? false %}
+
+{% macro resolve(page, parent = null) %}
+  {% set page_exists = (page is defined and page is not null) %}
+  {% set page_header = page_exists ? page.header : null %}
+  {% set real_parent = page_exists ? page.parent : null %}
   
-  {% set show_image_override = page.header.show_header_image|default('default') %}
-  {% if show_image_override == 'default' %}
-    {% set show_image = render_children.image ?? true %}
+  {% set standalone = (parent is null or (page_exists and parent.path == page.path)) %}
+  {% set col_parent = standalone ? null : parent %}
+
+  {# 1. Title #}
+  {% set page_val = page_header.page.content.title ?? null %}
+  {% set parent_val = null %}
+  {% if not standalone and col_parent is not null %}
+    {% set parent_val = col_parent.header.collection.display.title ?? null %}
   {% else %}
-    {% set show_image = show_image_override == 'enabled' %}
+    {% if real_parent is not null and real_parent.header is defined %}
+      {% set parent_val = real_parent.header.page.content.title ?? null %}
+    {% endif %}
+  {% endif %}
+  {% set theme_val = not standalone ? config.themes.hypertext.collection.display.title : config.themes.hypertext.page.content.title %}
+  
+  {% if page_val is not null and page_val != 'default' %}
+    {% set show_title = (page_val == 1) %}
+  {% elseif parent_val is not null and parent_val != 'default' %}
+    {% set show_title = (parent_val == 1) %}
+  {% else %}
+    {% set show_title = (theme_val == 1) %}
+  {% endif %}
+
+  {# 2. Subtitle #}
+  {% set page_val = page_header.page.content.subtitle ?? null %}
+  {% set parent_val = null %}
+  {% if not standalone and col_parent is not null %}
+    {% set parent_val = col_parent.header.collection.display.subtitle ?? null %}
+  {% else %}
+    {% if real_parent is not null and real_parent.header is defined %}
+      {% set parent_val = real_parent.header.page.content.subtitle ?? null %}
+    {% endif %}
+  {% endif %}
+  {% set theme_val = not standalone ? config.themes.hypertext.collection.display.subtitle : config.themes.hypertext.page.content.subtitle %}
+  
+  {% if page_val is not null and page_val != 'default' %}
+    {% set show_subtitle = (page_val == 1) %}
+  {% elseif parent_val is not null and parent_val != 'default' %}
+    {% set show_subtitle = (parent_val == 1) %}
+  {% else %}
+    {% set show_subtitle = (theme_val == 1) %}
+  {% endif %}
+
+  {# 3. Header Image #}
+  {% set page_val = page_header.page.content['header-image'] ?? null %}
+  {% set parent_val = null %}
+  {% if not standalone and col_parent is not null %}
+    {% set parent_val = col_parent.header.collection.display['header-image'] ?? null %}
+  {% else %}
+    {% if real_parent is not null and real_parent.header is defined %}
+      {% set parent_val = real_parent.header.page.content['header-image'] ?? null %}
+    {% endif %}
+  {% endif %}
+  {% set theme_val = not standalone ? config.themes.hypertext.collection.display['header-image'] : config.themes.hypertext.page.content['header-image'] %}
+  
+  {% if page_val is not null and page_val != 'default' %}
+    {% set show_image = (page_val == 1) %}
+  {% elseif parent_val is not null and parent_val != 'default' %}
+    {% set show_image = (parent_val == 1) %}
+  {% else %}
+    {% set show_image = (theme_val == 1) %}
+  {% endif %}
+
+  {# 4. Categories #}
+  {% set page_val = page_header.page.content.categories ?? null %}
+  {% set parent_val = null %}
+  {% if not standalone and col_parent is not null %}
+    {% set parent_val = col_parent.header.collection.display.categories ?? null %}
+  {% else %}
+    {% if real_parent is not null and real_parent.header is defined %}
+      {% set parent_val = real_parent.header.page.content.categories ?? null %}
+    {% endif %}
+  {% endif %}
+  {% set theme_val = not standalone ? config.themes.hypertext.collection.display.categories : config.themes.hypertext.page.content.categories %}
+  
+  {% if page_val is not null and page_val != 'default' %}
+    {% set show_cat = (page_val == 1) %}
+  {% elseif parent_val is not null and parent_val != 'default' %}
+    {% set show_cat = (parent_val == 1) %}
+  {% else %}
+    {% set show_cat = (theme_val == 1) %}
+  {% endif %}
+
+  {# 5. Tags #}
+  {% set page_val = page_header.page.content.tags ?? null %}
+  {% set parent_val = null %}
+  {% if not standalone and col_parent is not null %}
+    {% set parent_val = col_parent.header.collection.display.tags ?? null %}
+  {% else %}
+    {% if real_parent is not null and real_parent.header is defined %}
+      {% set parent_val = real_parent.header.page.content.tags ?? null %}
+    {% endif %}
+  {% endif %}
+  {% set theme_val = not standalone ? config.themes.hypertext.collection.display.tags : config.themes.hypertext.page.content.tags %}
+  
+  {% if page_val is not null and page_val != 'default' %}
+    {% set show_tags = (page_val == 1) %}
+  {% elseif parent_val is not null and parent_val != 'default' %}
+    {% set show_tags = (parent_val == 1) %}
+  {% else %}
+    {% set show_tags = (theme_val == 1) %}
+  {% endif %}
+
+  {# 6. Published Date #}
+  {% set page_val = page_header.page.content['date-published'] ?? null %}
+  {% set parent_val = null %}
+  {% if not standalone and col_parent is not null %}
+    {% set col_date = col_parent.header.collection.display.date ?? null %}
+    {% set col_date_type = col_parent.header.collection.display['date-type'] ?? 'published' %}
+    {% if col_date_type == 'published' or col_date_type == 'date' %}
+      {% set parent_val = col_date %}
+    {% else %}
+      {% set parent_val = 0 %}
+    {% endif %}
+  {% else %}
+    {% if real_parent is not null and real_parent.header is defined %}
+      {% set parent_val = real_parent.header.page.content['date-published'] ?? null %}
+    {% endif %}
+  {% endif %}
+  {% set theme_val = null %}
+  {% if not standalone %}
+    {% set t_date = config.themes.hypertext.collection.display.date ?? 1 %}
+    {% set t_type = config.themes.hypertext.collection.display['date-type'] ?? 'published' %}
+    {% set theme_val = (t_type == 'published' and t_date == 1) ? 1 : 0 %}
+  {% else %}
+    {% set theme_val = config.themes.hypertext.page.content['date-published'] %}
+  {% endif %}
+  
+  {% if page_val is not null and page_val != 'default' %}
+    {% set show_date_published = (page_val == 1) %}
+  {% elseif parent_val is not null and parent_val != 'default' %}
+    {% set show_date_published = (parent_val == 1) %}
+  {% else %}
+    {% set show_date_published = (theme_val == 1) %}
+  {% endif %}
+
+  {# 7. Modified Date #}
+  {% set page_val = page_header.page.content['date-last-updated'] ?? null %}
+  {% set parent_val = null %}
+  {% if not standalone and col_parent is not null %}
+    {% set col_date = col_parent.header.collection.display.date ?? null %}
+    {% set col_date_type = col_parent.header.collection.display['date-type'] ?? 'published' %}
+    {% if col_date_type == 'modified' %}
+      {% set parent_val = col_date %}
+    {% else %}
+      {% set parent_val = 0 %}
+    {% endif %}
+  {% else %}
+    {% if real_parent is not null and real_parent.header is defined %}
+      {% set parent_val = real_parent.header.page.content['date-last-updated'] ?? null %}
+    {% endif %}
+  {% endif %}
+  {% set theme_val = null %}
+  {% if not standalone %}
+    {% set t_date = config.themes.hypertext.collection.display.date ?? 1 %}
+    {% set t_type = config.themes.hypertext.collection.display['date-type'] ?? 'published' %}
+    {% set theme_val = (t_type == 'modified' and t_date == 1) ? 1 : 0 %}
+  {% else %}
+    {% set theme_val = config.themes.hypertext.page.content['date-last-updated'] %}
+  {% endif %}
+  
+  {% if page_val is not null and page_val != 'default' %}
+    {% set show_date_modified = (page_val == 1) %}
+  {% elseif parent_val is not null and parent_val != 'default' %}
+    {% set show_date_modified = (parent_val == 1) %}
+  {% else %}
+    {% set show_date_modified = (theme_val == 1) %}
+  {% endif %}
+
+  {# 8. Summary (Collection only) #}
+  {% set page_val = page_header.collection.display.summary ?? null %}
+  {% set parent_val = null %}
+  {% if not standalone and col_parent is not null %}
+    {% set parent_val = col_parent.header.collection.display.summary ?? null %}
+  {% endif %}
+  {% set theme_val = config.themes.hypertext.collection.display.summary ?? 0 %}
+  
+  {% if page_val is not null and page_val != 'default' %}
+    {% set show_summary = (page_val == 1) %}
+  {% elseif parent_val is not null and parent_val != 'default' %}
+    {% set show_summary = (parent_val == 1) %}
+  {% else %}
+    {% set show_summary = (theme_val == 1) %}
+  {% endif %}
+
+  {# 9. Click-through (Collection only) #}
+  {% set page_val = page_header.collection.display['click-through'] ?? null %}
+  {% set parent_val = null %}
+  {% if not standalone and col_parent is not null %}
+    {% set parent_val = col_parent.header.collection.display['click-through'] ?? null %}
+  {% endif %}
+  {% set theme_val = config.themes.hypertext.collection.display['click-through'] ?? 0 %}
+  
+  {% if page_val is not null and page_val != 'default' %}
+    {% set show_click_through = (page_val == 1) %}
+  {% elseif parent_val is not null and parent_val != 'default' %}
+    {% set show_click_through = (parent_val == 1) %}
+  {% else %}
+    {% set show_click_through = (theme_val == 1) %}
+  {% endif %}
+
+  {# 10. Nested Children (Collection only) #}
+  {% set page_val = page_header.collection['show-nested'] ?? null %}
+  {% set parent_val = null %}
+  {% if not standalone and col_parent is not null %}
+    {% set parent_val = col_parent.header.collection['show-nested'] ?? null %}
+  {% endif %}
+  {% set theme_val = config.themes.hypertext.collection['show-nested'] ?? 0 %}
+  
+  {% if page_val is not null and page_val != 'default' %}
+    {% set show_children = (page_val == 1) %}
+  {% elseif parent_val is not null and parent_val != 'default' %}
+    {% set show_children = (parent_val == 1) %}
+  {% else %}
+    {% set show_children = (theme_val == 1) %}
   {% endif %}
 
   {{ {
+    'show_title': show_title,
     'show_subtitle': show_subtitle,
+    'show_image': show_image,
     'show_cat': show_cat,
-    'show_children': show_children,
-    'show_date': show_date,
-    'show_image': show_image
+    'show_tags': show_tags,
+    'show_date_published': show_date_published,
+    'show_date_modified': show_date_modified,
+    'show_summary': show_summary,
+    'show_click_through': show_click_through,
+    'show_children': show_children
   }|json_encode }}
 {% endmacro %}

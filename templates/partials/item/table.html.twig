@@ -8,19 +8,45 @@
   in `hypertext.php`.
 #}
 {% import 'partials/item/config.html.twig' as item_config %}
-{% set cfg = item_config.resolve(parent, parent)|json_decode %}
+{% import 'partials/item/image.html.twig' as image_finder %}
+{% set cfg = item_config.resolve({}, parent)|json_decode %}
 {% set inner_children = page.collection()|length > 0 ? page.collection() : page.children.visible %}
 
 {# ------------------------------------------------------------------------ #}
 
 <table class="children" width="100%">
   {# Header #}
-  <thead><tr>
-    {% if cfg.show_image %}<td>{{ 'THEME_HYPERTEXT.THUMBNAIL.THUMBNAIL'|t|raw }}</td>{% endif %}
-    <td>Title</td>
-    {% if cfg.show_date %}<td>{{ 'THEME_HYPERTEXT.DATES.PUBLISHED'|t|raw }}</td>{% endif %}
-    {% if cfg.show_cat %}<td>{{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t|raw }}</td>{% endif %}
-  </thead></tr>
+  <thead>
+    <tr>
+      {% if cfg.show_image %}
+        <td>{{ 'THEME_HYPERTEXT.THUMBNAIL.THUMBNAIL'|t|raw }}</td>
+      {% endif %}
+
+      {% if cfg.show_title %}
+        <td>{{ 'THEME_HYPERTEXT.TITLES.TITLE'|t|raw }}</td>
+      {% endif %}
+
+      {% if cfg.show_subtitle %}
+        <td>{{ 'THEME_HYPERTEXT.TITLES.SUBTITLE'|t|raw }}</td>
+      {% endif %}
+
+      {% if cfg.show_date_published or cfg.show_date_modified %}
+        <td>{{ 'THEME_HYPERTEXT.DATES.DATE'|t|raw }}</td>
+      {% endif %}
+      
+      {% if cfg.show_cat %}
+        <td>{{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t|raw }}</td>
+      {% endif %}
+
+      {% if cfg.show_tags %}
+        <td>{{ 'THEME_HYPERTEXT.TAGS.TAGS'|t|raw }}</td>
+      {% endif %}
+
+      {% if cfg.show_summary %}
+        <td>{{ 'THEME_HYPERTEXT.SUMMARY.SUMMARY'|t|raw }}</td>
+      {% endif %}
+    </tr>
+  </thead>
 
   {% for child in collection if child.isPage() %}
     {# Never show the image; it's hideous on mobile.
@@ -31,48 +57,72 @@
      #   {% set show_image = child.header.show_header_image == 'enabled' %}
      # {% endif %}
      # {% set header_image = child.media.images[child.header.header_image_file] ?? child.media.images|first %} #}
-    {% set inner_children = child.collection()|length > 0 ? child.collection() : child.children.visible %}
+    {% set child_cfg = item_config.resolve(child, parent)|json_decode %}
+    {% set inner_children = child.collection()|length > 0 ? 
+                            child.collection() : child.children.visible %}
 
-
-
-  <tr{% if child.taxonomy.category %} class="{% for cat in child.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}"{% endif %}>
+    <tr {% if child.taxonomy.category %} 
+          class="{% for cat in child.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}"
+        {% endif %}>
 
     {# Image #}
-    {% if cfg.show_image %} {# Never true, left it in for someone to convince me otherwise. #}
+    {% if cfg.show_image %}
     <td class="thumbnail">
-    {% if header_image %}
-      {% if handling.images.compress|default('none') != 'none' %}
-        <a href="{{ child.url }}">{{ header_image.cropZoom(((style.layout['content-width'] == 'default' ? 1024 : style.layout['content-width']) / 24), (style.layout['content-width'] == 'default' ? 1024 : style.layout['content-width']) / 24).html() }}</a>
-      {% else %}
-        <a href="{{ child.url }}">{{ header_image.html() }}</a>
+      {% set img_desc = image_finder.find_thumbnail(child)|trim %}
+      {% set header_image = null %}
+      {% if img_desc %}
+        {% set parts = img_desc|split(':', 2) %}
+        {% if parts[0] == 'page' %}
+          {% set header_image = child.media.images[parts[1]] %}
+        {% elseif parts[0] == 'global' %}
+          {% set header_image = media['image://' ~ parts[1]] %}
+        {% elseif parts[0] == 'first' %}
+          {% set header_image = child.media.images|first %}
+        {% endif %}
       {% endif %}
-    {% endif %}
+
+      {% if child_cfg.show_image and header_image %}
+        {% if handling.images.compress|default('none') != 'none' %}
+          {% set theme_style = config.themes.hypertext.style %}
+          <a href="{{ child.url }}">
+            {{ header_image.cropZoom(((theme_style.layout['content-width'] == 'default' ? 1024 : theme_style.layout['content-width']) / 24), (theme_style.layout['content-width'] == 'default' ? 1024 : theme_style.layout['content-width']) / 24).html()|raw }}
+          </a>
+        {% else %}
+          <a href="{{ child.url }}">{{ header_image.html()|raw }}</a>
+        {% endif %}
+      {% endif %}
     </td>
     {% endif %}
-    
 
     {# Title #}
     <td>
       <strong>
         <a href="{{ child.url }}">{{ child.title }}</a>        
       </strong>
-      {% if cfg.show_subtitle and child.header.subtitle %}- <span>{{ child.header.subtitle }}</span>{% endif %}
+      {% if child_cfg.show_subtitle and child.header.subtitle %}- <span>{{ child.header.subtitle }}</span>{% endif %}
     </td>
 
     {# Date #}
-    {% if cfg.show_date %}
+    {% if cfg.show_date_published or cfg.show_date_modified %}
     <td>
-        {% include 'partials/item/date.html.twig' with {'page': child, 'parent': page, 'show_date': true} %}
+      {% if child_cfg.show_date_published or child_cfg.show_date_modified %}
+        {% 
+          include 'partials/item/date.html.twig' 
+          with {
+            'page': child, 
+            'parent': page
+          } %}
+      {% endif %}
     </td>
     {% endif %}
 
     {# Categories #}
     {% if cfg.show_cat %}
     <td>
-      {% if child.taxonomy.category %}
+      {% if child_cfg.show_cat and child.taxonomy.category %}
       <small>
         {% for category in child.taxonomy.category %}
-        {{ dec_left|raw }}<a href="{{ parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ dec_right|raw }}{{ not loop.last %}, {% endif %}
+        {{ dec_left|raw }}<a href="{{ parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ dec_right|raw }}{{ not loop.last ? ', ' : '' }}
         {% endfor %}
       </small>
       {% endif %}
@@ -85,28 +135,36 @@
       {% set inner_children = inner_children.order(page.header.content.order.by|default(system.pages.order.by), 
                                                    page.header.content.order.dir|default(system.pages.order.dir)) %}
       {% for inner_child in inner_children %}
+        {% set inner_cfg = item_config.resolve(inner_child, child)|json_decode %}
         <tr class="row-child">
 
           {# Title #}
           <td>
             &emsp;<a href="{{ inner_child.url }}">{{ inner_child.title }}</a>        
-            {% if cfg.show_subtitle and inner_child.header.subtitle %}- <span>{{ inner_child.header.subtitle }}</span>{% endif %}
+            {% if inner_cfg.show_subtitle and inner_child.header.subtitle %}- <span>{{ inner_child.header.subtitle }}</span>{% endif %}
           </td>
 
           {# Date #}
-          {% if cfg.show_date %}
+          {% if cfg.show_date_published or cfg.show_date_modified %}
           <td>
-            {% include 'partials/item/date.html.twig' with {'page': inner_child, 'parent': child, 'show_date': true} %}
+            {% if inner_cfg.show_date_published or inner_cfg.show_date_modified %}
+              {% 
+                include 'partials/item/date.html.twig' 
+                with {
+                  'page': inner_child, 
+                  'parent': child
+                } %}
+            {% endif %}
           </td>
           {% endif %}
 
           {# Categories #}
           {% if cfg.show_cat %}
           <td>
-            {% if inner_child.taxonomy.category %}
+            {% if inner_cfg.show_cat and inner_child.taxonomy.category %}
             <small>
               {% for category in inner_child.taxonomy.category %}
-              {{ dec_left|raw }}<a href="{{ child.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ dec_right|raw }}{{ not loop.last %}, {% endif %}
+              {{ dec_left|raw }}<a href="{{ child.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ dec_right|raw }}{{ not loop.last ? ', ' : '' }}
               {% endfor %}
             </small>
             {% endif %}
@@ -115,7 +173,6 @@
           </tr>
       {% endfor %}
     {% endif %} {# End render nested children #}
-
 
   {% endfor %} {# End of child loop #}
 </table>

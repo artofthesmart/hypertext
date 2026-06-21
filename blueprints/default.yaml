@@ -15,6 +15,30 @@ form:
           type: tab
           title: Hypertext
           fields:
+            tabs:
+              type: tabs
+              classes: plain
+              fields:
+                content:
+                  type: tab
+                  title: Content
+                  fields:
+                    title:
+                      type: text
+                      label: Title
+                    content:
+                      type: textarea
+                      label: Content
+                settings:
+                  type: tab
+                  title: Settings
+                  fields:
+                    published:
+                      type: toggle
+                      label: Published
+                    featured:
+                      type: toggle
+                      label: Featured
             columns:
               type: columns
               fields:
@@ -26,8 +50,15 @@ form:
                       title: JS/CSS Overrides
                       underline: true
                       import@:
-                        type: overrides
-                        context: theme://blueprints/default-partials
+                        type: css_js
+                        context: theme://blueprints/partials
+                    page_defaults_title:
+                      type: section
+                      title: Page Rendering Overrides
+                      underline: true
+                      import@:
+                        type: page_defaults
+                        context: theme://blueprints/partials
                 content_column:
                   type: column
                   title: Extra Content & Metadata

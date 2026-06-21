@@ -11,11 +11,22 @@
 {% set cfg = item_config.resolve(page, parent)|json_decode %}
 {% set inner_children = page.collection()|length > 0 ? page.collection() : page.children.visible %}
 
-{% set header_image = page.media.images[page.header.header_image_file] ?? page.media.images|first %}
+{% import 'partials/item/image.html.twig' as image_finder %}
+{% set img_desc = image_finder.find_thumbnail(page)|trim %}
+{% set header_image = null %}
+{% if img_desc %}
+  {% set parts = img_desc|split(':', 2) %}
+  {% if parts[0] == 'page' %}{% set header_image = page.media.images[parts[1]] %}
+  {% elseif parts[0] == 'global' %}{% set header_image = media['image://' ~ parts[1]] %}
+  {% elseif parts[0] == 'first' %}{% set header_image = page.media.images|first %}
+  {% endif %}
+{% endif %}
+
+{% set theme_style = config.themes.hypertext.style %}
 {% set use_image_crop = (handling.images.compress|default('none') != 'none') %}
-{% set image_width = use_image_crop ? (style.layout['content-width'] == 'default' ? 1024 : style.layout['content-width']) / 7 : header_image.width %}
-{% set image_height = use_image_crop ? (style.layout['content-width'] == 'default' ? 1024 : style.layout['content-width']) / 7 : header_image.height %}
-{% set header_image_url = use_image_crop ? header_image.cropZoom(image_width, image_height).url : header_image.url %}
+{% set image_width = (use_image_crop and header_image) ? (theme_style.layout['content-width'] == 'default' ? 1024 : theme_style.layout['content-width']) / 7 : (header_image ? header_image.width : 0) %}
+{% set image_height = (use_image_crop and header_image) ? (theme_style.layout['content-width'] == 'default' ? 1024 : theme_style.layout['content-width']) / 7 : (header_image ? header_image.height : 0) %}
+{% set header_image_url = (use_image_crop and header_image) ? header_image.cropZoom(image_width, image_height).url : (header_image ? header_image.url : '') %}
 
 {# ------------------------------------------------------------------------ #}
 
@@ -52,7 +63,15 @@
 
 {# Date #}
 <td>
-  {% include 'partials/item/date.html.twig' with {'page': page, 'parent': parent, 'show_date': cfg.show_date, 'show_label': true} %}
+  {% if cfg.show_date_published or cfg.show_date_modified %}
+    {% 
+      include 'partials/item/date.html.twig' 
+      with {
+        'page': page, 
+        'parent': parent, 
+        'show_label': true
+      } %}
+  {% endif %}
 </td>
 
 {# Categories #}

@@ -1,0 +1,114 @@
+form:
+  fields:
+    header.collection.mode:
+      type: select
+      label: Collection Layout
+      help: Determines how child pages are rendered when a page has a collection. Can be overridden per-page via page frontmatter or in the Admin view of the page.
+      default: default
+      options:
+        default: Use Default
+        list: List
+        comfy: Comfy (image + excerpt)
+        table: Table (compact rows)
+        grid: Grid (2D table)
+        cards: Cards (tile layout)
+
+    header.collection.display.title:
+      type: select
+      label: Show Title
+      help: When enabled, child page titles will be shown.
+      default: default
+      options:
+        default: Use Default
+        1: Enabled
+        0: Disabled
+
+    header.collection.display.subtitle:
+      type: select
+      label: Show Subtitle
+      help: When enabled, child page subtitles will be shown (if available).
+      default: default
+      options:
+        default: Use Default
+        1: Enabled
+        0: Disabled
+
+    header.collection.display.header-image:
+      type: select
+      label: Show Thumbnail
+      help: When enabled, child page thumbnails will be shown. If one isn't available, the header image is shown instead. If neither exists, nothing is shown.
+      default: default
+      options:
+        default: Use Default
+        1: Enabled
+        0: Disabled
+
+    header.collection.display.date:
+      type: select
+      label: Show Date
+      help: When enabled, a date will be shown (if possible) for child pages.
+      default: default
+      options:
+        default: Use Default
+        1: Enabled
+        0: Disabled
+
+    header.collection.display.date-type:
+      type: select
+      label: Select Date
+      help: Choose which date Grav should use for displaying dates for child pages.
+      default: default
+      options:
+        default: Use Default
+        published: Published Date
+        modified: Last Modified Date
+
+    header.collection.display.categories:
+      type: select
+      label: Show Categories
+      help: When enabled, child page categories will be shown (if available).
+      default: default
+      options:
+        default: Use Default
+        1: Enabled
+        0: Disabled
+
+    header.collection.display.tags:
+      type: select
+      label: Show Tags
+      help: When enabled, child page tags will be shown (if available).
+      default: default
+      options:
+        default: Use Default
+        1: Enabled
+        0: Disabled
+
+    header.collection.display.summary:
+      type: select
+      label: Show Summary
+      help: When enabled, child page summaries/excerpts will be shown. This is the content before the `===` in the body of a child page.
+      default: default
+      options:
+        default: Use Default
+        1: Enabled
+        0: Disabled
+
+    header.collection.display.click-through:
+      type: select
+      label: Show "Read More" Link
+      help: When enabled, a "Read More" or similar link to the full child page will be shown.
+      default: default
+      options:
+        default: Use Default
+        1: Enabled
+        0: Disabled
+
+    header.collection.show-nested:
+      type: select
+      label: Show nested children
+      help: When enabled, any sub-children that a child page has will be shown (if possible).
+      default: default
+      options:
+        default: Use Default
+        1: Enabled
+        0: Disabled

@@ -1,0 +1,59 @@
+form:
+  fields:
+    header.style.css.enable:
+      type: select
+      label: Allow CSS
+      help: Determines what CSS is allowed to load. Can be overridden on a per-page or collection basis.
+      default: default
+      options:
+        default: Use default
+        1: Enabled
+        0: Disabled
+
+    header.style.js.enable:
+      type: select
+      label: Allow JS
+      help: Determines what JS is allowed to load. Can be overridden on a per-page or collection basis.
+      default: default
+      options:
+        default: Use default
+        1: Enabled
+        0: Disabled
+
+    header.handling.css.serving:
+      type: select
+      label: CSS Include Method
+      help: "Determines whether to prioritize single page loads (inline <style>, good for Hypertext or single-serving sites) or multiple page loads (<link>, good for CSS styles or multi-paged sites)."
+      default: default
+      options:
+        default: Use default
+        inline: Inline (Faster single page loads)
+        linked: Link (Good for enabling JS/CSS)
+
+    header.handling.js.serving:
+      type: select
+      label: JS Include Method
+      help: "Determines how JavaScript is served. Inline embeds scripts in the page, linked uses separate requests."
+      default: default
+      options:
+        default: Use default
+        inline: Inline
+        linked: Linked
+
+    header.handling.minify-output:
+      type: select
+      classes: fancy
+      label: Minify HTML Output
+      help: When enabled, the final HTML output will be minified (whitespace/comments removed) for smaller payloads. Inline CSS is always auto-minified.
+      default: default
+      options:
+        default: Use default
+        1: Enabled
+        0: Disabled
+
+    header.style.css.custom-value:
+      type: textarea
+      label: Custom CSS
+      help: Add your page-specific, custom CSS rules here.
+      placeholder: "e.g. body { font-family: Courier }"
+      size: large

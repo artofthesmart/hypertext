@@ -1,0 +1,71 @@
+form:
+  fields:
+    header.page.content.title:
+      type: select
+      label: Show Title
+      help: When enabled, the page title will be shown.
+      default: default
+      options:
+        default: Use Default
+        1: Enabled
+        0: Disabled
+
+    header.page.content.subtitle:
+      type: select
+      label: Show Subtitle
+      help: When enabled, the subtitle will be shown on the page (if available).
+      default: default
+      options:
+        default: Use Default
+        1: Enabled
+        0: Disabled
+
+    header.page.content.header-image:
+      type: select
+      label: Show Header Image
+      help: When enabled, the header image will be shown at the top of the page. If you don't specify one, the first image in the post will be shown.
+      default: default
+      options:
+        default: Use Default
+        1: Enabled
+        0: Disabled
+
+    header.page.content.date-published:
+      type: select
+      label: Show Published Date
+      help: When enabled, the published date will be shown on the page.
+      default: default
+      options:
+        default: Use Default
+        1: Enabled
+        0: Disabled
+
+    header.page.content.date-last-updated:
+      type: select
+      label: Show Last Modified Date
+      help: When enabled, the last modified date will be shown on the page.
+      default: default
+      options:
+        default: Use Default
+        1: Enabled
+        0: Disabled
+
+    header.page.content.categories:
+      type: select
+      label: Show Categories
+      help: When enabled, categories will be shown on the page (if available).
+      default: default
+      options:
+        default: Use Default
+        1: Enabled
+        0: Disabled
+
+    header.page.content.tags:
+      type: select
+      label: Show Tags
+      help: When enabled, tags will be shown on the page (if available).
+      default: default
+      options:
+        default: Use Default
+        1: Enabled
+        0: Disabled
