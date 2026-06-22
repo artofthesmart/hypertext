@@ -15,30 +15,6 @@ form:
           type: tab
           title: Hypertext
           fields:
-            tabs:
-              type: tabs
-              classes: plain
-              fields:
-                content:
-                  type: tab
-                  title: Content
-                  fields:
-                    title:
-                      type: text
-                      label: Title
-                    content:
-                      type: textarea
-                      label: Content
-                settings:
-                  type: tab
-                  title: Settings
-                  fields:
-                    published:
-                      type: toggle
-                      label: Published
-                    featured:
-                      type: toggle
-                      label: Featured
             columns:
               type: columns
               fields:
