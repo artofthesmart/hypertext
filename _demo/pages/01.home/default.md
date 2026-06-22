@@ -12,7 +12,8 @@ show_clickthrough: true
 [Hypertext](http://hypertext.artofthesmart.com) is a theme for [Grav CMS](http://getgrav.org/) that prioritizes speed and simplicity.  It does not require (nor does it include) any Javascript and it keeps styles to a bare minimum.  This ensures a fast, consistent user experience across browsers and devices.
 
 Special features include:
-*  HTML 3 & HTML 5 compliance modes
+*  Zero Javascript dependencies for lightning-fast loads
+*  Clean, semantic HTML generation
 *  Built-in open source style sheets
 *  Headless mode for in-app serving
 
@@ -59,7 +60,7 @@ I tried to keep the theme consistent throughout by following a few key design pr
 1. No Javascript
 2. No Theme File Fetches
 2. Minimal Styles
-3. Target the [HTML3.2 specification](https://www.w3.org/TR/2018/SPSD-html32-20180315)
+3. Target raw HTML
 
 ### No Javascript
 This was the easiest rule to follow and it's core to the philosophy of this theme.  JS files must be downloaded and executed before rendering of the page is complete because they could manipulate the DOM.  That means awaiting the first HTML response and putting out more requests, any of which could fail, delay, or call for more files.  Then the browser needs to execute those scripts, eating up time, memory, and battery.
@@ -99,6 +100,6 @@ There are some options for allowing a tiny amount of CSS that come built-in to h
 [The Hypertext reference guide](/reference) has [a table with all of the styles included in the theme by default](/reference#style_table), along with screenshots.
 
 ### Use HTML Like It's 1995
-I liked the 3.2 spec.  I felt like it was that great combination of "here's how you should do it" and "but- hey- do whatever you want".  Hypertext tries to stick to the spirit of that specification in a few ways.  The most obvious is that you can choose whether to use HTML3 tags or HTML5 tags.
+I liked the raw HTML of the 90s.  I felt like it was that great combination of "here's how you should do it" and "but- hey- do whatever you want".  Hypertext tries to stick to the spirit of that era in a few ways.  The most obvious is that you can choose whether to use raw HTML tags or HTML5 tags.
 
 It also minimizes the use of classes and IDs.  In part this is to keep sizes low but also because at the time you would be have been using semantic selectors like `li` and `span`.  So there are almost no IDs, and classes only where one item has considerable metadata that cannot otherwise be reasonably distinguished (e.g. the `active` class in a nav item to indicate that is the currently loaded page).

@@ -1,49 +1,14 @@
+---
+style:
+    css:
+        custom-value: ".example-container {\n    display: flex;\n    margin: 20px 0;\n    gap: 20px;\n  }\n\n  .example-content {\n    flex: 1;\n    padding: 15px;\n    border: 1px solid #ddd;\n    border-radius: 4px;\n  }\n\n  .example-code {\n    flex: 1;\n    padding: 15px;\n    border: 1px solid #ddd;\n    border-radius: 4px;\n    background-color: #f8f8f8;\n    overflow-x: auto;\n  }\n\n  .example-code pre {\n    margin: 0;\n    padding: 0;\n    white-space: pre-wrap;\n    font-family: monospace;\n    font-size: 0.85em;\n  }\n\n  .example-label {\n    font-size: 0.7em;\n    font-weight: bold;\n    text-transform: uppercase;\n    letter-spacing: 0.08em;\n    color: #888;\n    margin-bottom: 6px;\n  }"
+---
+
 This page shows lots of example HTML tags to give you an idea of the look and feel of Hypertext.
 
 ===
 
 # Example HTML Content
-
-<style>
-  .example-container {
-    display: flex;
-    margin: 20px 0;
-    gap: 20px;
-  }
-
-  .example-content {
-    flex: 1;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-
-  .example-code {
-    flex: 1;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #f8f8f8;
-    overflow-x: auto;
-  }
-
-  .example-code pre {
-    margin: 0;
-    padding: 0;
-    white-space: pre-wrap;
-    font-family: monospace;
-    font-size: 0.85em;
-  }
-
-  .example-label {
-    font-size: 0.7em;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #888;
-    margin-bottom: 6px;
-  }
-</style>
 
 ## Headings
 
