@@ -7,11 +7,6 @@ content:
     by: folder
     dir: asc
 hypertext:
-  style:
-    preset: sakura
-  layout:
-    width: 768
-    alignment: center
   content:
     subtitle: 1
     date: none

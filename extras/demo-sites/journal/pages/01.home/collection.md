@@ -7,8 +7,6 @@ content:
     by: date
     dir: desc
 hypertext:
-  style:
-    preset: hypertext++
   content:
     subtitle: 1
     date: none

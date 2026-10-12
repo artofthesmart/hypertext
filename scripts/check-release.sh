@@ -68,6 +68,7 @@ for site in journal catalog resume docs restaurant; do
   archive="$root/dist/hypertext-demo-${site}-${version}.zip"
   unzip -Z1 "$archive" | grep -q "hypertext-demo-${site}/config/system.yaml"
   unzip -Z1 "$archive" | grep -q "hypertext-demo-${site}/config/site.yaml"
+  unzip -Z1 "$archive" | grep -q "hypertext-demo-${site}/config/themes/hypertext.yaml"
   unzip -Z1 "$archive" | grep -q "hypertext-demo-${site}/pages/01.home/collection.md"
 done
 

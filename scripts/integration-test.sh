@@ -78,14 +78,16 @@ start_server() {
 render_site() {
   local site="$1"
   local expected="$2"
+  local child_route="$3"
+  local expected_style="$4"
+  local expected_width="$5"
   local package="$root/dist/hypertext-demo-${site}-${version}.zip"
 
   rm -rf "$work/site" "$grav_root/user/pages"
   mkdir -p "$work/site" "$grav_root/user/pages"
   unzip -q "$package" -d "$work/site"
   cp -a "$work/site/hypertext-demo-${site}/pages/." "$grav_root/user/pages/"
-  cp "$work/site/hypertext-demo-${site}/config/site.yaml" "$grav_root/user/config/site.yaml"
-  cp "$work/site/hypertext-demo-${site}/config/system.yaml" "$grav_root/user/config/system.yaml"
+  cp -a "$work/site/hypertext-demo-${site}/config/." "$grav_root/user/config/"
 
   (
     cd "$grav_root"
@@ -94,21 +96,31 @@ render_site() {
 
   start_server
   curl -fsS "http://127.0.0.1:${port}/" -o "$work/${site}.html"
+  curl -fsS "http://127.0.0.1:${port}${child_route}" -o "$work/${site}-child.html"
   grep -q "$expected" "$work/${site}.html"
   grep -q '/user/themes/hypertext/images/favicon.png' "$work/${site}.html"
+  grep -q "max-width: ${expected_width}px" "$work/${site}.html"
+  grep -q "max-width: ${expected_width}px" "$work/${site}-child.html"
+  if [[ "$expected_style" == 'none' ]]; then
+    ! grep -Eq '/user/(themes|data)/hypertext/[^"]+\.css' "$work/${site}.html"
+    ! grep -Eq '/user/(themes|data)/hypertext/[^"]+\.css' "$work/${site}-child.html"
+  else
+    grep -q "$expected_style" "$work/${site}.html"
+    grep -q "$expected_style" "$work/${site}-child.html"
+  fi
   if grep -Eiq '<script([[:space:]>])' "$work/${site}.html"; then
     echo "Unexpected script element in ${site} demo" >&2
     exit 1
   fi
 }
 
-render_site journal '<ol class="children list">'
-render_site catalog '<ul class="children grid">'
+render_site journal '<ol class="children list">' '/home/river-path' '/user/themes/hypertext/css/hypertext++.css' 960
+render_site catalog '<ul class="children grid">' '/home/arc-lamp' '/user/themes/hypertext/css/water-light.css' 1024
 grep -q 'srcset=' "$work/catalog.html"
 grep -q '<figcaption>' "$work/catalog.html"
-render_site resume '<section class="children comfy">'
-render_site docs '<table class="children">'
-render_site restaurant '<section class="children cards">'
+render_site resume '<section class="children comfy">' '/home/current-role' '/user/themes/hypertext/css/sakura.css' 768
+render_site docs '<table class="children">' '/home/installation' none 960
+render_site restaurant '<section class="children cards">' '/home/bakery' '/user/themes/hypertext/css/water-dark.css' 960
 
 curl -fsS "http://127.0.0.1:${port}/?theme=water-dark" | grep -q '/user/themes/hypertext/css/water-dark.css'
 curl -fsS "http://127.0.0.1:${port}/?theme=latex" | grep -q '/user/data/hypertext/styles/css/latex.css'

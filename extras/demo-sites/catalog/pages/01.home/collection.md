@@ -7,10 +7,6 @@ content:
     by: folder
     dir: asc
 hypertext:
-  style:
-    preset: water-light
-  layout:
-    width: 1024
   content:
     subtitle: 1
     date: none

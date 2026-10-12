@@ -7,11 +7,6 @@ content:
     by: folder
     dir: asc
 hypertext:
-  style:
-    preset: water-dark
-  layout:
-    width: 960
-    alignment: center
   content:
     subtitle: 1
     date: none

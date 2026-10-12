@@ -7,10 +7,6 @@ content:
     by: folder
     dir: asc
 hypertext:
-  style:
-    preset: default
-  layout:
-    width: 960
   content:
     subtitle: 1
     date: none
