@@ -33,9 +33,9 @@ jobs:
       matrix:
         include:
           - grav: 2.0.27
-            php: '8.2'
+            php: '8.3'
           - grav: 2.1.12
-            php: '8.2'
+            php: '8.3'
           - grav: 2.2.6
             php: '8.3'
     steps:

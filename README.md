@@ -220,6 +220,6 @@ Hypertext 2 is a clean break from the previous configuration model. See [MIGRATI
 
 ## Development
 
-The general demo package and five focused site packages exercise every collection layout. Runtime, style-pack, and demo archives are built by `.github/workflows/release-packages.yml`. CI validates Grav 2.0.27, 2.1.12, and 2.2.6 on supported PHP releases.
+The general demo package and five focused site packages exercise every collection layout. Runtime, style-pack, and demo archives are built by `.github/workflows/release-packages.yml`. CI validates Grav 2.0.27, 2.1.12, and 2.2.6 on PHP 8.3, the minimum declared by the current Grav 2 release packages.
 
 Hypertext is licensed under the MIT License.
