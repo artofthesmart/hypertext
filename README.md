@@ -36,6 +36,14 @@ The repository release workflow produces three separate packages:
 - `hypertext-styles-VERSION.zip` — optional extended stylesheet library;
 - `hypertext-demo-VERSION.zip` — demonstration pages and media.
 
+It also produces five focused demo-site overlays:
+
+- `hypertext-demo-journal-VERSION.zip`;
+- `hypertext-demo-catalog-VERSION.zip`;
+- `hypertext-demo-resume-VERSION.zip`;
+- `hypertext-demo-docs-VERSION.zip`;
+- `hypertext-demo-restaurant-VERSION.zip`.
+
 ## Core features
 
 - Browser-default styling or four small bundled presets
@@ -170,9 +178,22 @@ Theme-owned images are rendered through Grav media with:
 
 - one resize/crop operation;
 - explicit width and height;
+- native responsive candidates when Grav media alternatives are present;
 - native lazy loading for collection images;
 - eager loading for the primary page header image;
 - asynchronous decoding.
+
+Use `header_image_alt` or `thumbnail_image_alt` for an explicit text alternative. A Grav media sidecar such as `photo.jpg.meta.yaml` can also provide:
+
+```yaml
+alt: Descriptive alternative text
+title: Optional advisory title
+caption: Optional visible caption
+focus_x: center
+focus_y: top
+```
+
+`focus_x` accepts `left`, `center`, `right`, or an original-image x coordinate. `focus_y` accepts `top`, `center`, `bottom`, or an original-image y coordinate.
 
 Markdown and plugin-generated images are left to Grav and the originating plugin.
 
@@ -186,12 +207,19 @@ Use the included release builder to verify package boundaries:
 ./scripts/build-release.sh
 ```
 
+Run the complete package contract and Grav integration checks with:
+
+```bash
+./scripts/check-release.sh
+GRAV_VERSION=2.2.6 ./scripts/integration-test.sh
+```
+
 ## Migration
 
 Hypertext 2 is a clean break from the previous configuration model. See [MIGRATION.md](MIGRATION.md) before upgrading an existing site.
 
 ## Development
 
-The separate demo package exercises all five collection layouts. Runtime, style-pack, and demo archives are built by `.github/workflows/release-packages.yml`.
+The general demo package and five focused site packages exercise every collection layout. Runtime, style-pack, and demo archives are built by `.github/workflows/release-packages.yml`. CI validates Grav 2.0.27, 2.1.12, and 2.2.6 on supported PHP releases.
 
 Hypertext is licensed under the MIT License.

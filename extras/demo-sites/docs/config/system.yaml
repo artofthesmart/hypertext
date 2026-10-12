@@ -1,0 +1,4 @@
+pages:
+  theme: hypertext
+home:
+  alias: /home

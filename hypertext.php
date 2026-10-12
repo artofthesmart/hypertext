@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Grav\Theme;
 
+use Grav\Common\Page\Interfaces\PageInterface;
 use Grav\Common\Theme;
 use Symfony\Component\Yaml\Yaml;
+use Twig\TwigFunction;
 
 /**
  * Hypertext theme integration for Grav 2.
@@ -18,8 +20,19 @@ class Hypertext extends Theme
     public static function getSubscribedEvents(): array
     {
         return [
+            'onTwigInitialized' => ['onTwigInitialized', 0],
             'onTwigSiteVariables' => ['onTwigSiteVariables', 0],
         ];
+    }
+
+    /**
+     * Register the small configuration helpers used by theme templates.
+     */
+    public function onTwigInitialized(): void
+    {
+        $twig = $this->grav['twig']->twig();
+        $twig->addFunction(new TwigFunction('hypertext_config', [$this, 'resolveConfig']));
+        $twig->addFunction(new TwigFunction('hypertext_content_config', [$this, 'resolveContentConfig']));
     }
 
     /**
@@ -29,6 +42,60 @@ class Hypertext extends Theme
     {
         $twig = $this->grav['twig'];
         $twig->twig_vars['hypertext_styles'] = self::stylesheets();
+    }
+
+    /**
+     * Resolve the global theme defaults and explicit overrides for one page.
+     *
+     * @return array<string, array<string, mixed>>
+     */
+    public function resolveConfig(PageInterface $page): array
+    {
+        $theme = $this->config();
+        $header = $page->header();
+        $local = self::arrayValue($header->hypertext ?? []);
+
+        $resolved = [];
+        foreach (['header', 'footer', 'navigation', 'layout', 'assets', 'content'] as $section) {
+            $resolved[$section] = array_replace(
+                self::arrayValue($theme[$section] ?? []),
+                self::inheritedOverrides($local[$section] ?? [])
+            );
+        }
+
+        $resolved['style'] = array_replace(
+            self::arrayValue($theme['style'] ?? []),
+            self::styleOverrides($local['style'] ?? [])
+        );
+
+        $globalCollection = self::arrayValue($theme['collection'] ?? []);
+        $localCollection = self::inheritedOverrides($local['collection'] ?? [], ['display']);
+        $resolved['collection'] = array_replace($globalCollection, $localCollection);
+        $resolved['collection']['display'] = array_replace(
+            self::arrayValue($globalCollection['display'] ?? []),
+            self::inheritedOverrides(
+                self::arrayValue($local['collection'] ?? [])['display'] ?? []
+            )
+        );
+
+        return $resolved;
+    }
+
+    /**
+     * Resolve a collection item's display settings.
+     *
+     * @param array<string, mixed> $defaults
+     * @return array<string, mixed>
+     */
+    public function resolveContentConfig(PageInterface $page, array $defaults): array
+    {
+        $header = $page->header();
+        $local = self::arrayValue($header->hypertext ?? []);
+
+        return array_replace(
+            $defaults,
+            self::inheritedOverrides($local['content'] ?? [])
+        );
     }
 
     /**
@@ -114,5 +181,44 @@ class Hypertext extends Theme
         }
 
         return $styles;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private static function arrayValue(mixed $value): array
+    {
+        return is_array($value) ? $value : (is_object($value) ? get_object_vars($value) : []);
+    }
+
+    /**
+     * @param list<string> $excludedKeys
+     * @return array<string, mixed>
+     */
+    private static function inheritedOverrides(mixed $value, array $excludedKeys = []): array
+    {
+        $overrides = self::arrayValue($value);
+
+        return array_filter(
+            $overrides,
+            static fn(mixed $item, string $key): bool => $item !== 'default' && !in_array($key, $excludedKeys, true),
+            ARRAY_FILTER_USE_BOTH
+        );
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private static function styleOverrides(mixed $value): array
+    {
+        $overrides = self::arrayValue($value);
+
+        return array_filter(
+            $overrides,
+            static fn(mixed $item, string $key): bool => $key === 'preset'
+                ? $item !== 'inherit'
+                : $item !== 'default',
+            ARRAY_FILTER_USE_BOTH
+        );
     }
 }

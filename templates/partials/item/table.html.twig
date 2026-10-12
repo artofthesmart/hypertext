@@ -16,8 +16,7 @@
   </thead>
   <tbody>
   {% for child in collection if child.isPage() %}
-    {% set child_local = child.header.hypertext.content|default({})|filter(value => value != 'default') %}
-    {% set cfg = display_cfg|merge(child_local) %}
+    {% set cfg = hypertext_content_config(child, display_cfg) %}
     <tr{% if child.taxonomy.category %} class="{{ fragments.category_classes(child) }}"{% endif %}>
       {% if display_cfg.image %}
         <td>{% if cfg.image %}{{ image.render(child, 'thumbnail', image_size, image_size, 'lazy', child.url) }}{% endif %}</td>

@@ -10,10 +10,9 @@
     'display_cfg': display_cfg
   } %}
 {% elseif layout == 'grid' %}
-  <table class="children grid">
+  <ul class="children grid">
   {% for child in collection if child.isPage() %}
-    {% set child_local = child.header.hypertext.content|default({})|filter(value => value != 'default') %}
-    {% set cfg = display_cfg|merge(child_local) %}
+    {% set cfg = hypertext_content_config(child, display_cfg) %}
     {% include 'partials/item/grid.html.twig' with {
       'page': child,
       'parent': parent,
@@ -22,12 +21,11 @@
       'display_cfg': display_cfg
     } %}
   {% endfor %}
-  </table>
+  </ul>
 {% elseif layout == 'cards' %}
   <section class="children cards">
   {% for child in collection if child.isPage() %}
-    {% set child_local = child.header.hypertext.content|default({})|filter(value => value != 'default') %}
-    {% set cfg = display_cfg|merge(child_local) %}
+    {% set cfg = hypertext_content_config(child, display_cfg) %}
     {% include 'partials/item/cards.html.twig' with {
       'page': child,
       'parent': parent,
@@ -40,8 +38,7 @@
 {% elseif layout == 'comfy' %}
   <section class="children comfy">
   {% for child in collection if child.isPage() %}
-    {% set child_local = child.header.hypertext.content|default({})|filter(value => value != 'default') %}
-    {% set cfg = display_cfg|merge(child_local) %}
+    {% set cfg = hypertext_content_config(child, display_cfg) %}
     {% include 'partials/item/comfy.html.twig' with {
       'page': child,
       'parent': parent,
@@ -54,8 +51,7 @@
 {% else %}
   <ol class="children list">
   {% for child in collection %}
-    {% set child_local = child.header.hypertext.content|default({})|filter(value => value != 'default') %}
-    {% set cfg = display_cfg|merge(child_local) %}
+    {% set cfg = hypertext_content_config(child, display_cfg) %}
     {% include 'partials/item/list.html.twig' with {
       'page': child,
       'parent': parent,

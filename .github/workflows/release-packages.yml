@@ -2,7 +2,11 @@ name: Build release packages
 
 on:
   workflow_dispatch:
+  pull_request:
   push:
+    branches:
+      - Hypertext-2
+      - hypertext-2-stabilization
     tags:
       - 'v*'
 
@@ -14,9 +18,38 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Build runtime, style, and demo packages
-        run: ./scripts/build-release.sh
+      - name: Validate release contract
+        run: ./scripts/check-release.sh
       - uses: actions/upload-artifact@v4
         with:
           name: hypertext-release-packages
           path: dist/*.zip
+
+  integration:
+    needs: package
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - grav: 2.0.27
+            php: '8.2'
+          - grav: 2.1.12
+            php: '8.2'
+          - grav: 2.2.6
+            php: '8.3'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: apcu, curl, dom, fileinfo, gd, mbstring, openssl, yaml, zip
+          coverage: none
+      - uses: actions/download-artifact@v4
+        with:
+          name: hypertext-release-packages
+          path: dist
+      - name: Test Grav ${{ matrix.grav }} on PHP ${{ matrix.php }}
+        env:
+          GRAV_VERSION: ${{ matrix.grav }}
+        run: ./scripts/integration-test.sh

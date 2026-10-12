@@ -31,16 +31,34 @@
   {% endif %}
 
   {% if image %}
-    {% set rendered = width and height ? image.cropZoom(width|round, height|round) : image %}
+    {% set metadata = image.metadata|default({}) %}
+    {% set explicit_alt = kind == 'header'
+      ? page.header.header_image_alt|default('')
+      : page.header.thumbnail_image_alt|default('') %}
+    {% set alt = explicit_alt|default(metadata.alt|default(page.title)) %}
+    {% set title = metadata.title|default('') %}
+    {% set caption = metadata.caption|default('') %}
+    {% set focus_x = metadata.focus_x|default('center') %}
+    {% set focus_y = metadata.focus_y|default('center') %}
+    {% set rendered = width and height
+      ? image.cropZoom(width|round, height|round, 'transparent', focus_x, focus_y)
+      : image %}
+    {% set rendered_width = rendered.width %}
+    {% set rendered_height = rendered.height %}
+    {% set srcset = rendered.srcset(false) %}
+    {% if caption %}<figure>{% endif %}
     {% if href %}<a href="{{ href }}">{% endif %}
     <img
       src="{{ rendered.url }}"
-      width="{{ rendered.width }}"
-      height="{{ rendered.height }}"
+      {% if srcset %}srcset="{{ srcset }}" sizes="(max-width: {{ rendered_width }}px) 100vw, {{ rendered_width }}px"{% endif %}
+      width="{{ rendered_width }}"
+      height="{{ rendered_height }}"
       loading="{{ loading }}"
       decoding="async"
       {% if loading == 'eager' %}fetchpriority="high"{% endif %}
-      alt="{{ page.title|e('html_attr') }}">
+      {% if title %}title="{{ title|e('html_attr') }}"{% endif %}
+      alt="{{ alt|e('html_attr') }}">
     {% if href %}</a>{% endif %}
+    {% if caption %}<figcaption>{{ caption }}</figcaption></figure>{% endif %}
   {% endif %}
 {% endmacro %}

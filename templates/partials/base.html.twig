@@ -1,19 +1,13 @@
 {% set theme = config.themes.hypertext %}
-{% set local = page.header.hypertext|default({}) %}
-{% set header_cfg = theme.header|merge(local.header|default({})|filter(value => value != 'default')) %}
-{% set footer_cfg = theme.footer|merge(local.footer|default({})|filter(value => value != 'default')) %}
-{% set nav_cfg = theme.navigation|merge(local.navigation|default({})|filter(value => value != 'default')) %}
-{% set layout_cfg = theme.layout|merge(local.layout|default({})|filter(value => value != 'default')) %}
-{% set local_style = local.style|default({}) %}
-{% set local_style_preset = local_style.preset|default('inherit') %}
-{% set style_cfg = theme.style|merge(local_style|filter((value, key) => key != 'preset' and value != 'default')) %}
-{% if local_style_preset != 'inherit' %}
-  {% set style_cfg = style_cfg|merge({'preset': local_style_preset}) %}
-{% endif %}
-{% set local_content = local.content|default({})|filter(value => value != 'default') %}
-{% set page_cfg = theme.content|merge(local_content) %}
-{% set local_assets = local.assets|default({})|filter(value => value != 'default') %}
-{% set asset_cfg = theme.assets|merge(local_assets) %}
+{% set hypertext = hypertext_config(page) %}
+{% set header_cfg = hypertext.header %}
+{% set footer_cfg = hypertext.footer %}
+{% set nav_cfg = hypertext.navigation %}
+{% set layout_cfg = hypertext.layout %}
+{% set style_cfg = hypertext.style %}
+{% set page_cfg = hypertext.content %}
+{% set asset_cfg = hypertext.assets %}
+{% set collection_cfg = hypertext.collection %}
 {% set css_enabled = asset_cfg.css %}
 {% set js_enabled = asset_cfg.js %}
 {% set dec_left = nav_cfg.decoration == 'braced' ? '[ ' : (nav_cfg.decoration == 'angled' ? '< ' : '') %}

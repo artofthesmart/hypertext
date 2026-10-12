@@ -34,8 +34,7 @@
       {% if inner_children|length > 0 %}
         <ul class="nested-children">
         {% for child in inner_children %}
-          {% set child_local = child.header.hypertext.content|default({})|filter(value => value != 'default') %}
-          {% set child_cfg = display_cfg|merge(child_local) %}
+          {% set child_cfg = hypertext_content_config(child, display_cfg) %}
           {% include 'partials/item/list.html.twig' with {
             'page': child,
             'parent': parent,

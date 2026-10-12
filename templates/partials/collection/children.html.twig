@@ -1,8 +1,5 @@
 {% set collection = page.collection()|length > 0 ? page.collection() : page.children.visible %}
-{% set local_collection = page.header.hypertext.collection|default({})|filter(value => value != 'default') %}
-{% set local_display = local_collection.display|default({})|filter(value => value != 'default') %}
-{% set collection_cfg = theme.collection|merge(local_collection) %}
-{% set display_cfg = theme.collection.display|merge(local_display) %}
+{% set display_cfg = collection_cfg.display %}
 
 {% if collection|length > 0 %}
   {% set collection = collection.order(

@@ -1,31 +1,29 @@
 {% import 'partials/item/image.html.twig' as image %}
 {% import 'partials/item/fragments.html.twig' as fragments %}
 {% set content_width = layout_cfg.width == 'full' ? 960 : layout_cfg.width|int %}
-{% set image_size = (content_width / 7)|round %}
-{% set row_class = page.taxonomy.category ? ' class="' ~ fragments.category_classes(page) ~ '"' : '' %}
+{% set image_size = (content_width / 4)|round %}
 
-<tr{{ row_class|raw }}>
+<li{% if page.taxonomy.category %} class="{{ fragments.category_classes(page) }}"{% endif %}>
+  <article>
   {% if cfg.image %}
-    <td rowspan="3" class="image">
-      {{ image.render(page, 'thumbnail', image_size, image_size, 'lazy', page.url) }}
-    </td>
+    {{ image.render(page, 'thumbnail', image_size, image_size, 'lazy', page.url) }}
   {% endif %}
-  <td colspan="2">
-    {% if cfg.title %}<strong><a href="{{ page.url }}">{{ page.title }}</a></strong>{% endif %}
-  </td>
-</tr>
-<tr{{ row_class|raw }}>
-  <td colspan="2">{% if cfg.subtitle and page.header.subtitle %}{{ page.header.subtitle }}{% endif %}</td>
-</tr>
-<tr{{ row_class|raw }}>
-  <td>{% if cfg.date != 'none' %}{{ fragments.date(page, cfg.date, true) }}{% endif %}</td>
-  <td>
-    {% if cfg.categories and page.taxonomy.category %}
-      {{ fragments.categories(page, parent.url, dec_left, dec_right) }}
-    {% endif %}
-    {% if cfg.tags and page.taxonomy.tag %}
-      {% if cfg.categories and page.taxonomy.category %}<br>{% endif %}
-      {{ fragments.tags(page, parent.url, dec_left, dec_right) }}
-    {% endif %}
-  </td>
-</tr>
+
+  {% if cfg.title %}<h3><a href="{{ page.url }}">{{ page.title }}</a></h3>{% endif %}
+  {% if cfg.subtitle and page.header.subtitle %}<p>{{ page.header.subtitle }}</p>{% endif %}
+
+  {% if cfg.date != 'none' or (cfg.categories and page.taxonomy.category) or (cfg.tags and page.taxonomy.tag) %}
+    <p><small>
+      {% if cfg.date != 'none' %}{{ fragments.date(page, cfg.date, true) }}{% endif %}
+      {% if cfg.categories and page.taxonomy.category %}
+        {% if cfg.date != 'none' %}<br>{% endif %}
+        {{ fragments.categories(page, parent.url, dec_left, dec_right) }}
+      {% endif %}
+      {% if cfg.tags and page.taxonomy.tag %}
+        {% if cfg.date != 'none' or (cfg.categories and page.taxonomy.category) %}<br>{% endif %}
+        {{ fragments.tags(page, parent.url, dec_left, dec_right) }}
+      {% endif %}
+    </small></p>
+  {% endif %}
+  </article>
+</li>

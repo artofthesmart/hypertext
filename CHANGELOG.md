@@ -9,6 +9,11 @@
     * Centralizes image, date, taxonomy, summary, and configuration behavior across all five collection layouts.
     * Limits explicit plugin integration to Pagination, Breadcrumbs, SimpleSearch, Login, and Feed.
     * Ships only modern WOFF2 accessibility fonts and four compact core style presets.
+    * Resolves global and local page configuration through small PHP-backed Twig helpers.
+    * Replaces the table-based grid with semantic list and article markup plus a conditional CSS grid rule.
+    * Adds media metadata, captions, focal positions, and native responsive image candidates.
+    * Adds release-contract checks and integration coverage for Grav 2.0.27, 2.1.12, and 2.2.6.
+    * Adds five compact demo-site packages for journals, catalogs, resumes, documentation, and restaurants.
 
 # v2.4.2
 ## 08/17/2024

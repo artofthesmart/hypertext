@@ -18,6 +18,16 @@
 
 <style>
 img { max-width: 100%; height: auto; }
+{% if collection_cfg.layout == 'grid' %}
+.children.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1rem;
+  padding: 0;
+  list-style: none;
+}
+.children.grid > li { min-width: 0; }
+{% endif %}
 body {
 {% if layout_cfg.width != 'full' %}
   max-width: {{ layout_cfg.width|int }}px;
