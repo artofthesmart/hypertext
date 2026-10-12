@@ -1,102 +1,47 @@
-{% set use_visually_impaired = style['visually-impaired']|default(false) %}
+{% set available_styles = hypertext_styles|default({}) %}
+{% set configured_style = style_cfg.preset|default('default') %}
+{% set requested_style = uri.query('theme')|default('') %}
+{% set stylesheet = requested_style in available_styles|keys ? requested_style : configured_style %}
+{% set stylesheet = stylesheet in available_styles|keys ? stylesheet : 'default' %}
+{% set style_info = available_styles[stylesheet]|default({'path': null}) %}
+{% set accessible_font = style_cfg['accessible-font']|default(false) %}
 
-{% set stylesheets = ['air', 'hypertext++', 'latex', 'marx', 'milligram', 'modest', 'mvp', 'newcss-default', 'newcss-night', 'newcss-terminal', 'sakura', 'sakura-dark', 'sakura-dark-solarized', 'sakura-earthly', 'sakura-ink', 'sakura-pink', 'sakura-radical', 'sakura-vader', 'simple', 'stylize', 'tacit', 'tufte', 'water-dark', 'water-light', 'writ', 'yorha'] %}
-
-{# URI overrides are restricted to known stylesheets. #}
-{% set stylesheet = style.css.stylesheet in stylesheets ? style.css.stylesheet : 'default' %}
-{% set requested_stylesheet = uri.query('theme')|default('') %}
-{% if requested_stylesheet matches '/^\\d+$/' %}
-  {% set stylesheet = stylesheets[requested_stylesheet % stylesheets|length] %}
-{% elseif requested_stylesheet in stylesheets %}
-  {% set stylesheet = requested_stylesheet %}
+{% if style_info.path %}
+  <link rel="stylesheet" href="{{ url(style_info.path) }}">
 {% endif %}
 
-{# Always required and hard to serve via href. See docs. #}
-{% set required_styles %}
-  img { max-width: 100%; }
-
-  {# Max width and centering vs left alignment #}
-  body {
-    {% if style.layout['content-width'] != 'default' %}
-      max-width: {{ style.layout['content-width'] }}px;
-    {% else %}
-      max-width: 100%;
-    {% endif %}
-
-    {# Reset to 8px, the Chrome default (`unset` doesnt work). #}
-    {% if style.layout.alignment == 'left' %}
-      margin-left: 8px;
-      margin-right: 8px;
-    {% elseif style.layout.alignment == 'right' %}
-      margin-left: auto;
-      margin-right: 8px;
-    {% else %}
-      margin-left: auto;
-      margin-right: auto;
-    {% endif %}
-  }
-{% endset %}
-
-
-{# FONT PRELOADING #}
-{# Preload Atkinson Hyperlegible font when visually impaired mode is active to prevent FOUT and minimize CLS #}
-{% if use_visually_impaired %}
-  <link rel="preload" href="{{ url('theme://fonts/WOFF2/Atkinson-Hyperlegible-Regular-102a.woff2') }}" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="{{ url('theme://fonts/WOFF2/Atkinson-Hyperlegible-Bold-102a.woff2') }}" as="font" type="font/woff2" crossorigin />
+{% if accessible_font %}
+  <link rel="preload" href="{{ url('theme://fonts/WOFF2/Atkinson-Hyperlegible-Regular-102a.woff2') }}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ url('theme://fonts/WOFF2/Atkinson-Hyperlegible-Bold-102a.woff2') }}" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{{ url('theme://css/visual-impaired.css') }}">
 {% endif %}
 
-{# CONFIGURE THEME'S CSS FEATURES #}
+<style>
+img { max-width: 100%; height: auto; }
+body {
+{% if layout_cfg.width != 'full' %}
+  max-width: {{ layout_cfg.width|int }}px;
+{% endif %}
+{% if layout_cfg.alignment == 'right' %}
+  margin-left: auto;
+  margin-right: 8px;
+{% elseif layout_cfg.alignment == 'center' %}
+  margin-left: auto;
+  margin-right: auto;
+{% else %}
+  margin-left: 8px;
+  margin-right: 8px;
+{% endif %}
+}
+{{ style_cfg['custom-css']|default('')|raw }}
+</style>
 
-{# ------------------------------------------------------------------------ #}
-
-{% block stylesheets %}
-
-{# Add the hypertext selected stylesheet #}
-{% if stylesheet != 'default' %}
-
-  {% if css_serving == 'inline' %}
-    <style>{{ include('css/' ~ stylesheet ~ '.css') }}</style>
-    {% if use_visually_impaired %}<style>{{ include('css/visual-impaired.css') }}</style>{% endif %}
-
-  {% else %}
-    <link href="{{ url('theme://css/'~stylesheet~'.css') }}" rel="stylesheet" />
-    {% if use_visually_impaired %}<link href="{{ url('theme://css/visual-impaired.css') }}" rel="stylesheet" /> {% endif %}
-  {% endif %}
-
-{% endif %} {# END if style isn't default #}
-{% endblock %}
-
-{% block javascripts %}
-  {# Hypertext doesn't add any JS, but if it did it would go here. #}
-{% endblock %}
-
-{# Regular CSS/JS includes, like from plugins #}
 {% block assets deferred %}
   {% if css_enabled %}{{ assets.css()|raw }}{% endif %}
   {% if js_enabled %}{{ assets.js()|raw }}{% endif %}
 {% endblock %}
 
-{# Feed plugin auto-discovery #}
-{% if config.plugins.feed.enabled is defined and config.plugins.feed.enabled %}
-  <link rel="alternate" type="application/atom+xml" title="{{ site.title }} Feed" href="{{ home_url ~ '/feed:atom' }}" />
-  <link rel="alternate" type="application/rss+xml" title="{{ site.title }} Feed" href="{{ home_url ~ '/feed:rss' }}" />
+{% if config.get('plugins.feed.enabled', false) %}
+  <link rel="alternate" type="application/atom+xml" title="{{ site.title|e('html_attr') }} Feed" href="{{ home_url ~ '/feed:atom' }}">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title|e('html_attr') }} Feed" href="{{ home_url ~ '/feed:rss' }}">
 {% endif %}
-
-{# Add any final required styling like max-width, centering, and user-provided values #}
-<style>
-  {# Set by the theme. #}
-  {% autoescape false %}
-  {{ required_styles }}
-
-  {# User's custom styles take priority. #}
-  {{ style.css['custom-value'] }}
-
-  {# Page's custom styles (or inherited from parent) take maximum priority. #}
-  {% set page_custom_css = page.header.style.css['custom-value'] ?? null %}
-  {% if page_custom_css is empty %}
-    {% set parent_custom_css = (parent is not null and parent.header is defined) ? (parent.header.style.css['custom-value'] ?? null) : null %}
-    {% set page_custom_css = parent_custom_css %}
-  {% endif %}
-  {{ page_custom_css }}
-  {% endautoescape %}
-</style>

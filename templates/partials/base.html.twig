@@ -1,123 +1,89 @@
-{% set structure = config.themes.hypertext.structure %}
-{% set handling = config.themes.hypertext.handling %}
-{% set style = config.themes.hypertext.style %}
-{% set parent = page.parent %}
-
-{# Resolve page-level asset overrides once so both head and footer use them. #}
-{% set page_css = page.header.style.css.enable ?? null %}
-{% set parent_css = (parent is not null and parent.header is defined) ? (parent.header.style.css.enable ?? null) : null %}
-{% set css_enabled = page_css is not null and page_css != 'default'
-  ? page_css == 1
-  : (parent_css is not null and parent_css != 'default' ? parent_css == 1 : style.css.enable) %}
-
-{% set page_js = page.header.style.js.enable ?? null %}
-{% set parent_js = (parent is not null and parent.header is defined) ? (parent.header.style.js.enable ?? null) : null %}
-{% set js_enabled = page_js is not null and page_js != 'default'
-  ? page_js == 1
-  : (parent_js is not null and parent_js != 'default' ? parent_js == 1 : style.js.enable) %}
-
-{% set page_css_serving = page.header.handling.css.serving ?? null %}
-{% set parent_css_serving = (parent is not null and parent.header is defined) ? (parent.header.handling.css.serving ?? null) : null %}
-{% set css_serving = page_css_serving is not null and page_css_serving != 'default'
-  ? page_css_serving
-  : (parent_css_serving is not null and parent_css_serving != 'default' ? parent_css_serving : handling.css.serving) %}
-
-{% set page_headless = page.header.page.content.headless ?? page.header.is_headless ?? null %}
-{% set parent_headless = (parent is not null and parent.header is defined) ? (parent.header.page.content.headless ?? null) : null %}
-{% set headless_enabled = page_headless is not null and page_headless != 'default'
-  ? page_headless == 1
-  : (parent_headless is not null and parent_headless != 'default'
-    ? parent_headless == 1
-    : config.themes.hypertext.page.content.headless|default(false)) %}
-
-{# ------------------------------------------------------------------------ #}
+{% set theme = config.themes.hypertext %}
+{% set local = page.header.hypertext|default({}) %}
+{% set header_cfg = theme.header|merge(local.header|default({})|filter(value => value != 'default')) %}
+{% set footer_cfg = theme.footer|merge(local.footer|default({})|filter(value => value != 'default')) %}
+{% set nav_cfg = theme.navigation|merge(local.navigation|default({})|filter(value => value != 'default')) %}
+{% set layout_cfg = theme.layout|merge(local.layout|default({})|filter(value => value != 'default')) %}
+{% set local_style = local.style|default({}) %}
+{% set local_style_preset = local_style.preset|default('inherit') %}
+{% set style_cfg = theme.style|merge(local_style|filter((value, key) => key != 'preset' and value != 'default')) %}
+{% if local_style_preset != 'inherit' %}
+  {% set style_cfg = style_cfg|merge({'preset': local_style_preset}) %}
+{% endif %}
+{% set local_content = local.content|default({})|filter(value => value != 'default') %}
+{% set page_cfg = theme.content|merge(local_content) %}
+{% set local_assets = local.assets|default({})|filter(value => value != 'default') %}
+{% set asset_cfg = theme.assets|merge(local_assets) %}
+{% set css_enabled = asset_cfg.css %}
+{% set js_enabled = asset_cfg.js %}
+{% set dec_left = nav_cfg.decoration == 'braced' ? '[ ' : (nav_cfg.decoration == 'angled' ? '< ' : '') %}
+{% set dec_right = nav_cfg.decoration == 'braced' ? ' ]' : (nav_cfg.decoration == 'angled' ? ' >' : '') %}
 
 <!DOCTYPE html>
 
-
-{# ## HEADLESS RENDERING ## #}
-{% if uri.query('headless') or headless_enabled %}
-<html>
-  <head>
-    <title>{% if header.title %}{{ header.title|e('html') }} | {% endif %}{{ site.title|e('html') }}</title>
-  </head>
-  <body>
+{% if uri.query('headless') or page_cfg.headless %}
+<html lang="{{ grav.language.getActive ?: grav.config.site.default_lang }}">
+<head>
+  <meta charset="utf-8">
+  <title>{% if page.title %}{{ page.title|e('html') }} | {% endif %}{{ site.title|e('html') }}</title>
+</head>
+<body>
   {{ block('content') }}
-  </body>
+</body>
 </html>
-
-
 {% else %}
-{# ## ORDINARY RENDER ## #}
 <html lang="{{ grav.language.getActive ?: grav.config.site.default_lang }}">
 <head>
 {% block head %}
-  <meta charset="utf-8" />
-  <link rel="canonical" href="{{ page.url(true, true) }}" />
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="canonical" href="{{ page.url(true, true) }}">
 
   {% for meta in page.metadata %}
-    <meta {% if meta.name %}name="{{ meta.name }}" {% endif %}{% if meta.http_equiv %}http-equiv="{{ meta.http_equiv }}" {% endif %}{% if meta.charset %}charset="{{ meta.charset }}" {% endif %}{% if meta.property %}property="{{ meta.property }}" {% endif %}{% if meta.content %}content="{{ meta.content }}" {% endif %}/>
+    <meta {% if meta.name %}name="{{ meta.name|e('html_attr') }}" {% endif %}{% if meta.http_equiv %}http-equiv="{{ meta.http_equiv|e('html_attr') }}" {% endif %}{% if meta.charset %}charset="{{ meta.charset|e('html_attr') }}" {% endif %}{% if meta.property %}property="{{ meta.property|e('html_attr') }}" {% endif %}{% if meta.content %}content="{{ meta.content|e('html_attr') }}" {% endif %}>
   {% endfor %}
 
-  {% if structure['add-site-name'] %}
-    <title>{% if header.title %}{{ header.title|e('html') }} | {% endif %}{{ site.title|e('html') }}</title>
-  {% else %}
-    {% if header.title %}<title>{{ header.title|e('html') }}</title>{% endif %}
-  {% endif %}
-  
+  <title>{% if page.title %}{{ page.title|e('html') }} | {% endif %}{{ site.title|e('html') }}</title>
 
-  {# Prefer a user-uploaded favicon, fall back to the theme default #}
-  {% set favicon_url = url('images://favicon.png', false, true) ?: url('theme://images/favicon.png') %}
-  <link rel="icon" type="image/png" href="{{ favicon_url }}" />
+  {% set uploaded_favicon = media['image://favicon.png']|default(null) %}
+  <link rel="icon" type="image/png" href="{{ uploaded_favicon ? uploaded_favicon.url : url('theme://images/favicon.png') }}">
 
   {% include 'partials/page/js-css.html.twig' %}
-{% endblock head %}
+{% endblock %}
 </head>
 
-
 <body class="{{ page.template|e('html_attr') }}{% if page.header.bodyClasses %} {{ page.header.bodyClasses|e('html_attr') }}{% endif %}">
-  {# ## HEADER ## #}
   <header>
   {% block header %}
     {% include 'partials/page/header.html.twig' %}
   {% endblock %}
   </header>
-  
-  {# ## BODY ## #}
-  <main>
 
-    {# ARTICLE HEAD #}
+  <main>
     {% block item_head %}
-    {% include 'partials/item/header.html.twig' %}
+      {% include 'partials/item/header.html.twig' with {'cfg': page_cfg} %}
     {% endblock %}
 
-    {# ARTICLE BODY #}
     {% block content %}
     <article>
       {{ page.content|raw }}
     </article>
     {% endblock %}
 
-    {# CHILD PAGES #}
     {% block children %}
-    {% include 'partials/collection/children.html.twig' %}
+      {% include 'partials/collection/children.html.twig' %}
     {% endblock %}
 
-    {# ARTICLE FOOTER #}
     {% block item_footer %}
-    {% include 'partials/item/footer.html.twig' %}
+      {% include 'partials/item/footer.html.twig' %}
     {% endblock %}
-
   </main>
 
-  {# ## FOOTER ## #}
   <footer>
   {% block footer %}
     {% include 'partials/page/footer.html.twig' %}
   {% endblock %}
   </footer>
-
 </body>
 {% endif %}
 </html>

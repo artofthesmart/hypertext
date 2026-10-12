@@ -1,98 +1,31 @@
-{#
-  partials/item/grid.html.twig
-  ──────────────────────────
-  Renders grid item view.
-  
-  Note: Global decorator variables `dec_left` and `dec_right` used here
-  are dynamically registered in the theme class via `onTwigSiteVariables()`
-  in `hypertext.php`.
-#}
-{% import 'partials/item/config.html.twig' as item_config %}
-{% set cfg = item_config.resolve(page, parent)|json_decode %}
-{% set inner_children = page.collection()|length > 0 ? page.collection() : page.children.visible %}
+{% import 'partials/item/image.html.twig' as image %}
+{% import 'partials/item/fragments.html.twig' as fragments %}
+{% set content_width = layout_cfg.width == 'full' ? 960 : layout_cfg.width|int %}
+{% set image_size = (content_width / 7)|round %}
+{% set row_class = page.taxonomy.category ? ' class="' ~ fragments.category_classes(page) ~ '"' : '' %}
 
-{% import 'partials/item/image.html.twig' as image_finder %}
-{% set img_desc = image_finder.find_thumbnail(page)|trim %}
-{% set header_image = null %}
-{% if img_desc %}
-  {% set parts = img_desc|split(':', 2) %}
-  {% if parts[0] == 'page' %}{% set header_image = page.media.images[parts[1]] %}
-  {% elseif parts[0] == 'global' %}{% set header_image = media['image://' ~ parts[1]] %}
-  {% elseif parts[0] == 'first' %}{% set header_image = page.media.images|first %}
+<tr{{ row_class|raw }}>
+  {% if cfg.image %}
+    <td rowspan="3" class="image">
+      {{ image.render(page, 'thumbnail', image_size, image_size, 'lazy', page.url) }}
+    </td>
   {% endif %}
-{% endif %}
-
-{% set theme_style = config.themes.hypertext.style %}
-{% set use_image_crop = (handling.images.compress|default('none') != 'none') %}
-{% set image_width = (use_image_crop and header_image) ? (theme_style.layout['content-width'] == 'default' ? 1024 : theme_style.layout['content-width']) / 7 : (header_image ? header_image.width : 0) %}
-{% set image_height = (use_image_crop and header_image) ? (theme_style.layout['content-width'] == 'default' ? 1024 : theme_style.layout['content-width']) / 7 : (header_image ? header_image.height : 0) %}
-{% set header_image_url = (use_image_crop and header_image) ? header_image.cropZoom(image_width, image_height).url : (header_image ? header_image.url : '') %}
-
-{# ------------------------------------------------------------------------ #}
-
-<tr{% if page.taxonomy.category %} class="{% for cat in page.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}"{% endif %}>
-
-  {# Image #}
-  <td rowspan="3" class="image" width="20%">
-  {% if cfg.show_image and header_image %}
-    <a href="{{ page.url }}">
-      <img src="{{ header_image_url }}" width="{{ image_width }}" height="{{ image_height }}" loading="lazy" alt="{{ page.title|e('html_attr') }}">
-    </a>
-  {% endif %}
-  </td>
-  
-
-  {# Title #}
   <td colspan="2">
-  <strong>
-    <a href="{{ page.url }}">{{ page.title }}</a>
-  </strong>
+    {% if cfg.title %}<strong><a href="{{ page.url }}">{{ page.title }}</a></strong>{% endif %}
   </td>
 </tr>
-
-{# Subtitle #}
-<tr{% if page.taxonomy.category %} class="{% for cat in page.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}"{% endif %}>
-  <td colspan="2">
-    {% if cfg.show_subtitle and page.header.subtitle %}
-      {{ page.header.subtitle }}
+<tr{{ row_class|raw }}>
+  <td colspan="2">{% if cfg.subtitle and page.header.subtitle %}{{ page.header.subtitle }}{% endif %}</td>
+</tr>
+<tr{{ row_class|raw }}>
+  <td>{% if cfg.date != 'none' %}{{ fragments.date(page, cfg.date, true) }}{% endif %}</td>
+  <td>
+    {% if cfg.categories and page.taxonomy.category %}
+      {{ fragments.categories(page, parent.url, dec_left, dec_right) }}
+    {% endif %}
+    {% if cfg.tags and page.taxonomy.tag %}
+      {% if cfg.categories and page.taxonomy.category %}<br>{% endif %}
+      {{ fragments.tags(page, parent.url, dec_left, dec_right) }}
     {% endif %}
   </td>
 </tr>
-
-<tr{% if page.taxonomy.category %} class="{% for cat in page.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}"{% endif %}>
-
-{# Date #}
-<td>
-  {% if cfg.show_date_published or cfg.show_date_modified %}
-    {% 
-      include 'partials/item/date.html.twig' 
-      with {
-        'page': page, 
-        'parent': parent, 
-        'show_label': true
-      } %}
-  {% endif %}
-</td>
-
-{# Categories #}
-<td>
-{% if page.taxonomy.category and cfg.show_cat %}
-  {{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t|raw }}: 
-  {% for category in page.taxonomy.category %}
-    {{ dec_left|raw }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ dec_right|raw }}{{ not loop.last ? ',' : '' }}
-  {% endfor %}
-{% endif %}
-</td></tr>
-
-{# Children
- # Not sure how to implement this just yet...
-{% if cfg.show_children and inner_children|length > 0 %}
-{% set inner_children = inner_children.order(page.header.content.order.by|default('default'), page.header.content.order.dir|default('default')) %}
-<br>
-{{ 'THEME_HYPERTEXT.PAGINATION.SUB_PAGES'|t }}:
-<ol class="nested-children">
-  {% for child in inner_children %}
-  <li><a href="{{ child.url }}">{{ child.title }}</a>{{ child.header.subtitle and cfg.show_subtitle ? ' - <span>'~child.header.subtitle~'</span>' : '' }}</li>
-  {% endfor %}
-</ol>
-{% endif %} {# End render nested children #}

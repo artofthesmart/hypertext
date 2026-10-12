@@ -1,79 +1,57 @@
-{% set nav = structure.navigation.header %}
-{% set navItems = nav['custom-items']|default([]) %}
-{% set isInline = nav.mode|default('inline') == 'inline' %}
-{% set navStyle = structure['text-style']|default('plain') %}
-{% set decLeft  = navStyle == 'braced' ? '[ ' : (navStyle == 'angled' ? '&lt; ' : '') %}
-{% set decRight = navStyle == 'braced' ? ' ]' : (navStyle == 'angled' ? ' &gt;' : '') %}
+{% set nav = nav_cfg %}
+{% set nav_items = nav['custom-items']|default([]) %}
+{% set inline = nav.mode|default('inline') == 'inline' %}
+{% set login_enabled = config.get('plugins.login.enabled', false) and grav.user.username %}
+{% set has_nav = pages.children.visible|length > 0 or nav_items|length > 0 or login_enabled %}
 
-{% set hasNav = pages.children.visible|length >= 1 or
-                navItems|length >= 1 or
-                (config.plugins.login.enabled and grav.user.username) %}
-
-{% if hasNav %}
-
-<nav>
-
-  {# INLINE/TEXT NAV BAR #}
-  {% if isInline %}
+{% if has_nav %}
+<nav aria-label="Primary">
+  {% if inline %}
     {% for child in pages.children.visible %}
-      <a href="{{ child.url }}"{{ (child.active or child.activeChild) ? ' class="current"' :'' }}>{{ decLeft|raw }}{{ child.menu }}{{ decRight|raw }}</a>
-      {% if navStyle == 'plain' and (not loop.last or navItems|length >= 1 or (config.plugins.login.enabled and grav.user.username)) %} | {% endif %}
-    {% endfor %} {# End child pages loop #}
-
-    {# Write additional links #}
-    {% if navItems|length >= 1 %}
-    <span>
-    {% for menuItem in navItems %}
-      <a href="{{ menuItem.href }}"
-        {% if menuItem.fieldset.rel %}rel="{{ menuItem.fieldset.rel|e('html_attr') }}"{% endif %}
-        {% if menuItem.fieldset.name %}name="{{ menuItem.fieldset.name|e('html_attr') }}"{% endif %}
-        {% if menuItem.fieldset.title %}title="{{ menuItem.fieldset.title|e('html_attr') }}"{% endif %}
-        {% if menuItem.isOffsite %}class="offsite"{% endif %}
-        {% if menuItem.isNewWindow %}target="_blank"{% endif %}>{{ decLeft|raw }}{{ menuItem.text}}{{ decRight|raw }}</a>
-      {% if navStyle == 'plain' and (not loop.last or (config.plugins.login.enabled and grav.user.username)) %} | {% endif %}
+      <a href="{{ child.url }}"{{ (child.active or child.activeChild) ? ' class="current"' : '' }}>{{ dec_left|raw }}{{ child.menu }}{{ dec_right|raw }}</a>
+      {% if nav.decoration == 'plain' and (not loop.last or nav_items|length > 0 or login_enabled) %} | {% endif %}
     {% endfor %}
-    </span>
-    {% endif %} {# End additional links loop #}
 
-    {% if config.plugins.login.enabled and grav.user.username %}
-      [{% include 'partials/login-status.html.twig' %}]
+    {% for item in nav_items %}
+      {% set item_rel = ((item.rel|default('')) ~ (item['new-window'] ? ' noopener' : ''))|trim %}
+      <a href="{{ item.href|e('html_attr') }}"
+        {% if item.title %}title="{{ item.title|e('html_attr') }}"{% endif %}
+        {% if item_rel %}rel="{{ item_rel|e('html_attr') }}"{% endif %}
+        {% if item.offsite %}class="offsite"{% endif %}
+        {% if item['new-window'] %}target="_blank"{% endif %}>{{ dec_left|raw }}{{ item.text }}{{ dec_right|raw }}</a>
+      {% if nav.decoration == 'plain' and (not loop.last or login_enabled) %} | {% endif %}
+    {% endfor %}
+
+    {% if login_enabled %}
+      {{ dec_left|raw }}{% include 'partials/login-status.html.twig' %}{{ dec_right|raw }}
     {% endif %}
   {% else %}
-
-  {# UL/LI NAV BAR #}
-  <ul>
-    {% for child in pages.children.visible %}
-    <li><a href="{{ child.url }}"{{ (child.active or child.activeChild) ? ' class="current"' :'' }}>{{ child.menu }}</a></li>
-    {% endfor %}
-
-    {% for menuItem in navItems %}
-      <li><a href="{{ menuItem.href }}"
-          {% if menuItem.fieldset.rel %}rel="{{ menuItem.fieldset.rel|e('html_attr') }}"{% endif %}
-          {% if menuItem.fieldset.name %}name="{{ menuItem.fieldset.name|e('html_attr') }}"{% endif %}
-          {% if menuItem.fieldset.title %}title="{{ menuItem.fieldset.title|e('html_attr') }}"{% endif %}
-          {% if menuItem.isOffsite %}class="offsite"{% endif %}
-          {% if menuItem.isNewWindow %}target="_blank"{% endif %}>{{ menuItem.text}}</a></li>
-    {% endfor %}
-
-    {% if config.plugins.login.enabled and grav.user.username %}
-      <li>[{% include 'partials/login-status.html.twig' %}]</li>
-    {% endif %}
-  </ul>
-  {% endif %} {# End of navigation links #}
-
-  </nav>
-
-  {# SimpleSearch box #}
-  {% if config.plugins.simplesearch.enabled ?? false %}
-    {% include 'partials/simplesearch_searchbox.html.twig' %}
+    <ul>
+      {% for child in pages.children.visible %}
+        <li><a href="{{ child.url }}"{{ (child.active or child.activeChild) ? ' class="current"' : '' }}>{{ child.menu }}</a></li>
+      {% endfor %}
+      {% for item in nav_items %}
+        {% set item_rel = ((item.rel|default('')) ~ (item['new-window'] ? ' noopener' : ''))|trim %}
+        <li><a href="{{ item.href|e('html_attr') }}"
+          {% if item.title %}title="{{ item.title|e('html_attr') }}"{% endif %}
+          {% if item_rel %}rel="{{ item_rel|e('html_attr') }}"{% endif %}
+          {% if item.offsite %}class="offsite"{% endif %}
+          {% if item['new-window'] %}target="_blank"{% endif %}>{{ item.text }}</a></li>
+      {% endfor %}
+      {% if login_enabled %}
+        <li>{% include 'partials/login-status.html.twig' %}</li>
+      {% endif %}
+    </ul>
   {% endif %}
+</nav>
 
-  {# Breadcrumbs #}
-  {% if config.plugins.breadcrumbs.enabled %}
-    {% include 'partials/breadcrumbs.html.twig' %}
-  {% endif %}
+{% if config.get('plugins.simplesearch.enabled', false) %}
+  {% include 'partials/simplesearch_searchbox.html.twig' %}
+{% endif %}
 
-  {# Drop in a separator as most themes need this or will hide it. #}
-  <hr>
-  
-{% endif %} {# end if has nav #}
+{% if config.get('plugins.breadcrumbs.enabled', false) %}
+  {% include 'partials/breadcrumbs.html.twig' %}
+{% endif %}
+
+<hr>
+{% endif %}

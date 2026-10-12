@@ -1,49 +1,62 @@
 form:
   fields:
-    header.style.css.enable:
+    header.hypertext.assets.css:
       type: select
-      label: Allow CSS
-      help: Determines what CSS is allowed to load. Can be overridden on a per-page or collection basis.
+      label: Allow plugin CSS
       default: default
       options:
-        default: Use default
+        default: Use theme default
         1: Enabled
         0: Disabled
 
-    header.style.js.enable:
+    header.hypertext.assets.js:
       type: select
-      label: Allow JS
-      help: Determines what JS is allowed to load. Can be overridden on a per-page or collection basis.
+      label: Allow plugin JavaScript
       default: default
       options:
-        default: Use default
+        default: Use theme default
         1: Enabled
         0: Disabled
 
-    header.handling.css.serving:
-      type: select
-      label: CSS Include Method
-      help: "Determines whether to prioritize single page loads (inline <style>, good for Hypertext or single-serving sites) or multiple page loads (<link>, good for CSS styles or multi-paged sites)."
-      default: default
-      options:
-        default: Use default
-        inline: Inline (Faster single page loads)
-        linked: Link (Good for enabling JS/CSS)
-
-    header.handling.minify-output:
-      type: select
-      classes: fancy
-      label: Minify HTML Output
-      help: When enabled, the final HTML output will be minified (whitespace/comments removed) for smaller payloads. Inline CSS is always auto-minified.
-      default: default
-      options:
-        default: Use default
-        1: Enabled
-        0: Disabled
-
-    header.style.css.custom-value:
+    header.hypertext.style.custom-css:
       type: textarea
-      label: Custom CSS
-      help: Add your page-specific, custom CSS rules here.
-      placeholder: "e.g. body { font-family: Courier }"
+      label: Page-specific CSS
       size: large
+
+    header.hypertext.style.preset:
+      type: select
+      label: Stylesheet preset
+      default: inherit
+      data-options@: '\Grav\Theme\Hypertext::stylesheetOverrideOptions'
+
+    header.hypertext.style.accessible-font:
+      type: select
+      label: Use Atkinson Hyperlegible
+      default: default
+      options:
+        default: Use theme default
+        1: Enabled
+        0: Disabled
+
+    header.hypertext.layout.alignment:
+      type: select
+      label: Page alignment
+      default: default
+      options:
+        default: Use theme default
+        left: Left
+        center: Center
+        right: Right
+
+    header.hypertext.layout.width:
+      type: select
+      label: Maximum content width
+      default: default
+      options:
+        default: Use theme default
+        full: Full width
+        640: 640px
+        768: 768px
+        960: 960px
+        1024: 1024px
+        1280: 1280px

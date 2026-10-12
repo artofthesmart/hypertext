@@ -1,0 +1,22 @@
+name: Build release packages
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build runtime, style, and demo packages
+        run: ./scripts/build-release.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: hypertext-release-packages
+          path: dist/*.zip

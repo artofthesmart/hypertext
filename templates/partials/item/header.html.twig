@@ -1,78 +1,34 @@
-{#
-  partials/item/header.html.twig
-  ──────────────────────────────
-  Renders page/item header view.
-  
-  Note: Global decorator variables `dec_left` and `dec_right` used here
-  are dynamically registered in the theme class via `onTwigSiteVariables()`
-  in `hypertext.php`.
-#}
-{% import 'partials/item/config.html.twig' as item_config %}
-{% set cfg = item_config.resolve(page)|json_decode %}
+{% import 'partials/item/image.html.twig' as image %}
+{% import 'partials/item/fragments.html.twig' as fragments %}
+{% set content_width = layout_cfg.width == 'full' ? 1024 : layout_cfg.width|int %}
 
-{% import 'partials/item/image.html.twig' as image_finder %}
-{% set header_desc = image_finder.find_header(page)|trim %}
-{% set header_image = null %}
-{% if header_desc %}
-  {% set parts = header_desc|split(':', 2) %}
-  {% if parts[0] == 'page' %}{% set header_image = page.media.images[parts[1]] %}
-  {% elseif parts[0] == 'global' %}{% set header_image = media['image://' ~ parts[1]] %}
-  {% elseif parts[0] == 'first' %}{% set header_image = page.media.images|first %}
+{% if cfg.title and not page.home() %}
+  <h2><a href="{{ page.url }}">{{ page.title }}</a></h2>
+{% endif %}
+
+{% if cfg.subtitle and page.header.subtitle %}
+  <p><strong>{{ page.header.subtitle }}</strong></p>
+{% endif %}
+
+{% if cfg.image %}
+  {{ image.render(page, 'header', content_width, (content_width / 5)|round, 'eager', page.url) }}
+{% endif %}
+
+{% if cfg.date != 'none' or (cfg.categories and page.taxonomy.category) or (cfg.tags and page.taxonomy.tag) %}
+<p>
+  {% if cfg.date != 'none' %}
+    {{ 'THEME_HYPERTEXT.DATES.DATE'|t }}:
+    <small>{{ dec_left|raw }}{{ fragments.date(page, cfg.date) }}{{ dec_right|raw }}</small>
   {% endif %}
-{% endif %}
-
-{% set use_image_crop = (handling.images.compress|default('none') != 'none') %}
-{% set image_width = (use_image_crop and header_image) ? (style.layout['content-width'] == 'default' ? 1024 : style.layout['content-width']) - 10 : (header_image ? header_image.width : 0) %}
-{% set image_height = (use_image_crop and header_image) ? (style.layout['content-width'] == 'default' ? 1024 : style.layout['content-width']) / 5 : (header_image ? header_image.height : 0) %}
-{% set header_image_url = (use_image_crop and header_image) ? header_image.cropZoom(image_width, image_height).url : (header_image ? header_image.url : '') %}
-
-{# ------------------------------------------------------------------------ #}
-
-{# Title & Subtitle #}
-{% if cfg.show_title and not page.home() %}
-<h2>
-  <a href="{{ page.url }}">{{ page.title }}</a>
-</h2>
-{% endif %}
-{% if cfg.show_subtitle and page.header.subtitle %}<strong>{{ page.header.subtitle }}</strong>{% endif %}
-
-<p> {# The next set of items should be somewhat close together. #}
-
-{# Image #}
-{% if cfg.show_image and header_image %}
-  <a href="{{ page.url }}">
-    <img src="{{ header_image_url }}" width="{{ image_width }}" height="{{ image_height }}" loading="lazy" alt="{{ page.title|e('html_attr') }}">
-  </a>
-  <br>
-{% endif %}
-
-{# Date #}
-{% if cfg.show_date_published or cfg.show_date_modified %}
-  {{ 'THEME_HYPERTEXT.DATES.DATE'|t }}: <small>
-    {{ dec_left|raw }}{% 
-      include 'partials/item/date.html.twig' 
-      with {
-        'page': page, 
-        'parent': page.parent, 
-        'show_label': false
-      } %}{{ dec_right|raw }}
-  </small><br />
-{% endif %}
-
-{# Categories #}
-{% if cfg.show_cat and page.taxonomy.category %}
-  {{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t }}: <small>
-  {% for category in page.taxonomy.category %}
-    {{ dec_left|raw }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ dec_right|raw }}{{ not loop.last ? ',' : '' }}
-  {% endfor %}</small>
-  {{ page.taxonomy.tag ? '<br>' : '' }}
-{% endif %}
-
-{% if cfg.show_tags and page.taxonomy.tag %}
-  {{ 'THEME_HYPERTEXT.TAGS.TAGS'|t }}: <small>
-  {% for tag in page.taxonomy.tag %}
-    {{ dec_left|raw }}<a href="{{ page.parent.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ tag }}">{{ tag }}</a>{{ dec_right|raw }}{{ not loop.last ? ',' : '' }}
-  {% endfor %}</small>
-{% endif %}
-
+  {% if cfg.categories and page.taxonomy.category %}
+    {% if cfg.date != 'none' %}<br>{% endif %}
+    {{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t }}:
+    <small>{{ fragments.categories(page, page.parent.url, dec_left, dec_right) }}</small>
+  {% endif %}
+  {% if cfg.tags and page.taxonomy.tag %}
+    {% if cfg.date != 'none' or (cfg.categories and page.taxonomy.category) %}<br>{% endif %}
+    {{ 'THEME_HYPERTEXT.TAGS.TAGS'|t }}:
+    <small>{{ fragments.tags(page, page.parent.url, dec_left, dec_right) }}</small>
+  {% endif %}
 </p>
+{% endif %}

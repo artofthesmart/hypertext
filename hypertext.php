@@ -5,138 +5,114 @@ declare(strict_types=1);
 namespace Grav\Theme;
 
 use Grav\Common\Theme;
-use RocketTheme\Toolbox\Event\Event;
+use Symfony\Component\Yaml\Yaml;
 
 /**
- * Hypertext Theme for Grav CMS 2.0+
- *
- * A zero JS/CSS theme focused on ultra-fast, accessible, semantic HTML5.
- * Implements integrated output minification to avoid external plugin dependencies.
+ * Hypertext theme integration for Grav 2.
  */
 class Hypertext extends Theme
 {
     /**
-     * Subscribe to Grav lifecycle events.
-     *
-     * @return array<string, array<array<string|int>>>
+     * @return array<string, array{0: string, 1: int}>
      */
     public static function getSubscribedEvents(): array
     {
         return [
             'onTwigSiteVariables' => ['onTwigSiteVariables', 0],
-            'onOutputGenerated'   => ['onOutputGenerated', 0],
         ];
     }
 
     /**
-     * Set up global Twig variables for the theme.
+     * Expose the stylesheet manifest to Twig.
      */
     public function onTwigSiteVariables(): void
     {
-        $config = $this->config();
-        $textStyle = $config['structure']['text-style'] ?? 'plain';
-
-        $decLeft = '';
-        $decRight = '';
-        if ($textStyle === 'braced') {
-            $decLeft = '[ ';
-            $decRight = ' ]';
-        } elseif ($textStyle === 'angled') {
-            $decLeft = '< ';
-            $decRight = ' >';
-        }
-
-        $this->grav['twig']->twig_vars['dec_left'] = $decLeft;
-        $this->grav['twig']->twig_vars['dec_right'] = $decRight;
+        $twig = $this->grav['twig'];
+        $twig->twig_vars['hypertext_styles'] = self::stylesheets();
     }
 
     /**
-     * Registers the theme classes directory dynamically with Composer's autoloader.
-     * Uses Grav's locator to resolve the 'theme://classes' stream to support child theme inheritance.
-     */
-    public function autoload(): \Composer\Autoload\ClassLoader
-    {
-        $locator = $this->grav['locator'];
-        $classesDir = $locator->findResource('theme://classes', true);
-
-        /** @var \Composer\Autoload\ClassLoader $loader */
-        $loader = $this->grav['loader'];
-        
-        // Maps the namespace prefix to the resolved theme classes directory.
-        // Fallback to local classes directory if theme://classes locator path is not resolved.
-        $loader->addPsr4('Grav\\Theme\\Hypertext\\', $classesDir ?: __DIR__ . '/classes');
-
-        return $loader;
-    }
-
-    /**
-     * Minify final HTML output when enabled in theme config.
+     * Build stylesheet options for the Admin blueprint.
      *
-     * Strips HTML comments (preserving IE conditionals), collapses whitespace,
-     * and minifies any inline <style> blocks by removing CSS comments and
-     * collapsing whitespace within them. Also compresses images as needed.
+     * @return array<string, string>
      */
-    public function onOutputGenerated(Event $event): void
+    public static function stylesheetOptions(): array
     {
-        $config = $this->config();
-
-        // Only process HTML output formats
-        $format = $this->grav['page']?->templateFormat() ?? 'html';
-        if ($format !== 'html') {
-            return;
+        $options = [];
+        foreach (self::stylesheets() as $name => $style) {
+            $options[$name] = $style['label'];
         }
 
-        $output = $this->grav->output;
-        if (empty($output)) {
-            return;
+        return $options;
+    }
+
+    /**
+     * Build page-level stylesheet options for the Admin blueprint.
+     *
+     * @return array<string, string>
+     */
+    public static function stylesheetOverrideOptions(): array
+    {
+        return ['inherit' => 'Use theme default'] + self::stylesheetOptions();
+    }
+
+    /**
+     * Load core styles and any optional user-installed style pack.
+     *
+     * Optional styles are installed under:
+     * user/data/hypertext/styles/{styles.yaml,css/*.css}
+     *
+     * @return array<string, array{label: string, path: string|null}>
+     */
+    public static function stylesheets(): array
+    {
+        $styles = self::loadStyles(
+            __DIR__ . '/styles.yaml',
+            'theme://css/'
+        );
+
+        $optionalManifest = GRAV_ROOT . '/user/data/hypertext/styles/styles.yaml';
+        if (is_file($optionalManifest)) {
+            $styles += self::loadStyles(
+                $optionalManifest,
+                'user://data/hypertext/styles/css/'
+            );
         }
 
-        // 1. Process images (handles both compression and ensuring width/height parameters are set)
-        $compressMode = $config['handling']['images']['compress'] ?? 'none';
-        $output = \Grav\Theme\Hypertext\ImageCompressor::process($output, $compressMode);
+        return $styles;
+    }
 
-        // 2. Minify HTML and inline assets
-        $page = $this->grav['page'] ?? null;
-        $shouldMinify = null;
-        if ($page) {
-            $header = $page->header();
-            $val = null;
-            if (isset($header->handling)) {
-                $handling = $header->handling;
-                if (is_array($handling)) {
-                    $val = $handling['minify-output'] ?? null;
-                } elseif (is_object($handling)) {
-                    $val = $handling->{'minify-output'} ?? null;
-                }
+    /**
+     * @return array<string, array{label: string, path: string|null}>
+     */
+    private static function loadStyles(string $manifest, string $basePath): array
+    {
+        $data = Yaml::parseFile($manifest);
+        $entries = is_array($data) ? ($data['styles'] ?? []) : [];
+        $styles = [];
+
+        foreach ($entries as $name => $entry) {
+            if (
+                !is_string($name)
+                || $name === 'inherit'
+                || !preg_match('/^[a-z0-9][a-z0-9+_-]*$/i', $name)
+                || !is_array($entry)
+            ) {
+                throw new \UnexpectedValueException("Invalid Hypertext style entry in {$manifest}");
             }
-            if ($val !== null && $val !== 'default') {
-                $shouldMinify = (bool) $val;
-            } else {
-                $parent = $page->parent();
-                if ($parent) {
-                    $parentHeader = $parent->header();
-                    if (isset($parentHeader->handling)) {
-                        $parentHandling = $parentHeader->handling;
-                        $parentVal = null;
-                        if (is_array($parentHandling)) {
-                            $parentVal = $parentHandling['minify-output'] ?? null;
-                        } elseif (is_object($parentHandling)) {
-                            $parentVal = $parentHandling->{'minify-output'} ?? null;
-                        }
-                        if ($parentVal !== null && $parentVal !== 'default') {
-                            $shouldMinify = (bool) $parentVal;
-                        }
-                    }
-                }
+
+            $label = $entry['label'] ?? $name;
+            $file = $entry['file'] ?? null;
+            if (!is_string($label) || ($file !== null && (!is_string($file) || basename($file) !== $file))) {
+                throw new \UnexpectedValueException("Invalid Hypertext style metadata for {$name}");
             }
-        }
-        if ($shouldMinify === null) {
-            $shouldMinify = (bool) ($config['handling']['minify-output'] ?? true);
-        }
-        if ($shouldMinify) {
-            $output = \Grav\Theme\Hypertext\HtmlMinifier::process($output);
+
+            $styles[$name] = [
+                'label' => $label,
+                'path' => $file === null ? null : $basePath . $file,
+            ];
         }
 
-        $this->grav->output = $output;
+        return $styles;
     }
 }

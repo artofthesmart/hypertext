@@ -1,55 +1,41 @@
-structure:
-  header:
-    use-subheader: false
-    subheader: ""
-  footer:
-    style: text
-    content: ""
-  navigation:
-    header:
-      mode: inline
-      custom-items: []
-    pagination:
-      style: inline
-  text-style: braced
-  add-site-name: true
-handling:
-  images:
-    compress: minimal
-  css:
-    serving: inline
-  minify-output: true
+header:
+  custom-html: ''
+  show-description: false
+footer:
+  format: markdown
+  content: ''
+navigation:
+  mode: inline
+  decoration: braced
+  pagination: inline
+  custom-items: []
+layout:
+  alignment: left
+  width: 960
 style:
-  layout:
-    alignment: left
-    content-width: 960
-  css:
-    enable: false
-    custom-value: ""
-    stylesheet: default
-  js:
-    enable: false
-  visually-impaired: false
-page:
-  content:
-    title: true
-    subtitle: false
-    header-image: false
-    date-last-updated: false
-    date-published: true
-    tags: true
-    categories: true
-    headless: false
+  preset: default
+  custom-css: ''
+  accessible-font: false
+assets:
+  css: false
+  js: false
+content:
+  title: true
+  subtitle: false
+  image: false
+  date: published
+  categories: true
+  tags: true
+  headless: false
 collection:
-  mode: list
-  show-nested: false
+  layout: list
+  nested: false
   display:
     title: true
     subtitle: false
-    header-image: false
-    date: true
-    date-type: published
-    tags: true
+    image: false
+    date: published
     categories: true
+    tags: true
     summary: false
-    click-through: false
+    read-more: false

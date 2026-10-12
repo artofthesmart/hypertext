@@ -2,15 +2,15 @@ name: Hypertext
 slug: hypertext
 type: theme
 version: 2.0.0
-description: "Hypertext is a lean HTML5 theme with no JavaScript or stylesheet required by default."
+description: "Hypertext is a lean semantic HTML5 theme with no JavaScript or stylesheet required by default."
 icon: compress
 author:
   name: Alejo Grigera Sutro
   email: hypertext@artofthesmart.com
-  url: http://artofthesmart.com
+  url: https://artofthesmart.com
 homepage: https://github.com/artofthesmart/hypertext
-demo: http://hypertext.artofthesmart.com
-keywords: theme, simple, compliance, fast, semantic, html5, performance
+demo: https://hypertext.artofthesmart.com
+keywords: theme, simple, fast, semantic, html5, performance
 bugs: https://github.com/artofthesmart/hypertext/issues
 license: MIT
 
@@ -18,7 +18,7 @@ dependencies:
   - { name: grav, version: '>=2.0.0' }
 
 compatibility:
-  grav: ['2.0']
+  grav: ['2.0', '2.1', '2.2']
 
 form:
   validation: strict
@@ -27,76 +27,200 @@ form:
       type: tabs
       active: 1
       fields:
-        structure: # STRUCTURAL CONTENT TAB
+        structure:
           type: tab
           title: Structure
           fields:
-            navStructureTitle:
+            navigation_section:
               type: section
               title: Navigation
               underline: true
-            description:
-              type: display
-              label: Description
-              markdown: true
-              content: These values let you decide how you want navigation to work.
-            structure.navigation.header.mode:
-              default: inline
+            navigation.mode:
               type: select
-              label: Navigation Display
-              help: Determines how the menu bar is displayed. Inline renders links horizontally separated by decorators and a small bit of CSS. Stacked renders as a bulleted list without CSS.
+              label: Navigation display
+              default: inline
               options:
-                inline: Inline
-                stacked: Stacked (ul/li)
-            structure.text-style:
+                inline: Inline links
+                stacked: Stacked list
+            navigation.decoration:
+              type: select
+              label: Inline text decoration
               default: braced
+              options:
+                braced: "[ Link ]"
+                angled: "< Link >"
+                plain: Plain
+            navigation.pagination:
               type: select
-              label: Text decorator style
-              help: Determines how inline links and metadata labels are decorated throughout the site — navigation, categories, tags, dates, etc.
-              options:
-                braced: "Braced: [ Home ] [ About ]"
-                angled: "Angled: < Home > < About >"
-                plain: "Plain: Home | About"
-            structure.navigation.pagination.style:
+              label: Pagination display
               default: inline
-              type: select                      
-              label: Pagination style
-              help: When you have the pagination plugin installed, determines how pagination is displayed. Inline renders links horizontally separated by decorators. Stacked renders as a bulleted list. 
               options:
-                inline: Inline
-                stacked: Stacked (ul/li)
+                inline: Inline links
+                stacked: Stacked list
+            navigation.custom-items:
+              type: list
+              style: vertical
+              label: Additional navigation links
+              fields:
+                .text:
+                  type: text
+                  label: Link text
+                .href:
+                  type: text
+                  label: URL
+                .title:
+                  type: text
+                  label: Advisory title
+                .rel:
+                  type: text
+                  label: Relationship
+                .offsite:
+                  type: toggle
+                  label: Add offsite class
+                  default: 0
+                  options:
+                    1: Enabled
+                    0: Disabled
+                  validate:
+                    type: bool
+                .new-window:
+                  type: toggle
+                  label: Open in a new window
+                  default: 0
+                  options:
+                    1: Enabled
+                    0: Disabled
+                  validate:
+                    type: bool
+            header_section:
+              type: section
+              title: Site header
+              underline: true
+            header.custom-html:
+              type: textarea
+              label: Custom header HTML
+              help: Leave blank to render the site title.
+            header.show-description:
+              type: toggle
+              label: Show site description
+              default: 0
+              options:
+                1: Enabled
+                0: Disabled
+              validate:
+                type: bool
+            footer_section:
+              type: section
+              title: Site footer
+              underline: true
+            footer.format:
+              type: select
+              label: Footer format
+              default: markdown
+              options:
+                markdown: Markdown
+                html: HTML
+            footer.content:
+              type: textarea
+              label: Footer content
+        content:
+          type: tab
+          title: Content
+          fields:
             columns:
               type: columns
               fields:
-                column1: # COLLECTION DEFAULTS
+                page_column:
                   type: column
                   fields:
-                    collectionDefaultsTitle:
+                    page_section:
                       type: section
-                      title: Collection Defaults
+                      title: Page defaults
                       underline: true
-                    description:
-                      type: display
-                      label: Description
-                      markdown: true
-                      content: "[Collections](https://learn.getgrav.org/17/content/collections) group and display multiple pages, e.g. a list of blog posts, a 'Cars' section of your site, a portfolio of photos, a predefined search results page of blog posts sorted by category/tag/date, etc. These defaults apply site-wide, but can be overridden on a per-collection basis. [See examples of Hypertext collections in action](https://hypetext.artofthesmart.com)."
-                    collection.mode:
+                    content.title:
+                      type: toggle
+                      label: Show title
+                      default: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    content.subtitle:
+                      type: toggle
+                      label: Show subtitle
+                      default: 0
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    content.image:
+                      type: toggle
+                      label: Show header image
+                      default: 0
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    content.date:
+                      type: select
+                      label: Date
+                      default: published
+                      options:
+                        none: None
+                        published: Published
+                        modified: Modified
+                        both: Published and modified
+                    content.categories:
+                      type: toggle
+                      label: Show categories
+                      default: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    content.tags:
+                      type: toggle
+                      label: Show tags
+                      default: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                collection_column:
+                  type: column
+                  fields:
+                    collection_section:
+                      type: section
+                      title: Collection defaults
+                      underline: true
+                    collection.layout:
+                      type: select
+                      label: Layout
                       default: list
-                      type: select                      
-                      label: Collection Layout
-                      help: Determines how child pages are rendered when a given page or directory has child pages.
                       options:
                         list: List
-                        comfy: Comfy (image + excerpt)
-                        table: Table (compact rows)
-                        grid: Grid (2D table)
-                        cards: Cards (tile layout)
+                        comfy: Comfy
+                        table: Table
+                        grid: Grid
+                        cards: Cards
+                    collection.nested:
+                      type: toggle
+                      label: Show nested children
+                      default: 0
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
                     collection.display.title:
                       type: toggle
-                      label: Show Title
-                      help: When enabled, child page titles will be shown.
+                      label: Show titles
                       default: 1
-                      highlight: 1
                       options:
                         1: Enabled
                         0: Disabled
@@ -104,51 +228,35 @@ form:
                         type: bool
                     collection.display.subtitle:
                       type: toggle
-                      label: Show Subtitle
-                      help: When enabled, child page subtitles will be shown (if available).
+                      label: Show subtitles
                       default: 0
-                      highlight: 1
                       options:
                         1: Enabled
                         0: Disabled
                       validate:
                         type: bool
-                    collection.display.header-image:
+                    collection.display.image:
                       type: toggle
-                      label: Show Thumbnail
-                      help: When enabled, child page thumbnails will be shown. If one isn't available, the header image is shown instead. If neither exists, nothing is shown.
+                      label: Show thumbnails
                       default: 0
-                      highlight: 0
                       options:
                         1: Enabled
                         0: Disabled
                       validate:
                         type: bool
                     collection.display.date:
-                      type: toggle
-                      label: Show Date
-                      help: When enabled, a date will be shown (if possible) for child pages.
-                      default: 1
-                      highlight: 1
-                      options:
-                        1: Enabled
-                        0: Disabled
-                      validate:
-                        type: bool
-                    collection.display.date-type:
                       type: select
-                      label: Select Date
-                      help: Choose which date Grav should use for displaying dates for child pages.
+                      label: Date
                       default: published
                       options:
-                        published: Published Date
-                        modified: Last Modified Date
+                        none: None
+                        published: Published
+                        modified: Modified
+                        both: Published and modified
                     collection.display.categories:
                       type: toggle
-                      label: Show Categories
-                      help: When enabled, child page categories will be shown (if available).
+                      label: Show categories
                       default: 1
-                      highlight: 1
                       options:
                         1: Enabled
                         0: Disabled
@@ -156,10 +264,8 @@ form:
                         type: bool
                     collection.display.tags:
                       type: toggle
-                      label: Show Tags
-                      help: When enabled, child page tags will be shown (if available).
+                      label: Show tags
                       default: 1
-                      highlight: 1
                       options:
                         1: Enabled
                         0: Disabled
@@ -167,436 +273,97 @@ form:
                         type: bool
                     collection.display.summary:
                       type: toggle
-                      label: Show Summary
-                      help: When enabled, child page summaries/excerpts will be shown. This is the content before the `===` in the body of a child page.
+                      label: Show summaries
                       default: 0
-                      highlight: 1
                       options:
                         1: Enabled
                         0: Disabled
                       validate:
                         type: bool
-                    collection.display.click-through:
+                    collection.display.read-more:
                       type: toggle
-                      label: Show "Read More" Link
-                      help: When enabled, a "Read More" or similar link to the full child page will be shown.
+                      label: Show read-more links
                       default: 0
-                      highlight: 1
                       options:
                         1: Enabled
                         0: Disabled
                       validate:
                         type: bool
-                    collection.show-nested:
-                      type: toggle
-                      label: Show nested children
-                      help: When enabled, any sub-children that a child page has will be shown (if possible).
-                      default: 0
-                      highlight: 1
-                      options:
-                        1: Enabled
-                        0: Disabled
-                      validate:
-                        type: bool
-                column2: # PAGE DEFAULTS
-                  type: column
-                  fields:
-                    pageDefaultsTitle:
-                      type: section
-                      title: Page Defaults
-                      underline: true
-                    description:
-                      type: display
-                      label: Description
-                      markdown: true
-                      content: "[Pages](https://learn.getgrav.org/17/content/content-pages) display individual pages of conetnt, e.g. a blog post, a car article, a portfolio project, etc. These defaults apply site-wide, but can be overridden on a per-page basis."
-                    page.content.title:
-                      type: toggle
-                      label: Show Title
-                      help: When enabled, the page title will be shown.
-                      default: 1
-                      highlight: 1
-                      options:
-                        1: Enabled
-                        0: Disabled
-                      validate:
-                        type: bool
-                    page.content.subtitle:
-                      type: toggle
-                      label: Show Subtitle
-                      help: When enabled, the subtitle will be shown on the page (if available).
-                      default: 0
-                      highlight: 1
-                      options:
-                        1: Enabled
-                        0: Disabled
-                      validate:
-                        type: bool
-                    page.content.header-image:
-                      type: toggle
-                      label: Show Header Image
-                      help: When enabled, the header image will be shown at the top of the page. If you don't specify one, the first image in the post will be shown.
-                      default: 0
-                      highlight: 1
-                      options:
-                        1: Enabled
-                        0: Disabled
-                      validate:
-                        type: bool
-                    page.content.date-published:
-                      type: toggle
-                      label: Show Published Date
-                      help: When enabled, the published date will be shown on the page.
-                      default: 1
-                      highlight: 1
-                      options:
-                        1: Enabled
-                        0: Disabled
-                      validate:
-                        type: bool
-                    page.content.date-last-updated:
-                      type: toggle
-                      label: Show Last Modified Date
-                      help: When enabled, the last modified date will be shown on the page.
-                      default: 0
-                      highlight: 1
-                      options:
-                        1: Enabled
-                        0: Disabled
-                      validate:
-                        type: bool
-                    page.content.categories:
-                      type: toggle
-                      label: Show Categories
-                      help: When enabled, categories will be shown on the page (if available).
-                      default: 1
-                      highlight: 1
-                      options:
-                        1: Enabled
-                        0: Disabled
-                      validate:
-                        type: bool
-                    page.content.tags:
-                      type: toggle
-                      label: Show Tags
-                      help: When enabled, tags will be shown on the page (if available).
-                      default: 1
-                      highlight: 1
-                      options:
-                        1: Enabled
-                        0: Disabled
-                      validate:
-                        type: bool
-        style: # STYLE TAB
+        style:
           type: tab
-          title: Style & Formatting
+          title: Style & assets
           fields:
-            columns:
-              type: columns
-              fields:
-                column1: # INCLUDES/EXCLUDES COLUMN
-                  type: column
-                  fields:
-                    includesTitle:
-                      type: section
-                      title: CSS/JS Settings
-                      underline: true
-                    description:
-                      type: display
-                      label: Description
-                      markdown: true
-                      content: These fields offer settings for whether to allow CSS or JS files. Some plugins include these kinds of files, so this is a great way to suppress them.  Remember that these are *global* settings, which you can override on a per-page basis.  For example, you could install the [syntax highlighting](https://github.com/getgrav/grav-plugin-highlight) plugin, disable CSS/JS here, and then enable it only on pages where you know you are showing code.
-                    style.css.enable:
-                      type: toggle
-                      
-                      label: Allow Global CSS
-                      help: Determines what CSS is allowed to load. This can be overridden by an individual page.
-                      default: 0
-                      highlight: 0
-                      options:
-                        1: Enabled
-                        0: Disabled
-                      validate:
-                        type: bool
-                    style.js.enable:  
-                      type: toggle
-                      
-                      label: Allow Global JS
-                      help: Determines what JS is allowed to load. This can be overridden by an individual page.
-                      default: 0
-                      highlight: 0
-                      options:
-                        1: Enabled
-                        0: Disabled
-                      validate:
-                        type: bool
-                    handlingTitle:
-                      type: section
-                      title: Asset Handling
-                      underline: true
-                    handling.css.serving:
-                      type: select
-                      
-                      label: CSS Include Method
-                      help: "Determines whether to prioritize single page loads (inline <style>, good for Hypertext or single-serving sites) or multiple page loads (<link>, good for CSS styles or multi-paged sites)."
-                      options:
-                        inline: Inline (Faster single page loads)
-                        linked: Link (Good for enabling JS/CSS)
-                    handling.minify-output:
-                      type: toggle
-                      
-                      label: Minify HTML Output
-                      help: When enabled, the final HTML output will be minified (whitespace/comments removed) for smaller payloads. Inline CSS is always auto-minified.
-                      default: 1
-                      highlight: 1
-                      options:
-                        1: Enabled
-                        0: Disabled
-                      validate:
-                        type: bool
-                column2: # SELECT A STYLE COLUMN
-                  type: column
-                  fields:
-                    styleTitle:
-                      type: section
-                      title: Themes & Styles
-                      underline: true
-                    description:
-                      type: display
-                      label: Description
-                      markdown: true
-                      content: Themes here are open-source CSS files available on GitHub and are not my own work. Consider visiting their homepages, contributing, and supporting the authors.  Remember that you can test these styles quickly by adding the name or number to a theme URL parameter, e.g. `YourSite.com/?theme=water` or `YourSite.com/?theme=4`.
-                    style.css.stylesheet:
-                      type: select
-                      
-                      label: Select a Theme
-                      help: Selects from a pre-determined list of simple, fast CSS files.
-                      options:
-                        default:            "hypertext (No style)"
-                        air:                "#0 air (2KB)"
-                        hypertext++:        "#1 hypertext++ (0KB)"
-                        latex:              "#2 latex (305KB)"
-                        marx:               "#3 marx (11KB)"
-                        milligram:          "#4 milligram (9KB)"
-                        modest:             "#5 modest (2KB)"
-                        mvp:                "#6 mvp (10KB)"
-                        newcss-default:     "#7 newcss-default (8KB)"
-                        newcss-night:       "#8 newcss-night (7KB)"
-                        newcss-terminal:    "#9 newcss-terminal (7KB)"
-                        sakura:             "#10 sakura (4KB)"
-                        sakura-dark:        "#11 sakura-dark (4KB)"
-                        sakura-dark-solarized: "#12 sakura-dark-solar (4KB)"
-                        sakura-earthly:     "#13 sakura-earthly (4KB)"
-                        sakura-ink:         "#14 sakura-ink (5KB)"
-                        sakura-pink:        "#15 sakura-pink (5KB)"
-                        sakura-radical:     "#16 sakura-radical (5KB)"
-                        sakura-vader:       "#17 sakura-vader (4KB)"
-                        simple:             "#18 simple (9KB)"
-                        stylize:            "#19 stylize (4KB)"
-                        tacit:              "#20 tacit (7KB)"
-                        tufte:              "#21 tufte (12KB)"
-                        water-dark:         "#22 water-dark (2KB)"
-                        water-light:        "#23 water-light (2KB)"
-                        writ:               "#24 writ (2KB)"
-                        yorha:              "#25 yorha (8KB)"
-
-                    style.css.custom-value:
-                      type: textarea
-                      label: Custom CSS
-                      help: Add your custom CSS rules here.
-                      placeholder: "e.g. body { font-family: Courier }"
-                      size: large
-                    favicon:
-                      name: Favicon
-                      type: file
-                      label: Upload Favicon
-                      help: This uploads a new image for browser tabs and search engines to use to represent your website. It must be called favicon.png and conform to other favicon requirements. See Hypertext homepage for details. 
-                      destination: 'image://favicon'
-                      multiple: false
-                      autofocus: false
-                      accept:
-                        - image/png
-                    configurationTitle:
-                      type: section
-                      title: Layout Configuration
-                      underline: true
-                    style.layout.alignment:
-                      type: select
-                      size: medium
-                      
-                      label: General site layout
-                      help: Configures the general layout of the website horizontally.
-                      options:
-                        left: No style (align left)
-                        centered: Centered
-                        right: Right-aligned
-                    style.layout.content-width:
-                      type: select
-                      size: medium
-                      
-                      label: Maximum website width
-                      help: Caps the website's maximum width for viewing on large screens.
-                      options:
-                        default: No style (full width)
-                        640: 640px (very small)
-                        768: 768px (small)
-                        960: 960px (medium)
-                        1024: 1024px (large)
-                        1280: 1280px (very large)
-                    handling.images.compress:
-                      type: select
-                      size: medium
-                      label: Image Compression
-                      help: Determines whether or not to compress and re-encode images. This reduces image filesize to speed up delivery.
-                      default: minimal
-                      options:
-                        minimal: Minimal (100% WebP, site-width resized)
-                        none: None (No resizing or re-encoding)
-                        medium: Medium (80% WebP)
-                        high: High (60% WebP)
-                        extreme: Extreme (50% WebP, smaller dimensions)
-                    style.visually-impaired:
-                      type: toggle
-                      size: medium
-                      label: Hyperlegible text/lists
-                      help: When enabled, this will replace any stylesheet's default `body paragraph` typeface and use the Atkinson Hyperlegible Font for users with poorer eyesight. *WARNING* the font is ~100kb.
-                      default: 0
-                      highlight: 0
-                      options:
-                        1: 'Enabled'
-                        0: 'Disabled'
-                      validate:
-                        type: bool
-        menus: # HEADER, FOOTER, LINKS TAB
-          type: tab
-          title: Headers, Footers, Links
-          fields:
-            columns:
-              type: columns
-              fields:
-                column1: # Headers, Footers
-                  type: column
-                  fields:
-                    headersTitle:
-                      type: section
-                      title: Headers & Icons
-                      underline: true
-                    headersDescription:
-                      type: display
-                      size: long
-                      label: Description
-                      markdown: true
-                      content: "This section lets you change elements near the top of your website like header images and more."
-                    structure.header.use-subheader:
-                      type: toggle
-                      
-                      label: Show Site Subtitle
-                      help: When enabled, if you have one, your site's Configuration => Site => Metadata => Description will appear under the site title. When disabled, it's not rendered.
-                      default: 0
-                      highlight: 1
-                      options:
-                        1: Enabled
-                        0: Disabled
-                      validate:
-                        type: bool
-                    structure.header.subheader:
-                      type: textarea
-                      label: Title/Header HTML
-                      help: This is raw HTML that will be included in the header instead of the Site Title. Write your own custom site title, use an image, or ads.
-                      placeholder: "Leave this blank to use the site title as the site header. Otherwise, write HTML here. You can include images. Consider using SVG or base64 encoded images to stay fast."
-                      size: large
-                    footersTitle:
-                      type: section
-                      title: Footers
-                      underline: true
-                    footersDescription:
-                      type: display
-                      size: long
-                      label: Description
-                      markdown: true
-                      content: "This section lets you change elements near the bottom of your website like custom disclaimers or content."
-                    structure.footer.style:
-                      type: select
-                      
-                      label: Footer Type
-                      help: The footer can be either markdown or HTML, whichever you need.
-                      size: large
-                      default: text
-                      options:
-                        text: Text / Markdown
-                        html: HTML  
-                    structure.footer.content:
-                      type: textarea
-                      label: Footer Content
-                      size: large
-                      help: Add your optional, custom footer content here. If you need to remove the Hypertext attribution line, you can do it from the theme code in user/themes/hypertext/templates/partials/page/footer.html.twig.
-                column2: # Links
-                  type: column
-                  fields:
-                    linksTitle:
-                      type: section
-                      title: Links
-                      underline: true
-                    description:
-                      type: display
-                      size: long
-                      label: Description
-                      markdown: true
-                      content: "This section lets you add custom links to the end of your website's navigation."
-                    structure.navigation.header.custom-items:
-                      name: custom-items
-                      type: list
-                      style: vertical
-                      size: long
-                      label: Additional Menu Items
-                      help: Add manual links to the header of your site.
-                      fields:
-                        .text:
-                          type: text
-                          label: Link Text
-                          placeholder: Use Google
-                        .href:
-                          type: text
-                          label: Full URL
-                          placeholder: http://google.com
-                        .isOffsite:
-                          type: toggle
-                          label: Add offsite CSS class
-                          help: When enabled, this will add a CSS class to this item indicating that it is offsite.
-                          default: 0
-                          options:
-                              1: 'Enabled'
-                              0: 'Disabled'
-                          validate:
-                              type: bool
-                        .isNewWindow:
-                          type: toggle
-                          label: Open in new window
-                          help: When enabled, this will cause the link to open in a new window when clicked.
-                          default: 0
-                          options:
-                              1: 'Enabled'
-                              0: 'Disabled'
-                          validate:
-                              type: bool
-                        .fieldset:
-                          type: fieldset
-                          title: Other Parameters
-                          help: Advanced settings for your new link.
-                          text: Advanced or optional features for this link.
-                          icon: cogs
-                          collapsed: true     # Initial state of fieldset (see collapsible option)
-                          collapsible: true    # Whether one can expand the fieldset or not 
-                          fields:
-                            .rel:
-                              type: text
-                              label: rel
-                              placeholder: The forward relationship, also known as the "link type".
-                            .name:
-                              type: text
-                              label: Name
-                              placeholder: This should be a string defining unique name for the scope of the current HTML document.
-                            .title:
-                              type: text
-                              label: Title
-                              placeholder: An advisory title for the linked resource.
+            style_section:
+              type: section
+              title: Aesthetic options
+              underline: true
+            style.preset:
+              type: select
+              label: Stylesheet preset
+              data-options@: '\Grav\Theme\Hypertext::stylesheetOptions'
+            style.custom-css:
+              type: textarea
+              label: Custom CSS
+              size: large
+            style.accessible-font:
+              type: toggle
+              label: Use Atkinson Hyperlegible
+              default: 0
+              options:
+                1: Enabled
+                0: Disabled
+              validate:
+                type: bool
+            layout_section:
+              type: section
+              title: Layout
+              underline: true
+            layout.alignment:
+              type: select
+              label: Page alignment
+              default: left
+              options:
+                left: Left
+                center: Center
+                right: Right
+            layout.width:
+              type: select
+              label: Maximum content width
+              default: 960
+              options:
+                full: Full width
+                640: 640px
+                768: 768px
+                960: 960px
+                1024: 1024px
+                1280: 1280px
+            assets_section:
+              type: section
+              title: Plugin assets
+              underline: true
+            assets.css:
+              type: toggle
+              label: Allow plugin CSS
+              default: 0
+              options:
+                1: Enabled
+                0: Disabled
+              validate:
+                type: bool
+            assets.js:
+              type: toggle
+              label: Allow plugin JavaScript
+              default: 0
+              options:
+                1: Enabled
+                0: Disabled
+              validate:
+                type: bool
+            favicon:
+              name: Favicon
+              type: file
+              label: Upload favicon.png
+              destination: 'image://favicon'
+              multiple: false
+              accept:
+                - image/png

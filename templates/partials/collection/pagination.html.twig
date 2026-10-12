@@ -1,6 +1,6 @@
 {% set pagination = pagination|default(page.collection.params.pagination) %}
 {% set base_url = base_url|default(page.url) %}
-{% set isInlinePagination = structure.navigation.pagination.style|default('inline') == 'inline' %}
+{% set isInlinePagination = nav_cfg.pagination|default('inline') == 'inline' %}
 
 {# ------------------------------------------------------------------------ #}
 

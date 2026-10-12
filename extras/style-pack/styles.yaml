@@ -1,0 +1,67 @@
+styles:
+  air:
+    label: Air (2 KB)
+    file: air.css
+  latex:
+    label: LaTeX (305 KB)
+    file: latex.css
+  marx:
+    label: Marx (11 KB)
+    file: marx.css
+  milligram:
+    label: Milligram (9 KB)
+    file: milligram.css
+  modest:
+    label: Modest (2 KB)
+    file: modest.css
+  mvp:
+    label: MVP (10 KB)
+    file: mvp.css
+  newcss-default:
+    label: new.css Default (8 KB)
+    file: newcss-default.css
+  newcss-night:
+    label: new.css Night (7 KB)
+    file: newcss-night.css
+  newcss-terminal:
+    label: new.css Terminal (7 KB)
+    file: newcss-terminal.css
+  sakura-dark:
+    label: Sakura Dark (4 KB)
+    file: sakura-dark.css
+  sakura-dark-solarized:
+    label: Sakura Dark Solarized (4 KB)
+    file: sakura-dark-solarized.css
+  sakura-earthly:
+    label: Sakura Earthly (4 KB)
+    file: sakura-earthly.css
+  sakura-ink:
+    label: Sakura Ink (5 KB)
+    file: sakura-ink.css
+  sakura-pink:
+    label: Sakura Pink (5 KB)
+    file: sakura-pink.css
+  sakura-radical:
+    label: Sakura Radical (5 KB)
+    file: sakura-radical.css
+  sakura-vader:
+    label: Sakura Vader (4 KB)
+    file: sakura-vader.css
+  simple:
+    label: Simple.css (9 KB)
+    file: simple.css
+  stylize:
+    label: Stylize (4 KB)
+    file: stylize.css
+  tacit:
+    label: Tacit (7 KB)
+    file: tacit.css
+  tufte:
+    label: Tufte (12 KB)
+    file: tufte.css
+  writ:
+    label: Writ (2 KB)
+    file: writ.css
+  yorha:
+    label: YoRHa (8 KB)
+    file: yorha.css

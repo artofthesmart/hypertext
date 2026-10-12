@@ -1,58 +1,69 @@
-{#
-  partials/collection/render.html.twig
-  ────────────────────────────────────
-  Reusable collection rendering dispatcher.
+{% set layout = layout|default(theme.collection.layout) %}
+{% set collection_cfg = collection_cfg|default(theme.collection) %}
+{% set display_cfg = display_cfg|default(theme.collection.display) %}
 
-  Expected variables (pass with the 'with' clause or set before including):
-    collection  – iterable of Grav Page objects
-    parent      – the parent Page (used by sub-templates for context/settings)
-    style       – (optional) one of: list | comfy | table | grid | cards
-                  Falls back to config.themes.hypertext.collection.mode,
-                  then to 'list'.
-#}
-
-{% set style = style|default(config.themes.hypertext.collection.mode|default('list')) %}
-
-{# ── LIST (default) ─────────────────────────────────────────────────────────── #}
-{% if style == 'list' %}
-  <ol>
-  {% for child in collection %}
-    {% if child.isPage() or child.isDir() %}
-      {% include 'partials/item/list.html.twig' with {'page': child, 'parent': parent, 'level': 1} %}
-    {% endif %}
-  {% endfor %}
-  </ol>
-
-{# ── COMFY ────────────────────────────────────────────────────────────────── #}
-{% elseif style == 'comfy' %}
-  {% for child in collection %}
-    {% if child.isPage() %}
-      {% include 'partials/item/comfy.html.twig' with {'page': child, 'parent': parent} %}
-    {% endif %}
-  {% endfor %}
-
-{# ── TABLE ────────────────────────────────────────────────────────────────── #}
-{% elseif style == 'table' %}
-  {% include 'partials/item/table.html.twig' with {'parent': parent, 'collection': collection} %}
-
-{# ── GRID (2D table layout) ───────────────────────────────────────────────── #}
-{% elseif style == 'grid' %}
-  <table>
-  {% for child in collection %}
-    {% if child.isPage() %}
-      {% include 'partials/item/grid.html.twig' with {'page': child, 'parent': parent} %}
-    {% endif %}
+{% if layout == 'table' %}
+  {% include 'partials/item/table.html.twig' with {
+    'collection': collection,
+    'parent': parent,
+    'collection_cfg': collection_cfg,
+    'display_cfg': display_cfg
+  } %}
+{% elseif layout == 'grid' %}
+  <table class="children grid">
+  {% for child in collection if child.isPage() %}
+    {% set child_local = child.header.hypertext.content|default({})|filter(value => value != 'default') %}
+    {% set cfg = display_cfg|merge(child_local) %}
+    {% include 'partials/item/grid.html.twig' with {
+      'page': child,
+      'parent': parent,
+      'cfg': cfg,
+      'collection_cfg': collection_cfg,
+      'display_cfg': display_cfg
+    } %}
   {% endfor %}
   </table>
-
-{# ── CARDS (floating card blocks) ─────────────────────────────────────────── #}
-{% elseif style == 'cards' %}
-  <div id="cards-collection">
-  {% for child in collection %}
-    {% if child.isPage() %}
-      {% include 'partials/item/cards.html.twig' with {'page': child, 'parent': parent} %}
-    {% endif %}
+{% elseif layout == 'cards' %}
+  <section class="children cards">
+  {% for child in collection if child.isPage() %}
+    {% set child_local = child.header.hypertext.content|default({})|filter(value => value != 'default') %}
+    {% set cfg = display_cfg|merge(child_local) %}
+    {% include 'partials/item/cards.html.twig' with {
+      'page': child,
+      'parent': parent,
+      'cfg': cfg,
+      'collection_cfg': collection_cfg,
+      'display_cfg': display_cfg
+    } %}
   {% endfor %}
-  </div>
-
+  </section>
+{% elseif layout == 'comfy' %}
+  <section class="children comfy">
+  {% for child in collection if child.isPage() %}
+    {% set child_local = child.header.hypertext.content|default({})|filter(value => value != 'default') %}
+    {% set cfg = display_cfg|merge(child_local) %}
+    {% include 'partials/item/comfy.html.twig' with {
+      'page': child,
+      'parent': parent,
+      'cfg': cfg,
+      'collection_cfg': collection_cfg,
+      'display_cfg': display_cfg
+    } %}
+  {% endfor %}
+  </section>
+{% else %}
+  <ol class="children list">
+  {% for child in collection %}
+    {% set child_local = child.header.hypertext.content|default({})|filter(value => value != 'default') %}
+    {% set cfg = display_cfg|merge(child_local) %}
+    {% include 'partials/item/list.html.twig' with {
+      'page': child,
+      'parent': parent,
+      'cfg': cfg,
+      'collection_cfg': collection_cfg,
+      'display_cfg': display_cfg,
+      'level': 1
+    } %}
+  {% endfor %}
+  </ol>
 {% endif %}

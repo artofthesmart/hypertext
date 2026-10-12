@@ -1,81 +1,66 @@
 form:
   fields:
-    header.page.content.title:
+    header.hypertext.content.title:
       type: select
-      label: Show Title
-      help: When enabled, the page title will be shown.
+      label: Show title
       default: default
       options:
-        default: Use Default
+        default: Use theme default
         1: Enabled
         0: Disabled
 
-    header.page.content.subtitle:
+    header.hypertext.content.subtitle:
       type: select
-      label: Show Subtitle
-      help: When enabled, the subtitle will be shown on the page (if available).
+      label: Show subtitle
       default: default
       options:
-        default: Use Default
+        default: Use theme default
         1: Enabled
         0: Disabled
 
-    header.page.content.header-image:
+    header.hypertext.content.image:
       type: select
-      label: Show Header Image
-      help: When enabled, the header image will be shown at the top of the page. If you don't specify one, the first image in the post will be shown.
+      label: Show header image
       default: default
       options:
-        default: Use Default
+        default: Use theme default
         1: Enabled
         0: Disabled
 
-    header.page.content.date-published:
+    header.hypertext.content.date:
       type: select
-      label: Show Published Date
-      help: When enabled, the published date will be shown on the page.
+      label: Date
       default: default
       options:
-        default: Use Default
+        default: Use theme default
+        none: None
+        published: Published
+        modified: Modified
+        both: Published and modified
+
+    header.hypertext.content.categories:
+      type: select
+      label: Show categories
+      default: default
+      options:
+        default: Use theme default
         1: Enabled
         0: Disabled
 
-    header.page.content.date-last-updated:
+    header.hypertext.content.tags:
       type: select
-      label: Show Last Modified Date
-      help: When enabled, the last modified date will be shown on the page.
+      label: Show tags
       default: default
       options:
-        default: Use Default
+        default: Use theme default
         1: Enabled
         0: Disabled
 
-    header.page.content.categories:
+    header.hypertext.content.headless:
       type: select
-      label: Show Categories
-      help: When enabled, categories will be shown on the page (if available).
+      label: Headless rendering
       default: default
       options:
-        default: Use Default
-        1: Enabled
-        0: Disabled
-
-    header.page.content.tags:
-      type: select
-      label: Show Tags
-      help: When enabled, tags will be shown on the page (if available).
-      default: default
-      options:
-        default: Use Default
-        1: Enabled
-        0: Disabled
-
-    header.page.content.headless:
-      type: select
-      label: Headless Rendering
-      help: When enabled, only this page's rendered content is returned without the site header, metadata, navigation, or footer.
-      default: default
-      options:
-        default: Use Default
+        default: Use theme default
         1: Enabled
         0: Disabled

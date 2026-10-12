@@ -2,11 +2,13 @@
 
 1. [](#improved)
     * Rebuilds the theme around semantic HTML5 and Grav 2.
-    * Aligns global defaults, Admin blueprints, and page-level rendering overrides.
-    * Adds integrated output minification and native image optimization.
-    * Preserves scripts and preformatted content during output minification.
-    * Restricts URL stylesheet overrides to bundled themes.
-    * Fixes body classes, inherited asset controls, custom navigation attributes, and inline/linked stylesheet drift.
+    * Reduces the production theme archive to under 500KB by packaging demo content and extended styles separately.
+    * Replaces duplicated inline/linked stylesheet copies with one manifest-driven, cacheable source.
+    * Removes response-wide HTML minification and image reparsing in favor of Grav media, page caching, and transport compression.
+    * Replaces legacy and inherited settings with a direct global-plus-local Hypertext 2 schema.
+    * Centralizes image, date, taxonomy, summary, and configuration behavior across all five collection layouts.
+    * Limits explicit plugin integration to Pagination, Breadcrumbs, SimpleSearch, Login, and Feed.
+    * Ships only modern WOFF2 accessibility fonts and four compact core style presets.
 
 # v2.4.2
 ## 08/17/2024
