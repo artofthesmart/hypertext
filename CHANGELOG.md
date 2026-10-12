@@ -1,3 +1,13 @@
+# Hypertext 2 rewrite (unreleased)
+
+1. [](#improved)
+    * Rebuilds the theme around semantic HTML5 and Grav 2.
+    * Aligns global defaults, Admin blueprints, and page-level rendering overrides.
+    * Adds integrated output minification and native image optimization.
+    * Preserves scripts and preformatted content during output minification.
+    * Restricts URL stylesheet overrides to bundled themes.
+    * Fixes body classes, inherited asset controls, custom navigation attributes, and inline/linked stylesheet drift.
+
 # v2.4.2
 ## 08/17/2024
 

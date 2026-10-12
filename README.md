@@ -1,6 +1,6 @@
 # Hypertext Theme
 
-[Hypertext](http://hypertext.artofthesmart.com) is a theme for [Grav CMS](https://getgrav.org/) that prioritizes speed and simplicity.  It does not require (nor does it include) any Javascript and it keeps styles to a bare minimum.  This ensures a fast, consistent user experience across browsers and devices.
+[Hypertext](http://hypertext.artofthesmart.com) is a theme for [Grav CMS](https://getgrav.org/) that prioritizes speed, accessibility, and semantic HTML5. It requires no JavaScript or stylesheet by default, while still allowing selected pages and plugins to opt into the assets they need.
 
 [You can see it live here](http://hypertext.artofthesmart.com).
 
@@ -11,10 +11,11 @@
 ## Features
 
 * Virtually weightless for maximum performance
-* CSS/JS squelches to completely cut out any unnecessary stuff
+* CSS/JS controls to suppress unnecessary plugin assets
 * Fully responsive across almost any device
 * Includes `headless` parameter for serving only content
-* HTML 3 & HTML 5 compliance modes
+* Semantic HTML5 output
+* Integrated HTML/CSS minification and image optimization
 * Hyperlegible override for visually impaired users
 * 25 built-in, open source stylesheets
 
@@ -59,7 +60,7 @@ You should now have all the theme files under
 
     /your/site/grav/user/themes/hypertext
 
->> NOTE: This theme is a modular component for Grav which requires the [Grav](http://github.com/getgrav/grav), [Error](https://github.com/getgrav/grav-theme-error) and [Problems](https://github.com/getgrav/grav-plugin-problems) plugins.
+>> NOTE: This theme requires Grav 2.0 or newer.
 
 ## Updating
 
@@ -78,7 +79,7 @@ This command will check your Grav install to see if your Hypertext theme is due 
 Manually updating Hypertext is pretty simple. Here is what you will need to do to get this done:
 
 * Delete the `your/site/user/themes/hypertext` directory.
-* Downalod the new version of the Hypertext theme from either [GitHub](https://github.com/getgrav/hypertext) or [GetGrav.org](http://getgrav.org/downloads/themes#extras).
+* Download the new version of the Hypertext theme from either [GitHub](https://github.com/artofthesmart/hypertext) or [GetGrav.org](http://getgrav.org/downloads/themes#extras).
 * Unzip the zip file in `your/site/user/themes` and rename the resulting folder to `hypertext`.
 * Clear the Grav cache. The simplest way to do this is by going to the root Grav directory in terminal and typing `bin/grav clear-cache`.
 
@@ -86,7 +87,7 @@ Manually updating Hypertext is pretty simple. Here is what you will need to do t
 
 ### Dependencies
 
-This Hypertext theme runs on the latest version(s) of Grav CMS, namely 1.6 or higher.
+This Hypertext rewrite targets Grav CMS 2.0 or newer.
 
 ## Setup
 

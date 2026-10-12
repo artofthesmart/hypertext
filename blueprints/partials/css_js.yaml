@@ -30,16 +30,6 @@ form:
         inline: Inline (Faster single page loads)
         linked: Link (Good for enabling JS/CSS)
 
-    header.handling.js.serving:
-      type: select
-      label: JS Include Method
-      help: "Determines how JavaScript is served. Inline embeds scripts in the page, linked uses separate requests."
-      default: default
-      options:
-        default: Use default
-        inline: Inline
-        linked: Linked
-
     header.handling.minify-output:
       type: select
       classes: fancy

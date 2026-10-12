@@ -25,11 +25,11 @@
     <span>
     {% for menuItem in navItems %}
       <a href="{{ menuItem.href }}"
-        {{ menuItem.fieldset.rel ? 'rel=%s '|format(menuItem.fieldset.rel) : '' }}
-        {{ menuItem.fieldset.name ? 'name=%s '|format(menuItem.fieldset.name) : '' }}
-        {{ menuItem.fieldset.title ? 'title=%s '|format(menuItem.fieldset.title) : '' }}
-        {{ menuItem.isOffsite ? 'class="offsite"' : '' }}
-        {{ menuItem.isNewWindow ? 'target="_blank"' : '' }}>{{ decLeft|raw }}{{ menuItem.text}}{{ decRight|raw }}</a>
+        {% if menuItem.fieldset.rel %}rel="{{ menuItem.fieldset.rel|e('html_attr') }}"{% endif %}
+        {% if menuItem.fieldset.name %}name="{{ menuItem.fieldset.name|e('html_attr') }}"{% endif %}
+        {% if menuItem.fieldset.title %}title="{{ menuItem.fieldset.title|e('html_attr') }}"{% endif %}
+        {% if menuItem.isOffsite %}class="offsite"{% endif %}
+        {% if menuItem.isNewWindow %}target="_blank"{% endif %}>{{ decLeft|raw }}{{ menuItem.text}}{{ decRight|raw }}</a>
       {% if navStyle == 'plain' and (not loop.last or (config.plugins.login.enabled and grav.user.username)) %} | {% endif %}
     {% endfor %}
     </span>
@@ -48,11 +48,11 @@
 
     {% for menuItem in navItems %}
       <li><a href="{{ menuItem.href }}"
-          {{ menuItem.rel ? 'rel="%s" '|format(menuItem.rel) : '' }}
-          {{ menuItem.name ? 'name="%s" '|format(menuItem.name) : '' }}
-          {{ menuItem.isOffsite ? 'class="offsite"' : '' }}
-          {{ menuItem.target ? 'target="%s" '|format(menuItem.target) : '' }}
-          {{ menuItem.isNewWindow ? 'target="_blank"' : '' }}>{{ menuItem.text}}</a></li>
+          {% if menuItem.fieldset.rel %}rel="{{ menuItem.fieldset.rel|e('html_attr') }}"{% endif %}
+          {% if menuItem.fieldset.name %}name="{{ menuItem.fieldset.name|e('html_attr') }}"{% endif %}
+          {% if menuItem.fieldset.title %}title="{{ menuItem.fieldset.title|e('html_attr') }}"{% endif %}
+          {% if menuItem.isOffsite %}class="offsite"{% endif %}
+          {% if menuItem.isNewWindow %}target="_blank"{% endif %}>{{ menuItem.text}}</a></li>
     {% endfor %}
 
     {% if config.plugins.login.enabled and grav.user.username %}

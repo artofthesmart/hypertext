@@ -1,55 +1,64 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Grav\Theme\Hypertext;
 
 class HtmlMinifier
 {
     /**
-     * Minifies HTML output, including inline CSS and JS blocks.
+     * Minifies HTML output and inline CSS without altering scripts or
+     * whitespace-sensitive content.
      *
      * @param string $output The raw HTML string.
      * @return string The minified HTML string.
      */
     public static function process(string $output): string
     {
-        // Minify inline <style> blocks first (preserve the tags, compress the CSS)
-        $output = (string) preg_replace_callback(
+        $styledOutput = preg_replace_callback(
             '/<style\b[^>]*>(.*?)<\/style>/si',
             static function (array $matches): string {
-                $tag = $matches[0];
-                $css = $matches[1];
-                $minifiedCss = self::minifyCss($css);
-                return str_replace($matches[1], $minifiedCss, $tag);
+                return str_replace($matches[1], self::minifyCss($matches[1]), $matches[0]);
             },
             $output
         );
+        if ($styledOutput !== null) {
+            $output = $styledOutput;
+        }
 
-        // Minify inline <script> blocks (preserve the tags, compress the JS)
-        $output = (string) preg_replace_callback(
-            '/<script\b[^>]*>(.*?)<\/script>/si',
-            static function (array $matches): string {
-                $js = trim($matches[1]);
-                if ($js === '') {
-                    return $matches[0];
-                }
-                // Light JS minification: strip single-line comments, collapse whitespace
-                $minifiedJs = (string) preg_replace('/\/\/.*$/m', '', $js);
-                $minifiedJs = (string) preg_replace('/\s+/', ' ', $minifiedJs);
-                return str_replace($matches[1], $minifiedJs, $matches[0]);
+        $preserved = [];
+        $protectedOutput = preg_replace_callback(
+            '/<(pre|textarea|script)\b[^>]*>.*?<\/\1>/si',
+            static function (array $matches) use (&$preserved): string {
+                $placeholder = sprintf("\x1AHYPERTEXT_%d\x1A", count($preserved));
+                $preserved[$placeholder] = $matches[0];
+
+                return $placeholder;
             },
             $output
         );
+        if ($protectedOutput !== null) {
+            $output = $protectedOutput;
+        }
 
         // Strip HTML comments (but preserve IE conditional comments)
-        $output = (string) preg_replace('/<!--(?!\[if\s).*?-->/s', '', $output);
+        $withoutComments = preg_replace('/<!--(?!\[if\s).*?-->/s', '', $output);
+        if ($withoutComments !== null) {
+            $output = $withoutComments;
+        }
 
         // Collapse runs of whitespace (newlines, tabs, spaces) to a single space
-        $output = (string) preg_replace('/\s{2,}/', ' ', $output);
+        $collapsedOutput = preg_replace('/\s{2,}/', ' ', $output);
+        if ($collapsedOutput !== null) {
+            $output = $collapsedOutput;
+        }
 
-        // Remove spaces between tags
-        $output = (string) preg_replace('/>\s+</', '> <', $output);
+        $betweenTagsCollapsed = preg_replace('/>\s+</', '> <', $output);
+        if ($betweenTagsCollapsed !== null) {
+            $output = $betweenTagsCollapsed;
+        }
 
-        return trim($output);
+        return strtr(trim($output), $preserved);
     }
 
     /**
@@ -60,11 +69,15 @@ class HtmlMinifier
      */
     private static function minifyCss(string $css): string
     {
-        // Remove CSS comments
-        $css = (string) preg_replace('/\/\*.*?\*\//s', '', $css);
+        $withoutComments = preg_replace('/\/\*.*?\*\//s', '', $css);
+        if ($withoutComments !== null) {
+            $css = $withoutComments;
+        }
 
-        // Collapse whitespace
-        $css = (string) preg_replace('/\s+/', ' ', $css);
+        $collapsedCss = preg_replace('/\s+/', ' ', $css);
+        if ($collapsedCss !== null) {
+            $css = $collapsedCss;
+        }
 
         // Remove spaces around structural characters
         $css = str_replace(

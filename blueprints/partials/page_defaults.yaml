@@ -69,3 +69,13 @@ form:
         default: Use Default
         1: Enabled
         0: Disabled
+
+    header.page.content.headless:
+      type: select
+      label: Headless Rendering
+      help: When enabled, only this page's rendered content is returned without the site header, metadata, navigation, or footer.
+      default: default
+      options:
+        default: Use Default
+        1: Enabled
+        0: Disabled

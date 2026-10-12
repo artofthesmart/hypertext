@@ -1,6 +1,34 @@
 {% set structure = config.themes.hypertext.structure %}
 {% set handling = config.themes.hypertext.handling %}
 {% set style = config.themes.hypertext.style %}
+{% set parent = page.parent %}
+
+{# Resolve page-level asset overrides once so both head and footer use them. #}
+{% set page_css = page.header.style.css.enable ?? null %}
+{% set parent_css = (parent is not null and parent.header is defined) ? (parent.header.style.css.enable ?? null) : null %}
+{% set css_enabled = page_css is not null and page_css != 'default'
+  ? page_css == 1
+  : (parent_css is not null and parent_css != 'default' ? parent_css == 1 : style.css.enable) %}
+
+{% set page_js = page.header.style.js.enable ?? null %}
+{% set parent_js = (parent is not null and parent.header is defined) ? (parent.header.style.js.enable ?? null) : null %}
+{% set js_enabled = page_js is not null and page_js != 'default'
+  ? page_js == 1
+  : (parent_js is not null and parent_js != 'default' ? parent_js == 1 : style.js.enable) %}
+
+{% set page_css_serving = page.header.handling.css.serving ?? null %}
+{% set parent_css_serving = (parent is not null and parent.header is defined) ? (parent.header.handling.css.serving ?? null) : null %}
+{% set css_serving = page_css_serving is not null and page_css_serving != 'default'
+  ? page_css_serving
+  : (parent_css_serving is not null and parent_css_serving != 'default' ? parent_css_serving : handling.css.serving) %}
+
+{% set page_headless = page.header.page.content.headless ?? page.header.is_headless ?? null %}
+{% set parent_headless = (parent is not null and parent.header is defined) ? (parent.header.page.content.headless ?? null) : null %}
+{% set headless_enabled = page_headless is not null and page_headless != 'default'
+  ? page_headless == 1
+  : (parent_headless is not null and parent_headless != 'default'
+    ? parent_headless == 1
+    : config.themes.hypertext.page.content.headless|default(false)) %}
 
 {# ------------------------------------------------------------------------ #}
 
@@ -8,7 +36,7 @@
 
 
 {# ## HEADLESS RENDERING ## #}
-{% if (uri.query('headless') or page.header.is_headless) %}
+{% if uri.query('headless') or headless_enabled %}
 <html>
   <head>
     <title>{% if header.title %}{{ header.title|e('html') }} | {% endif %}{{ site.title|e('html') }}</title>
@@ -48,7 +76,7 @@
 </head>
 
 
-<body class="{{ page.template }}{{ page.header.bodyClasses ? ' {{ page.header.bodyClasses }}' : ''}}">
+<body class="{{ page.template|e('html_attr') }}{% if page.header.bodyClasses %} {{ page.header.bodyClasses|e('html_attr') }}{% endif %}">
   {# ## HEADER ## #}
   <header>
   {% block header %}

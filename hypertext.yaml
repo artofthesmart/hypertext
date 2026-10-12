@@ -1,42 +1,26 @@
 structure:
-  content:
-    a11y-typeface: false
-    a11y-use-aria: true
   header:
-    style: text
-    modular-file: _site_header.md
     use-subheader: false
     subheader: ""
   footer:
-    style: none
+    style: text
     content: ""
-    modular-file: _site_footer.md
   navigation:
-    header: 
+    header:
       mode: inline
-      alignment: left
-      show-socials: false
       custom-items: []
     pagination:
       style: inline
-      text-style: plain
   text-style: braced
   add-site-name: true
-  use-favicon: false
-  show-date: default
 handling:
   images:
-    serving: linked
     compress: minimal
-    allow-url-parameters: admin
   css:
-    serving: inline
-  js:
     serving: inline
   minify-output: true
 style:
   layout:
-    type: 1-column
     alignment: left
     content-width: 960
   css:
@@ -45,22 +29,12 @@ style:
     stylesheet: default
   js:
     enable: false
-    custom-value: ""
   visually-impaired: false
 page:
-  header:
-    style: text
-    image-name: ""
-    modular-file: _page_header.md
-  footer:
-    style: none
-    image-name: ""
-    modular-file: _page_footer.md
   content:
     title: true
     subtitle: false
     header-image: false
-    author: false
     date-last-updated: false
     date-published: true
     tags: true
@@ -69,20 +43,13 @@ page:
 collection:
   mode: list
   show-nested: false
-  list-settings:
-  comfy-settings:
-  table-settings:
-  grid-settings:
-  cards-settings:
   display:
     title: true
     subtitle: false
     header-image: false
-    author: false
-    date-last-updated: false
-    date-published: true
+    date: true
+    date-type: published
     tags: true
     categories: true
     summary: false
     click-through: false
-    headless: false

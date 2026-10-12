@@ -7,30 +7,6 @@ form:
       help: A subtitle to display under the title of a page.
       style: fancy
 
-    header.show_subtitle:
-      type: toggle
-      label: Show subtitle
-      help: When enabled, the subtitle will be shown on this page.
-      default: 0
-      highlight: 1
-      options:
-        1: Enabled
-        0: Disabled
-      validate:
-        type: bool
-
-    header.show_header_image:
-      type: toggle
-      label: Show header image
-      help: When enabled, the header image will be shown at the top of this page. If you don't specify one, the first image will be shown.
-      default: 0
-      highlight: 1
-      options:
-        1: Enabled
-        0: Disabled
-      validate:
-        type: bool
-
     header.header_image_file:
       type: text
       toggleable: true
@@ -44,18 +20,6 @@ form:
       label: Thumbnail image file
       help: Image filename that exists in the page folder. If not provided, the header image will be used if possible.
       placeholder: thumbnail.jpg
-
-    header.show_categories:
-      type: toggle
-      label: Show categories
-      help: When enabled, categories will be shown on this page.
-      default: 1
-      highlight: 1
-      options:
-        1: Enabled
-        0: Disabled
-      validate:
-        type: bool
 
     header.summary.delimiter:
       type: text
@@ -75,50 +39,3 @@ form:
       validate:
         type: int
         min: 1
-
-    header.show_clickthrough:
-      type: toggle
-      label: Add `Continue Reading` link
-      help: When disabled, this page will not render a link to read more content in this page after the snippet.
-      default: 1
-      highlight: 1
-      options:
-        1: Enabled
-        0: Disabled
-      validate:
-        type: bool
-
-    header.show_date:
-      type: select
-      label: Add Date
-      help: Locally configures whether the date that the page was published will appear on this page. You can set this globally in theme settings.
-      classes: fancy
-      default: default
-      options:
-        default: Use global setting
-        enabled: Show date
-        disabled: Hide date
-
-    header.show_children:
-      type: toggle
-      label: Show nested children
-      help: When enabled, nested child pages will be listed on this page.
-      default: 0
-      highlight: 1
-      options:
-        1: Enabled
-        0: Disabled
-      validate:
-        type: bool
-
-    header.is_headless:
-      type: toggle
-      label: Headless rendering
-      help: When enabled, this page will not render headers, footers, or anything else except the page's content.
-      default: 0
-      highlight: 0
-      options:
-        1: Enabled
-        0: Disabled
-      validate:
-        type: bool

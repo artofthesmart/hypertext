@@ -2,7 +2,7 @@ name: Hypertext
 slug: hypertext
 type: theme
 version: 2.0.0
-description: "Hypertext is a zero JS/CSS theme to create simple, fast websites."
+description: "Hypertext is a lean HTML5 theme with no JavaScript or stylesheet required by default."
 icon: compress
 author:
   name: Alejo Grigera Sutro
@@ -342,14 +342,6 @@ form:
                       options:
                         inline: Inline (Faster single page loads)
                         linked: Link (Good for enabling JS/CSS)
-                    handling.js.serving:
-                      type: select
-                      
-                      label: JS Include Method
-                      help: "Determines how JavaScript is served. Inline embeds scripts in the page, linked uses separate requests."
-                      options:
-                        inline: Inline
-                        linked: Linked
                     handling.minify-output:
                       type: toggle
                       
