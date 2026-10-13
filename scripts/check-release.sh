@@ -70,6 +70,17 @@ for site in journal catalog resume docs restaurant; do
   unzip -Z1 "$archive" | grep -q "hypertext-demo-${site}/config/site.yaml"
   unzip -Z1 "$archive" | grep -q "hypertext-demo-${site}/config/themes/hypertext.yaml"
   unzip -Z1 "$archive" | grep -q "hypertext-demo-${site}/pages/01.home/collection.md"
+
+  markdown_count="$(unzip -Z1 "$archive" | grep -Ec "hypertext-demo-${site}/pages/.+\.md$")"
+  if (( markdown_count < 10 )); then
+    echo "${site} demo contains ${markdown_count} Markdown pages; expected at least 10" >&2
+    exit 1
+  fi
+
+  if ! unzip -Z1 "$archive" | grep -Eq "hypertext-demo-${site}/pages/01\.home/[^/]+/collection\.md$"; then
+    echo "${site} demo does not contain a nested collection" >&2
+    exit 1
+  fi
 done
 
 printf 'Release contract OK: core=%s bytes, archives=%s\n' "$core_bytes" "${#archives[@]}"

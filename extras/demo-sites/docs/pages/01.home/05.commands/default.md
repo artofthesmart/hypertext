@@ -1,12 +1,26 @@
 ---
-title: Command reference
-subtitle: Build, preview, inspect, and clean
+title: Commands
+subtitle: The small set of commands readers actually need
 taxonomy:
   category: [reference]
+  tag: [cli, commands]
 ---
 
-The command surface contains four verbs and a common set of path flags.
+The command list is intentionally short so the docs can stay memorable.
+Every command either builds, serves, or inspects the content tree.
 
 ===
 
-Use `lantern inspect` to print the resolved publication model without writing output. This is useful in CI and editor integrations.
+```sh
+lantern build ./notes --output ./public
+lantern serve ./public --port 8080
+lantern validate ./notes
+```
+
+| Command | Purpose |
+|---|---|
+| build | Generate static HTML |
+| serve | Preview the published output locally |
+| validate | Check frontmatter and file structure |
+
+<kbd>Ctrl</kbd> + <kbd>C</kbd> stops the preview server when you are finished.

@@ -1,16 +1,36 @@
 ---
-title: One Pot, Five Ingredients
-date: 2026-08-29 19:10
-subtitle: A forgiving late-summer dinner
+title: One Pot for a Cold Night
+date: 2026-10-11 18:20
+subtitle: Beans, greens, and a little too much garlic in the best possible way
 taxonomy:
-  category: [kitchen]
-  tag: [recipe, simple, seasonal]
+  category: [cooking]
+  tag: [supper, pantry, winter]
 ---
 
-Tomatoes, white beans, garlic, greens, and a heel of bread make a complete meal.
+This is the kind of dinner that starts with a sharp knife and ends with a quiet kitchen. The pot does most of the work:
+beans soften, onions fade into the broth, and the greens collapse into something satisfying and green.
 
 ===
 
-Cook the garlic gently, add the tomatoes and beans, then fold in the greens. Tear the bread over the top and let it absorb the broth.
+## Ingredients
 
-It is less a recipe than a pattern: use what is ripe, keep the heat low, and stop before the ingredients lose their character.
+- olive oil
+- one onion, chopped
+- four cloves garlic, sliced
+- two cups cooked beans
+- a handful of greens
+- stock, lemon, salt, and black pepper
+
+## Method
+
+1. Warm the oil until it shimmers.
+2. Cook the onion slowly so it turns translucent instead of brown.
+3. Add the garlic, beans, and stock; simmer until the broth thickens.
+4. Finish with lemon and greens so the pot keeps a little brightness.
+
+<dl>
+<dt>Time on the stove</dt><dd>About 30 minutes, plus the first sip of tea</dd>
+<dt>Helpful note</dt><dd>A parmesan rind is optional but welcome.</dd>
+</dl>
+
+After dinner, the pot looked almost clean enough for tomorrow's soup. That is usually the sign that the recipe has done its job.

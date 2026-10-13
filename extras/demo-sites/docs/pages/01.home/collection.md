@@ -11,6 +11,7 @@ hypertext:
     subtitle: 1
     date: none
   collection:
+    nested: true
     layout: table
     display:
       title: 1
@@ -24,6 +25,8 @@ hypertext:
 ---
 
 Lantern turns a folder of Markdown files into a static publication.
+The documentation stays in a table because readers usually arrive looking for a path,
+a command, or the one setting they forgot.
 
 ```sh
 lantern build ./notes --output ./public
