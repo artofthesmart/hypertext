@@ -1,136 +1,53 @@
-{% set show_subtitle = parent.header.render.children.subtitle ?? true %}
-{% set show_cat = parent.header.render.children.category ?? true %}
-{% set show_children = parent.header.render.children.nested_children ?? true %}
-{% set inner_children = page.collection()|length > 0 ? page.collection() : page.children.visible %}
+{% import 'partials/item/image.html.twig' as image %}
+{% import 'partials/item/fragments.html.twig' as fragments %}
+{% set content_width = layout_cfg.width == 'full' ? 960 : layout_cfg.width|int %}
+{% set image_size = (content_width / 20)|round %}
 
-{% set show_date = parent.header.render.children.date ?? false %}
-{# Looking for the switch statement? Look down. #}
-
-{# ------------------------------------------------------------------------ #}
-
-<table class="children" width="100%">
-  {# Header #}
-  {{ html5 ? '<thead>' : ''}}<tr>
-    {% if show_image %}<td>{{ 'THEME_HYPERTEXT.THUMBNAIL.THUMBNAIL'|t|raw }}</td>{% endif %}
-    <td>Title</td>
-    {% if show_date %}<td>{{ 'THEME_HYPERTEXT.DATES.PUBLISHED'|t|raw }}</td>{% endif %}
-    {% if show_cat %}<td>{{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t|raw }}</td>{% endif %}
-  {{ html5 ? '</thead>' : ''}}</tr>
-
-  {% for child in collection if child.isPage() %}
-    {# Never show the image; it's hideous on mobile.
-     #
-     # {% if child.header.show_header_image|default('default') == 'default' %}
-     #   {% set show_image = parent.header.render.children.image ?? true %}
-     # {% else %}
-     #   {% set show_image = child.header.show_header_image == 'enabled' %}
-     # {% endif %}
-     # {% set header_image = child.media.images[child.header.header_image_file] ?? child.media.images|first %} #}
-    {% set inner_children = child.collection()|length > 0 ? child.collection() : child.children.visible %}
-
-    {% switch page.header.render.children.which_date|default('date') %}
-      {% case 'modified' %}
-        {% set date = child.modified %}
-      {% case 'published' %}
-        {% set date = child.publishDate %}
-      {% case 'unpublished' %}
-        {% set date = child.unpublishDate %}
-      {% case 'date' %}
-        {% set date = child.date %}
-      {% default %}
-        {% set date = child.date %}
-    {% endswitch %}
-
-  <tr{% if child.taxonomy.category %} class="{% for cat in child.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}"{% endif %}>
-
-    {# Image #}
-    {% if show_image %} {# Never true, left it in for someone to convince me otherwise. #}
-    <td class="thumbnail">
-    {% if header_image %}
-      {% if style.image_cropping|default(false) %}
-        <a href="{{ child.url }}">{{ header_image.cropZoom(((style.width == 'default' ? 1024 : style.width) / 24), (style.width == 'default' ? 1024 : style.width) / 24).html() }}</a>
-      {% else %}
-        <a href="{{ child.url }}">{{ header_image.html() }}</a>
-      {% endif %}
-    {% endif %}
-    </td>
-    {% endif %}
-    
-
-    {# Title #}
-    <td>
-      <strong>
-        <a href="{{ child.url }}">{{ child.title }}</a>        
-      </strong>
-      {% if show_subtitle and child.header.subtitle %}- <span>{{ child.header.subtitle }}</span>{% endif %}
-    </td>
-
-    {# Date #}
-    {% if show_date %}
-    <td>
-      {% if html5 %}
-        <time datetime="{{ date|date("c") }}">{{ date|date(system.pages.dateformat.short) }}</time>
-      {% else %}
-        <span class="datetime">{{ date|date(system.pages.dateformat.short) }}</span>
-      {% endif %}
-    </td>
-    {% endif %}
-
-    {# Categories #}
-    {% if show_cat %}
-    <td>
-      {% if child.taxonomy.category %}
-      <small>
-        {% for category in child.taxonomy.category %}
-        [<a href="{{ parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>]{% if not loop.last %}, {% endif %}
-        {% endfor %}
-      </small>
-      {% endif %}
-    </td>
-    {% endif %}
+<table class="children">
+  <thead>
+    <tr>
+      {% if display_cfg.image %}<th>{{ 'THEME_HYPERTEXT.THUMBNAIL.THUMBNAIL'|t }}</th>{% endif %}
+      <th>{{ 'THEME_HYPERTEXT.TITLES.TITLE'|t }}</th>
+      {% if display_cfg.date != 'none' %}<th>{{ 'THEME_HYPERTEXT.DATES.DATE'|t }}</th>{% endif %}
+      {% if display_cfg.categories %}<th>{{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t }}</th>{% endif %}
+      {% if display_cfg.tags %}<th>{{ 'THEME_HYPERTEXT.TAGS.TAGS'|t }}</th>{% endif %}
+      {% if display_cfg.summary %}<th>{{ 'THEME_HYPERTEXT.SUMMARY.SUMMARY'|t }}</th>{% endif %}
     </tr>
-
-    {# Children #}
-    {% if show_children and inner_children|length > 0 %}
-      {% set inner_children = inner_children.order(page.header.content.order.by|default(system.pages.order.by), 
-                                                   page.header.content.order.dir|default(system.pages.order.dir)) %}
-      {% for inner_child in inner_children %}
-        <tr class="row-child">
-
-          {# Title #}
-          <td>
-            &emsp;<a href="{{ inner_child.url }}">{{ inner_child.title }}</a>        
-            {% if show_subtitle and inner_child.header.subtitle %}- <span>{{ inner_child.header.subtitle }}</span>{% endif %}
-          </td>
-
-          {# Date #}
-          {% if show_date %}
-          <td>
-            {% if html5 %}
-              <time datetime="{{ inner_child.date|date("c") }}">{{ child.date|date(system.pages.dateformat.short) }}</time>
-            {% else %}
-              <span class="datetime">{{ inner_child.date|date(system.pages.dateformat.short) }}</span>
-            {% endif %}
-          </td>
+  </thead>
+  <tbody>
+  {% for child in collection if child.isPage() %}
+    {% set cfg = hypertext_content_config(child, display_cfg) %}
+    <tr{% if child.taxonomy.category %} class="{{ fragments.category_classes(child) }}"{% endif %}>
+      {% if display_cfg.image %}
+        <td>{% if cfg.image %}{{ image.render(child, 'thumbnail', image_size, image_size, 'lazy', child.url) }}{% endif %}</td>
+      {% endif %}
+      <td>
+        {% if cfg.title %}<strong><a href="{{ child.url }}">{{ child.title }}</a></strong>{% endif %}
+        {% if cfg.subtitle and child.header.subtitle %}<br><small>{{ child.header.subtitle }}</small>{% endif %}
+        {% if collection_cfg.nested %}
+          {% set inner_children = child.collection()|length > 0 ? child.collection() : child.children.visible %}
+          {% if inner_children|length > 0 %}
+            <ul>
+            {% for inner in inner_children %}
+              <li><a href="{{ inner.url }}">{{ inner.title }}</a></li>
+            {% endfor %}
+            </ul>
           {% endif %}
-
-          {# Categories #}
-          {% if show_cat %}
-          <td>
-            {% if inner_child.taxonomy.category %}
-            <small>
-              {% for category in inner_child.taxonomy.category %}
-              [<a href="{{ child.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>]{% if not loop.last %}, {% endif %}
-              {% endfor %}
-            </small>
-            {% endif %}
-          </td>
-          {% endif %}
-          </tr>
-      {% endfor %}
-    {% endif %} {# End render nested children #}
-
-
-  {% endfor %} {# End of child loop #}
+        {% endif %}
+      </td>
+      {% if display_cfg.date != 'none' %}
+        <td>{% if cfg.date != 'none' %}{{ fragments.date(child, cfg.date) }}{% endif %}</td>
+      {% endif %}
+      {% if display_cfg.categories %}
+        <td>{% if cfg.categories and child.taxonomy.category %}{{ fragments.categories(child, parent.url, dec_left, dec_right, config.get('system.param_sep', ':')) }}{% endif %}</td>
+      {% endif %}
+      {% if display_cfg.tags %}
+        <td>{% if cfg.tags and child.taxonomy.tag %}{{ fragments.tags(child, parent.url, dec_left, dec_right, config.get('system.param_sep', ':')) }}{% endif %}</td>
+      {% endif %}
+      {% if display_cfg.summary %}
+        <td>{% if cfg.summary %}{{ fragments.summary(child, cfg['read-more']) }}{% endif %}</td>
+      {% endif %}
+    </tr>
+  {% endfor %}
+  </tbody>
 </table>
-

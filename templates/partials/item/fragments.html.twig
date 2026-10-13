@@ -1,0 +1,36 @@
+{% macro date(page, mode, show_label = false) %}
+  {% if mode in ['published', 'both'] %}
+    {% if show_label %}{{ 'THEME_HYPERTEXT.DATES.PUBLISHED'|t }}: {% endif %}
+    <time datetime="{{ page.publishDate|default(page.date)|date('c') }}">{{ page.publishDate|default(page.date)|date(system.pages.dateformat.short) }}</time>
+  {% endif %}
+  {% if mode == 'both' %} | {% endif %}
+  {% if mode in ['modified', 'both'] %}
+    {% if show_label %}{{ 'THEME_HYPERTEXT.DATES.MODIFIED'|t }}: {% endif %}
+    <time datetime="{{ page.modified|date('c') }}">{{ page.modified|date(system.pages.dateformat.short) }}</time>
+  {% endif %}
+{% endmacro %}
+
+{% macro categories(page, parent_url, dec_left = '', dec_right = '', param_sep = ':') %}
+  {% for category in page.taxonomy.category %}
+    {{ dec_left|raw }}<a href="{{ parent_url|rtrim('/') }}/category{{ param_sep }}{{ category|url_encode }}">{{ category }}</a>{{ dec_right|raw }}{{ not loop.last ? ', ' : '' }}
+  {% endfor %}
+{% endmacro %}
+
+{% macro tags(page, parent_url, dec_left = '', dec_right = '', param_sep = ':') %}
+  {% for tag in page.taxonomy.tag %}
+    {{ dec_left|raw }}<a href="{{ parent_url|rtrim('/') }}/tag{{ param_sep }}{{ tag|url_encode }}">{{ tag }}</a>{{ dec_right|raw }}{{ not loop.last ? ', ' : '' }}
+  {% endfor %}
+{% endmacro %}
+
+{% macro category_classes(page) -%}
+  {%- for category in page.taxonomy.category -%}
+    cat_{{ category|hyphenize }}{{ not loop.last ? ' ' }}
+  {%- endfor -%}
+{% endmacro %}
+
+{% macro summary(page, read_more = false) %}
+  {{ page.summary|raw }}
+  {% if read_more and page.summary != page.content %}
+    <p><a href="{{ page.url }}">{{ 'THEME_HYPERTEXT.PAGINATION.CONTINUE_READING'|t }}…</a></p>
+  {% endif %}
+{% endmacro %}

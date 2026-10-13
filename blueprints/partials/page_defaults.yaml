@@ -1,0 +1,66 @@
+form:
+  fields:
+    header.hypertext.content.title:
+      type: select
+      label: Show title
+      default: default
+      options:
+        default: Use theme default
+        1: Enabled
+        0: Disabled
+
+    header.hypertext.content.subtitle:
+      type: select
+      label: Show subtitle
+      default: default
+      options:
+        default: Use theme default
+        1: Enabled
+        0: Disabled
+
+    header.hypertext.content.image:
+      type: select
+      label: Show header image
+      default: default
+      options:
+        default: Use theme default
+        1: Enabled
+        0: Disabled
+
+    header.hypertext.content.date:
+      type: select
+      label: Date
+      default: default
+      options:
+        default: Use theme default
+        none: None
+        published: Published
+        modified: Modified
+        both: Published and modified
+
+    header.hypertext.content.categories:
+      type: select
+      label: Show categories
+      default: default
+      options:
+        default: Use theme default
+        1: Enabled
+        0: Disabled
+
+    header.hypertext.content.tags:
+      type: select
+      label: Show tags
+      default: default
+      options:
+        default: Use theme default
+        1: Enabled
+        0: Disabled
+
+    header.hypertext.content.headless:
+      type: select
+      label: Headless rendering
+      default: default
+      options:
+        default: Use theme default
+        1: Enabled
+        0: Disabled

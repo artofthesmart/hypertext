@@ -1,0 +1,32 @@
+---
+title: Maya Chen
+subtitle: Product designer · researcher · design systems
+content:
+  items: '@self.children'
+  order:
+    by: folder
+    dir: asc
+hypertext:
+  content:
+    subtitle: 1
+    date: none
+    categories: 1
+    tags: 1
+  collection:
+    layout: comfy
+    display:
+      title: 1
+      subtitle: 1
+      image: 1
+      date: none
+      categories: 1
+      tags: 1
+      summary: 1
+      read-more: 0
+---
+
+I design calm, durable tools for teams working with complex information.
+
+**Based in:** Portland, Oregon<br>
+**Email:** maya@example.com<br>
+**Availability:** Select advisory and design-system projects

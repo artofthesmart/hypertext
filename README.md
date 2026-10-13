@@ -1,101 +1,225 @@
-# Hypertext Theme
+# Hypertext
 
-[Hypertext](http://hypertext.artofthesmart.com) is a theme for [Grav CMS](https://getgrav.org/) that prioritizes speed and simplicity.  It does not require (nor does it include) any Javascript and it keeps styles to a bare minimum.  This ensures a fast, consistent user experience across browsers and devices.
+Hypertext is a semantic HTML5 theme for Grav CMS 2 that prioritizes the smallest practical runtime:
 
-[You can see it live here](http://hypertext.artofthesmart.com).
+- no JavaScript by default;
+- no stylesheet by default;
+- one tiny inline layout-safety block;
+- cacheable optional stylesheets;
+- native Grav media transforms;
+- simple, accessible markup.
 
-![The Hypertext theme keeps things minimal.](assets/screenshot.png)
+## Requirements
 
-**Why does this theme exist?**  Most Grav themes come with heavy JS requirements.  Sometimes 1MB or more!  These slow down browsers and create compatibility issues.  Grav is a very powerful CMS but there should be an option for people who want something as close to hand-coded HTML as possible.  This theme tries to separate form and function to create a truly unique experience.  [It even works in windows 95](assets/win95.png)!
-
-## Features
-
-* Virtually weightless for maximum performance
-* CSS/JS squelches to completely cut out any unnecessary stuff
-* Fully responsive across almost any device
-* Includes `headless` parameter for serving only content
-* HTML 3 & HTML 5 compliance modes
-* Hyperlegible override for visually impaired users
-* 25 built-in, open source stylesheets
-
-### Supported Page Templates
-
-* Default view template `default.md`
-* Error view template `error.md`
-* Directory view template `collection.md`
-* Blog view template `blog.md` and `blog_list.md`
-* Blog item view template `item.md` and `blog_item.md`
-
-## Getting started
-
-Here are some links to get you started:
-*  Read the installation guide below to download and install the theme.
-*  [Visit the Hypertext home page](http://hypertext.artofthesmart.com) to learn more about the philosophy behind the project.
-*  [Read the reference guide for caveats and gotchas](http://hypertext.artofthesmart.com/reference) to avoid common mistakes with Hypertext.
-*  [Read the FAQ](http://hypertext.artofthesmart.com/FAQ) or [visit the issues page in Github](https://github.com/artofthesmart/hypertext/issues) if you run into problems.
-*  [Contribute to Hypertext via Github](https://github.com/artofthesmart/hypertext) and help make the web faster!
-
-> **Special thanks** go out to [Ricardo](https://urbansquid.london), the theme champion in the Grav Discord server, [Andy Miller](https://twitter.com/rhuk) creator of Grav CMS, and my wife who's sick of hearing about this project by now.
-
----
+- Grav CMS 2.0 or newer
+- PHP supported by the installed Grav release
 
 ## Installation
 
-Installing the theme can be done in one of two ways. Grav's GPM (Grav Package Manager) installation method enables you to quickly and easily install the theme with a simple terminal command, while the manual method enables you to do so via a zip file.
+Install the runtime package into `user/themes/hypertext`, then set:
 
-### GPM Installation (Preferred)
+```yaml
+# user/config/system.yaml
+pages:
+  theme: hypertext
+```
 
-The simplest way to install this theme is via the [Grav Package Manager (GPM)](http://learn.getgrav.org/advanced/grav-gpm) through your system's Terminal (also called the command line).  From the root of your Grav install type:
+Clear Grav's cache:
 
-    bin/gpm install hypertext
+```bash
+bin/grav clearcache
+```
 
-This will install the Hypertext theme into your `/user/themes` directory within Grav. Its files can be found under `/your/site/grav/user/themes/hypertext`.
+The repository release workflow produces three separate packages:
 
-### Manual Installation
+- `hypertext-VERSION.zip` — production runtime theme;
+- `hypertext-styles-VERSION.zip` — optional extended stylesheet library;
+- `hypertext-demo-VERSION.zip` — demonstration pages and media.
 
-To install this theme, just download the zip version of this repository and unzip it under `/your/site/grav/user/themes`. Then, rename the folder to `hypertext`. You can find these files either on [GitHub](https://github.com/artofthesmart/hypertext) or via [GetGrav.org](http://getgrav.org/downloads/themes).
+It also produces five focused demo-site overlays:
 
-You should now have all the theme files under
+- `hypertext-demo-journal-VERSION.zip`;
+- `hypertext-demo-catalog-VERSION.zip`;
+- `hypertext-demo-resume-VERSION.zip`;
+- `hypertext-demo-docs-VERSION.zip`;
+- `hypertext-demo-restaurant-VERSION.zip`.
 
-    /your/site/grav/user/themes/hypertext
+## Core features
 
->> NOTE: This theme is a modular component for Grav which requires the [Grav](http://github.com/getgrav/grav), [Error](https://github.com/getgrav/grav-theme-error) and [Problems](https://github.com/getgrav/grav-plugin-problems) plugins.
+- Browser-default styling or four small bundled presets
+- Five collection layouts: list, comfy, table, grid, and cards
+- Per-page and per-collection display overrides
+- Optional Atkinson Hyperlegible typeface
+- Headless content rendering with `?headless=1`
+- Plugin CSS and JavaScript disabled unless explicitly enabled
+- Semantic support for Pagination, Breadcrumbs, SimpleSearch, Login, and Feed
+- No response-wide HTML or image post-processing
 
-## Updating
+## Styles
 
-As development for the Hypertext theme continues, new versions may become available that add additional features and functionality, improve compatibility with newer Grav releases, and generally provide a better user experience. Updating Hypertext is easy, and can be done through Grav's GPM system, as well as manually.
+The core presets are:
 
-### GPM Update (Preferred)
+- `default` — browser defaults;
+- `hypertext++`;
+- `water-light`;
+- `water-dark`;
+- `sakura`.
 
-The simplest way to update this theme is via the [Grav Package Manager (GPM)](http://learn.getgrav.org/advanced/grav-gpm). You can do this with this by navigating to the root directory of your Grav install using your system's Terminal (also called command line) and typing the following:
+Preview an installed style by name:
 
-    bin/gpm update hypertext
+```text
+https://example.com/?theme=water-dark
+```
 
-This command will check your Grav install to see if your Hypertext theme is due for an update. If a newer release is found, you will be asked whether or not you wish to update. To continue, type `y` and hit enter. The theme will automatically update and clear Grav's cache.
+Unknown style names are ignored. Numeric style indexes are not supported.
 
-### Manual Update
+To install the optional style pack, copy its `styles.yaml` and `css/` directory to:
 
-Manually updating Hypertext is pretty simple. Here is what you will need to do to get this done:
+```text
+user/data/hypertext/styles/
+```
 
-* Delete the `your/site/user/themes/hypertext` directory.
-* Downalod the new version of the Hypertext theme from either [GitHub](https://github.com/getgrav/hypertext) or [GetGrav.org](http://getgrav.org/downloads/themes#extras).
-* Unzip the zip file in `your/site/user/themes` and rename the resulting folder to `hypertext`.
-* Clear the Grav cache. The simplest way to do this is by going to the root Grav directory in terminal and typing `bin/grav clear-cache`.
+Hypertext discovers the manifest automatically and adds its entries to the Admin style selector.
 
-> Note: Any changes you have made to any of the files listed under this directory will also be removed and replaced by the new set. Any files located elsewhere (for example a YAML settings file placed in `user/config/themes`) will remain intact.
+## Configuration
 
-### Dependencies
+Global settings live in:
 
-This Hypertext theme runs on the latest version(s) of Grav CMS, namely 1.6 or higher.
+```text
+user/config/themes/hypertext.yaml
+```
 
-## Setup
+The primary configuration shape is:
 
-If you want to set Hypertext as the default theme, you can do so by following these steps:
+```yaml
+navigation:
+  mode: inline
+  decoration: braced
 
-* Navigate to `/your/site/grav/user/config`.
-* Open the **system.yaml** file.
-* Change the `theme:` setting to `theme: hypertext`.
-* Save your changes.
-* Clear the Grav cache. The simplest way to do this is by going to the root Grav directory in Terminal and typing `bin/grav clear-cache`.
+layout:
+  alignment: left
+  width: 960
 
-Once this is done, you should be able to see the new theme on the frontend. Keep in mind any customizations made to the previous theme will not be reflected as all of the theme and templating information is now being pulled from the **hypertext** folder.
+style:
+  preset: default
+  custom-css: ''
+  accessible-font: false
+
+assets:
+  css: false
+  js: false
+
+content:
+  title: true
+  subtitle: false
+  image: false
+  date: published
+  categories: true
+  tags: true
+  headless: false
+
+collection:
+  layout: list
+  nested: false
+  display:
+    title: true
+    subtitle: false
+    image: false
+    date: published
+    categories: true
+    tags: true
+    summary: false
+    read-more: false
+```
+
+Page overrides use the same keys under `header.hypertext`:
+
+```yaml
+---
+title: Example
+hypertext:
+  assets:
+    css: 1
+  content:
+    image: 1
+    date: modified
+---
+```
+
+Collection overrides are equally direct:
+
+```yaml
+---
+title: Articles
+content:
+  items: '@self.children'
+hypertext:
+  collection:
+    layout: cards
+    display:
+      image: 1
+      summary: 1
+      read-more: 1
+---
+```
+
+Configuration precedence is deliberately limited to:
+
+1. global theme defaults;
+2. explicit page or collection overrides.
+
+Parent-page inheritance and legacy setting aliases are not part of Hypertext 2.
+
+## Images
+
+Set `header_image_file` or `thumbnail_image_file` to choose a page image. Otherwise Hypertext checks conventional `header.*` or `thumbnail.*` names and then the first page image.
+
+Theme-owned images are rendered through Grav media with:
+
+- one resize/crop operation;
+- explicit width and height;
+- native responsive candidates when Grav media alternatives are present;
+- native lazy loading for collection images;
+- eager loading for the primary page header image;
+- asynchronous decoding.
+
+Use `header_image_alt` or `thumbnail_image_alt` for an explicit text alternative. A Grav media sidecar such as `photo.jpg.meta.yaml` can also provide:
+
+```yaml
+alt: Descriptive alternative text
+title: Optional advisory title
+caption: Optional visible caption
+focus_x: center
+focus_y: top
+```
+
+`focus_x` accepts `left`, `center`, `right`, or an original-image x coordinate. `focus_y` accepts `top`, `center`, `bottom`, or an original-image y coordinate.
+
+Markdown and plugin-generated images are left to Grav and the originating plugin.
+
+## Production performance
+
+Enable Grav page caching and configure Brotli or gzip in the web server. Hypertext intentionally does not regex-minify completed HTML because transport compression handles whitespace efficiently without adding response-wide PHP processing.
+
+Use the included release builder to verify package boundaries:
+
+```bash
+./scripts/build-release.sh
+```
+
+Run the complete package contract and Grav integration checks with:
+
+```bash
+./scripts/check-release.sh
+GRAV_VERSION=2.2.6 ./scripts/integration-test.sh
+```
+
+## Migration
+
+Hypertext 2 is a clean break from the previous configuration model. See [MIGRATION.md](MIGRATION.md) before upgrading an existing site.
+
+## Development
+
+The general demo package and five focused site packages exercise every collection layout across 69 content pages. Each focused demo includes a nested subcollection, realistic multi-link navigation, deliberately dense overlapping taxonomies, substantial Markdown/semantic HTML, and responsive local media. Site-wide presentation stays in `config/themes/hypertext.yaml`; page frontmatter contains only page-specific overrides. Runtime, style-pack, and demo archives are built by `.github/workflows/release-packages.yml`. CI validates every demo route, taxonomy link, navigation target, and generated image on Grav 2.0.27, 2.1.12, and 2.2.6 using PHP 8.3, the minimum declared by the current Grav 2 release packages.
+
+Hypertext is licensed under the MIT License.

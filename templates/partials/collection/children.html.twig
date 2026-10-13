@@ -1,0 +1,23 @@
+{% set collection = page.collection()|length > 0 ? page.collection() : page.children.visible %}
+{% set display_cfg = collection_cfg.display %}
+
+{% if collection|length > 0 %}
+  {% set collection = collection.order(
+    page.header.content.order.by|default(system.pages.order.by),
+    page.header.content.order.dir|default(system.pages.order.dir)
+  ) %}
+  {% include 'partials/collection/render.html.twig' with {
+    'collection': collection,
+    'parent': page,
+    'layout': collection_cfg.layout,
+    'collection_cfg': collection_cfg,
+    'display_cfg': display_cfg
+  } %}
+
+  {% if config.get('plugins.pagination.enabled', false) and collection.params.pagination %}
+    {% include 'partials/collection/pagination.html.twig' with {
+      'base_url': page.url,
+      'pagination': collection.params.pagination
+    } %}
+  {% endif %}
+{% endif %}

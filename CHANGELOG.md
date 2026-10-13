@@ -1,3 +1,25 @@
+# Hypertext 2 rewrite (unreleased)
+
+1. [](#improved)
+    * Rebuilds the theme around semantic HTML5 and Grav 2.
+    * Reduces the production theme archive to under 500KB by packaging demo content and extended styles separately.
+    * Replaces duplicated inline/linked stylesheet copies with one manifest-driven, cacheable source.
+    * Removes response-wide HTML minification and image reparsing in favor of Grav media, page caching, and transport compression.
+    * Replaces legacy and inherited settings with a direct global-plus-local Hypertext 2 schema.
+    * Centralizes image, date, taxonomy, summary, and configuration behavior across all five collection layouts.
+    * Limits explicit plugin integration to Pagination, Breadcrumbs, SimpleSearch, Login, and Feed.
+    * Ships only modern WOFF2 accessibility fonts and four compact core style presets.
+    * Resolves global and local page configuration through small PHP-backed Twig helpers.
+    * Replaces the table-based grid with semantic list and article markup plus a conditional CSS grid rule.
+    * Adds media metadata, captions, focal positions, and native responsive image candidates.
+    * Adds release-contract checks and integration coverage for Grav 2.0.27, 2.1.12, and 2.2.6.
+    * Adds five compact demo-site packages for journals, catalogs, resumes, documentation, and restaurants.
+    * Keeps each demo's site-wide style and layout consistent on collection and child pages through global theme configuration.
+    * Expands the focused demos to 69 content pages with nested collections, substantial prose, and broad Markdown and semantic HTML coverage.
+    * Fixes taxonomy parameter separators and verifies category/tag click-through routes.
+    * Stress-tests every collection layout with many-to-many taxonomies, dense metadata, realistic navigation, and responsive Unsplash-sourced media.
+    * Renders cards as a responsive grid with appropriately sized 16:9 thumbnails and reports transformed image dimensions accurately.
+
 # v2.4.2
 ## 08/17/2024
 

@@ -1,96 +1,34 @@
-{% set show_image = page.header.show_header_image|default(false) %}
-{% set header_image_name = page.header.header_image_file|default('header.png') %}
-{% set header_image = page.media.images[header_image_name] ??
-                      media['image://' ~ header_image_name] ??
+{% import 'partials/item/image.html.twig' as image %}
+{% import 'partials/item/fragments.html.twig' as fragments %}
+{% set content_width = layout_cfg.width == 'full' ? 1024 : layout_cfg.width|int %}
 
-                      page.media.images['header.png'] ??
-                      page.media.images['header.gif'] ??
-                      page.media.images['header.jpg'] ??
-                      page.media.images['header.webp'] ??
-
-                      media['image://' ~ page.slug()~'.png'] ??
-                      media['image://' ~ page.slug()~'.gif'] ??
-                      media['image://' ~ page.slug()~'.jpg'] ??
-                      media['image://' ~ page.slug()~'.webp'] ??
-
-                      media['image://' ~ page.slug()~'_header.png'] ??
-                      media['image://' ~ page.slug()~'_header.gif'] ??
-                      media['image://' ~ page.slug()~'_header.jpg'] ??
-                      media['image://' ~ page.slug()~'_header.webp'] ??
-
-                      page.media.images|first %}
-{% set use_image_crop = style.image_cropping|default(false) %}
-{% set image_width = use_image_crop ? (style.width == 'default' ? 1024 : style.width) - 10 : header_image.width %}
-{% set image_height = use_image_crop ? (style.width == 'default' ? 1024 : style.width) / 5 : header_image.height %}
-{% set header_image_url = use_image_crop ? header_image.cropZoom(image_width, image_height).url : header_image.url %}
-
-{% set show_date = structure.show_date|default(false) %}
-
-{% switch page.parent.header.render.children.which_date|default('date') %}
-{% case 'modified' %}
-    {% set date = page.modified %}
-{% case 'published' %}
-    {% set date = page.publishDate %}
-{% case 'unpublished' %}
-    {% set date = page.unpublishDate %}
-{% case 'date' %}
-    {% set date = page.date %}
-{% default %}
-    {% set date = page.date %}
-{% endswitch %}
-
-{# ------------------------------------------------------------------------ #}
-
-{# Title & Subtitle #}
-{% if not page.home() %}
-<h2>
-  <a href="{{ page.url }}">{{ page.title }}</a>
-</h2>
-{% endif %}
-{% if page.header.subtitle %}<strong>{{ page.header.subtitle }}</strong>{% endif %}
-
-<p> {# The next set of items should be somewhat close together. #}
-
-{# Image #}
-{% if show_image and header_image %}
-  <a href="{{ page.url }}">
-    <img src="{{ header_image_url }}" width="{{ header_image_width }}" height="{{ header_image_height }}">
-  </a>
-  <br>
+{% if cfg.title and not page.home() %}
+  <h2><a href="{{ page.url }}">{{ page.title }}</a></h2>
 {% endif %}
 
-{# Date #}
-{% set isHome = page.home() %}
-{% if (show_date != 0) and (show_date != default) and page.header.show_date != 'disabled' %}
-  {% if (show_date == 'everywhere' or show_date == 1) or 
-     (show_date == 'not-home' and not isHome) or
-     (show_date == 'children' and page.template() in ['default', 'blog_item', 'item', 'modular'] and not isHome) or
-     page.header.show_date == 'enabled'
-  %}
-    Date: <small>
-      {% if html5 %}
-          {{ structure.use_decorators ? '[' : '' }}<time datetime="{{ date|date("c") }}">{{ date|date(system.pages.dateformat.short) }}</time>{{ structure.use_decorators ? ']' : '' }}
-      {% else %}
-          {{ structure.use_decorators ? '[' : '' }}<span class="datetime">{{ date|date(system.pages.dateformat.short) }}</span>{{ structure.use_decorators ? ']' : '' }}
-      {% endif %}
-    </small><br />
+{% if cfg.subtitle and page.header.subtitle %}
+  <p><strong>{{ page.header.subtitle }}</strong></p>
+{% endif %}
+
+{% if cfg.image %}
+  {{ image.render(page, 'header', content_width, (content_width / 5)|round, 'eager', page.url) }}
+{% endif %}
+
+{% if cfg.date != 'none' or (cfg.categories and page.taxonomy.category) or (cfg.tags and page.taxonomy.tag) %}
+<p>
+  {% if cfg.date != 'none' %}
+    {{ 'THEME_HYPERTEXT.DATES.DATE'|t }}:
+    <small>{{ dec_left|raw }}{{ fragments.date(page, cfg.date) }}{{ dec_right|raw }}</small>
   {% endif %}
-{% endif %}
-
-{# Categories #}
-{% if page.taxonomy.category %}
-  {{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t }}: <small>
-  {% for category in page.taxonomy.category %}
-    {{ structure.use_decorators ? '[' : '' }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ structure.use_decorators ? ']' : '' }}{{ not loop.last ? ',' : '' }}
-  {% endfor %}</small>
-  {{ page.taxonomy.tag ? '<br>' : '' }}
-{% endif %}
-
-{% if page.taxonomy.tag %}
-  Tags: <small>
-  {% for tag in page.taxonomy.tag %}
-    {{ structure.use_decorators ? '[' : '' }}<a href="{{ page.parent.url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ tag }}">{{ tag }}</a>{{ structure.use_decorators ? ']' : '' }}{{ not loop.last ? ',' : '' }}
-  {% endfor %}</small>
-{% endif %}
-
+  {% if cfg.categories and page.taxonomy.category %}
+    {% if cfg.date != 'none' %}<br>{% endif %}
+    {{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t }}:
+    <small>{{ fragments.categories(page, page.parent.url, dec_left, dec_right, config.get('system.param_sep', ':')) }}</small>
+  {% endif %}
+  {% if cfg.tags and page.taxonomy.tag %}
+    {% if cfg.date != 'none' or (cfg.categories and page.taxonomy.category) %}<br>{% endif %}
+    {{ 'THEME_HYPERTEXT.TAGS.TAGS'|t }}:
+    <small>{{ fragments.tags(page, page.parent.url, dec_left, dec_right, config.get('system.param_sep', ':')) }}</small>
+  {% endif %}
 </p>
+{% endif %}

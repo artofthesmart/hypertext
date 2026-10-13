@@ -1,0 +1,23 @@
+layout:
+  width: 1024
+style:
+  preset: water-light
+navigation:
+  custom-items:
+  - text: Buying Guide
+    href: /home/buying-guide
+    title: Nested buying guide
+  - text: Field Clock
+    href: /home/field-clock
+    title: Timekeeping product
+  - text: Repair Kit
+    href: /home/repair-kit
+    title: Accessory and spare-parts set
+  - text: Project source
+    href: https://github.com/example/hypertext-catalog
+    title: Catalog source on GitHub
+    offsite: true
+    new-window: true
+    rel: external
+content:
+  image: true

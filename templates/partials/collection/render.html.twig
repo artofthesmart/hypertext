@@ -1,0 +1,65 @@
+{% set layout = layout|default(theme.collection.layout) %}
+{% set collection_cfg = collection_cfg|default(theme.collection) %}
+{% set display_cfg = display_cfg|default(theme.collection.display) %}
+
+{% if layout == 'table' %}
+  {% include 'partials/item/table.html.twig' with {
+    'collection': collection,
+    'parent': parent,
+    'collection_cfg': collection_cfg,
+    'display_cfg': display_cfg
+  } %}
+{% elseif layout == 'grid' %}
+  <ul class="children grid">
+  {% for child in collection if child.isPage() %}
+    {% set cfg = hypertext_content_config(child, display_cfg) %}
+    {% include 'partials/item/grid.html.twig' with {
+      'page': child,
+      'parent': parent,
+      'cfg': cfg,
+      'collection_cfg': collection_cfg,
+      'display_cfg': display_cfg
+    } %}
+  {% endfor %}
+  </ul>
+{% elseif layout == 'cards' %}
+  <section class="children cards">
+  {% for child in collection if child.isPage() %}
+    {% set cfg = hypertext_content_config(child, display_cfg) %}
+    {% include 'partials/item/cards.html.twig' with {
+      'page': child,
+      'parent': parent,
+      'cfg': cfg,
+      'collection_cfg': collection_cfg,
+      'display_cfg': display_cfg
+    } %}
+  {% endfor %}
+  </section>
+{% elseif layout == 'comfy' %}
+  <section class="children comfy">
+  {% for child in collection if child.isPage() %}
+    {% set cfg = hypertext_content_config(child, display_cfg) %}
+    {% include 'partials/item/comfy.html.twig' with {
+      'page': child,
+      'parent': parent,
+      'cfg': cfg,
+      'collection_cfg': collection_cfg,
+      'display_cfg': display_cfg
+    } %}
+  {% endfor %}
+  </section>
+{% else %}
+  <ol class="children list">
+  {% for child in collection %}
+    {% set cfg = hypertext_content_config(child, display_cfg) %}
+    {% include 'partials/item/list.html.twig' with {
+      'page': child,
+      'parent': parent,
+      'cfg': cfg,
+      'collection_cfg': collection_cfg,
+      'display_cfg': display_cfg,
+      'level': 1
+    } %}
+  {% endfor %}
+  </ol>
+{% endif %}

@@ -1,0 +1,23 @@
+layout:
+  width: 960
+style:
+  preset: default
+navigation:
+  custom-items:
+  - text: Concepts
+    href: /home/concepts
+    title: Nested concepts guide
+  - text: Installation
+    href: /home/installation
+    title: Install guide
+  - text: Commands
+    href: /home/commands
+    title: CLI reference
+  - text: Project source
+    href: https://github.com/example/hypertext-docs
+    title: Docs source on GitHub
+    offsite: true
+    new-window: true
+    rel: external
+content:
+  image: true

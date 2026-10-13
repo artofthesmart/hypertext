@@ -1,0 +1,62 @@
+form:
+  fields:
+    header.hypertext.assets.css:
+      type: select
+      label: Allow plugin CSS
+      default: default
+      options:
+        default: Use theme default
+        1: Enabled
+        0: Disabled
+
+    header.hypertext.assets.js:
+      type: select
+      label: Allow plugin JavaScript
+      default: default
+      options:
+        default: Use theme default
+        1: Enabled
+        0: Disabled
+
+    header.hypertext.style.custom-css:
+      type: textarea
+      label: Page-specific CSS
+      size: large
+
+    header.hypertext.style.preset:
+      type: select
+      label: Stylesheet preset
+      default: inherit
+      data-options@: '\Grav\Theme\Hypertext::stylesheetOverrideOptions'
+
+    header.hypertext.style.accessible-font:
+      type: select
+      label: Use Atkinson Hyperlegible
+      default: default
+      options:
+        default: Use theme default
+        1: Enabled
+        0: Disabled
+
+    header.hypertext.layout.alignment:
+      type: select
+      label: Page alignment
+      default: default
+      options:
+        default: Use theme default
+        left: Left
+        center: Center
+        right: Right
+
+    header.hypertext.layout.width:
+      type: select
+      label: Maximum content width
+      default: default
+      options:
+        default: Use theme default
+        full: Full width
+        640: 640px
+        768: 768px
+        960: 960px
+        1024: 1024px
+        1280: 1280px

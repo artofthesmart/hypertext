@@ -1,11 +1,11 @@
-{% if partials.header.custom_header_image != '' %}
-  {{ partials.header.custom_header_image|raw  }}
+{% if header_cfg['custom-html'] %}
+  {{ header_cfg['custom-html']|raw }}
 {% else %}
   <h1><a href="{{ home_url }}">{{ site.title|e('html') }}</a></h1>
 {% endif %}
 
-{% if site.metadata.description and partials.header.show_subtitle %}
-<p class="subtitle">{{ site.metadata.description }}</p>
+{% if header_cfg['show-description'] and site.metadata.description %}
+  <p class="subtitle">{{ site.metadata.description }}</p>
 {% endif %}
 
 {% block header_navigation %}

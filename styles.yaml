@@ -1,0 +1,15 @@
+styles:
+  default:
+    label: Hypertext (browser default)
+  hypertext++:
+    label: Hypertext++ (1 KB)
+    file: hypertext++.css
+  water-light:
+    label: Water Light (2 KB)
+    file: water-light.css
+  water-dark:
+    label: Water Dark (2 KB)
+    file: water-dark.css
+  sakura:
+    label: Sakura (4 KB)
+    file: sakura.css

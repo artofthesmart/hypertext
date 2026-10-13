@@ -1,0 +1,64 @@
+{% macro render(page, kind, width = null, height = null, loading = 'lazy', href = null) %}
+  {% set preferred = kind == 'header'
+    ? page.header.header_image_file|default('')
+    : page.header.thumbnail_image_file|default('') %}
+  {% set image = preferred ? page.media.images[preferred]|default(null) : null %}
+
+  {% if not image and kind == 'thumbnail' %}
+    {% if page.media.images['thumbnail.webp'] is defined %}
+      {% set image = page.media.images['thumbnail.webp'] %}
+    {% elseif page.media.images['thumbnail.jpg'] is defined %}
+      {% set image = page.media.images['thumbnail.jpg'] %}
+    {% elseif page.media.images['thumbnail.png'] is defined %}
+      {% set image = page.media.images['thumbnail.png'] %}
+    {% elseif page.media.images['thumbnail.gif'] is defined %}
+      {% set image = page.media.images['thumbnail.gif'] %}
+    {% endif %}
+  {% endif %}
+
+  {% if not image %}
+    {% if page.media.images['header.webp'] is defined %}
+      {% set image = page.media.images['header.webp'] %}
+    {% elseif page.media.images['header.jpg'] is defined %}
+      {% set image = page.media.images['header.jpg'] %}
+    {% elseif page.media.images['header.png'] is defined %}
+      {% set image = page.media.images['header.png'] %}
+    {% elseif page.media.images['header.gif'] is defined %}
+      {% set image = page.media.images['header.gif'] %}
+    {% elseif page.media.images|length > 0 %}
+      {% set image = page.media.images|first %}
+    {% endif %}
+  {% endif %}
+
+  {% if image %}
+    {% set metadata = image.metadata|default({}) %}
+    {% set explicit_alt = kind == 'header'
+      ? page.header.header_image_alt|default('')
+      : page.header.thumbnail_image_alt|default('') %}
+    {% set alt = explicit_alt|default(metadata.alt|default(page.title)) %}
+    {% set title = metadata.title|default('') %}
+    {% set caption = metadata.caption|default('') %}
+    {% set focus_x = metadata.focus_x|default('center') %}
+    {% set focus_y = metadata.focus_y|default('center') %}
+    {% set rendered = width and height
+      ? image.cropZoom(width|round, height|round, 'transparent', focus_x, focus_y)
+      : image %}
+    {% set rendered_width = width and height ? width|round : rendered.width %}
+    {% set rendered_height = width and height ? height|round : rendered.height %}
+    {% set srcset = rendered.srcset(false) %}
+    {% if caption %}<figure>{% endif %}
+    {% if href %}<a href="{{ href }}">{% endif %}
+    <img
+      src="{{ rendered.url }}"
+      {% if srcset %}srcset="{{ srcset }}" sizes="(max-width: {{ rendered_width }}px) 100vw, {{ rendered_width }}px"{% endif %}
+      width="{{ rendered_width }}"
+      height="{{ rendered_height }}"
+      loading="{{ loading }}"
+      decoding="async"
+      {% if loading == 'eager' %}fetchpriority="high"{% endif %}
+      {% if title %}title="{{ title|e('html_attr') }}"{% endif %}
+      alt="{{ alt|e('html_attr') }}">
+    {% if href %}</a>{% endif %}
+    {% if caption %}<figcaption>{{ caption }}</figcaption></figure>{% endif %}
+  {% endif %}
+{% endmacro %}

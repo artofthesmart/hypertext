@@ -1,8 +1,16 @@
 {% set crumbs = breadcrumbs.get() %}
 {% if crumbs|length > 1 %}
-<span id="breadcrumbs">
+<nav id="breadcrumbs" aria-label="{{ 'THEME_HYPERTEXT.BREADCRUMBS'|t|default('Breadcrumb') }}">
+  <ol>
     {% for crumb in crumbs %}
-    <a href="{{ crumb.url }}">{{ crumb.menu }}</a>{% if not loop.last %} &raquo; {% endif %}
+      <li>
+        {% if not loop.last %}
+          <a href="{{ crumb.url }}">{{ crumb.menu }}</a>
+        {% else %}
+          <strong aria-current="page">{{ crumb.menu }}</strong>
+        {% endif %}
+      </li>
     {% endfor %}
-</span>
+  </ol>
+</nav>
 {% endif %}

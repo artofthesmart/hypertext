@@ -1,0 +1,24 @@
+layout:
+  alignment: center
+  width: 768
+style:
+  preset: sakura
+navigation:
+  custom-items:
+  - text: Case Studies
+    href: /home/case-studies
+    title: Nested case studies
+  - text: Current Role
+    href: /home/current-role
+    title: Current work
+  - text: Skills
+    href: /home/skills
+    title: Skills overview
+  - text: Project source
+    href: https://github.com/example/hypertext-resume
+    title: Resume source on GitHub
+    offsite: true
+    new-window: true
+    rel: external
+content:
+  image: true

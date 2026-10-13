@@ -1,16 +1,24 @@
 name: Hypertext
-version: 2.4.2
-description: "Hypertext is a zero JS/CSS theme to create simple, fast websites."
+slug: hypertext
+type: theme
+version: 2.0.0
+description: "Hypertext is a lean semantic HTML5 theme with no JavaScript or stylesheet required by default."
 icon: compress
 author:
   name: Alejo Grigera Sutro
   email: hypertext@artofthesmart.com
-  url: http://artofthesmart.com
+  url: https://artofthesmart.com
 homepage: https://github.com/artofthesmart/hypertext
-demo: http://hypertext.artofthesmart.com
-keywords: theme, simple, compliance, fast, semantic, 1995
+demo: https://hypertext.artofthesmart.com
+keywords: theme, simple, fast, semantic, html5, performance
 bugs: https://github.com/artofthesmart/hypertext/issues
 license: MIT
+
+dependencies:
+  - { name: grav, version: '>=2.0.0' }
+
+compatibility:
+  grav: ['2.0', '2.1', '2.2']
 
 form:
   validation: strict
@@ -18,396 +26,344 @@ form:
     tabs:
       type: tabs
       active: 1
-
       fields:
-        structure: # STRUCTURAL CONTENT TAB
+        structure:
           type: tab
           title: Structure
           fields:
-            columns:
-              type: columns
+            navigation_section:
+              type: section
+              title: Navigation
+              underline: true
+            navigation.mode:
+              type: select
+              label: Navigation display
+              default: inline
+              options:
+                inline: Inline links
+                stacked: Stacked list
+            navigation.decoration:
+              type: select
+              label: Inline text decoration
+              default: braced
+              options:
+                braced: "[ Link ]"
+                angled: "< Link >"
+                plain: Plain
+            navigation.pagination:
+              type: select
+              label: Pagination display
+              default: inline
+              options:
+                inline: Inline links
+                stacked: Stacked list
+            navigation.custom-items:
+              type: list
+              style: vertical
+              label: Additional navigation links
               fields:
-                column1: # MENU BAR STRUCTURE
-                  type: column
-                  fields:
-                    navStructureTitle:
-                      type: section
-                      title: Navigation Structure
-                      underline: true
-                    structure.add_site_name:
-                      type: toggle
-                      label: Add site name to page titles
-                      help: When enabled, page titles will end with a pipe seperator and the name of the website. When disabled, only your page's title will be used.
-                      default: 1
-                      highlight: 1
-                      options:
-                        1: Enabled
-                        0: Disabled
-                      validate:
-                        type: bool
-                    structure.inline_navbar:
-                      type: toggle
-                      label: Use inline menu bar
-                      help: When enabled, the navigation list at the top of the page will be inlined instead of <ul>. Enable if using no theme.
-                      default: 0
-                      highlight: 0
-                      options:
-                        1: Enabled
-                        0: Disabled
-                      validate:
-                        type: bool
-                    structure.inline_pagination:
-                      type: toggle
-                      label: Use inline pagination
-                      help: When enabled, and you have installed the pagination plugin, pagination will be inlined instead of <ul>.
-                      default: 1
-                      highlight: 1
-                      options:
-                        1: Enabled
-                        0: Disabled
-                      validate:
-                        type: bool
-                    structure.use_decorators:
-                      type: toggle
-                      label: Use decorator text
-                      help: When enabled, spacers are added to inline navigation and brackets around category links. Just decorators.
-                      default: 1
-                      highlight: 1
-                      options:
-                        1: Enabled
-                        0: Disabled
-                      validate:
-                        type: bool
-                column2: # RENDER STRUCTURE
-                  type: column
-                  fields:
-                    renderStructureTitle:
-                      type: section
-                      title: HTML Structure & Options
-                      underline: true
-                    structure.html_mode:
-                      type: select
-                      classes: fancy
-                      label: HTML Mode
-                      help: HTML5 includes semantic markup like `article` tags to make built-in stylesheets work, while HTML3 is for extreme speed with little-to-no style.
-                      options:
-                        default: HTML 5 (Recommended)
-                        compatibility: HTML 3.2 (Minimal style)
-                    structure.use_favicon:
-                      type: toggle
-                      label: Use favicon
-                      help: When enabled, the site will use the favicon at `user/images/favicon/favicon.png`. See Hypertext homepage for details. 
-                      default: 0
-                      highlight: 0
-                      options:
-                        1: Enabled
-                        0: Disabled
-                      validate:
-                        type: bool
-                    favicon:
-                      name: Favicon
-                      type: file
-                      label: Upload Favicon
-                      help: This uploads a new image for browser tabs and search engines to use to represent your website. It MUST be called favicon.png and conform to other favicon requirements. See Hypertext homepage for details. 
-                      destination: 'image://favicon'
-                      multiple: false
-                      autofocus: false
-                      accept:
-                        - image/png
-                    structure.show_date:
-                      type: select
-                      classes: fancy
-                      label: Show last updated dates
-                      help: When enabled, the date that the page was published will appear on individual pages.
-                      options:
-                        default: No dates
-                        children: Only on child pages
-                        not-home: Everywhere but the home page
-                        everywhere: Everywhere
-        style: # STYLE TAB
+                .text:
+                  type: text
+                  label: Link text
+                .href:
+                  type: text
+                  label: URL
+                .title:
+                  type: text
+                  label: Advisory title
+                .rel:
+                  type: text
+                  label: Relationship
+                .offsite:
+                  type: toggle
+                  label: Add offsite class
+                  default: 0
+                  options:
+                    1: Enabled
+                    0: Disabled
+                  validate:
+                    type: bool
+                .new-window:
+                  type: toggle
+                  label: Open in a new window
+                  default: 0
+                  options:
+                    1: Enabled
+                    0: Disabled
+                  validate:
+                    type: bool
+            header_section:
+              type: section
+              title: Site header
+              underline: true
+            header.custom-html:
+              type: textarea
+              label: Custom header HTML
+              help: Leave blank to render the site title.
+            header.show-description:
+              type: toggle
+              label: Show site description
+              default: 0
+              options:
+                1: Enabled
+                0: Disabled
+              validate:
+                type: bool
+            footer_section:
+              type: section
+              title: Site footer
+              underline: true
+            footer.format:
+              type: select
+              label: Footer format
+              default: markdown
+              options:
+                markdown: Markdown
+                html: HTML
+            footer.content:
+              type: textarea
+              label: Footer content
+        content:
           type: tab
-          title: Style & Formatting
+          title: Content
           fields:
             columns:
               type: columns
               fields:
-                column1: # INCLUDES/EXCLUDES COLUMN
+                page_column:
                   type: column
                   fields:
-                    includesTitle:
+                    page_section:
                       type: section
-                      title: CSS/JS Settings
+                      title: Page defaults
                       underline: true
-                    description:
-                      type: display
-                      label: Description
-                      markdown: true
-                      content: These fields offer settings for whether to allow CSS or JS files. Some plugins include these kinds of files, so this is a great way to suppress them.  Remember that these are *global* settings, which you can override on a per-page basis.  For example, you could install the [syntax highlighting](https://github.com/getgrav/grav-plugin-highlight) plugin, disable CSS/JS here, and then enable it only on pages where you know you are showing code.
-                    style.allowCSS:
+                    content.title:
                       type: toggle
-                      classes: fancy
-                      label: Allow Global CSS
-                      help: Determines what CSS is allowed to load. This can be overridden by an individual page.
+                      label: Show title
                       default: 1
-                      highlight: 0
                       options:
                         1: Enabled
                         0: Disabled
                       validate:
                         type: bool
-                    style.allowJS:  
+                    content.subtitle:
                       type: toggle
-                      classes: fancy
-                      label: Allow Global JS
-                      help: Determines what JS is allowed to load. This can be overridden by an individual page.
-                      default: 1
-                      highlight: 0
+                      label: Show subtitle
+                      default: 0
                       options:
                         1: Enabled
                         0: Disabled
                       validate:
-                        type: bool                    
-                column2: # SELECT A STYLE COLUMN
+                        type: bool
+                    content.image:
+                      type: toggle
+                      label: Show header image
+                      default: 0
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    content.date:
+                      type: select
+                      label: Date
+                      default: published
+                      options:
+                        none: None
+                        published: Published
+                        modified: Modified
+                        both: Published and modified
+                    content.categories:
+                      type: toggle
+                      label: Show categories
+                      default: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    content.tags:
+                      type: toggle
+                      label: Show tags
+                      default: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                collection_column:
                   type: column
                   fields:
-                    styleTitle:
+                    collection_section:
                       type: section
-                      title: Themes & Styles
+                      title: Collection defaults
                       underline: true
-                    description:
-                      type: display
-                      label: Description
-                      markdown: true
-                      content: Themes here are open-source CSS files available on GitHub and are not my own work. Consider visiting their homepages, contributing, and supporting the authors.  Remember that you can test these styles quickly by adding the name or number to a theme URL parameter, e.g. `YourSite.com/?theme=water` or `YourSite.com/?theme=4`.
-                    style.stylesheet:
+                    collection.layout:
                       type: select
-                      classes: fancy
-                      label: Select a Theme
-                      help: Selects from a pre-determined list of simple, fast CSS files.
+                      label: Layout
+                      default: list
                       options:
-                        default:            "hypertext (No style)"
-                        air:                "#0 air (2KB)"
-                        hypertext++:        "#1 hypertext++ (0KB)"
-                        latex:              "#2 latex (305KB)"
-                        marx:               "#3 marx (11KB)"
-                        milligram:          "#4 milligram (9KB)"
-                        modest:             "#5 modest (2KB)"
-                        mvp:                "#6 mvp (10KB)"
-                        newcss-default:     "#7 newcss-default (8KB)"
-                        newcss-night:       "#8 newcss-night (7KB)"
-                        newcss-terminal:    "#9 newcss-terminal (7KB)"
-                        sakura:             "#10 sakura (4KB)"
-                        sakura-dark:        "#11 sakura-dark (4KB)"
-                        sakura-dark-solarized: "#12 sakura-dark-solar (4KB)"
-                        sakura-earthly:     "#13 sakura-earthly (4KB)"
-                        sakura-ink:         "#14 sakura-ink (5KB)"
-                        sakura-pink:        "#15 sakura-pink (5KB)"
-                        sakura-radical:     "#16 sakura-radical (5KB)"
-                        sakura-vader:       "#17 sakura-vader (4KB)"
-                        simple:             "#18 simple (9KB)"
-                        stylize:            "#19 stylize (4KB)"
-                        tacit:              "#20 tacit (7KB)"
-                        tufte:              "#21 tufte (12KB)"
-                        water-dark:         "#22 water-dark (2KB)"
-                        water-light:        "#23 water-light (2KB)"
-                        writ:               "#24 writ (2KB)"
-                        yorha:              "#25 yorha (8KB)"
-
-
-                    style.include_type:
-                      type: select
-                      classes: fancy
-                      label: Include Method
-                      help: Determines whether to prioritize single page loads (inline <style>, good for Hypertext or single-serving sites) or multiple page loads (<link>, good for CSS styles or multi-paged sites).
-                      options:
-                        default: Link (Good for enabling JS/CSS)
-                        inline: Inline (Faster single page loads)
-                    style.customCSS:
-                      type: textarea
-                      label: Custom CSS
-                      help: Add your custom CSS rules here.
-                      placeholder: "e.g. body { font-family: Courier }"
-                      size: large
-                    configurationTitle:
-                      type: section
-                      title: Other Configurations
-                      underline: true
-                    style.configuration:
-                      type: select
-                      size: medium
-                      classes: fancy
-                      label: General site layout
-                      help: Configures the general layout of the website horizontally.
-                      options:
-                        default: No style (align left)
-                        centered: Centered
-                    style.width:
-                      type: select
-                      size: medium
-                      classes: fancy
-                      label: Maximum website width
-                      help: Caps the website's maximum width for viewing on large screens.
-                      options:
-                        default: No style (full width)
-                        640: 640px (very small)
-                        768: 768px (small)
-                        960: 960px (medium)
-                        1024: 1024px (large)
-                        1280: 1280px (very large)
-                    style.image_cropping:
+                        list: List
+                        comfy: Comfy
+                        table: Table
+                        grid: Grid
+                        cards: Cards
+                    collection.nested:
                       type: toggle
-                      size: medium
-                      label: Auto-resize header images
-                      help: When enabled, this will cropzoom header images of pages to a default size. When *disabled* header images will render with whatever size you upload them at.
+                      label: Show nested children
                       default: 0
-                      highlight: 0
                       options:
-                        1: 'Enabled'
-                        0: 'Disabled'
+                        1: Enabled
+                        0: Disabled
                       validate:
                         type: bool
-                    style.visually_impared_mode:
+                    collection.display.title:
                       type: toggle
-                      size: medium
-                      label: Hyperlegible text/lists
-                      help: When enabled, this will replace any stylesheet's default `body paragraph` typeface and use the Atkinson Hyperlegible Font for users with poorer eyesight. *WARNING* the font is ~100kb.
-                      default: 0
-                      highlight: 0
+                      label: Show titles
+                      default: 1
                       options:
-                        1: 'Enabled'
-                        0: 'Disabled'
+                        1: Enabled
+                        0: Disabled
                       validate:
                         type: bool
-        menus: # HEADER, FOOTER, LINKS TAB
+                    collection.display.subtitle:
+                      type: toggle
+                      label: Show subtitles
+                      default: 0
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    collection.display.image:
+                      type: toggle
+                      label: Show thumbnails
+                      default: 0
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    collection.display.date:
+                      type: select
+                      label: Date
+                      default: published
+                      options:
+                        none: None
+                        published: Published
+                        modified: Modified
+                        both: Published and modified
+                    collection.display.categories:
+                      type: toggle
+                      label: Show categories
+                      default: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    collection.display.tags:
+                      type: toggle
+                      label: Show tags
+                      default: 1
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    collection.display.summary:
+                      type: toggle
+                      label: Show summaries
+                      default: 0
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+                    collection.display.read-more:
+                      type: toggle
+                      label: Show read-more links
+                      default: 0
+                      options:
+                        1: Enabled
+                        0: Disabled
+                      validate:
+                        type: bool
+        style:
           type: tab
-          title: Headers, Footers, Links
+          title: Style & assets
           fields:
-            columns:
-              type: columns
-              fields:
-                column1: # Headers, Footers
-                  type: column
-                  fields:
-                    headersTitle:
-                      type: section
-                      title: Headers & Icons
-                      underline: true
-                    headersDescription:
-                      type: display
-                      size: long
-                      label: Description
-                      markdown: true
-                      content: "This section lets you change elements near the top of your website like header images and more."
-                    partials.header.show_subtitle:
-                      type: toggle
-                      classes: fancy
-                      label: Show Site Subtitle
-                      help: When enabled, if you have one, your site's Configuration => Site => Metadata => Description will appear under the site title. When disabled, it's not rendered.
-                      default: 1
-                      highlight: 1
-                      options:
-                        1: Enabled
-                        0: Disabled
-                      validate:
-                        type: bool
-                    partials.header.custom_header_image:
-                      type: textarea
-                      label: Title/Header HTML
-                      help: This is raw HTML that will be included in the header instead of the Site Title. Write your own custom site title, use an image, or ads.
-                      placeholder: "Leave this blank to use the site title as the site header. Otherwise, write HTML here. You can include images. Consider using SVG or base64 encoded images to stay fast."
-                      size: large
-                    footersTitle:
-                      type: section
-                      title: Footers
-                      underline: true
-                    footersDescription:
-                      type: display
-                      size: long
-                      label: Description
-                      markdown: true
-                      content: "This section lets you change elements near the bottom of your website like custom disclaimers or content."
-                    partials.footer.custom_footer_type:
-                      type: select
-                      classes: fancy
-                      label: Footer Type
-                      help: The footer can be either markdown or HTML, whichever you need.
-                      size: large
-                      default: markdown
-                      options:
-                        markdown: Markdown
-                        html: HTML  
-                    partials.footer.custom_footer:
-                      type: textarea
-                      label: Footer Content
-                      size: large
-                      help: Add your optional, custom footer content here. If you need to remove the Hypertext attribution line, you can do it from the theme code in user/themes/hypertext/templates/partials/page/footer.html.twig.
-                column2: # Links
-                  type: column
-                  fields:
-                    linksTitle:
-                      type: section
-                      title: Links
-                      underline: true
-                    description:
-                      type: display
-                      size: long
-                      label: Description
-                      markdown: true
-                      content: "This section lets you add custom links to the end of your website's navigation."
-                    menu.menuItems:
-                      name: menuItems
-                      type: list
-                      style: vertical
-                      size: long
-                      label: Additional Menu Items
-                      help: Add manual links to the header of your site.
-                      fields:
-                        .text:
-                          type: text
-                          label: Link Text
-                          placeholder: Use Google
-                        .href:
-                          type: text
-                          label: Full URL
-                          placeholder: http://google.com
-                        .isOffsite:
-                          type: toggle
-                          label: Add offsite CSS class
-                          help: When enabled, this will add a CSS class to this item indicating that it is offsite.
-                          default: 0
-                          options:
-                              1: 'Enabled'
-                              0: 'Disabled'
-                          validate:
-                              type: bool
-                        .isNewWindow:
-                          type: toggle
-                          label: Open in new window
-                          help: When enabled, this will cause the link to open in a new window when clicked.
-                          default: 0
-                          options:
-                              1: 'Enabled'
-                              0: 'Disabled'
-                          validate:
-                              type: bool
-                        .fieldset:
-                          type: fieldset
-                          title: Other Parameters
-                          help: Advanced settings for your new link.  This tries to stick to the HTML 3 spec.
-                          text: Advanced or optional features for this link.
-                          icon: cogs
-                          collapsed: true     # Initial state of fieldset (see collapsible option)
-                          collapsible: true    # Whether one can expand the fieldset or not 
-                          fields:
-                            .rel:
-                              type: text
-                              label: rel
-                              placeholder: The forward relationship, also known as the "link type".
-                            .name:
-                              type: text
-                              label: Name
-                              placeholder: This should be a string defining unique name for the scope of the current HTML document.
-                            .title:
-                              type: text
-                              label: Title
-                              placeholder: An advisory title for the linked resource.
+            style_section:
+              type: section
+              title: Aesthetic options
+              underline: true
+            style.preset:
+              type: select
+              label: Stylesheet preset
+              data-options@: '\Grav\Theme\Hypertext::stylesheetOptions'
+            style.custom-css:
+              type: textarea
+              label: Custom CSS
+              size: large
+            style.accessible-font:
+              type: toggle
+              label: Use Atkinson Hyperlegible
+              default: 0
+              options:
+                1: Enabled
+                0: Disabled
+              validate:
+                type: bool
+            layout_section:
+              type: section
+              title: Layout
+              underline: true
+            layout.alignment:
+              type: select
+              label: Page alignment
+              default: left
+              options:
+                left: Left
+                center: Center
+                right: Right
+            layout.width:
+              type: select
+              label: Maximum content width
+              default: 960
+              options:
+                full: Full width
+                640: 640px
+                768: 768px
+                960: 960px
+                1024: 1024px
+                1280: 1280px
+            assets_section:
+              type: section
+              title: Plugin assets
+              underline: true
+            assets.css:
+              type: toggle
+              label: Allow plugin CSS
+              default: 0
+              options:
+                1: Enabled
+                0: Disabled
+              validate:
+                type: bool
+            assets.js:
+              type: toggle
+              label: Allow plugin JavaScript
+              default: 0
+              options:
+                1: Enabled
+                0: Disabled
+              validate:
+                type: bool
+            favicon:
+              name: Favicon
+              type: file
+              label: Upload favicon.png
+              destination: 'image://favicon'
+              multiple: false
+              accept:
+                - image/png

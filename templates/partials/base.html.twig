@@ -1,97 +1,83 @@
-{% set structure = config.themes.hypertext.structure %}
-{% set style = config.themes.hypertext.style %}
-{% set menu = config.themes.hypertext.menu %}
-{% set partials = config.themes.hypertext.partials %}
-{% set html5 = structure.html_mode|default('default') == 'default' %}
-
-{# ------------------------------------------------------------------------ #}
+{% set theme = config.themes.hypertext %}
+{% set hypertext = hypertext_config(page) %}
+{% set header_cfg = hypertext.header %}
+{% set footer_cfg = hypertext.footer %}
+{% set nav_cfg = hypertext.navigation %}
+{% set layout_cfg = hypertext.layout %}
+{% set style_cfg = hypertext.style %}
+{% set page_cfg = hypertext.content %}
+{% set asset_cfg = hypertext.assets %}
+{% set collection_cfg = hypertext.collection %}
+{% set css_enabled = asset_cfg.css %}
+{% set js_enabled = asset_cfg.js %}
+{% set dec_left = nav_cfg.decoration == 'braced' ? '[ ' : (nav_cfg.decoration == 'angled' ? '< ' : '') %}
+{% set dec_right = nav_cfg.decoration == 'braced' ? ' ]' : (nav_cfg.decoration == 'angled' ? ' >' : '') %}
 
 <!DOCTYPE html>
 
-
-{# ## HEADLESS RENDERING ## #}
-{% if (uri.query('headless') or page.header.is_headless) %}
-<html>
-  <head>
-    <title>{% if header.title %}{{ header.title|e('html') }} | {% endif %}{{ site.title|e('html') }}</title>
-  </head>
-  <body>
+{% if uri.query('headless') or page_cfg.headless %}
+<html lang="{{ grav.language.getActive ?: grav.config.site.default_lang }}">
+<head>
+  <meta charset="utf-8">
+  <title>{% if page.title %}{{ page.title|e('html') }} | {% endif %}{{ site.title|e('html') }}</title>
+</head>
+<body>
   {{ block('content') }}
-  </body>
+</body>
 </html>
-
-
 {% else %}
-{# ## ORDINARY RENDER ## #}
 <html lang="{{ grav.language.getActive ?: grav.config.site.default_lang }}">
 <head>
 {% block head %}
-  <meta charset="utf-8" />
-  <link rel="canonical" href="{{ page.url(true, true) }}" />
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="canonical" href="{{ page.url(true, true) }}">
 
   {% for meta in page.metadata %}
-    <meta {% if meta.name %}name="{{ meta.name }}" {% endif %}{% if meta.http_equiv %}http-equiv="{{ meta.http_equiv }}" {% endif %}{% if meta.charset %}charset="{{ meta.charset }}" {% endif %}{% if meta.property %}property="{{ meta.property }}" {% endif %}{% if meta.content %}content="{{ meta.content }}" {% endif %}/>
+    <meta {% if meta.name %}name="{{ meta.name|e('html_attr') }}" {% endif %}{% if meta.http_equiv %}http-equiv="{{ meta.http_equiv|e('html_attr') }}" {% endif %}{% if meta.charset %}charset="{{ meta.charset|e('html_attr') }}" {% endif %}{% if meta.property %}property="{{ meta.property|e('html_attr') }}" {% endif %}{% if meta.content %}content="{{ meta.content|e('html_attr') }}" {% endif %}>
   {% endfor %}
 
-  {% if structure.add_site_name %}
-    <title>{% if header.title %}{{ header.title|e('html') }} | {% endif %}{{ site.title|e('html') }}</title>
-  {% else %}
-    {% if header.title %}<title>{{ header.title|e('html') }}</title>{% endif %}
-  {% endif %}
-  
+  <title>{% if page.title %}{{ page.title|e('html') }} | {% endif %}{{ site.title|e('html') }}</title>
 
-  {% if structure.use_favicon %}
-  <link rel="icon" type="image/png" href="{{ url('image://favicon/favicon.png') }}" />
-  {% endif %}
+  {% set uploaded_favicon = media['image://favicon.png']|default(null) %}
+  <link rel="icon" type="image/png" href="{{ uploaded_favicon ? uploaded_favicon.url : url('theme://images/favicon.png') }}">
 
   {% include 'partials/page/js-css.html.twig' %}
-{% endblock head %}
+{% endblock %}
 </head>
 
-
-<body class="{{ page.template }}{{ page.header.bodyClasses ? ' {{ page.header.bodyClasses }}' : ''}}">
-  {# ## HEADER ## #}
-  {{ html5 ? '<header>' : '<div class="header">' }}
+<body class="{{ page.template|e('html_attr') }}{% if page.header.bodyClasses %} {{ page.header.bodyClasses|e('html_attr') }}{% endif %}">
+  <header>
   {% block header %}
     {% include 'partials/page/header.html.twig' %}
   {% endblock %}
-  {{ html5 ? '</header>' : '</div>' }}
-  
-  {# ## BODY ## #}
-  {{ html5 ? '<main>' : '<div class="main">' }}
-    {{ html5 ? '<article>' : '<div class="item">'}}
+  </header>
 
-    {# ARTICLE HEAD #}
+  <main>
     {% block item_head %}
-    {% include 'partials/item/header.html.twig' %}
+      {% include 'partials/item/header.html.twig' with {'cfg': page_cfg} %}
     {% endblock %}
 
-    {# ARTICLE BODY #}
     {% block content %}
-    {{ page.content|raw }}
+    <article>
+      {{ page.content|raw }}
+    </article>
     {% endblock %}
 
-    {# CHILD PAGES #}
     {% block children %}
-    {% include 'partials/item/children.html.twig' %}
+      {% include 'partials/collection/children.html.twig' %}
     {% endblock %}
 
-    {# ARTICLE FOOTER #}
     {% block item_footer %}
-    {% include 'partials/item/footer.html.twig' %}
+      {% include 'partials/item/footer.html.twig' %}
     {% endblock %}
+  </main>
 
-    {{ html5 ? '</article>' : '</div>'}}
-  {{ html5 ? '</main>' : '</div>' }}
-
-  {# ## FOOTER ## #}
-  {{ html5 ? '<footer>' : '<div class="footer">' }}
+  <footer>
   {% block footer %}
     {% include 'partials/page/footer.html.twig' %}
   {% endblock %}
-  {{ html5 ? '</footer>' : '</div>' }}
-
+  </footer>
 </body>
 {% endif %}
 </html>

@@ -1,64 +1,51 @@
-{% set show_subtitle = parent.header.render.children.subtitle ?? true %}
-{% set show_cat = parent.header.render.children.category ?? true %}
-{% set show_children = parent.header.render.children.nested_children ?? true %}
-{% set inner_children = page.collection()|length > 0 ? page.collection() : page.children.visible %}
-
-{% set show_date = parent.header.render.children.date ?? false %}
-{% switch parent.header.render.children.which_date|default('date') %}
-  {% case 'modified' %}
-    {% set date = page.modified %}
-  {% case 'published' %}
-    {% set date = page.publishDate %}
-  {% case 'unpublished' %}
-    {% set date = page.unpublishDate %}
-  {% case 'date' %}
-    {% set date = page.date %}
-  {% default %}
-    {% set date = page.date %}
-{% endswitch %}
-
-{# ------------------------------------------------------------------------ #}
+{% import 'partials/item/image.html.twig' as image %}
+{% import 'partials/item/fragments.html.twig' as fragments %}
+{% set content_width = layout_cfg.width == 'full' ? 960 : layout_cfg.width|int %}
+{% set thumb_size = (content_width / 16)|round %}
 
 {% if page.isDir() %}
-<li><strong>{{ page.title }}</strong></li>
+  <li><strong>{{ page.title }}</strong></li>
 {% else %}
-
-<li class="child-level-{{ level }}{% for cat in page.taxonomy.category %} cat_{{ cat|hyphenize }}{% endfor %}">
-  {# Date #}
-  {% if show_date %}
-    {% if html5 %}
-      {{ structure.use_decorators ? '[' : '' }}<time datetime="{{ date|date("c") }}">{{ date|date(system.pages.dateformat.short) }}</time>{{ structure.use_decorators ? ']' : ' '}}
-    {% else %}
-      {{ structure.use_decorators ? '[' : '' }}<span class="datetime">{{ date|date(system.pages.dateformat.short) }}</span>{{ structure.use_decorators ? ']' : ' '}}
+  <li class="child-level-{{ level }}{% if page.taxonomy.category %} {{ fragments.category_classes(page) }}{% endif %}">
+    {% if cfg.image %}
+      {{ image.render(page, 'thumbnail', thumb_size, thumb_size, 'lazy', page.url) }}
     {% endif %}
-  {% endif %}
 
-  {# Title & Subtitle #}
-  {{ level > 1 ? '' : '<strong>' }}
-    <a href="{{ page.url }}">{{ page.title }}</a>
-  {{ level > 1 ? '' : '</strong>' }}
-  {% if page.header.subtitle and show_subtitle %} - <small>{{ page.header.subtitle }}</small>{% endif %}
+    {% if cfg.date != 'none' %}
+      {{ dec_left|raw }}{{ fragments.date(page, cfg.date) }}{{ dec_right|raw }}
+    {% endif %}
 
-  {# Categories #}
-  {% if page.taxonomy.category and show_cat %}
-    <br/>
-    {{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t }}: <small>
-    {% for category in page.taxonomy.category %}
-      {{ structure.use_decorators ? '[' : '' }}<a href="{{ page.parent.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>{{ structure.use_decorators ? ']' : '' }}{{ not loop.last ? ',' : '' }}
-    {% endfor %}</small>
-  {% else %}
-  {% endif %}
+    {% if cfg.title %}
+      {% if level == 1 %}<strong>{% endif %}<a href="{{ page.url }}">{{ page.title }}</a>{% if level == 1 %}</strong>{% endif %}
+    {% endif %}
+    {% if cfg.subtitle and page.header.subtitle %} – <small>{{ page.header.subtitle }}</small>{% endif %}
 
-  {# Children #}
-  {% if show_children and inner_children|length > 0 %}
-  {% set inner_children = inner_children.order(page.header.content.order.by|default(system.pages.order.by),
-                                               page.header.content.order.dir|default(system.pages.order.dir)) %}
-  <ul class="nested-children">
-    {% for child in inner_children %}
-      {% include 'partials/item/list.html.twig' with {'page':child, 'parent':parent, level:level + 1} %}
-    {% endfor %}
-    <br>
-  </ul>
-  {% endif %} {# End render nested children #}
-</li>
+    {% if cfg.categories and page.taxonomy.category %}
+      <br>{{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t }}:
+      <small>{{ fragments.categories(page, parent.url, dec_left, dec_right, config.get('system.param_sep', ':')) }}</small>
+    {% endif %}
+    {% if cfg.tags and page.taxonomy.tag %}
+      <br>{{ 'THEME_HYPERTEXT.TAGS.TAGS'|t }}:
+      <small>{{ fragments.tags(page, parent.url, dec_left, dec_right, config.get('system.param_sep', ':')) }}</small>
+    {% endif %}
+
+    {% if collection_cfg.nested %}
+      {% set inner_children = page.collection()|length > 0 ? page.collection() : page.children.visible %}
+      {% if inner_children|length > 0 %}
+        <ul class="nested-children">
+        {% for child in inner_children %}
+          {% set child_cfg = hypertext_content_config(child, display_cfg) %}
+          {% include 'partials/item/list.html.twig' with {
+            'page': child,
+            'parent': parent,
+            'cfg': child_cfg,
+            'collection_cfg': collection_cfg,
+            'display_cfg': display_cfg,
+            'level': level + 1
+          } %}
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endif %}
+  </li>
 {% endif %}

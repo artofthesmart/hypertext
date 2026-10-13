@@ -1,16 +1,41 @@
-structure:
-  inline_navbar: true
-  inline_pagination: true
-  use_decorators: true
-  html_mode: default
-  use_favicon: false
-  show_date: default
+header:
+  custom-html: ''
+  show-description: false
+footer:
+  format: markdown
+  content: ''
+navigation:
+  mode: inline
+  decoration: braced
+  pagination: inline
+  custom-items: []
+layout:
+  alignment: left
+  width: 960
 style:
-  configuration: centered
-  width: 768
-  allowCSS: false
-  allowJS: false
-  stylesheet: default
-  include_type: default
-  image_cropping: false
-  inline_navbar: 1
+  preset: default
+  custom-css: ''
+  accessible-font: false
+assets:
+  css: false
+  js: false
+content:
+  title: true
+  subtitle: false
+  image: false
+  date: published
+  categories: true
+  tags: true
+  headless: false
+collection:
+  layout: list
+  nested: false
+  display:
+    title: true
+    subtitle: false
+    image: false
+    date: published
+    categories: true
+    tags: true
+    summary: false
+    read-more: false

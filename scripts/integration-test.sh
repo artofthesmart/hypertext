@@ -1,0 +1,240 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+version="$(awk '/^version:/ { print $2; exit }' "$root/blueprints.yaml")"
+grav_version="${GRAV_VERSION:-2.2.6}"
+port="${HYPERTEXT_TEST_PORT:-8765}"
+work="$(mktemp -d)"
+server_pid=''
+suite_html="$work/demo-suite.html"
+
+cleanup() {
+  status=$?
+  if (( status != 0 )) && [[ -f "$work/server.log" ]]; then
+    cat "$work/server.log" >&2
+  fi
+  if [[ -n "$server_pid" ]]; then
+    kill "$server_pid" 2>/dev/null || true
+    wait "$server_pid" 2>/dev/null || true
+  fi
+  rm -rf "$work"
+  return "$status"
+}
+trap cleanup EXIT
+
+curl -fsSL "https://getgrav.org/download/core/grav/${grav_version}" -o "$work/grav.zip"
+unzip -q "$work/grav.zip" -d "$work"
+grav_root="$(find "$work" -mindepth 1 -maxdepth 1 -type d -name 'grav*' -print -quit)"
+[[ -n "$grav_root" ]] || {
+  echo "Unable to locate extracted Grav ${grav_version}" >&2
+  exit 1
+}
+
+unzip -q "$root/dist/hypertext-${version}.zip" -d "$grav_root/user/themes"
+mkdir -p "$grav_root/user/data/hypertext/styles"
+unzip -q "$root/dist/hypertext-styles-${version}.zip" -d "$work/styles"
+cp -a "$work/styles/hypertext-styles/." "$grav_root/user/data/hypertext/styles/"
+
+php -l "$grav_root/user/themes/hypertext/hypertext.php"
+GRAV_ROOT="$grav_root" php -r '
+define("GRAV_ROOT", getenv("GRAV_ROOT"));
+require GRAV_ROOT . "/vendor/autoload.php";
+require GRAV_ROOT . "/user/themes/hypertext/hypertext.php";
+$global = \Grav\Theme\Hypertext::stylesheetOptions();
+$local = \Grav\Theme\Hypertext::stylesheetOverrideOptions();
+if (count($global) !== 27 || count($local) !== 28 || array_key_first($local) !== "inherit") {
+    throw new RuntimeException("Invalid Admin stylesheet options");
+}
+'
+(
+  cd "$grav_root"
+  php bin/grav yamllinter --folder=user/themes/hypertext --strict --no-ansi
+)
+
+start_server() {
+  if [[ -n "$server_pid" ]]; then
+    kill "$server_pid" 2>/dev/null || true
+    wait "$server_pid" 2>/dev/null || true
+  fi
+
+  (
+    cd "$grav_root"
+    exec php -S "127.0.0.1:${port}" system/router.php
+  ) >"$work/server.log" 2>&1 &
+  server_pid=$!
+
+  for _ in {1..40}; do
+    if curl -fsS "http://127.0.0.1:${port}/" >/dev/null 2>&1; then
+      return
+    fi
+    sleep 0.5
+  done
+
+  echo "Grav test server did not become ready" >&2
+  exit 1
+}
+
+render_site() {
+  local site="$1"
+  local expected="$2"
+  local child_route="$3"
+  local expected_style="$4"
+  local expected_width="$5"
+  local expected_taxonomy="$6"
+  local expected_images="$7"
+  local package="$root/dist/hypertext-demo-${site}-${version}.zip"
+  local site_root="$work/site/hypertext-demo-${site}"
+  local pages_root="$site_root/pages/01.home"
+  local all_html="$work/${site}-all.html"
+
+  rm -rf "$work/site" "$grav_root/user/pages"
+  mkdir -p "$work/site" "$grav_root/user/pages"
+  unzip -q "$package" -d "$work/site"
+  cp -a "$site_root/pages/." "$grav_root/user/pages/"
+  cp -a "$site_root/config/." "$grav_root/user/config/"
+
+  (
+    cd "$grav_root"
+    php bin/grav clearcache --quiet
+  )
+
+  start_server
+  curl -fsS "http://127.0.0.1:${port}/" -o "$work/${site}.html"
+  curl -fsS "http://127.0.0.1:${port}${child_route}" -o "$work/${site}-child.html"
+  : > "$all_html"
+  cat "$work/${site}.html" >> "$all_html"
+  while IFS= read -r -d '' content_file; do
+    relative="${content_file#"$pages_root"/}"
+    route="/home"
+    IFS='/' read -r -a route_parts <<< "$(dirname "$relative")"
+    for part in "${route_parts[@]}"; do
+      route+="/${part#*.}"
+    done
+    curl -fsS "http://127.0.0.1:${port}${route}" >> "$all_html"
+  done < <(
+    find "$pages_root" -mindepth 2 -type f \
+      \( -name 'default.md' -o -name 'collection.md' \) -print0 |
+      sort -z
+  )
+
+  grep -q "$expected" "$work/${site}.html"
+  grep -q '/user/themes/hypertext/images/favicon.png' "$work/${site}.html"
+  grep -q "max-width: ${expected_width}px" "$work/${site}.html"
+  grep -q "max-width: ${expected_width}px" "$work/${site}-child.html"
+  nav_html="$work/${site}-nav.html"
+  sed -n '/<nav aria-label="Primary">/,/<\/nav>/p' "$work/${site}.html" > "$nav_html"
+  nav_link_count="$(grep -o '<a ' "$nav_html" | wc -l || true)"
+  if (( nav_link_count < 5 )); then
+    echo "${site} demo renders ${nav_link_count} primary navigation links; expected at least 5" >&2
+    exit 1
+  fi
+  grep -q 'class="offsite"' "$nav_html"
+  grep -q 'target="_blank"' "$nav_html"
+  while IFS= read -r nav_url; do
+    [[ "$nav_url" == /* ]] || continue
+    curl -fsS "http://127.0.0.1:${port}${nav_url}" >/dev/null
+  done < <(grep -oE 'href="[^"]+"' "$nav_html" | sed -E 's/^href="(.*)"$/\1/')
+
+  image_count="$(grep -o '<img' "$all_html" | wc -l || true)"
+  eager_image_count="$(grep -o 'loading="eager"' "$all_html" | wc -l || true)"
+  lazy_image_count="$(grep -o 'loading="lazy"' "$all_html" | wc -l || true)"
+  if (( image_count < expected_images )); then
+    echo "${site} demo renders ${image_count} images (${eager_image_count} eager, ${lazy_image_count} lazy); expected at least ${expected_images}" >&2
+    exit 1
+  fi
+  grep -q 'loading="eager"' "$all_html"
+  grep -q 'loading="lazy"' "$all_html"
+  grep -q 'srcset=' "$all_html"
+  grep -q '<figcaption>' "$all_html"
+  while IFS= read -r image_url; do
+    [[ "$image_url" == /* ]] || continue
+    curl -fsS "http://127.0.0.1:${port}${image_url}" >/dev/null
+  done < <(grep -oE 'src="/[^"]+"' "$all_html" | sed -E 's/^src="(.*)"$/\1/' | sort -u)
+
+  rich_element_count=0
+  for element in blockquote table pre details dl figure; do
+    if grep -q "<${element}" "$all_html"; then
+      rich_element_count=$((rich_element_count + 1))
+    fi
+  done
+  if (( rich_element_count < 4 )); then
+    echo "${site} demo renders only ${rich_element_count} of 6 rich content elements" >&2
+    exit 1
+  fi
+  cat "$all_html" >> "$suite_html"
+  if [[ "$expected_style" == 'none' ]]; then
+    ! grep -Eq '/user/(themes|data)/hypertext/[^"]+\.css' "$work/${site}.html"
+    ! grep -Eq '/user/(themes|data)/hypertext/[^"]+\.css' "$work/${site}-child.html"
+  else
+    grep -q "$expected_style" "$work/${site}.html"
+    grep -q "$expected_style" "$work/${site}-child.html"
+  fi
+  if grep -Eiq '<script([[:space:]>])' "$all_html"; then
+    echo "Unexpected script element in ${site} demo" >&2
+    exit 1
+  fi
+  if grep -Eiq "href=(\"\"|'')" "$all_html"; then
+    echo "Empty link in ${site} demo" >&2
+    exit 1
+  fi
+  if grep -Eq 'href="/([^"]*/)?(category|tag)[^:/"]' "$all_html"; then
+    echo "Malformed taxonomy link in ${site} demo" >&2
+    exit 1
+  fi
+
+  taxonomy_links="$(
+    grep -oE 'href="[^"]*/(category|tag):[^"]+"' "$all_html" |
+      sed -E 's/^href="(.*)"$/\1/' |
+      sort -u || true
+  )"
+  if [[ "$expected_taxonomy" == 'true' && -z "$taxonomy_links" ]]; then
+    echo "No taxonomy links rendered in ${site} demo" >&2
+    exit 1
+  fi
+  while IFS= read -r taxonomy_url; do
+    [[ -n "$taxonomy_url" ]] || continue
+    curl -fsS "http://127.0.0.1:${port}${taxonomy_url}" >/dev/null
+  done <<< "$taxonomy_links"
+}
+
+: > "$suite_html"
+render_site journal '<ol class="children list">' '/home/river-path' '/user/themes/hypertext/css/hypertext++.css' 960 true 8
+render_site catalog '<ul class="children grid">' '/home/arc-lamp' '/user/themes/hypertext/css/water-light.css' 1024 true 12
+grep -q 'srcset=' "$work/catalog.html"
+grep -q '<figcaption>' "$work/catalog.html"
+curl -fsS "http://127.0.0.1:${port}/category:timekeeping" -o "$work/catalog-timekeeping.html"
+timekeeping_count="$(grep -oE '<li[^>]*cat_timekeeping[^>]*>' "$work/catalog-timekeeping.html" | wc -l || true)"
+if (( timekeeping_count < 2 )); then
+  echo "Catalog timekeeping taxonomy renders ${timekeeping_count} items; expected at least 2" >&2
+  exit 1
+fi
+render_site resume '<section class="children comfy">' '/home/current-role' '/user/themes/hypertext/css/sakura.css' 768 true 6
+render_site docs '<table class="children">' '/home/installation' none 960 true 6
+render_site restaurant '<section class="children cards">' '/home/bakery' '/user/themes/hypertext/css/water-dark.css' 960 true 8
+grep -q 'grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr))' "$work/restaurant.html"
+restaurant_card_url="$(
+  grep -oE 'src="/[^"]+"' "$work/restaurant.html" |
+    head -n 1 |
+    sed -E 's/^src="(.*)"$/\1/'
+)"
+curl -fsS "http://127.0.0.1:${port}${restaurant_card_url}" -o "$work/restaurant-card.webp"
+php -r '
+  $size = getimagesize($argv[1]);
+  if ($size === false || $size[0] !== 480 || $size[1] !== 270) {
+      fwrite(STDERR, "Restaurant card image is not the expected 480x270 derivative\n");
+      exit(1);
+  }
+' "$work/restaurant-card.webp"
+
+for element in blockquote table pre details dl figure; do
+  grep -q "<${element}" "$suite_html"
+done
+
+curl -fsS "http://127.0.0.1:${port}/?theme=water-dark" -o "$work/theme-water-dark.html"
+grep -q '/user/themes/hypertext/css/water-dark.css' "$work/theme-water-dark.html"
+curl -fsS "http://127.0.0.1:${port}/?theme=latex" -o "$work/theme-latex.html"
+grep -q '/user/data/hypertext/styles/css/latex.css' "$work/theme-latex.html"
+
+printf 'Grav %s integration OK on port %s\n' "$grav_version" "$port"

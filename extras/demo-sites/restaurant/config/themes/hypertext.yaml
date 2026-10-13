@@ -1,0 +1,24 @@
+layout:
+  alignment: center
+  width: 960
+style:
+  preset: water-dark
+navigation:
+  custom-items:
+  - text: Events
+    href: /home/events
+    title: Nested event series
+  - text: Bakery
+    href: /home/bakery
+    title: Morning counter menu
+  - text: Visiting
+    href: /home/visiting
+    title: Hours and address
+  - text: Project source
+    href: https://github.com/example/hypertext-restaurant
+    title: Restaurant source on GitHub
+    offsite: true
+    new-window: true
+    rel: external
+content:
+  image: true

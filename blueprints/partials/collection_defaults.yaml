@@ -1,0 +1,96 @@
+form:
+  fields:
+    header.hypertext.collection.layout:
+      type: select
+      label: Collection layout
+      default: default
+      options:
+        default: Use theme default
+        list: List
+        comfy: Comfy
+        table: Table
+        grid: Grid
+        cards: Cards
+
+    header.hypertext.collection.nested:
+      type: select
+      label: Show nested children
+      default: default
+      options:
+        default: Use theme default
+        1: Enabled
+        0: Disabled
+
+    header.hypertext.collection.display.title:
+      type: select
+      label: Show titles
+      default: default
+      options:
+        default: Use theme default
+        1: Enabled
+        0: Disabled
+
+    header.hypertext.collection.display.subtitle:
+      type: select
+      label: Show subtitles
+      default: default
+      options:
+        default: Use theme default
+        1: Enabled
+        0: Disabled
+
+    header.hypertext.collection.display.image:
+      type: select
+      label: Show thumbnails
+      default: default
+      options:
+        default: Use theme default
+        1: Enabled
+        0: Disabled
+
+    header.hypertext.collection.display.date:
+      type: select
+      label: Date
+      default: default
+      options:
+        default: Use theme default
+        none: None
+        published: Published
+        modified: Modified
+        both: Published and modified
+
+    header.hypertext.collection.display.categories:
+      type: select
+      label: Show categories
+      default: default
+      options:
+        default: Use theme default
+        1: Enabled
+        0: Disabled
+
+    header.hypertext.collection.display.tags:
+      type: select
+      label: Show tags
+      default: default
+      options:
+        default: Use theme default
+        1: Enabled
+        0: Disabled
+
+    header.hypertext.collection.display.summary:
+      type: select
+      label: Show summaries
+      default: default
+      options:
+        default: Use theme default
+        1: Enabled
+        0: Disabled
+
+    header.hypertext.collection.display.read-more:
+      type: select
+      label: Show read-more links
+      default: default
+      options:
+        default: Use theme default
+        1: Enabled
+        0: Disabled

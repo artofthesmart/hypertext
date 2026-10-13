@@ -1,90 +1,68 @@
-{% set allowCSS = page.header.allowCSS == 'enabled' or
-                    (page.header.allowCSS|default('default') == 'default' and 
-                     style.allowCSS == '1') %}
-{% set allowJS  = page.header.allowJS  == 'enabled' or
-                    (page.header.allowJS|default('default') == 'default' and 
-                     style.allowJS == '1') %}
-{% set use_visually_impaired = style.visually_impared_mode|default(false) %}
+{% set available_styles = hypertext_styles|default({}) %}
+{% set configured_style = style_cfg.preset|default('default') %}
+{% set requested_style = uri.query('theme')|default('') %}
+{% set stylesheet = requested_style in available_styles|keys ? requested_style : configured_style %}
+{% set stylesheet = stylesheet in available_styles|keys ? stylesheet : 'default' %}
+{% set style_info = available_styles[stylesheet]|default({'path': null}) %}
+{% set accessible_font = style_cfg['accessible-font']|default(false) %}
 
-{% set stylesheets = ['air', 'hypertext++', 'latex', 'marx', 'milligram', 'modest', 'mvp', 'newcss-default', 'newcss-night', 'newcss-terminal', 'sakura', 'sakura-dark', 'sakura-dark-solarized', 'sakura-earthly', 'sakura-ink', 'sakura-pink', 'sakura-radical', 'sakura-vader', 'simple', 'stylize', 'tacit', 'tufte', 'water-dark', 'water-light', 'writ', 'yorha'] %}
-
-{# Set a stylesheet from the style config, then from the URI if available #}
-{% set stylesheet = uri.query('theme')|default(style.stylesheet) %}
-{% if stylesheet matches '/^\\d+$/' %}
-  {% set stylesheet = stylesheets[stylesheet % stylesheets|length] %}
+{% if style_info.path %}
+  <link rel="stylesheet" href="{{ url(style_info.path) }}">
 {% endif %}
 
-{# Always required and hard to serve via href. See docs. #}
-{% set required_styles %}
-  img { max-width: 100%; }
+{% if accessible_font %}
+  <link rel="preload" href="{{ url('theme://fonts/WOFF2/Atkinson-Hyperlegible-Regular-102a.woff2') }}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ url('theme://fonts/WOFF2/Atkinson-Hyperlegible-Bold-102a.woff2') }}" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{{ url('theme://css/visual-impaired.css') }}">
+{% endif %}
 
-  {# Max width and centering vs left alignment #}
-  body {
-    {% if style.width != 'default' %}
-      max-width: {{style.width}}px;
-    {% else %}
-      max-width: 100%;
-    {% endif %}
-
-    {# Reset to 8px, the Chrome default (`unset` doesnt work). #}
-    {% if style.configuration == 'default' %}
-      margin-left: 8px;
-      margin-right: 8px;
-    {% else %}
-      margin-left: auto;
-      margin-right: auto;
-    {% endif %}
-  }
-{% endset %}
-
-
-
-{# CONFIGURE THEME'S CSS FEATURES #}
-
-{# ------------------------------------------------------------------------ #}
-
-{% block stylehseets %}
-
-{# Add the hypertext selected stylesheet #}
-{% if stylesheet != 'default' %}
-
-  {% if style.include_type == 'inline' %}
-    <style>{{ include('css/' ~ stylesheet ~ '.css') }}</style>
-  
-  {% elseif not allowCSS %}
-    {# User wants it via href, but doesn't have CSS pipeline running #}
-    <link href="{{ url('theme://css/'~stylesheet~'.css') }}" rel="stylesheet" />
-    {% if use_visually_impaired %}<link href="{{ url('theme://css/visual-impaired.css') }}" rel="stylesheet" /> {% endif %}
-  
-  {% else %}
-    {# User wants it href and is allowing CSS pipeline, so use that. #}
-    {% do assets.addCss('theme://css/'~stylesheet~'.css') %}
-    {% if use_visually_impaired %}{% do assets.addCss('theme://css/visual-impaired.css') %} {%endif %}
-  {% endif %}
-
-{% endif %} {# END if style isn't default #}
-{% endblock %}
-
-{% block javascripts %}
-  {# Hypertext doesn't add any JS, but if it did it would go here. #}
-{% endblock %}
-
-{# Regular CSS/JS includes, like from plugins #}
-{% block assets deferred %}
-  {% if allowCSS %}{{ assets.css()|raw }}{% endif %}
-  {% if allowJS %}{{ assets.js()|raw }}{% endif %}
-{% endblock %}
-
-{# Add any final required styling like max-width, centering, and user-provided values #}
 <style>
-  {# Set by the theme. #}
-  {% autoescape false %}
-  {{ required_styles }}
-
-  {# User's custom styles take priority. #}
-  {{ style.customCSS }}
-
-  {# Page's custom styles take maximum priority. #}
-  {{ page.header.customCSS}}
-  {% endautoescape %}
+img { max-width: 100%; height: auto; }
+{% if collection_cfg.layout == 'grid' %}
+.children.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1rem;
+  padding: 0;
+  list-style: none;
+}
+.children.grid > li { min-width: 0; }
+{% endif %}
+{% if collection_cfg.layout == 'cards' %}
+.children.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: 1.5rem;
+}
+.children.cards > article { min-width: 0; }
+.children.cards figure { margin: 0 0 1rem; }
+.children.cards figure > a { display: block; }
+.children.cards figure img { display: block; width: 100%; }
+{% endif %}
+body {
+{% if layout_cfg.width != 'full' %}
+  max-width: {{ layout_cfg.width|int }}px;
+{% endif %}
+{% if layout_cfg.alignment == 'right' %}
+  margin-left: auto;
+  margin-right: 8px;
+{% elseif layout_cfg.alignment == 'center' %}
+  margin-left: auto;
+  margin-right: auto;
+{% else %}
+  margin-left: 8px;
+  margin-right: 8px;
+{% endif %}
+}
+{{ style_cfg['custom-css']|default('')|raw }}
 </style>
+
+{% block assets deferred %}
+  {% if css_enabled %}{{ assets.css()|raw }}{% endif %}
+  {% if js_enabled %}{{ assets.js()|raw }}{% endif %}
+{% endblock %}
+
+{% if config.get('plugins.feed.enabled', false) %}
+  <link rel="alternate" type="application/atom+xml" title="{{ site.title|e('html_attr') }} Feed" href="{{ home_url ~ '/feed:atom' }}">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title|e('html_attr') }} Feed" href="{{ home_url ~ '/feed:rss' }}">
+{% endif %}
