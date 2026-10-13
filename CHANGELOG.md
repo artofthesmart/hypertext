@@ -18,7 +18,7 @@
     * Expands the focused demos to 69 content pages with nested collections, substantial prose, and broad Markdown and semantic HTML coverage.
     * Fixes taxonomy parameter separators and verifies category/tag click-through routes.
     * Stress-tests every collection layout with many-to-many taxonomies, dense metadata, realistic navigation, and responsive Unsplash-sourced media.
-    * Prevents full-width cards from stretching low-resolution thumbnail crops and reports transformed image dimensions accurately.
+    * Renders cards as a responsive grid with appropriately sized 16:9 thumbnails and reports transformed image dimensions accurately.
 
 # v2.4.2
 ## 08/17/2024

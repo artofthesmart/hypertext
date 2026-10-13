@@ -1,11 +1,12 @@
 {% import 'partials/item/image.html.twig' as image %}
 {% import 'partials/item/fragments.html.twig' as fragments %}
 {% set content_width = layout_cfg.width == 'full' ? 960 : layout_cfg.width|int %}
-{% set image_height = (content_width * 9 / 16)|round %}
+{% set image_width = (content_width / 2)|round %}
+{% set image_height = (image_width * 9 / 16)|round %}
 
 <article{% if page.taxonomy.category %} class="{{ fragments.category_classes(page) }}"{% endif %}>
   {% if cfg.image %}
-    {{ image.render(page, 'thumbnail', content_width, image_height, 'lazy', page.url) }}
+    {{ image.render(page, 'thumbnail', image_width, image_height, 'lazy', page.url) }}
   {% endif %}
 
   {% if cfg.title %}<strong><a href="{{ page.url }}">{{ page.title }}</a></strong>{% endif %}

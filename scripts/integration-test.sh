@@ -213,6 +213,7 @@ fi
 render_site resume '<section class="children comfy">' '/home/current-role' '/user/themes/hypertext/css/sakura.css' 768 true 6
 render_site docs '<table class="children">' '/home/installation' none 960 true 6
 render_site restaurant '<section class="children cards">' '/home/bakery' '/user/themes/hypertext/css/water-dark.css' 960 true 8
+grep -q 'grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr))' "$work/restaurant.html"
 restaurant_card_url="$(
   grep -oE 'src="/[^"]+"' "$work/restaurant.html" |
     head -n 1 |
@@ -221,8 +222,8 @@ restaurant_card_url="$(
 curl -fsS "http://127.0.0.1:${port}${restaurant_card_url}" -o "$work/restaurant-card.webp"
 php -r '
   $size = getimagesize($argv[1]);
-  if ($size === false || $size[0] < 900 || $size[1] < 500) {
-      fwrite(STDERR, "Restaurant card image is undersized\n");
+  if ($size === false || $size[0] !== 480 || $size[1] !== 270) {
+      fwrite(STDERR, "Restaurant card image is not the expected 480x270 derivative\n");
       exit(1);
   }
 ' "$work/restaurant-card.webp"
