@@ -213,12 +213,27 @@ fi
 render_site resume '<section class="children comfy">' '/home/current-role' '/user/themes/hypertext/css/sakura.css' 768 true 6
 render_site docs '<table class="children">' '/home/installation' none 960 true 6
 render_site restaurant '<section class="children cards">' '/home/bakery' '/user/themes/hypertext/css/water-dark.css' 960 true 8
+restaurant_card_url="$(
+  grep -oE 'src="/[^"]+"' "$work/restaurant.html" |
+    head -n 1 |
+    sed -E 's/^src="(.*)"$/\1/'
+)"
+curl -fsS "http://127.0.0.1:${port}${restaurant_card_url}" -o "$work/restaurant-card.webp"
+php -r '
+  $size = getimagesize($argv[1]);
+  if ($size === false || $size[0] < 900 || $size[1] < 500) {
+      fwrite(STDERR, "Restaurant card image is undersized\n");
+      exit(1);
+  }
+' "$work/restaurant-card.webp"
 
 for element in blockquote table pre details dl figure; do
   grep -q "<${element}" "$suite_html"
 done
 
-curl -fsS "http://127.0.0.1:${port}/?theme=water-dark" | grep -q '/user/themes/hypertext/css/water-dark.css'
-curl -fsS "http://127.0.0.1:${port}/?theme=latex" | grep -q '/user/data/hypertext/styles/css/latex.css'
+curl -fsS "http://127.0.0.1:${port}/?theme=water-dark" -o "$work/theme-water-dark.html"
+grep -q '/user/themes/hypertext/css/water-dark.css' "$work/theme-water-dark.html"
+curl -fsS "http://127.0.0.1:${port}/?theme=latex" -o "$work/theme-latex.html"
+grep -q '/user/data/hypertext/styles/css/latex.css' "$work/theme-latex.html"
 
 printf 'Grav %s integration OK on port %s\n' "$grav_version" "$port"

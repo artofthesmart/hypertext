@@ -43,8 +43,8 @@
     {% set rendered = width and height
       ? image.cropZoom(width|round, height|round, 'transparent', focus_x, focus_y)
       : image %}
-    {% set rendered_width = rendered.width %}
-    {% set rendered_height = rendered.height %}
+    {% set rendered_width = width and height ? width|round : rendered.width %}
+    {% set rendered_height = width and height ? height|round : rendered.height %}
     {% set srcset = rendered.srcset(false) %}
     {% if caption %}<figure>{% endif %}
     {% if href %}<a href="{{ href }}">{% endif %}
