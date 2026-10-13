@@ -2,8 +2,15 @@
 title: Commands
 subtitle: The small set of commands readers actually need
 taxonomy:
-  category: [reference]
-  tag: [cli, commands]
+  category:
+  - reference
+  - concept
+  tag:
+  - cli
+  - build
+  - reference
+  - workflow
+  - terms
 ---
 
 The command list is intentionally short so the docs can stay memorable.

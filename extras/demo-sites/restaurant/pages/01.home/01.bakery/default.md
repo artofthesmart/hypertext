@@ -1,9 +1,18 @@
 ---
 title: Bakery
 subtitle: Available from 8 until sold out
+header_image_file: header.webp
+thumbnail_image_file: header.webp
 taxonomy:
-  category: [morning]
-  tag: [bread, pastry]
+  category:
+  - menu
+  - seasonal
+  tag:
+  - breakfast
+  - morning
+  - seasonal
+  - service
+  - hours
 ---
 
 The bakery opens early enough for commuters and closes when the shelves do.

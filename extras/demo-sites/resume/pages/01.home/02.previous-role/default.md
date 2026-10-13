@@ -1,6 +1,16 @@
 ---
 title: Senior Designer and Research Lead
 subtitle: Northline Studio · 2018–2022
+taxonomy:
+  category:
+  - product
+  - research
+  tag:
+  - strategy
+  - collaboration
+  - review
+  - operations
+  - design
 ---
 
 Supported product teams that needed clearer flows, better research practices, and a stronger visual system.

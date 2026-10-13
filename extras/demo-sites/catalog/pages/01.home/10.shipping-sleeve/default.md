@@ -2,8 +2,16 @@
 title: Shipping Sleeve
 subtitle: A reusable sleeve for paperwork, samples, and light parceling
 taxonomy:
-  category: [packaging]
-  tag: [mail, paper, reuse]
+  category:
+  - portable
+  - storage
+  - materials
+  tag:
+  - portable
+  - material
+  - paper
+  - utility
+  - storage
 ---
 
 The sleeve is sized for thin objects that should not rattle around in transit.

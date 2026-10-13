@@ -2,8 +2,15 @@
 title: Dessert
 subtitle: Fruit, custard, and a little restraint
 taxonomy:
-  category: [sweet]
-  tag: [fruit, cream]
+  category:
+  - menu
+  - seasonal
+  tag:
+  - seasonal
+  - dinner
+  - wine
+  - service
+  - hours
 ---
 
 Dessert keeps the sweetness lower than the nostalgia. The pastry is crisp, the cream is light, and the fruit is allowed to taste like fruit.

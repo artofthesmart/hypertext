@@ -2,8 +2,15 @@
 title: Drinks
 subtitle: House spritzes, low-proof pairings, and a short list of wines
 taxonomy:
-  category: [beverage]
-  tag: [pairing, alcohol, tea]
+  category:
+  - menu
+  - service
+  tag:
+  - wine
+  - tasting
+  - service
+  - seasonal
+  - dinner
 ---
 
 The drinks list is short on purpose so the staff can describe it without reciting a speech.

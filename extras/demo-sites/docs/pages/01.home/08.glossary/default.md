@@ -2,8 +2,15 @@
 title: Glossary
 subtitle: Short meanings for terms that appear throughout the docs
 taxonomy:
-  category: [help]
-  tag: [glossary, terms]
+  category:
+  - help
+  - reference
+  tag:
+  - glossary
+  - terms
+  - reference
+  - config
+  - defaults
 ---
 
 A glossary is useful when the same words show up in the code, the docs, and the release notes with slightly different jobs.

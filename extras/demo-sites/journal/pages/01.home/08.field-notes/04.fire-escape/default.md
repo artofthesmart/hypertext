@@ -3,8 +3,15 @@ title: Fire Escape in the Blue Hour
 date: 2026-10-10 18:55
 subtitle: A stairwell observation with a clean view of the alley
 taxonomy:
-  category: [building]
-  tag: [stairs, evening]
+  category:
+  - city
+  - domestic
+  tag:
+  - evening
+  - quiet
+  - city
+  - house
+  - route
 ---
 
 I climbed the fire escape because the apartment windows were reflecting the sunset and the alley was quieter than the kitchen.

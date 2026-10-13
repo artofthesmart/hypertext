@@ -1,6 +1,19 @@
 ---
 title: Principal Product Designer
 subtitle: Civic Atlas · 2022–present
+header_image_file: header.webp
+thumbnail_image_file: header.webp
+taxonomy:
+  category:
+  - product
+  - systems
+  tag:
+  - strategy
+  - collaboration
+  - design
+  - notes
+  - research
+  - operations
 ---
 
 Lead product strategy and interaction design for mapping tools used by local planning teams.

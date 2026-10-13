@@ -1,6 +1,20 @@
 ---
 title: Onboarding Flow
 subtitle: Turning an eleven-step start into a compact, readable sequence
+taxonomy:
+  category:
+  - portfolio
+  - research
+  - systems
+  tag:
+  - strategy
+  - systems
+  - research
+  - collaboration
+  - notes
+  - design
+  - review
+  - content
 ---
 
 The original onboarding process asked for too much attention before the user had any confidence in the product.

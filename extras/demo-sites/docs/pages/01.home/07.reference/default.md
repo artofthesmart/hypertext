@@ -2,8 +2,15 @@
 title: Reference
 subtitle: Definitions, defaults, and the values Lantern expects
 taxonomy:
-  category: [help]
-  tag: [reference, defaults]
+  category:
+  - help
+  - reference
+  tag:
+  - defaults
+  - glossary
+  - reference
+  - terms
+  - setup
 ---
 
 This page collects the default values in one place so you do not need to hunt through the narrative docs.

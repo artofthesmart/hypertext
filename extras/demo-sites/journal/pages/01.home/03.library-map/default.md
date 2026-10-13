@@ -2,9 +2,18 @@
 title: Mapping the Library Branches
 date: 2026-10-10 16:05
 subtitle: A pocket map for errands, reading rooms, and overdue returns
+header_image_file: header.webp
+thumbnail_image_file: header.webp
 taxonomy:
-  category: [reading]
-  tag: [library, map, city]
+  category:
+  - city
+  - reading
+  tag:
+  - reading
+  - route
+  - quiet
+  - city
+  - evening
 ---
 
 I started making a branch map after missing two returns in the same month. The project grew into a small guide to

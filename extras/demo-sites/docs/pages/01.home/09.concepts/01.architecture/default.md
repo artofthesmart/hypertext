@@ -2,8 +2,15 @@
 title: Architecture
 subtitle: Content, templates, and the narrow rendering path
 taxonomy:
-  category: [concept]
-  tag: [architecture, rendering]
+  category:
+  - concept
+  - reference
+  tag:
+  - architecture
+  - workflow
+  - reference
+  - config
+  - validation
 ---
 
 Lantern keeps the rendering path short: discover pages, resolve configuration, and emit HTML with as little ceremony as possible.

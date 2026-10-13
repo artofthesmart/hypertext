@@ -17,11 +17,11 @@
       {% if cfg.date != 'none' %}{{ fragments.date(page, cfg.date, true) }}{% endif %}
       {% if cfg.categories and page.taxonomy.category %}
         {% if cfg.date != 'none' %}<br>{% endif %}
-        {{ fragments.categories(page, parent.url, dec_left, dec_right) }}
+        {{ fragments.categories(page, parent.url, dec_left, dec_right, config.get('system.param_sep', ':')) }}
       {% endif %}
       {% if cfg.tags and page.taxonomy.tag %}
         {% if cfg.date != 'none' or (cfg.categories and page.taxonomy.category) %}<br>{% endif %}
-        {{ fragments.tags(page, parent.url, dec_left, dec_right) }}
+        {{ fragments.tags(page, parent.url, dec_left, dec_right, config.get('system.param_sep', ':')) }}
       {% endif %}
     </small></p>
   {% endif %}

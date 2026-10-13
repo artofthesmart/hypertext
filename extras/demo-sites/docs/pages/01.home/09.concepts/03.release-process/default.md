@@ -2,8 +2,19 @@
 title: Release Process
 subtitle: Validate, package, and publish in one disciplined chain
 taxonomy:
-  category: [concept]
-  tag: [release, validation]
+  category:
+  - concept
+  - reference
+  - help
+  tag:
+  - release
+  - validation
+  - deploy
+  - workflow
+  - reference
+  - errors
+  - config
+  - setup
 ---
 
 The release process begins with validation and ends with a package that can be copied without further editing.

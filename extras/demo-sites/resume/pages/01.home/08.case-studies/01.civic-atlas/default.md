@@ -1,6 +1,16 @@
 ---
 title: Civic Atlas
 subtitle: Mapping local planning workflows without losing the narrative thread
+taxonomy:
+  category:
+  - portfolio
+  - product
+  tag:
+  - strategy
+  - systems
+  - design
+  - collaboration
+  - notes
 ---
 
 This project combined geographic data with written context so reviewers could understand the why, not just the where.

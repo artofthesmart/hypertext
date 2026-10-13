@@ -2,8 +2,15 @@
 title: Pocket Notebook
 subtitle: Thread-sewn pages for lists, sketches, and measurements
 taxonomy:
-  category: [stationery]
-  tag: [paper, writing, pocket]
+  category:
+  - portable
+  - workspace
+  tag:
+  - portable
+  - paper
+  - desk
+  - daily
+  - utility
 ---
 
 This notebook is narrow enough for a jacket pocket and strong enough to survive a month of buses, cafes, and desk drawers.

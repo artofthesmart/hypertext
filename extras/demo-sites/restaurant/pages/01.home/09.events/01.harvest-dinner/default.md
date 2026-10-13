@@ -2,8 +2,15 @@
 title: Harvest Dinner
 subtitle: A shared table built around the first cold-weather vegetables
 taxonomy:
-  category: [event]
-  tag: [dinner, harvest]
+  category:
+  - event
+  - seasonal
+  tag:
+  - dinner
+  - seasonal
+  - family
+  - market
+  - service
 ---
 
 The harvest dinner leans into roasted roots, braises, and a pace that lets the room settle between courses.

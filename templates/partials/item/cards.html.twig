@@ -12,10 +12,10 @@
   {% if cfg.subtitle and page.header.subtitle %}<br><small>{{ page.header.subtitle }}</small>{% endif %}
   {% if cfg.date != 'none' %}<br><small>{{ fragments.date(page, cfg.date) }}</small>{% endif %}
   {% if cfg.categories and page.taxonomy.category %}
-    <br><small>{{ fragments.categories(page, parent.url, dec_left, dec_right) }}</small>
+    <br><small>{{ fragments.categories(page, parent.url, dec_left, dec_right, config.get('system.param_sep', ':')) }}</small>
   {% endif %}
   {% if cfg.tags and page.taxonomy.tag %}
-    <br><small>{{ fragments.tags(page, parent.url, dec_left, dec_right) }}</small>
+    <br><small>{{ fragments.tags(page, parent.url, dec_left, dec_right, config.get('system.param_sep', ':')) }}</small>
   {% endif %}
   {% if cfg.summary %}
     <div class="summary">{{ fragments.summary(page, cfg['read-more']) }}</div>

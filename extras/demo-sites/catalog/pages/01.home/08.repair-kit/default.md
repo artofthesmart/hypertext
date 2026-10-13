@@ -1,9 +1,23 @@
 ---
 title: Repair Kit Refill
 subtitle: Screws, felt pads, clips, and the little things that keep furniture honest
+header_image_file: header.webp
+thumbnail_image_file: header.webp
 taxonomy:
-  category: [accessories]
-  tag: [repair, spare, home]
+  category:
+  - workspace
+  - storage
+  - materials
+  - timekeeping
+  tag:
+  - desk
+  - storage
+  - utility
+  - material
+  - spare
+  - layout
+  - care
+  - portable
 ---
 
 The refill pack keeps a drawer's worth of emergency parts in one envelope-sized box.

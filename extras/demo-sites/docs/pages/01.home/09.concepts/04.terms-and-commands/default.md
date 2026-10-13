@@ -2,8 +2,16 @@
 title: Terms and Commands
 subtitle: A compact bridge between the glossary and the CLI
 taxonomy:
-  category: [concept]
-  tag: [terms, cli]
+  category:
+  - concept
+  - reference
+  tag:
+  - terms
+  - cli
+  - reference
+  - build
+  - workflow
+  - setup
 ---
 
 This page connects the names in the glossary to the commands in the reference section.

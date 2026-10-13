@@ -81,6 +81,17 @@ for site in journal catalog resume docs restaurant; do
     echo "${site} demo does not contain a nested collection" >&2
     exit 1
   fi
+
+  header_count="$(unzip -Z1 "$archive" | grep -Ec '/header\.webp$')"
+  retina_count="$(unzip -Z1 "$archive" | grep -Ec '/header@2x\.webp$')"
+  metadata_count="$(unzip -Z1 "$archive" | grep -Ec '/header\.webp\.meta\.yaml$')"
+  if (( header_count < 3 || retina_count != header_count || metadata_count != header_count )); then
+    echo "${site} demo media contract failed: headers=${header_count}, retina=${retina_count}, metadata=${metadata_count}" >&2
+    exit 1
+  fi
+
 done
+
+"$root/scripts/check-demo-taxonomy.py"
 
 printf 'Release contract OK: core=%s bytes, archives=%s\n' "$core_bytes" "${#archives[@]}"

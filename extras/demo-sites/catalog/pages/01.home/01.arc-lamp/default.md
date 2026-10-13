@@ -3,8 +3,15 @@ title: Arc Desk Lamp
 subtitle: Powder-coated steel, warm LED, replaceable driver
 thumbnail_image_file: thumbnail.webp
 taxonomy:
-  category: [lighting]
-  tag: [desk, steel, led]
+  category:
+  - workspace
+  - materials
+  tag:
+  - desk
+  - material
+  - utility
+  - daily
+  - layout
 ---
 
 A focused desk lamp with a weighted base and a simple two-position arm.

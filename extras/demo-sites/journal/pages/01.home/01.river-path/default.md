@@ -2,9 +2,18 @@
 title: The River Path Before Breakfast
 date: 2026-10-08 07:15
 subtitle: Six quiet miles through the first cool morning of autumn
+header_image_file: header.webp
+thumbnail_image_file: header.webp
 taxonomy:
-  category: [walking]
-  tag: [morning, river, autumn]
+  category:
+  - city
+  - walking
+  tag:
+  - morning
+  - route
+  - city
+  - weather
+  - quiet
 ---
 
 The path was almost empty, and the river carried a thin layer of mist that made the railings look softer than they are.

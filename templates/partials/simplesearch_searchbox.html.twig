@@ -11,7 +11,7 @@
     {% endif %}
     required
     value="{{ query|e }}"
-    data-search-separator="{{ config.system.param_sep }}"
+    data-search-separator="{{ config.get('system.param_sep', ':') }}"
     data-search-input="{{ base_url }}{{ config.plugins.simplesearch.route == '@self' ? '' : (config.plugins.simplesearch.route == '/' ? '' : config.plugins.simplesearch.route) }}/query"
   />
   <button type="submit">{{ 'THEME_HYPERTEXT.SEARCH'|t|default('Search') }}</button>

@@ -82,6 +82,8 @@ render_site() {
   local child_route="$3"
   local expected_style="$4"
   local expected_width="$5"
+  local expected_taxonomy="$6"
+  local expected_images="$7"
   local package="$root/dist/hypertext-demo-${site}-${version}.zip"
   local site_root="$work/site/hypertext-demo-${site}"
   local pages_root="$site_root/pages/01.home"
@@ -102,6 +104,7 @@ render_site() {
   curl -fsS "http://127.0.0.1:${port}/" -o "$work/${site}.html"
   curl -fsS "http://127.0.0.1:${port}${child_route}" -o "$work/${site}-child.html"
   : > "$all_html"
+  cat "$work/${site}.html" >> "$all_html"
   while IFS= read -r -d '' content_file; do
     relative="${content_file#"$pages_root"/}"
     route="/home"
@@ -120,6 +123,36 @@ render_site() {
   grep -q '/user/themes/hypertext/images/favicon.png' "$work/${site}.html"
   grep -q "max-width: ${expected_width}px" "$work/${site}.html"
   grep -q "max-width: ${expected_width}px" "$work/${site}-child.html"
+  nav_html="$work/${site}-nav.html"
+  sed -n '/<nav aria-label="Primary">/,/<\/nav>/p' "$work/${site}.html" > "$nav_html"
+  nav_link_count="$(grep -o '<a ' "$nav_html" | wc -l || true)"
+  if (( nav_link_count < 5 )); then
+    echo "${site} demo renders ${nav_link_count} primary navigation links; expected at least 5" >&2
+    exit 1
+  fi
+  grep -q 'class="offsite"' "$nav_html"
+  grep -q 'target="_blank"' "$nav_html"
+  while IFS= read -r nav_url; do
+    [[ "$nav_url" == /* ]] || continue
+    curl -fsS "http://127.0.0.1:${port}${nav_url}" >/dev/null
+  done < <(grep -oE 'href="[^"]+"' "$nav_html" | sed -E 's/^href="(.*)"$/\1/')
+
+  image_count="$(grep -o '<img' "$all_html" | wc -l || true)"
+  eager_image_count="$(grep -o 'loading="eager"' "$all_html" | wc -l || true)"
+  lazy_image_count="$(grep -o 'loading="lazy"' "$all_html" | wc -l || true)"
+  if (( image_count < expected_images )); then
+    echo "${site} demo renders ${image_count} images (${eager_image_count} eager, ${lazy_image_count} lazy); expected at least ${expected_images}" >&2
+    exit 1
+  fi
+  grep -q 'loading="eager"' "$all_html"
+  grep -q 'loading="lazy"' "$all_html"
+  grep -q 'srcset=' "$all_html"
+  grep -q '<figcaption>' "$all_html"
+  while IFS= read -r image_url; do
+    [[ "$image_url" == /* ]] || continue
+    curl -fsS "http://127.0.0.1:${port}${image_url}" >/dev/null
+  done < <(grep -oE 'src="/[^"]+"' "$all_html" | sed -E 's/^src="(.*)"$/\1/' | sort -u)
+
   rich_element_count=0
   for element in blockquote table pre details dl figure; do
     if grep -q "<${element}" "$all_html"; then
@@ -146,16 +179,40 @@ render_site() {
     echo "Empty link in ${site} demo" >&2
     exit 1
   fi
+  if grep -Eq 'href="/([^"]*/)?(category|tag)[^:/"]' "$all_html"; then
+    echo "Malformed taxonomy link in ${site} demo" >&2
+    exit 1
+  fi
+
+  taxonomy_links="$(
+    grep -oE 'href="[^"]*/(category|tag):[^"]+"' "$all_html" |
+      sed -E 's/^href="(.*)"$/\1/' |
+      sort -u || true
+  )"
+  if [[ "$expected_taxonomy" == 'true' && -z "$taxonomy_links" ]]; then
+    echo "No taxonomy links rendered in ${site} demo" >&2
+    exit 1
+  fi
+  while IFS= read -r taxonomy_url; do
+    [[ -n "$taxonomy_url" ]] || continue
+    curl -fsS "http://127.0.0.1:${port}${taxonomy_url}" >/dev/null
+  done <<< "$taxonomy_links"
 }
 
 : > "$suite_html"
-render_site journal '<ol class="children list">' '/home/river-path' '/user/themes/hypertext/css/hypertext++.css' 960
-render_site catalog '<ul class="children grid">' '/home/arc-lamp' '/user/themes/hypertext/css/water-light.css' 1024
+render_site journal '<ol class="children list">' '/home/river-path' '/user/themes/hypertext/css/hypertext++.css' 960 true 8
+render_site catalog '<ul class="children grid">' '/home/arc-lamp' '/user/themes/hypertext/css/water-light.css' 1024 true 12
 grep -q 'srcset=' "$work/catalog.html"
 grep -q '<figcaption>' "$work/catalog.html"
-render_site resume '<section class="children comfy">' '/home/current-role' '/user/themes/hypertext/css/sakura.css' 768
-render_site docs '<table class="children">' '/home/installation' none 960
-render_site restaurant '<section class="children cards">' '/home/bakery' '/user/themes/hypertext/css/water-dark.css' 960
+curl -fsS "http://127.0.0.1:${port}/category:timekeeping" -o "$work/catalog-timekeeping.html"
+timekeeping_count="$(grep -oE '<li[^>]*cat_timekeeping[^>]*>' "$work/catalog-timekeeping.html" | wc -l || true)"
+if (( timekeeping_count < 2 )); then
+  echo "Catalog timekeeping taxonomy renders ${timekeeping_count} items; expected at least 2" >&2
+  exit 1
+fi
+render_site resume '<section class="children comfy">' '/home/current-role' '/user/themes/hypertext/css/sakura.css' 768 true 6
+render_site docs '<table class="children">' '/home/installation' none 960 true 6
+render_site restaurant '<section class="children cards">' '/home/bakery' '/user/themes/hypertext/css/water-dark.css' 960 true 8
 
 for element in blockquote table pre details dl figure; do
   grep -q "<${element}" "$suite_html"

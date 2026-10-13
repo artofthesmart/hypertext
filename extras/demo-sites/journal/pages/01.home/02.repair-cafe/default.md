@@ -3,8 +3,15 @@ title: The Lamp That Would Not Stay Lit
 date: 2026-10-09 14:30
 subtitle: An afternoon at the repair cafe with a stubborn solder joint
 taxonomy:
-  category: [repair]
-  tag: [community, tools, light]
+  category:
+  - city
+  - domestic
+  tag:
+  - house
+  - quiet
+  - city
+  - tools
+  - morning
 ---
 
 The cafe smelled like coffee, machine oil, and warm dust. Someone had brought in a floor lamp with a loose switch,

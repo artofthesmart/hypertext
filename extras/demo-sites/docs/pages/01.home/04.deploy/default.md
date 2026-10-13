@@ -2,8 +2,15 @@
 title: Deploy
 subtitle: Copy the generated site where readers can reach it
 taxonomy:
-  category: [reference]
-  tag: [deploy, publish]
+  category:
+  - reference
+  - concept
+  tag:
+  - deploy
+  - release
+  - workflow
+  - validation
+  - reference
 ---
 
 Deployment is the final copy step: build the site, verify the links, and move the output to the server or bucket that serves it.

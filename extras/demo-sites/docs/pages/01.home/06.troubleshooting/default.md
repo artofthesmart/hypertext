@@ -2,8 +2,15 @@
 title: Troubleshooting
 subtitle: The things that usually go wrong first
 taxonomy:
-  category: [help]
-  tag: [errors, fixes]
+  category:
+  - help
+  - reference
+  tag:
+  - errors
+  - reference
+  - workflow
+  - validation
+  - setup
 ---
 
 Most build failures come from path mistakes, missing frontmatter, or an output directory that still contains stale files.

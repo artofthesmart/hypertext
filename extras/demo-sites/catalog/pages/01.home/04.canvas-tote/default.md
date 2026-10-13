@@ -2,8 +2,15 @@
 title: Canvas Tote
 subtitle: A carry bag with honest seams and reinforced handles
 taxonomy:
-  category: [carry]
-  tag: [cotton, bag, daily]
+  category:
+  - portable
+  - materials
+  tag:
+  - portable
+  - material
+  - daily
+  - utility
+  - storage
 ---
 
 The tote is cut from dense canvas and stitched so the seams land where the load actually sits.

@@ -16,10 +16,10 @@ hypertext:
     display:
       title: 1
       subtitle: 1
-      image: 0
+      image: 1
       date: none
       categories: 1
-      tags: 0
+      tags: 1
       summary: 1
       read-more: 1
 ---

@@ -1,6 +1,8 @@
 ---
 title: Concepts
 subtitle: How Lantern is put together
+header_image_file: header.webp
+thumbnail_image_file: header.webp
 content:
   items: '@self.children'
   order:
@@ -16,10 +18,10 @@ hypertext:
     display:
       title: 1
       subtitle: 1
-      image: 0
+      image: 1
       date: none
       categories: 1
-      tags: 0
+      tags: 1
       summary: 1
       read-more: 1
 ---

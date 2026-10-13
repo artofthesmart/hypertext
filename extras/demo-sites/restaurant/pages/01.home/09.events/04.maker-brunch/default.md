@@ -2,8 +2,16 @@
 title: Maker Brunch
 subtitle: Breakfast for the people who bring tools, sketches, and a small appetite
 taxonomy:
-  category: [event]
-  tag: [brunch, makers]
+  category:
+  - event
+  - service
+  tag:
+  - breakfast
+  - morning
+  - market
+  - service
+  - seasonal
+  - transit
 ---
 
 The maker brunch is a lighthearted event for people who spend their week building things and want a slower meal before Monday returns.

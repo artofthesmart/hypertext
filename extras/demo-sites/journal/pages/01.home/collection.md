@@ -17,7 +17,7 @@ hypertext:
     display:
       title: 1
       subtitle: 1
-      image: 0
+      image: 1
       date: published
       categories: 1
       tags: 1

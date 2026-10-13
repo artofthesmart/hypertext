@@ -3,8 +3,15 @@ title: Laundry Line Forecast
 date: 2026-10-08 13:15
 subtitle: Wind, clothespins, and the exact amount of sun needed
 taxonomy:
-  category: [domestic]
-  tag: [weather, house]
+  category:
+  - city
+  - domestic
+  tag:
+  - house
+  - weather
+  - morning
+  - quiet
+  - route
 ---
 
 I trust the weather only after the towels have seen it. Today the line held sheets, tea towels, and a shirt that always dries

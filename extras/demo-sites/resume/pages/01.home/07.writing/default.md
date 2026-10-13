@@ -1,6 +1,16 @@
 ---
 title: Writing
 subtitle: Essays, case notes, and the paragraphs I keep returning to
+taxonomy:
+  category:
+  - research
+  - portfolio
+  tag:
+  - writing
+  - content
+  - strategy
+  - notes
+  - collaboration
 ---
 
 Writing is where I do the part of the work that cannot be handed to a prototype.

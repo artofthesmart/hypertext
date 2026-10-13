@@ -1,6 +1,8 @@
 ---
 title: Field Notes for the Second Half of the Week
 subtitle: Routes, weather, and small repairs gathered in sequence
+header_image_file: header.webp
+thumbnail_image_file: header.webp
 date: 2026-10-12 19:00
 content:
   items: '@self.children'
@@ -17,7 +19,7 @@ hypertext:
     display:
       title: 1
       subtitle: 1
-      image: 0
+      image: 1
       date: published
       categories: 1
       tags: 1

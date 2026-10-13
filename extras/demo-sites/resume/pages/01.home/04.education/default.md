@@ -1,6 +1,16 @@
 ---
 title: Education and Community
 subtitle: Formal training, workshops, and the people who keep me honest
+taxonomy:
+  category:
+  - research
+  - community
+  tag:
+  - workshop
+  - writing
+  - collaboration
+  - notes
+  - design
 ---
 
 My education is a mix of design school, research practice, and years of learning from public-sector teams.

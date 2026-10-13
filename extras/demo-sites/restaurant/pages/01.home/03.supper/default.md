@@ -2,8 +2,19 @@
 title: Supper
 subtitle: Hearth dishes that reward sitting still for a while
 taxonomy:
-  category: [dinner]
-  tag: [grain, braise, wine]
+  category:
+  - menu
+  - seasonal
+  - service
+  tag:
+  - dinner
+  - wine
+  - service
+  - family
+  - market
+  - seasonal
+  - reservation
+  - morning
 ---
 
 Supper is the longer part of the menu: braises, roasted vegetables, and a grain course that changes with the season.

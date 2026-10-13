@@ -2,8 +2,15 @@
 title: Field Clock
 subtitle: A compact analog clock with a readable face
 taxonomy:
-  category: [timekeeping]
-  tag: [clock, battery, tabletop]
+  category:
+  - workspace
+  - timekeeping
+  tag:
+  - desk
+  - measure
+  - daily
+  - layout
+  - utility
 ---
 
 Field Clock is designed for kitchens, shared studios, and any place where a clock should be legible from across the room.

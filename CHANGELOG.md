@@ -16,6 +16,8 @@
     * Adds five compact demo-site packages for journals, catalogs, resumes, documentation, and restaurants.
     * Keeps each demo's site-wide style and layout consistent on collection and child pages through global theme configuration.
     * Expands the focused demos to 69 content pages with nested collections, substantial prose, and broad Markdown and semantic HTML coverage.
+    * Fixes taxonomy parameter separators and verifies category/tag click-through routes.
+    * Stress-tests every collection layout with many-to-many taxonomies, dense metadata, realistic navigation, and responsive Unsplash-sourced media.
 
 # v2.4.2
 ## 08/17/2024

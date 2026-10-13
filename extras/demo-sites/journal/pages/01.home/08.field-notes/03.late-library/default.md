@@ -3,8 +3,15 @@ title: Late Library, Quiet Table
 date: 2026-10-09 20:45
 subtitle: A room where returning books feels almost ceremonial
 taxonomy:
-  category: [reading]
-  tag: [night, city]
+  category:
+  - city
+  - reading
+  tag:
+  - reading
+  - quiet
+  - evening
+  - city
+  - route
 ---
 
 The library stayed open long enough for one last chapter and the return desk to go quiet. There were only two other readers

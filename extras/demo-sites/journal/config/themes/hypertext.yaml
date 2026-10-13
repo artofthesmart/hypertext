@@ -1,2 +1,21 @@
 style:
   preset: hypertext++
+navigation:
+  custom-items:
+  - text: Field Notes
+    href: /home/field-notes
+    title: Nested journal series
+  - text: Library Map
+    href: /home/library-map
+    title: Reading and route notes
+  - text: Repair Cafe
+    href: /home/repair-cafe
+    title: Repair story
+  - text: Project source
+    href: https://github.com/example/hypertext-journal
+    title: Journal source on GitHub
+    offsite: true
+    new-window: true
+    rel: external
+content:
+  image: true

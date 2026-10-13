@@ -1,6 +1,16 @@
 ---
 title: Skills
 subtitle: Research, systems, and the habit of making complexity legible
+taxonomy:
+  category:
+  - systems
+  - product
+  tag:
+  - strategy
+  - systems
+  - design
+  - collaboration
+  - notes
 ---
 
 These are the skills I use often enough that they deserve their own page.

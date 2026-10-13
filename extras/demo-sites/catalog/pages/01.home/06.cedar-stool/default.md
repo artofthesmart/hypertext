@@ -2,8 +2,15 @@
 title: Cedar Stool
 subtitle: Three legs, a low profile, and a finish that lets the grain speak
 taxonomy:
-  category: [seating]
-  tag: [wood, joinery, handmade]
+  category:
+  - materials
+  - workspace
+  tag:
+  - material
+  - utility
+  - care
+  - layout
+  - desk
 ---
 
 A compact stool for hallways, studios, and the corner where a shoe takes its time.

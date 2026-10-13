@@ -10,15 +10,15 @@
   {% endif %}
 {% endmacro %}
 
-{% macro categories(page, parent_url, dec_left = '', dec_right = '') %}
+{% macro categories(page, parent_url, dec_left = '', dec_right = '', param_sep = ':') %}
   {% for category in page.taxonomy.category %}
-    {{ dec_left|raw }}<a href="{{ parent_url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category|url_encode }}">{{ category }}</a>{{ dec_right|raw }}{{ not loop.last ? ', ' : '' }}
+    {{ dec_left|raw }}<a href="{{ parent_url|rtrim('/') }}/category{{ param_sep }}{{ category|url_encode }}">{{ category }}</a>{{ dec_right|raw }}{{ not loop.last ? ', ' : '' }}
   {% endfor %}
 {% endmacro %}
 
-{% macro tags(page, parent_url, dec_left = '', dec_right = '') %}
+{% macro tags(page, parent_url, dec_left = '', dec_right = '', param_sep = ':') %}
   {% for tag in page.taxonomy.tag %}
-    {{ dec_left|raw }}<a href="{{ parent_url|rtrim('/') }}/tag{{ config.system.param_sep }}{{ tag|url_encode }}">{{ tag }}</a>{{ dec_right|raw }}{{ not loop.last ? ', ' : '' }}
+    {{ dec_left|raw }}<a href="{{ parent_url|rtrim('/') }}/tag{{ param_sep }}{{ tag|url_encode }}">{{ tag }}</a>{{ dec_right|raw }}{{ not loop.last ? ', ' : '' }}
   {% endfor %}
 {% endmacro %}
 

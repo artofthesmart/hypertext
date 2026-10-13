@@ -2,8 +2,15 @@
 title: Space Planning Before Purchase
 subtitle: Measure the room before you measure the product
 taxonomy:
-  category: [guide]
-  tag: [layout, measuring]
+  category:
+  - guide
+  - timekeeping
+  tag:
+  - measure
+  - fit
+  - layout
+  - utility
+  - reference
 ---
 
 The first question is not whether an object is beautiful; it is whether it has enough room to breathe.

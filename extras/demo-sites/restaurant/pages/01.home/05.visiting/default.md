@@ -1,9 +1,18 @@
 ---
 title: Visiting
 subtitle: Hours, address, and the few details that matter before you arrive
+header_image_file: header.webp
+thumbnail_image_file: header.webp
 taxonomy:
-  category: [visit]
-  tag: [hours, address, transit]
+  category:
+  - service
+  - menu
+  tag:
+  - reservation
+  - hours
+  - service
+  - transit
+  - market
 ---
 
 Juniper Table sits on a quiet corner where buses, bikes, and neighborhood foot traffic all arrive with the same amount of patience.

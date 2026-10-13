@@ -1,6 +1,8 @@
 ---
 title: Buying Guide
 subtitle: Notes for choosing the right object the first time
+header_image_file: header.webp
+thumbnail_image_file: header.webp
 content:
   items: '@self.children'
   order:
@@ -16,7 +18,7 @@ hypertext:
     display:
       title: 1
       subtitle: 1
-      image: 0
+      image: 1
       date: none
       categories: 1
       tags: 1

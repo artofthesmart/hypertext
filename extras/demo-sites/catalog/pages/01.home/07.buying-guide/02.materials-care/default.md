@@ -2,8 +2,15 @@
 title: Materials and Care
 subtitle: Finish, texture, and the amount of maintenance you are willing to do
 taxonomy:
-  category: [guide]
-  tag: [materials, care]
+  category:
+  - guide
+  - materials
+  tag:
+  - care
+  - material
+  - utility
+  - reference
+  - daily
 ---
 
 A good surface should age in a way you can live with. Steel tolerates daily handling; canvas prefers brushing out dust;

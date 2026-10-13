@@ -18,7 +18,7 @@ hypertext:
       image: 1
       date: none
       categories: 1
-      tags: 0
+      tags: 1
       summary: 0
       read-more: 0
 ---

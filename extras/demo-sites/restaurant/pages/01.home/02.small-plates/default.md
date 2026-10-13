@@ -1,9 +1,18 @@
 ---
 title: Small Plates
 subtitle: Snacks and starters built to share
+header_image_file: header.webp
+thumbnail_image_file: header.webp
 taxonomy:
-  category: [lunch]
-  tag: [seasonal, vegetables]
+  category:
+  - menu
+  - seasonal
+  tag:
+  - seasonal
+  - market
+  - sourcing
+  - service
+  - dinner
 ---
 
 Small plates are the way the kitchen introduces itself: bright vegetables, good oil, and one or two stronger flavors to keep the room awake.

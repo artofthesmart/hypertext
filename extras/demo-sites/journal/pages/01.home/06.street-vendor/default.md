@@ -3,8 +3,15 @@ title: Soup From the Street Vendor
 date: 2026-10-12 12:05
 subtitle: Lunch served hot enough to fog the glasses
 taxonomy:
-  category: [food]
-  tag: [lunch, market, street]
+  category:
+  - city
+  - food
+  tag:
+  - food
+  - transit
+  - market
+  - city
+  - evening
 ---
 
 The cart sits beside the bus stop, where the line forms naturally because nobody wants to be the person who misses the bowl.

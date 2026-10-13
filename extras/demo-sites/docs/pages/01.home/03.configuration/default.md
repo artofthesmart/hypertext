@@ -1,9 +1,21 @@
 ---
 title: Configuration
 subtitle: Keep the site-level switches close to the content
+header_image_file: header.webp
+thumbnail_image_file: header.webp
 taxonomy:
-  category: [reference]
-  tag: [config, yaml]
+  category:
+  - reference
+  - concept
+  tag:
+  - config
+  - defaults
+  - setup
+  - reference
+  - workflow
+  - validation
+  - build
+  - architecture
 ---
 
 Lantern reads a single site configuration file and a smaller page-level override when a page needs something different.

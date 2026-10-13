@@ -2,8 +2,15 @@
 title: First Build
 subtitle: Run the smallest possible publication pass
 taxonomy:
-  category: [start]
-  tag: [build, output]
+  category:
+  - start
+  - reference
+  tag:
+  - build
+  - validation
+  - workflow
+  - setup
+  - install
 ---
 
 The first build should prove three things: the input folder is readable, the templates resolve, and the output folder is writable.

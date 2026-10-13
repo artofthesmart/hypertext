@@ -2,8 +2,15 @@
 title: Stacking Tray Set
 subtitle: Office storage that keeps the top layer visible
 taxonomy:
-  category: [storage]
-  tag: [paper, desk, modular]
+  category:
+  - workspace
+  - storage
+  tag:
+  - desk
+  - storage
+  - utility
+  - layout
+  - daily
 ---
 
 A pair of shallow trays for paper, receipts, and the objects that drift to the edge of a desk.

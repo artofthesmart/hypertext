@@ -1,6 +1,23 @@
 ---
 title: Civic Atlas
 subtitle: A mapping project for planning teams who need context as much as coordinates
+header_image_file: header.webp
+thumbnail_image_file: header.webp
+taxonomy:
+  category:
+  - product
+  - research
+  - systems
+  - portfolio
+  tag:
+  - strategy
+  - design
+  - systems
+  - research
+  - collaboration
+  - review
+  - notes
+  - content
 ---
 
 Civic Atlas is the project I point to when someone asks how design can make information dense without becoming hostile.

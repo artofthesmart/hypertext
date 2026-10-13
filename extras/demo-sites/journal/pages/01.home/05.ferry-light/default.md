@@ -2,9 +2,18 @@
 title: Ferry Light and the Morning Crossing
 date: 2026-10-12 06:40
 subtitle: A short ride where the wake, the gulls, and the timetable all agreed
+header_image_file: header.webp
+thumbnail_image_file: header.webp
 taxonomy:
-  category: [walking]
-  tag: [ferry, water, dawn]
+  category:
+  - city
+  - walking
+  tag:
+  - morning
+  - transit
+  - city
+  - route
+  - quiet
 ---
 
 The ferry left at first light with a dozen commuters and one sleepy cyclist. From the upper deck,

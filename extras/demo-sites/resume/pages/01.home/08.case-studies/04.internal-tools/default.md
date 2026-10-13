@@ -1,6 +1,16 @@
 ---
 title: Internal Tools
 subtitle: Small systems that made the team faster without making the work louder
+taxonomy:
+  category:
+  - portfolio
+  - community
+  tag:
+  - collaboration
+  - notes
+  - design
+  - workshop
+  - writing
 ---
 
 Some of the most useful design work happened inside internal tools: dashboards, review queues, and small utilities that removed repetitive steps.

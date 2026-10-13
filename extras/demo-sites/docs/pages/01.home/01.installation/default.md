@@ -1,9 +1,18 @@
 ---
 title: Installation
 subtitle: Install the binary and verify the environment
+header_image_file: header.webp
+thumbnail_image_file: header.webp
 taxonomy:
-  category: [start]
-  tag: [install, setup]
+  category:
+  - start
+  - reference
+  tag:
+  - install
+  - setup
+  - workflow
+  - reference
+  - build
 ---
 
 Download the archive for your platform, place `lantern` on your path, and run `lantern version`.

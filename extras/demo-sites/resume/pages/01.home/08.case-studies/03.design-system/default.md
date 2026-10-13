@@ -1,6 +1,16 @@
 ---
 title: Design System
 subtitle: Building a component language that teams could actually maintain
+taxonomy:
+  category:
+  - portfolio
+  - product
+  tag:
+  - design
+  - systems
+  - strategy
+  - collaboration
+  - notes
 ---
 
 The system started with the patterns that appeared most often in production and then reduced the rest to a set of predictable tokens.

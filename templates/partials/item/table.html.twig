@@ -39,10 +39,10 @@
         <td>{% if cfg.date != 'none' %}{{ fragments.date(child, cfg.date) }}{% endif %}</td>
       {% endif %}
       {% if display_cfg.categories %}
-        <td>{% if cfg.categories and child.taxonomy.category %}{{ fragments.categories(child, parent.url, dec_left, dec_right) }}{% endif %}</td>
+        <td>{% if cfg.categories and child.taxonomy.category %}{{ fragments.categories(child, parent.url, dec_left, dec_right, config.get('system.param_sep', ':')) }}{% endif %}</td>
       {% endif %}
       {% if display_cfg.tags %}
-        <td>{% if cfg.tags and child.taxonomy.tag %}{{ fragments.tags(child, parent.url, dec_left, dec_right) }}{% endif %}</td>
+        <td>{% if cfg.tags and child.taxonomy.tag %}{{ fragments.tags(child, parent.url, dec_left, dec_right, config.get('system.param_sep', ':')) }}{% endif %}</td>
       {% endif %}
       {% if display_cfg.summary %}
         <td>{% if cfg.summary %}{{ fragments.summary(child, cfg['read-more']) }}{% endif %}</td>

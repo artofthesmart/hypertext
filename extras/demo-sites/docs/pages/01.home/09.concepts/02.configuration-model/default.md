@@ -2,8 +2,15 @@
 title: Configuration Model
 subtitle: Defaults first, overrides second, surprises last
 taxonomy:
-  category: [concept]
-  tag: [configuration, model]
+  category:
+  - concept
+  - reference
+  tag:
+  - config
+  - defaults
+  - architecture
+  - setup
+  - workflow
 ---
 
 The configuration model starts with a site-wide default and then applies page-level overrides when a page has a special case.

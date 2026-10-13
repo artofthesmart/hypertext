@@ -3,8 +3,15 @@ title: One Pot for a Cold Night
 date: 2026-10-11 18:20
 subtitle: Beans, greens, and a little too much garlic in the best possible way
 taxonomy:
-  category: [cooking]
-  tag: [supper, pantry, winter]
+  category:
+  - food
+  - domestic
+  tag:
+  - food
+  - house
+  - evening
+  - weather
+  - market
 ---
 
 This is the kind of dinner that starts with a sharp knife and ends with a quiet kitchen. The pot does most of the work:

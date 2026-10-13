@@ -1,9 +1,18 @@
 ---
 title: Drawer Divider
 subtitle: Adjustable inserts for shallow storage and desktop organization
+header_image_file: header.webp
+thumbnail_image_file: header.webp
 taxonomy:
-  category: [accessories]
-  tag: [organization, storage]
+  category:
+  - storage
+  - workspace
+  tag:
+  - storage
+  - layout
+  - utility
+  - desk
+  - portable
 ---
 
 The divider keeps utensils, cables, and desk tools from drifting into a single noisy pile.

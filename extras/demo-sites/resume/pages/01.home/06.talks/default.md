@@ -1,6 +1,16 @@
 ---
 title: Talks and Workshops
 subtitle: Small public notes on design, research, and systems
+taxonomy:
+  category:
+  - community
+  - research
+  tag:
+  - workshop
+  - writing
+  - collaboration
+  - notes
+  - content
 ---
 
 I speak most often when a team wants a practical way to explain a messy process.

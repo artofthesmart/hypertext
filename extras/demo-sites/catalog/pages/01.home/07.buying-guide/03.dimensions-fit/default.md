@@ -2,8 +2,15 @@
 title: Dimensions and Fit
 subtitle: Decide with a ruler, not a guess
 taxonomy:
-  category: [guide]
-  tag: [dimensions, fit]
+  category:
+  - guide
+  - timekeeping
+  tag:
+  - measure
+  - fit
+  - layout
+  - utility
+  - reference
 ---
 
 I keep a small ruler in the drawer because most product disappointments are measurement problems in disguise.

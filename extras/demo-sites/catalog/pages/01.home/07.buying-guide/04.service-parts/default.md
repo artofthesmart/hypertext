@@ -2,8 +2,15 @@
 title: Service Parts and Spares
 subtitle: Buy the thing you can keep maintaining
 taxonomy:
-  category: [guide]
-  tag: [spares, service]
+  category:
+  - guide
+  - materials
+  tag:
+  - spare
+  - utility
+  - material
+  - care
+  - reference
 ---
 
 Any product that expects a long life should make its replacement parts visible. The spare screw, the felt pad, the driver, and the cord

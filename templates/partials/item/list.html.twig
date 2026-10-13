@@ -22,11 +22,11 @@
 
     {% if cfg.categories and page.taxonomy.category %}
       <br>{{ 'THEME_HYPERTEXT.CATEGORIES.CATEGORIES'|t }}:
-      <small>{{ fragments.categories(page, parent.url, dec_left, dec_right) }}</small>
+      <small>{{ fragments.categories(page, parent.url, dec_left, dec_right, config.get('system.param_sep', ':')) }}</small>
     {% endif %}
     {% if cfg.tags and page.taxonomy.tag %}
       <br>{{ 'THEME_HYPERTEXT.TAGS.TAGS'|t }}:
-      <small>{{ fragments.tags(page, parent.url, dec_left, dec_right) }}</small>
+      <small>{{ fragments.tags(page, parent.url, dec_left, dec_right, config.get('system.param_sep', ':')) }}</small>
     {% endif %}
 
     {% if collection_cfg.nested %}

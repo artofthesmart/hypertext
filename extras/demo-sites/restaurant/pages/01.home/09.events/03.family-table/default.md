@@ -2,8 +2,15 @@
 title: Family Table
 subtitle: Sunday service with room for children, cousins, and second helpings
 taxonomy:
-  category: [event]
-  tag: [community, sunday]
+  category:
+  - event
+  - service
+  tag:
+  - family
+  - service
+  - dinner
+  - market
+  - morning
 ---
 
 Family table is the loosest night of the month. The menu is still deliberate, but the pacing is gentler and the room makes room for noise.

@@ -3,8 +3,15 @@ title: Mud Map After the Rain
 date: 2026-10-07 08:10
 subtitle: Tracing detours where the sidewalk flooded
 taxonomy:
-  category: [walking]
-  tag: [rain, route]
+  category:
+  - city
+  - walking
+  tag:
+  - route
+  - weather
+  - city
+  - quiet
+  - tools
 ---
 
 The rain filled the curb cuts and turned the block into a rough sketch of itself. I walked the long way around the puddles,
